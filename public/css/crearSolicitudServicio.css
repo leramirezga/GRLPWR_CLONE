@@ -1,0 +1,162 @@
+.form-group.label-floating.is-focused #label-titulo, .form-group.label-floating:not(.is-empty) #label-titulo{
+    top: -48px;/*la fuente es más grande*/
+    font-size: 20px;
+}
+#label-titulo{
+    top: -37px;/*la fuente es más grande*/
+    font-size: 30px;
+}
+#input-lugar:valid ~ #label-lugar{
+    top: -28px;
+}
+#titulo::placeholder {
+    font-size: 30px!important;
+}
+.bootstrap-datetimepicker-widget .btn{
+    min-width: initial!important;
+}
+.tagList{
+    width: fit-content;
+    position: absolute;
+    margin-top: auto;
+}
+input[type="text"], select.form-control {
+    color: white;
+    background: transparent;
+    border: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-radius: 0;
+}
+/*.backdrop{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0.8;
+    background-color: black;
+    z-index: 1100;
+}
+.relative-backdrop{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+    background-color: black;
+    z-index: 1200;
+}
+.floating-container{
+    margin-top: 20vh;
+}
+.floating{
+    margin: -20px 15px 0;
+}
+.tagList{
+    width: fit-content;
+    position: absolute;
+    margin-top: auto;
+}
+
+textarea[type="text"],
+select.form-control {
+    color: white;
+    background: transparent;
+    border: none;
+
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+textarea[type="text"]:focus,
+select.form-control:focus {
+    background: transparent;
+    color: white!important;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border: 1px solid #80bdff;
+}
+
+input[type="text"],
+select.form-control {
+    color: white;
+    background: transparent;
+    border: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+input[type="text"]:focus,
+select.form-control:focus {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.paso-actual{
+    position: relative!important;
+    background-color: white!important;
+    z-index: 1200!important;
+    color: black!important;
+}
+.hide{
+    display: none;
+}
+
+.popover{
+    z-index: 1200!important;
+}
+.popover-navigation{
+    margin-top: 10px;
+}
+
+.input-group{
+    border-bottom: 1px solid var(--grey-color);
+}
+.date-container{
+    margin-bottom: 2vh;
+}
+.date-container>.btn{
+    min-width: initial;
+}
+.form-control{
+    padding: 1px!important;
+}
+input:focus ~ .floating-label,
+input:not(:focus):valid ~ .floating-label{
+    top: -10px;
+    bottom: 10px;
+    left: 0;
+    font-size: 11px;
+    opacity: 1;
+    z-index: 1000;
+}
+
+.inputText {
+    font-size: 14px;
+    height: 35px;
+}
+
+.floating-label {
+    position: absolute;
+    pointer-events: none;
+    top: 10px;
+    transition: 0.2s ease all;
+    color: var(--grey-color);
+}
+
+#horaFinal-container{
+    margin-right: 0;
+}
+.client-icon{
+    width: 32px;
+    height: 32px;
+}
+
+#mapModal{/*para evitar fondo blanco en el tutorial
+    background-color: transparent!important;
+}
+.bootstrap-datetimepicker-widget .btn{
+    min-width: initial!important;
+}*/

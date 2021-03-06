@@ -1,0 +1,58 @@
+.vw-100{
+    width: 10vw;
+}
+.vh-100{
+    height: 10vw;
+}
+.max-w-100{
+    max-width: 100px;
+}
+.max-h-100{
+    max-height: 100px;
+}
+.min-w-60{
+    min-width: 60px;
+}
+.min-h-60{
+    min-height: 60px;
+}
+.offer-container{
+    margin-right: 1vw;
+    margin-left: 1vw;
+}
+
+
+
+.fullRating-container-solicitud {
+    position: absolute;
+    background-image: url('../images/rating.png');
+    height: 2.5vw;
+    min-height: 16px;
+    max-height: 25px;
+    background-size: cover;/* Make the background image cover the area of the <div>, and clip the excess */
+}
+#emptyRating-solicitud{
+    width: 10vw;
+    height: 2.5vw;
+    min-width: 64px;
+    min-height: 16px;
+    max-width: 100px;
+    max-height: 25px;
+    /*position: relative; Al parecer no se necesita*/
+}
+.ranking-solicitud{
+    width: 2.5vw;
+    height: 2.5vw;
+    min-width: 16px;
+    min-height: 16px;
+    max-width: 25px;
+    max-height: 25px;
+}
+div>*{/*This prevent event information to get many space between lines*/
+    margin: 0;/*Whit this margin can't use important because Tags stops working*/
+}
+
+.event-information{
+    display: inline-block;
+    padding-right: 2vw;
+}

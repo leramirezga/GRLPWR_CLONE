@@ -1,0 +1,69 @@
+.register::after {
+    content: "";
+    background: url("../images/reg4.jpg") no-repeat center center fixed;
+    background-size: cover;
+    opacity: 1;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: fixed;
+    z-index: -1;
+}
+
+.divSocialNetwork{
+    margin-top: 10px !important;
+    margin: auto;
+    justify-content: space-between;
+    width: fit-content;
+}
+
+.form {
+    background-color: rgba(255,255,255,0.8);
+}
+
+.line {
+    margin-top: 0.9rem;
+    display: inline-block;
+    height: 1px;
+    background: gray;
+    opacity: 0.5;
+    width: inherit;
+    
+}
+
+.separator{
+    display:  inline-block;
+    text-align: center;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.divLines{
+    width:  100%;
+    display: flex;
+    justify-content:  space-around;
+    margin: auto
+}
+
+/*end checkbox*/
+.floating-card{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 20px!important;
+}
+.brand-name{
+    color:  #ffffff;
+    font: normal 36px 'Cookie', cursive;
+    margin: 0;
+}
+
+.brand-name span{
+    color:  #5383d3;
+}
+.fb {
+    background-color: #3B5998;
+    color: white;
+}
+
+
+

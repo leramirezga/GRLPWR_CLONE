@@ -1,0 +1,224 @@
+@media only screen and (max-width: 450px) {/*Para que los títulos se ajusten*/
+    h1{
+        font-size: 15vw;
+    }
+}
+@media only screen and (min-width: 450px) {
+    h1 {
+        font-size: 4.125rem;
+    }
+}
+@media only screen and (max-width: 600px) {
+    .sub-section-image {
+        width: 90vw;
+    }
+}
+@media only screen and (min-width: 601px) {
+    .sub-section-image {
+        width: 70vw;
+    }
+}
+@media only screen and (max-width: 767px) {
+    .section{
+        display: block;
+    }
+    .sub-section-info{
+        width: 90vw;
+        text-align: center;
+    }
+    .section > *{
+        margin: 10vh auto;
+    }
+    .pay-image{
+        height: 50vw;
+        width: 50vw
+    }
+    .pay-image2{
+        height: 20vw;
+        width: 20vw;
+        bottom: 20vw;
+    }
+    .overflow-text{/*Si el texto es demasiado grande para dispositivos mobiles*/
+        font-size: 3rem;
+    }
+}
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    .section{
+        display: flex;
+        justify-content: space-around;
+    }
+    .sub-section-info{
+        width: 45vw;
+    }
+    .sub-section-image{
+        width: 40vw;
+        height: 50vh;
+    }
+    .section > *{
+        margin: auto 0;
+    }
+    .pay-image{
+        height: 25vw;
+        width: 25vw
+    }
+    .pay-image2{
+        height: 10vw;
+        width: 10vw;
+        bottom: 10vw;
+    }
+}
+body{
+    font-family: 'K2D', sans-serif;
+    overflow-x: hidden;
+}
+.full-height {
+    height: 100vh;
+}
+
+.flex-center {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.position-ref {
+    position: relative;
+}
+
+.top-right {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.content {
+    text-align: center;
+}
+
+.title {
+    /*font-family: 'Raleway', sans-serif!important*/;
+    font-weight: 100;
+    font-size: 84px;
+}
+
+.links > a {
+    color: white;
+    padding: 0 25px;
+    font-size: 12px;
+    letter-spacing: .1rem;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+.btn{
+    border-radius: 20px!important;
+}
+.section{
+    min-height: 90vh;
+    height: fit-content;
+    padding-top: 24px;
+    position: relative;/*necesario para que las imágenes se ubiquen donde debe ser*/
+}
+body{
+    background-color: currentColor;
+    overflow-x: hidden;
+}
+#welcome{
+    color: white!important;
+}
+#welcome::after {
+    content: "";
+    background: url("../images/welcomeBackground.jpg") no-repeat center center fixed;
+    background-size: 100% 100%;
+    opacity: 0.4;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;/*necesario para que solo se vea en la primera parte*/
+    z-index: -1;
+}
+.brand-name{
+    color:  #ffffff;
+    font: normal 36px 'Cookie', cursive;
+    margin: 0;
+}
+
+.brand-name span{
+    color:  #5383d3;
+}
+h1{
+    font-weight: 600;
+    line-height: 5rem;
+}
+.how-works-image{
+    z-index: 1;/*Sin esto no funciona el shadow*/
+    position: relative;/*Sin esto no funciona el shadow*/
+}
+#section1{
+    background-color: cornflowerblue;
+    color: white;
+}
+#section2{
+    background-color: white;
+    color: black;
+}
+#section3{
+    background-color: cornflowerblue;
+    color: white;
+}
+#section4{
+    background-color: white;
+    color: black;
+}
+#section5{
+    color: white;
+    height: 90vh;/*para que centre, en este caso la altura es fija*/
+}
+#section6{
+    min-height: 110vh;
+}
+#section5::after {
+    content: "";
+    background-image: url("../images/experiencias.jpg");
+    background-size: 100% 100%;
+    opacity: 0.4;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    position: absolute;
+    z-index: -1;
+}
+.shadow-bottom{
+    position: relative;/*Sin esto no funciona el shadow*/
+}
+.shadow-bottom:after{/*Sin esto no funciona el shadow*/
+    content: "";
+    position: absolute;
+    z-index: 0;
+    -webkit-box-shadow: 0 0 60px rgba(0,0,0,.8);
+    box-shadow: 0 0 60px rgba(0,0,0,1);
+    bottom: 0px;
+    width: 80%;
+    height: 50%;
+    border-radius: 20%;
+    left: 10%;
+    right: 10%;
+}
+.footer-icons{
+    font-size: xx-large;
+}
+.redondeado{
+    border-radius: 20px;
+}
+.media-slider{
+    height: 40vh;
+}
+.media-descripcion {
+    height: 28vh;
+}
+.color-white{
+    color: white!important;
+}
+

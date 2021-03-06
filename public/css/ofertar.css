@@ -1,0 +1,19 @@
+.solicitud-container {
+    margin: 1vh 1vw 0;
+}
+.propuestas{
+    margin: 3vh 1vw 3vh;
+}
+.propuestas-header{
+    padding: 1vw;
+    margin-bottom: 1vh;
+}
+
+
+hr {
+    margin-left: auto!important;
+    max-width: 50%;
+    border: 0;
+    border-top: 1px solid black;
+}
+
