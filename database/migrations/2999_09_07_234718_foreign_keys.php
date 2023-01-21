@@ -71,8 +71,8 @@ class ForeignKeys extends Migration
         });
 
         Schema::table('transacciones_pagos', function (Blueprint $table) {
-            $table->foreign('id_solicitud_servicio')->references('id')->on('solicitudes_servicio');
-            $table->foreign('id_propuesta')->references('id')->on('ofrecimientos');
+            $table->foreign('cliente_id')->references('usuario_id')->on('clientes');
+            $table->foreign('sesion_evento_id')->references('id')->on('sesiones_evento');
         });
         Schema::table('transacciones_pendientes', function (Blueprint $table) {
             $table->foreign('id_transaccion')->references('id')->on('transacciones_pagos');
@@ -89,6 +89,21 @@ class ForeignKeys extends Migration
         Schema::table('comentarios', function (Blueprint $table) {
             $table->foreign('blog_id')->references('id')->on('blogs');
             $table->foreign('reply_id')->references('id')->on('comentarios');
+        });
+
+        Schema::table('sesiones_evento', function (Blueprint $table) {
+            $table->foreign('evento_id')->references('id')->on('eventos');
+        });
+
+        Schema::table('sesiones_cliente', function (Blueprint $table) {
+            $table->foreign('cliente_id')->references('usuario_id')->on('clientes');
+            $table->foreign('kangoo_id')->references('id')->on('kangoos');
+            $table->foreign('sesion_evento_id')->references('id')->on('sesiones_evento');
+        });
+
+        Schema::table('kangoo_partes', function (Blueprint $table) {
+            $table->foreign('parte_id')->references('id')->on('partes');
+            $table->foreign('kangoo_id')->references('id')->on('kangoos');
         });
     }
 
@@ -193,5 +208,37 @@ class ForeignKeys extends Migration
             $table->dropColumn('reply_id');
         });
 
+        Schema::table('sesiones_evento', function (Blueprint $table) {
+            $table->dropForeign(['evento_id']);
+            $table->dropColumn('evento_id');
+        });
+
+        Schema::table('sesiones_cliente', function (Blueprint $table) {
+            $table->dropForeign(['cliente_id']);
+            $table->dropColumn('cliente_id');
+            $table->dropForeign(['kangoo_id']);
+            $table->dropColumn('kangoo_id');
+            $table->dropForeign(['sesion_evento_id']);
+            $table->dropColumn('sesion_evento_id');
+        });
+
+        Schema::table('kangoo_partes', function (Blueprint $table) {
+            $table->dropForeign(['parte_id']);
+            $table->dropColumn('parte_id');
+            $table->dropForeign(['kangoo_id']);
+            $table->dropColumn('kangoo_id');
+        });
+
+        Schema::table('transacciones_pagos', function (Blueprint $table) {
+            $table->dropForeign(['cliente_id']);
+            $table->dropColumn('cliente_id');
+            $table->dropForeign(['sesion_evento_id']);
+            $table->dropColumn('sesion_evento_id');
+        });
+
+        Schema::table('transacciones_pendientes', function (Blueprint $table) {
+            $table->dropForeign(['id_transaccion']);
+            $table->dropColumn('id_transaccion');
+        });
     }
 }

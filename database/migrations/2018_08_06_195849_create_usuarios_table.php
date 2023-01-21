@@ -18,7 +18,7 @@ class CreateUsuariosTable extends Migration
             $table->String('email',64)->unique();
             $table->String('password')->nullable();//nullable for login with facebook.
             $table->String('rol');
-            $table->unsignedInteger('nivel');
+            $table->unsignedFloat('nivel', 5, 2)->default(0);
             $table->String('nombre',64);
             $table->String('apellido_1', 64)->nullable();
             $table->String('apellido_2', 64)->nullable();

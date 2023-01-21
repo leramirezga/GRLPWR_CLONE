@@ -19,8 +19,8 @@ class TransaccionesPagos extends Migration
             $table->integer('codigo_respuesta');
             $table->string('respuesta');
             $table->longText('data');
-            $table->unsignedInteger('id_solicitud_servicio');
-            $table->unsignedInteger('id_propuesta');
+            $table->bigInteger('sesion_evento_id', unsigned: true);
+            $table->unsignedInteger('cliente_id');
             $table->timestamps();
         });
     }

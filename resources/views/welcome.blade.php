@@ -63,7 +63,7 @@
     <nav id="top-navbar" class="navbar navbar-expand-md navbar-dark fixed-top">
         <a class="navbar-brand" href="#" style="width: 60px; padding: 0">
             <!--<img src="{{asset('images/logo-navbar.png')}}" width="100%" height="100%">-->
-            <h3 class="d-inline-block brand-name"><span>In</span>Training</h3>
+            <h3 class="d-inline-block brand-name"><span>Gravity</span>Force</h3>
         </a>
         <div class="top-right links">
             <a href="{{ route('blogs') }}">Blogs</a>
@@ -80,11 +80,11 @@
     <div id="welcome" class="flex-center position-ref full-height">
         <div class="content">
             <div class="title mb-3">
-                In Training
+                Gravity Force
             </div>
-            <h4 class="mb-5">Publica, Compara y Escoge al <strong>Entrenador Ideal</strong>, por el <strong>Mejor Precio.</strong></h4>
+            <h4 class="mb-5">Ven a <strong>Saltar</strong> hasta el cielo, con el deporte <strong>Más Divertido.</strong></h4>
             <a class="btn btn-success" style="font-size: 20px; padding: 7px 35px;" href="{{ route('register') }}">
-                Quiero un Entrenador Personal
+                ¡Quiero Saltar!
             </a>
         </div>
     </div>

@@ -16,7 +16,7 @@ class Cliente extends Model
      * @var array
      */
     protected $fillable = [
-        'usuario_id','peso_ideal','biotipo'
+        'usuario_id','peso_ideal','talla_zapato','biotipo'
     ];
 
     public function usuario(){

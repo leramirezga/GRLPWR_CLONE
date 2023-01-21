@@ -678,3 +678,10 @@ a.coral:hover{
     -ms-user-select: none;
     user-select: none;
 }
+.white-nav-link {
+    color: white;
+}
+
+.white-nav-link.active {
+    color: black;
+}

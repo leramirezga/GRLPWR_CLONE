@@ -9,11 +9,13 @@ use App\Model\Estatura;
 use App\Model\Ofrecimientos;
 use App\Model\Peso;
 use App\Model\Review;
+use App\Model\Evento;
 use App\User;
 use App\Utils\Constantes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Model\SolicitudServicio;
+use Illuminate\Support\Facades\DB;
 use Validator;
 
 class HomeController extends Controller
@@ -38,17 +40,12 @@ class HomeController extends Controller
         SeguridadController::verificarUsuario($user);
         $visitante = false;
         if(strcasecmp ( $user->rol, Constantes::ROL_CLIENTE ) == 0){
-            $solicitudes= SolicitudServicio::
-                            where('usuario_id', $user->id)
-                            ->whereIn('estado', [0, 5])//solicitud activa o modificada
-                            ->get();
-
             $entrenamientosAgendados = SolicitudServicio::
                                         where('usuario_id', $user->id)
                                         ->entrenamientosAgendados($user->rol)
                                         ->get();
 
-            return view('cliente.perfilCliente', compact('user', 'solicitudes', 'entrenamientosAgendados', 'visitante'));
+            return view('cliente.perfilCliente', compact('user', 'entrenamientosAgendados', 'visitante'));
         }
         if(strcasecmp ($user->rol, Constantes::ROL_ENTRENADOR) == 0){
             $ofrecimientos = Ofrecimientos::where('usuario_id', $user->id)->get();
@@ -136,7 +133,9 @@ class HomeController extends Controller
 
             Cliente::updateOrCreate(
                 ['usuario_id' => $user->id],
-                ['peso_ideal' => request()->pesoIdeal, 'biotipo' => request()->tipoCuerpo]
+                ['peso_ideal' => request()->pesoIdeal,
+                 'talla_zapato' => request()->tallaZapato,
+                 'biotipo' => request()->tipoCuerpo]
             );
 
             Peso::updateOrCreate(

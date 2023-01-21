@@ -5,9 +5,6 @@
 @section('tab3Title') Información físca @endsection
 
 @section('tab3Content')
-    @php
-        $horasRestante=0;
-    @endphp
     <h4 class="info-text">Cuentanos un poco de ti</h4>
     <div class="row m-auto">
         <div class="col-sm-4 m-auto">
@@ -35,6 +32,19 @@
                         <input name="estatura" type="number" step="any" class="form-control" required value="{{number_format($user->cliente->estatura()->estatura, 2)}}">
                     @else
                         <input name="estatura" type="number" step="any" class="form-control" required>
+                    @endif
+                </div>
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon iconos">
+                    <i class="fas fa-shoe-prints"></i>
+                </span>
+                <div class="form-group label-floating">
+                    <label class="control-label">Talla de zapatos <small>(TODO PREGUNTAR A JINA)</small></label>
+                    @if($user->cliente != null)
+                        <input name="tallaZapato" type="number" step="any" class="form-control" required value="{{number_format($user->cliente->talla_zapato, 2)}}">
+                    @else
+                        <input name="tallaZapato" type="number" step="any" class="form-control" required>
                     @endif
                 </div>
             </div>
@@ -191,7 +201,7 @@
     </div>
     <!-- Modal explicación tipo cuerpo-->
 
-            @endsection
+@endsection
 
 @section('modals')
 
@@ -242,22 +252,8 @@
 
 @section('card2')
     @if(!$visitante)
-
         @include('entrenamientosAgendados')
-
-        <div class="floating-card bg-semi-transparent p-3 mb-3">
-            <div class="mb-5">
-                <h3 class="d-inline-block">Mis solicitudes:</h3>
-                @if(!$solicitudes->isEmpty())
-                    <a class="btn btn-success float-right" href="{{route('crearSolicitud')}}">
-                        Crear Solicitud
-                    </a>
-                @endif
-            </div>
-
-            @include('solicitudesAbiertas')
-
-        </div>
+        @include('proximasSesiones')
     @endif
 @endsection
 

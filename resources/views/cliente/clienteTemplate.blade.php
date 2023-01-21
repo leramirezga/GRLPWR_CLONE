@@ -158,11 +158,20 @@
         @endforeach
     </div> <!-- end .flash-message -->
 
+    @if(session('msg'))
+        <div class="alert alert-{{session('msg_level')}} flashMessage">
+            <p>{{session('msg')}}</p>
+        </div>
+        @php(\Illuminate\Support\Facades\Session::forget('msg'))
+    @endif
+
     @auth
         <script src="{{asset('js/app.js')}}"></script>
     @endauth
 
     @yield('content')
+
+    @stack('scripts')
 
     <script>
         $(window).on("scroll", function() {

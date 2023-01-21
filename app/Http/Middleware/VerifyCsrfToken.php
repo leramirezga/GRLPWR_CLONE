@@ -12,9 +12,6 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        'http://127.0.0.1:8000/procesar_pago',
-        'https://intraining.com.co/procesar_pago',
-        'http://intraining.com.co/procesar_pago',
         'api/*',
     ];
 }

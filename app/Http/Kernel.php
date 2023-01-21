@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use Illuminate\Routing\Middleware\SubstituteBindings;
 
 class Kernel extends HttpKernel
 {
@@ -21,7 +22,7 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrustProxies::class,
 
         /*CORS*/
-        \Barryvdh\Cors\HandleCors::class,
+        \Fruitcake\Cors\HandleCors::class,
     ];
 
     /**
@@ -37,13 +38,15 @@ class Kernel extends HttpKernel
             // \Illuminate\Session\Middleware\AuthenticateSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
-            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            SubstituteBindings::class,
         ],
 
         'api' => [
-            \Barryvdh\Cors\HandleCors::class,
             'throttle:60,1',
             'bindings',
+            SubstituteBindings::class,
+            \App\Http\Middleware\EncryptCookies::class,
+            \Illuminate\Session\Middleware\StartSession::class,
         ],
     ];
 

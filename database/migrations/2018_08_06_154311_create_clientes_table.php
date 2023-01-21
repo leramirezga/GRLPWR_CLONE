@@ -15,7 +15,8 @@ class CreateClientesTable extends Migration
     {
         Schema::create('clientes', function (Blueprint $table) {
             $table->unsignedInteger('usuario_id')->unique();//foreign
-            $table->unsignedInteger('peso_ideal');
+            $table->unsignedFloat('peso_ideal',5,2);
+            $table->unsignedFloat('talla_zapato', 3, 1);
             $table->String('biotipo');
             $table->timestamps();
         });

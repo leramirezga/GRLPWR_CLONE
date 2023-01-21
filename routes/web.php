@@ -10,6 +10,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+use App\Http\Controllers\PagosController;
+use App\Http\Controllers\SesionClienteController;
+use App\Http\Controllers\SesionEventoController;
 use \Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
@@ -58,6 +62,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/insert-image', 'BlogsController@insertImage');
     Route::post('/upload-image', 'BlogsController@uploadImage');
     Route::post('/rotate-image', 'BlogsController@uploadImage');//TODO ROTATE AND CROP
+
+    Route::get('/eventos/{sesion}', [SesionEventoController::class, 'show'])->name('evento');
+    Route::get('/eventos', [SesionEventoController::class, 'fullcalendar'])->name('eventos');
+    Route::post('/agendar', [SesionClienteController::class, 'save'])->name('agendar');
+
+    Route::post('/response_payment',[PagosController::class, 'responsePayment']);
+    Route::get('/response_payment', [PagosController::class, 'responsePayment']);
+
 });
 /*Route::resources([
     'mis_solicitudes' => 'SolicitudServicioController',
@@ -70,10 +82,6 @@ Route::post('/notification/read', 'NotificationController@read');
 
 Route::get('auth/{provider}', 'Auth\SocialAuthController@redirectToProvider')->name('social.auth');
 Route::get('auth/{provider}/callback', 'Auth\SocialAuthController@handleProviderCallback');
-
-Route::get('/response_pago', 'PagosController@responsePago');
-
-Route::get('/{solicitud}/pago', 'PagosController@testPago');
 
 Route::get('/blogs', 'BlogsController@allBlogs')->name('blogs');
 Route::get('/{user}/blog', 'BlogsController@blogUsuario')->name('blogsUsuario');

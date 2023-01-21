@@ -9,7 +9,7 @@ class TransaccionesPagos extends Model
     protected $table = 'transacciones_pagos';
 
     protected $fillable = [
-        'ref_payco','codigo_respuesta','respuesta','data', 'id_solicitud_servicio', 'id_propuesta'
+        'ref_payco','codigo_respuesta','respuesta','data', 'sesion_evento_id', 'cliente_id'
     ];
 
 }

@@ -16,7 +16,7 @@ class CreateEstaturasTable extends Migration
         Schema::create('estaturas', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('usuario_id');//foreign
-            $table->float('estatura',5, 2);
+            $table->unsignedFloat('estatura',5,2);
             $table->unsignedInteger('unidad_medida');//0 metros, 1 centimetros, 2 pulgadas
             $table->timestamps();
         });
