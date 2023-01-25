@@ -1,24 +1,12 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<!doctype html>
+<html lang="es">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
+    <title>@yield('title') - InTraining</title>
+    <base href="/">
 
     <!-- bootstrap 4.1.0 -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
@@ -33,12 +21,45 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
     <!-- End bootstrap -->
 
-    <link rel="stylesheet" href="{{asset('css/register.css')}}">
+    <link rel="stylesheet" href="{{asset('css/general.css')}}">
 
-    <!--Logo-->
-    <link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet" type="text/css">
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script src="{{asset('js/general.js')}}"></script>
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+    <!--brand-name-->
+    <link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet" type="text/css">
+
+    <!--Scrollbar -->
+    <style>
+        /* width */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #555;
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: black;
+        }
+
+
+        .dropdown-menu::-webkit-scrollbar {
+            width: 0;
+        }
+    </style>
+    <!--Fin Scrollbar -->
 
     <!-- Global site tag (gtag.js) - Google Ads: 780220913 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=AW-780220913"></script>
@@ -50,81 +71,119 @@
         gtag('config', 'AW-780220913');
     </script>
 
-    <!-- Event snippet for Registro conversion page
-        In your html page, add the snippet and call gtag_report_conversion when someone clicks on the chosen link or button. -->
-    <script>
-        function gtag_report_conversion(url) {
-            var callback = function () {
-                if (typeof(url) != 'undefined') {
-                    window.location = url;
-                }
-            };
-            gtag('event', 'conversion', {
-                'send_to': 'AW-780220913/8DZwCOa_i40BEPHzhPQC',
-                'event_callback': callback
-            });
-            return false;
-        }
-    </script>
+    @auth
+        <!--notificaciones-->
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="userId" content="{{Auth::user()->id}}">
+    @endauth
 
+    @stack('head-content')
 </head>
 <body>
-<div class="register"></div>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-dark navbar-laravel" style="background: rgba(0,0,0,.7);">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    <h3 class="d-inline-block brand-name"><span>In</span>Training</h3>
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto" >
-                        <!-- Authentication Links -->
-                        @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                            </li>
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
+        <div id="top-navbar" class="navbar navbar-dark fixed-top">
+            <a class="navbar-brand d-none d-md-inline-block" href="@auth{{route('home', ['user'=> Auth::user()->slug])}}@else # @endauth">
+                <span class="d-inline-block brand-name"><span>In</span>Training</span>
+            </a>
+            <!--
+            <form id="buscarEntrenadores-form" action="{{ route('buscarEntrenadores') }}" method="GET">
+                <div class=" m-auto">
+                    <i style="padding-top: 15px" class="color-white mr-1 fas fa-search"></i>
+                    <input type="text" class="search-input" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
                 </div>
-            </div>
-        </nav>
+            </form>-->
+            <!-- Brand/logo -->
+            <div class="links ml-auto">
+                <!--
+                <a class="banner-icon" href="#">
+                    <img width="100%" alt="calendar" src="{{asset('images/calendar.png')}}">
+                </a>
+                <a class="banner-icon" href="#">
+                    <img width="100%" alt="stats" src="{{asset('images/stats.png')}}">
+                </a>
+                -->
+                <a class="d-none d-md-inline-block" href="{{route('blogs')}}">
+                    Blogs
+                </a>
 
-        <main class="py-4">
-            @yield('content')
-        </main>
+                @auth
+                    <notification class="cursor-pointer" v-bind:unread_notifications="unread_notifications" v-bind:notifications="notifications"></notification>
+
+                    <div class="dropdown d-inline-block">
+                        <img class="rounded-circle user-icon ml-3 cursor-pointer" alt="user" src="{{asset('images/avatars/'.Auth::user()->foto)}}?{{time()}}" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                        <div class="dropdown-menu dropdown-menu-right floating-card bg-dark" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{route('home', ['user'=> Auth::user()->slug])}}">Mi perfil</a>
+                            <a class="dropdown-item d-block d-md-none" href="{{route('blogs')}}">
+                                Blogs
+                            </a>
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                        </div>
+                    </div>
+                @else
+                    <div class="d-none d-md-inline-block links">
+                        <a href="{{ route('login') }}">Login</a>
+                        <a href="{{ route('register') }}">Registro</a>
+                    </div>
+                    <div class="dropdown d-inline-block d-inline-block d-md-none">
+                        <span class="navbar-toggler-icon cursor-pointer" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
+
+                        <div class="dropdown-menu dropdown-menu-right floating-card bg-dark" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{route('blogs')}}">Blogs</a>
+                            <a class="dropdown-item" href="{{ route('login') }}">Login</a>
+                            <a class="dropdown-item" href="{{ route('register') }}">Registro</a>
+                        </div>
+                    </div>
+                @endauth
+            </div>
+        </div>
     </div>
 
+    <div class="full"></div><!--para el background de la imagen-->
+
+    <div class="flash-message">
+        @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+            @if(Session::has('alert-' . $msg))
+
+                <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+            @endif
+        @endforeach
+    </div> <!-- end .flash-message -->
+
+    @if(session('msg'))
+        <div class="alert alert-{{session('msg_level')}} flashMessage">
+            <p>{{session('msg')}}</p>
+        </div>
+        @php(\Illuminate\Support\Facades\Session::forget('msg'))
+    @endif
+
+    @auth
+        <script src="{{asset('js/app.js')}}"></script>
+    @endauth
+
+    @yield('content')
+
+    @stack('scripts')
+
+    <script>
+        $(window).on("scroll", function() {
+            $("#top-navbar").css("backgroundColor", 'rgba(0, 0, 0, '+$(window).scrollTop());
+        });
+    </script>
+
+    <!--activación de los tooltip-->
+    <script>
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
 
     <!--subscribers-->
     <script type="text/javascript">

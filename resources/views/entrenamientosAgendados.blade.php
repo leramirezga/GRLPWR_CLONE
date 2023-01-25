@@ -68,7 +68,7 @@
         @endforeach
     @else
         <div class="solicitud-container d-md-flex floating-card bg-semi-transparent mb-3">
-            <p>No tienes entrenamientos agendados</p>
+            <p>Aún no tienes entrenamientos agendados</p>
         </div>
     @endif
 </div>

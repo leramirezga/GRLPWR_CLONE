@@ -5,14 +5,10 @@ namespace App;
 use App\Model\Blog;
 use App\Model\Cliente;
 use App\Model\Entrenador;
-use App\Model\Ofrecimientos;
-use App\Model\SolicitudServicio;
-use App\Utils\Constantes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Model\Review;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -81,41 +77,6 @@ class User extends Authenticatable
             return '';
         }
         return str_after(Carbon::parse($this->fecha_nacimiento)->diffForHumans(), 'hace ');
-    }
-
-    public function caloriasTotales(){
-        $caloriasTotales = 0;
-        foreach ($this->entrenamientos() as $entrenamiento){
-            $caloriasTotales += $entrenamiento->calorias;
-        }
-        return $caloriasTotales;
-    }
-
-    public function entrenamientosRealizados(){
-        $query = DB::table('solicitudes_servicio')
-            ->join('horarios_solicitud_servicio', 'solicitudes_servicio.id', 'horarios_solicitud_servicio.solicitud_servicio_id')
-            ->where('solicitudes_servicio.estado', 1)//solicitud contratada
-            ->where('horarios_solicitud_servicio.estado', 0);//activo
-
-        if(strcasecmp ($this->rol, Constantes::ROL_CLIENTE ) == 0) {
-            $query = $query->where('solicitudes_servicio.usuario_id', $this->id)
-                            ->where('horarios_solicitud_servicio.finalizado_cliente', 1);
-
-        }
-        if(strcasecmp ($this->rol, Constantes::ROL_ENTRENADOR ) == 0) {
-            $ofrecimientos = $this->hasMany(Ofrecimientos::class, 'usuario_id', 'id')->get();
-            $ofrecimientos_id = array();
-            foreach ($ofrecimientos as $ofrecimiento){
-                array_push($ofrecimientos_id, $ofrecimiento->id);
-            }
-            $query = $query->whereIn('oferta_aceptada', $ofrecimientos_id)
-                            ->where('horarios_solicitud_servicio.finalizado_entrenador', 1);
-        }
-        return $query->select('solicitudes_servicio.*')->get();
-    }
-
-    public function ofrecimientos(){
-       return $this->hasMany(Ofrecimientos::class, 'usuario_id', 'id');
     }
 
     public function blogs(){

@@ -4,9 +4,6 @@
         display: inline-block;
         width: 30%;
     }
-    .wizard-completar-perfil{
-        width: 70vw;
-    }
 }
 .user-profile-icon{
     display: block;/*evita que las estrellas se desacomoden*/
@@ -28,27 +25,5 @@
 div>*{/*This prevent event information to get many space between lines*/
     margin: 0;/*Whit this margin can't use important because Tags stops working*/
 }
-
-
-
-/*wizard*/
-.moving-tab{
-    width: 33.33%!important;
-}
-.label-floating{
-    -ms-flex: 1 1 auto!important;
-    flex: 1 1 auto!important;
-}
-.wizard-completar-perfil{
-    max-width: unset;
-}
-.input-group-addon{
-    padding-left: 0!important;
-}
-.tab-completar-perfil:hover, .tab-completar-perfil:focus {
-    color: #89229b;
-    text-decoration: none;
-}
-
 
 

@@ -14,11 +14,11 @@
  */
 
 
-
-
-
-
-
+@media only screen and (min-width: 768px) {
+    .wizard-completar-perfil{
+        width: 70vw;
+    }
+}
 
 .image-container {
     min-height: 100vh;
@@ -1344,4 +1344,23 @@ fieldset[disabled] .checkbox, fieldset[disabled] .checkbox input[type=checkbox],
     height: fit-content;
     margin: auto;
     max-width: 45%;
+}
+
+/*wizard*/
+.moving-tab{
+    width: 33.33%!important;
+}
+.label-floating{
+    -ms-flex: 1 1 auto!important;
+    flex: 1 1 auto!important;
+}
+.wizard-completar-perfil{
+    max-width: unset;
+}
+.input-group-addon{
+    padding-left: 0!important;
+}
+.tab-completar-perfil:hover, .tab-completar-perfil:focus {
+    color: #89229b;
+    text-decoration: none;
 }

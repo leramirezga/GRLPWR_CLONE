@@ -1,6 +1,8 @@
-@extends('cliente.clienteTemplate')
+@extends('layouts.app')
 
-@section('title') Ofertar @endsection
+@section('title')
+    Ofertar
+@endsection
 
 @section('head-content')
     <link rel="stylesheet" href="{{asset('css/ofertar.css')}}">
@@ -11,11 +13,13 @@
 
     <div class="container-fluid">
         <!-- Modal maps-->
-        <div class="modal fade" id="mapModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="mapModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Ubicacion <br/> <small>{{$solicitud->direccion}}</small></h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Ubicacion <br/>
+                            <small>{{$solicitud->direccion}}</small></h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -28,10 +32,13 @@
         </div>
 
         <!--oferta modal CREAR-->
-        <div class="modal fade" id="ofertModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="ofertModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <form id="crearPorpuestaForm" method="POST" action="{{route('crearPropuesta', ['solicitud' => $solicitud])}}" novalidate autocomplete="off">
+                    <form id="crearPorpuestaForm" method="POST"
+                          action="{{route('crearPropuesta', ['solicitud' => $solicitud])}}" novalidate
+                          autocomplete="off">
 
                         <input type="hidden" name="precioTotal" id="precioTotal">
 
@@ -46,7 +53,11 @@
                             <div class="form-group row">
                                 <label for="precio" class="col-6 col-form-label">Precio</label>
                                 <div class="col-6">
-                                    <input id="precio" type="number" class="text-right form-control{{ $errors->has('precio') ? ' is-invalid' : '' }}"  name="precio" value="{{ old('precio') }}" required autofocus onkeyup="actualizarPrecioTotal(this)" onkeypress='return event.charCode >= 48 && event.charCode <= 57'/>
+                                    <input id="precio" type="number"
+                                           class="text-right form-control{{ $errors->has('precio') ? ' is-invalid' : '' }}"
+                                           name="precio" value="{{ old('precio') }}" required autofocus
+                                           onkeyup="actualizarPrecioTotal(this)"
+                                           onkeypress='return event.charCode >= 48 && event.charCode <= 57'/>
                                     @if ($errors->has('precio'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('precio') }}</strong>
@@ -64,7 +75,8 @@
                             <div class="form-group row">
                                 <label for="total" class="col-6 col-form-label">Total</label>
                                 <div class="col-6">
-                                    <p id="total" class="col-form-label text-right mr-3">${{number_format(0, 0, '.', ',')}}</p>
+                                    <p id="total" class="col-form-label text-right mr-3">
+                                        ${{number_format(0, 0, '.', ',')}}</p>
                                 </div>
                             </div>
                         </div>
@@ -80,7 +92,8 @@
         <div class="modal fade" id="ofertaModalActualizar" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <form id="actualizarPorpuestaForm" method="post" action="{{route('actualizarPropuesta', ['solicitud' => $solicitud])}}" autocomplete="off">
+                    <form id="actualizarPorpuestaForm" method="post"
+                          action="{{route('actualizarPropuesta', ['solicitud' => $solicitud])}}" autocomplete="off">
                         @method('PUT')
                         @csrf
 
@@ -97,7 +110,11 @@
                             <div class="form-group row">
                                 <label for="precio" class="col-6 col-form-label">Precio</label>
                                 <div class="col-6">
-                                    <input id="precioActualizar" type="number" class="text-right form-control{{ $errors->has('precioActualizar') ? ' is-invalid' : '' }}"  name="precioActualizar" value="{{ old('precioActualizar') }}" required autofocus onkeyup="actualizarPrecioTotal(this)" onkeypress='return event.charCode >= 48 && event.charCode <= 57'/>
+                                    <input id="precioActualizar" type="number"
+                                           class="text-right form-control{{ $errors->has('precioActualizar') ? ' is-invalid' : '' }}"
+                                           name="precioActualizar" value="{{ old('precioActualizar') }}" required
+                                           autofocus onkeyup="actualizarPrecioTotal(this)"
+                                           onkeypress='return event.charCode >= 48 && event.charCode <= 57'/>
                                     @if ($errors->has('precioActualizar'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('precioActualizar') }}</strong>
@@ -115,7 +132,8 @@
                             <div class="form-group row">
                                 <label for="total" class="col-6 col-form-label">Total</label>
                                 <div class="col-6">
-                                    <p id="totalActualizar" class="col-form-label text-right mr-3">${{number_format(0, 0, '.', ',')}}</p>
+                                    <p id="totalActualizar" class="col-form-label text-right mr-3">
+                                        ${{number_format(0, 0, '.', ',')}}</p>
                                 </div>
                             </div>
                         </div>
@@ -131,7 +149,8 @@
         <div class="modal fade" id="ofertaModalEliminar" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <form id="eliminarPorpuestaForm" method="post" action="{{route('eliminarPropuesta', ['solicitud' => $solicitud])}}" autocomplete="off">
+                    <form id="eliminarPorpuestaForm" method="post"
+                          action="{{route('eliminarPropuesta', ['solicitud' => $solicitud])}}" autocomplete="off">
                         @method('DELETE')
                         @csrf
 
@@ -148,7 +167,9 @@
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-danger">Eliminar</button>
-                            <button type="button" class="btn btn-success" data-dismiss="modal" aria-label="Close">Cancelar</button>
+                            <button type="button" class="btn btn-success" data-dismiss="modal" aria-label="Close">
+                                Cancelar
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -162,22 +183,24 @@
                     <h3>{{$solicitud->titulo}}</h3>
                 </div>
                 <div class="d-inline-block">
-                    <a class="cursor-pointer" onclick="cargarUbicacion({{$solicitud}})" data-toggle="modal" data-target="#mapModal">
+                    <a class="cursor-pointer" onclick="cargarUbicacion({{$solicitud}})" data-toggle="modal"
+                       data-target="#mapModal">
                         <img class="client-icon d-inline-block" alt="lugar" src="{{asset('images/placeholder.png')}}">
                         <p class="d-inline-block">{{$solicitud->ciudad}}</p>
                     </a>
                 </div>
                 <div class="mt-3 mb-3">
                     @if($solicitud->horarios()->exists())
-                    <div class="event-information">
-                        <h4>Evento:</h4>
-                    </div>
-                    <div class="event-information">
-                        @foreach($solicitud->horarios as $horario)
-                            <p class="event-schedule">{{$horario->diaEvento()}} ({{$horario->fecha->format('d-M')}})
-                                {{$horario->hora_inicio->format('g:i A')}} - {{$horario->hora_fin->format('g:i A')}}</p>
-                        @endforeach
-                    </div>
+                        <div class="event-information">
+                            <h4>Evento:</h4>
+                        </div>
+                        <div class="event-information">
+                            @foreach($solicitud->horarios as $horario)
+                                <p class="event-schedule">{{$horario->diaEvento()}} ({{$horario->fecha->format('d-M')}})
+                                    {{$horario->hora_inicio->format('g:i A')}}
+                                    - {{$horario->hora_fin->format('g:i A')}}</p>
+                            @endforeach
+                        </div>
                     @endif
                     @isset($solicitud->programacion)
                         <div class="event-information">
@@ -224,18 +247,25 @@
                     @endforeach
                 </div>
                 <div class="user-info-horizontal mt-3 mb-3 mb-md-1">
-                    <a class="client-icon" href="{{route('visitarPerfil', ['user'=> $solicitud->cliente->usuario->slug])}}">
-                        <img class="rounded-circle" width="100%" height="100%" alt="user" src="{{asset('images/avatars/'.$solicitud->cliente->usuario->foto)}}">
+                    <a class="client-icon"
+                       href="{{route('visitarPerfil', ['user'=> $solicitud->cliente->usuario->slug])}}">
+                        <img class="rounded-circle" width="100%" height="100%" alt="user"
+                             src="{{asset('images/avatars/'.$solicitud->cliente->usuario->foto)}}">
                     </a>
                     <p>{{$solicitud->cliente->usuario->nombre}}</p>
                     <div class="rating-container">
                         <img id="emptyRating" alt="rating" src="{{asset('images/empty_rating.png')}}">
-                        <div class="fullRating-container" style="min-width: calc(64px*{{$solicitud->cliente->usuario->ratingPorcentage()}}); max-width: calc(100px*{{$solicitud->cliente->usuario->ratingPorcentage()}}); width: calc(10vw*{{$solicitud->cliente->usuario->ratingPorcentage()}});"></div>
+                        <div class="fullRating-container"
+                             style="min-width: calc(64px*{{$solicitud->cliente->usuario->ratingPorcentage()}}); max-width: calc(100px*{{$solicitud->cliente->usuario->ratingPorcentage()}}); width: calc(10vw*{{$solicitud->cliente->usuario->ratingPorcentage()}});"></div>
                     </div>
                 </div>
-                <button type="button" class="crear-propuesta btn apply-sm d-block d-md-none bg-base" data-toggle="modal" data-target="#ofertModal">Crear propuesta</button>
+                <button type="button" class="crear-propuesta btn apply-sm d-block d-md-none bg-base" data-toggle="modal"
+                        data-target="#ofertModal">Crear propuesta
+                </button>
             </div>
-            <button type="button" class="crear-propuesta btn apply-lg d-none d-md-block ml-auto bg-base" data-toggle="modal" data-target="#ofertModal">Crear propuesta</button>
+            <button type="button" class="crear-propuesta btn apply-lg d-none d-md-block ml-auto bg-base"
+                    data-toggle="modal" data-target="#ofertModal">Crear propuesta
+            </button>
         </div>
 
         <div class="propuestas">
@@ -245,7 +275,8 @@
 
             @if($solicitud->ofrecimientos->isEmpty())
                 <div class="margenes-normales floating-card bg-semi-transparent">
-                    <p class="d-inline-block">Aún no hay propuestas de otros entrenadores. Aprovecha y se el primero en crear una!</p>
+                    <p class="d-inline-block">Aún no hay propuestas de otros entrenadores. Aprovecha y se el primero en
+                        crear una!</p>
                 </div>
             @endif
 
@@ -253,12 +284,14 @@
                 <div class="offer-container floating-card bg-grey">
                     <div class="float-left">
                         <a href="{{route('visitarPerfil', ['user'=> $ofrecimiento->entrenador->slug])}}">
-                            <img class="rounded-circle vw-100 vh-100 max-w-100 max-h-100 min-w-60 min-h-60" alt="user" src="{{asset('images/avatars/'.$ofrecimiento->entrenador->foto)}}">
+                            <img class="rounded-circle vw-100 vh-100 max-w-100 max-h-100 min-w-60 min-h-60" alt="user"
+                                 src="{{asset('images/avatars/'.$ofrecimiento->entrenador->foto)}}">
                         </a>
                     </div>
                     <div class="user-info d-inline-block">
                         <h4>{{$ofrecimiento->entrenador->nombre}}</h4>
-                        <div class="fullRating-container-solicitud" style="min-width: calc(64px*{{$ofrecimiento->entrenador->ratingPorcentage()}}); max-width: calc(100px*{{$ofrecimiento->entrenador->ratingPorcentage()}}); width: calc(10vw*{{$ofrecimiento->entrenador->ratingPorcentage()}});"></div>
+                        <div class="fullRating-container-solicitud"
+                             style="min-width: calc(64px*{{$ofrecimiento->entrenador->ratingPorcentage()}}); max-width: calc(100px*{{$ofrecimiento->entrenador->ratingPorcentage()}}); width: calc(10vw*{{$ofrecimiento->entrenador->ratingPorcentage()}});"></div>
                         <img id="emptyRating-solicitud" alt="rating" src="{{asset('images/empty_rating.png')}}">
                         <p class="grey">{{$ofrecimiento->entrenador->reviews->count()}} reviews</p>
                         <img class="ranking-solicitud" alt="ranking" src="{{asset('images/ranking.jpg')}}">
@@ -275,36 +308,52 @@
                         <h4 class="mb-3">COP</h4>
                         @if($ofrecimiento->entrenador->id == $usuario)
                             <div class="d-none d-md-block mt-auto">
-                                @if($ofrecimiento->estado == 2)<!--de solicitud modificada-->
-                                <div class="d-inline-block">
-                                    <form id="confirmarPropuestaForm" method="POST" action="{{route('confirmarPropuesta')}}" autocomplete="off">
-                                        <input type="hidden" name="ofertaIDConfirmar" id="ofertaIDConfirmar" value="{{$ofrecimiento->id}}">
-                                        @method('PUT')
-                                        @csrf
-                                        <button type="submit" class="btn bg-success fas fa-check" style="min-width: unset; color: white;"></button>
-                                    </form>
-                                </div>
+                                @if($ofrecimiento->estado == 2)
+                                    <!--de solicitud modificada-->
+                                    <div class="d-inline-block">
+                                        <form id="confirmarPropuestaForm" method="POST"
+                                              action="{{route('confirmarPropuesta')}}" autocomplete="off">
+                                            <input type="hidden" name="ofertaIDConfirmar" id="ofertaIDConfirmar"
+                                                   value="{{$ofrecimiento->id}}">
+                                            @method('PUT')
+                                            @csrf
+                                            <button type="submit" class="btn bg-success fas fa-check"
+                                                    style="min-width: unset; color: white;"></button>
+                                        </form>
+                                    </div>
                                 @endif
-                                <button type="button" data-ofertaid="{{$ofrecimiento->id}}" data-toggle="modal" data-target="#ofertaModalActualizar" class="btn bg-third fas fa-pencil-alt" style="min-width: unset;"></button>
-                                <button type="button" data-ofertaid="{{$ofrecimiento->id}}" data-toggle="modal" data-target="#ofertaModalEliminar" class="btn bg-danger fa fa-trash" style="min-width: unset;"></button>
+                                <button type="button" data-ofertaid="{{$ofrecimiento->id}}" data-toggle="modal"
+                                        data-target="#ofertaModalActualizar" class="btn bg-third fas fa-pencil-alt"
+                                        style="min-width: unset;"></button>
+                                <button type="button" data-ofertaid="{{$ofrecimiento->id}}" data-toggle="modal"
+                                        data-target="#ofertaModalEliminar" class="btn bg-danger fa fa-trash"
+                                        style="min-width: unset;"></button>
                             </div>
                         @endif
                     </div>
                     <div style="height: 1px; clear:both;"></div>
                     @if($ofrecimiento->entrenador->id == $usuario)
-                        @if($ofrecimiento->estado == 2)<!--de solicitud modificada-->
+                        @if($ofrecimiento->estado == 2)
+                            <!--de solicitud modificada-->
                             <div class="mb-1 d-md-none">
-                                <form id="confirmarPropuestaForm" method="POST" action="{{route('confirmarPropuesta')}}" autocomplete="off">
-                                    <input type="hidden" name="ofertaIDConfirmar" id="ofertaIDConfirmar" value="{{$ofrecimiento->id}}">
+                                <form id="confirmarPropuestaForm" method="POST" action="{{route('confirmarPropuesta')}}"
+                                      autocomplete="off">
+                                    <input type="hidden" name="ofertaIDConfirmar" id="ofertaIDConfirmar"
+                                           value="{{$ofrecimiento->id}}">
                                     @method('PUT')
                                     @csrf
-                                    <button type="submit" class="btn bg-success fas fa-check" style="min-width: unset; color: white; width: 100%"></button>
+                                    <button type="submit" class="btn bg-success fas fa-check"
+                                            style="min-width: unset; color: white; width: 100%"></button>
                                 </form>
                             </div>
                         @endif
                         <div class="d-flex d-md-none" style="justify-content: space-between">
-                            <button type="button" data-ofertaid="{{$ofrecimiento->id}}" data-toggle="modal" data-target="#ofertaModalActualizar" class="btn bg-third fas fa-pencil-alt mr-2" style="width: -webkit-fill-available;"></button>
-                            <button type="button" data-ofertaid="{{$ofrecimiento->id}}" data-toggle="modal" data-target="#ofertaModalEliminar" class="btn bg-danger fa fa-trash" style="width: -webkit-fill-available"></button>
+                            <button type="button" data-ofertaid="{{$ofrecimiento->id}}" data-toggle="modal"
+                                    data-target="#ofertaModalActualizar" class="btn bg-third fas fa-pencil-alt mr-2"
+                                    style="width: -webkit-fill-available;"></button>
+                            <button type="button" data-ofertaid="{{$ofrecimiento->id}}" data-toggle="modal"
+                                    data-target="#ofertaModalEliminar" class="btn bg-danger fa fa-trash"
+                                    style="width: -webkit-fill-available"></button>
                         </div>
                     @endif
                 </div>
@@ -315,7 +364,7 @@
 
     @if(Session::has('errors'))
         <script>
-            $(document).ready(function(){
+            $(document).ready(function () {
                 $('#ofertModal').modal({show: true});
             });
         </script>
@@ -323,17 +372,17 @@
 
     <!--Asignar id de la oferta a editar-->
     <script>
-        $( '#ofertaModalActualizar' ).on('shown.bs.modal', function(event){
-            var button = $(event.relatedTarget );
-            document.getElementById('ofertaID').value= button.data('ofertaid');
+        $('#ofertaModalActualizar').on('shown.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            document.getElementById('ofertaID').value = button.data('ofertaid');
         });
     </script>
 
     <!--Asignar id de la oferta a eliminar-->
     <script>
-        $( '#ofertaModalEliminar' ).on('shown.bs.modal', function(event){
-            var button = $(event.relatedTarget );
-            document.getElementById('ofertaIDEliminar').value= button.data('ofertaid');
+        $('#ofertaModalEliminar').on('shown.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            document.getElementById('ofertaIDEliminar').value = button.data('ofertaid');
         });
     </script>
 
@@ -343,7 +392,7 @@
         var ofrecimientos = {!! $solicitud->ofrecimientos !!};
         var usuario = '<?php echo $usuario ?>';
         ofrecimientos.forEach(function (ofrecimiento) {
-            if(ofrecimiento['usuario_id'] == usuario){
+            if (ofrecimiento['usuario_id'] == usuario) {
                 $('.crear-propuesta').removeClass('d-block');
                 $('.crear-propuesta').removeClass('d-md-block');
                 $('.crear-propuesta').hide();
@@ -365,7 +414,7 @@
             document.getElementById('precioTotalActualizar').value = precioEntrenador + (precioEntrenador * 0.20);
         }
 
-        Number.prototype.formatMoney = function(c, d, t){
+        Number.prototype.formatMoney = function (c, d, t) {
             var n = this,
                 c = isNaN(c = Math.abs(c)) ? 2 : c,
                 d = d == undefined ? "." : d,
@@ -406,9 +455,9 @@
 
         function crearMarker(map, location, draggable) {
             marker = new google.maps.Marker({
-                position:location,
-                draggable:draggable,
-                map:map
+                position: location,
+                draggable: draggable,
+                map: map
             });
         }
     </script>

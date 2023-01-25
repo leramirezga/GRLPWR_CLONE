@@ -1,6 +1,8 @@
-@extends('cliente.clienteTemplate')
+@extends('layouts.app')
 
-@section('title') Mis Solicitudes @endsection
+@section('title')
+    Mis Solicitudes
+@endsection
 
 @section('head-content')
     <link rel="stylesheet" href="{{asset('css/solicitudServicio.css')}}">
@@ -8,20 +10,19 @@
 
 @section('content')
 
-
     <div class="container-fluid">
 
         <div class="sticky-top event-information-container floating-card bg-grey">
             @if($solicitud->horarios()->exists())
-            <div class="event-information">
-                <h4>Evento:</h4>
-            </div>
-            <div class="event-information">
-                @foreach($solicitud->horarios as $horario)
-                    <p class="event-schedule">{{$horario->diaEvento()}} ({{$horario->fecha->format('d-M')}})
-                        {{$horario->hora_inicio->format('g:i A')}} - {{$horario->hora_fin->format('g:i A')}}</p>
-                @endforeach
-            </div>
+                <div class="event-information">
+                    <h4>Evento:</h4>
+                </div>
+                <div class="event-information">
+                    @foreach($solicitud->horarios as $horario)
+                        <p class="event-schedule">{{$horario->diaEvento()}} ({{$horario->fecha->format('d-M')}})
+                            {{$horario->hora_inicio->format('g:i A')}} - {{$horario->hora_fin->format('g:i A')}}</p>
+                    @endforeach
+                </div>
             @endif
             @isset($solicitud->programacion)
                 <div class="event-information">
@@ -58,7 +59,8 @@
 
         @if($solicitud->ofrecimientos->isEmpty())
             <div class="margenes-normales floating-card bg-semi-transparent">
-                <p class="d-inline-block">Parece que aún no tienes ofertas, los entrenadores están revisando tu solicitud.</p>
+                <p class="d-inline-block">Parece que aún no tienes ofertas, los entrenadores están revisando tu
+                    solicitud.</p>
             </div>
         @endif
 
@@ -66,12 +68,14 @@
             <div class="offer-container floating-card bg-semi-transparent">
                 <div class="float-left">
                     <a href="{{route('visitarPerfil', ['user'=> $ofrecimiento->entrenador->slug])}}">
-                        <img class="rounded-circle vw-100 vh-100 max-w-100 max-h-100 min-w-60 min-h-60" alt="user" src="{{asset('images/avatars/'.$ofrecimiento->entrenador->foto)}}">
+                        <img class="rounded-circle vw-100 vh-100 max-w-100 max-h-100 min-w-60 min-h-60" alt="user"
+                             src="{{asset('images/avatars/'.$ofrecimiento->entrenador->foto)}}">
                     </a>
                 </div>
                 <div class="user-info d-inline-block">
                     <h4>{{$ofrecimiento->entrenador->nombre}}</h4>
-                    <div class="fullRating-container-solicitud" style="min-width: calc(64px*{{$ofrecimiento->entrenador->ratingPorcentage()}}); max-width: calc(100px*{{$ofrecimiento->entrenador->ratingPorcentage()}}); width: calc(10vw*{{$ofrecimiento->entrenador->ratingPorcentage()}});"></div>
+                    <div class="fullRating-container-solicitud"
+                         style="min-width: calc(64px*{{$ofrecimiento->entrenador->ratingPorcentage()}}); max-width: calc(100px*{{$ofrecimiento->entrenador->ratingPorcentage()}}); width: calc(10vw*{{$ofrecimiento->entrenador->ratingPorcentage()}});"></div>
                     <img id="emptyRating-solicitud" alt="rating" src="{{asset('images/empty_rating.png')}}">
                     <p class="grey">{{$ofrecimiento->entrenador->reviews->count()}} reviews</p>
                     <img class="ranking-solicitud" alt="ranking" src="{{asset('images/ranking.jpg')}}">
@@ -86,24 +90,34 @@
                 <div class="price-container float-right">
                     <h4>{{number_format($ofrecimiento->precio, 0, '.', ',')}}</h4>
                     <h4 class="mb-3">COP</h4>
-                    @if($ofrecimiento->estado == 2)<!--de solicitud modificada-->
-                        <button type="submit" class="btn apply-lg d-none d-md-block mt-auto bg-base" disabled>En espera por <br/> modificacion</button>
+                    @if($ofrecimiento->estado == 2)
+                        <!--de solicitud modificada-->
+                        <button type="submit" class="btn apply-lg d-none d-md-block mt-auto bg-base" disabled>En espera
+                            por <br/> modificacion
+                        </button>
                     @else
-                        <button type="submit" class="btn apply-lg d-none d-md-block mt-auto bg-base" onclick="showPayModal({{$solicitud}}, {{Auth::user()}}, {{$ofrecimiento}})">Contratar</button>
+                        <button type="submit" class="btn apply-lg d-none d-md-block mt-auto bg-base"
+                                onclick="showPayModal({{$solicitud}}, {{Auth::user()}}, {{$ofrecimiento}})">Contratar
+                        </button>
                     @endif
                     <!--TODO agregar la lógica del botón de contratar-->
                 </div>
                 <div style="height: 1px; clear:both;"></div>
-                @if($ofrecimiento->estado == 2)<!--de solicitud modificada-->
-                    <button type="button" class="btn apply-sm d-block d-md-none bg-base" disabled>En espera por modificacion</button>
+                @if($ofrecimiento->estado == 2)
+                    <!--de solicitud modificada-->
+                    <button type="button" class="btn apply-sm d-block d-md-none bg-base" disabled>En espera por
+                        modificacion
+                    </button>
                 @else
-                    <button type="button" class="btn apply-sm d-block d-md-none bg-base" onclick="showPayModal({{$solicitud}}, {{Auth::user()}}, {{$ofrecimiento}})">Contratar</button>
+                    <button type="button" class="btn apply-sm d-block d-md-none bg-base"
+                            onclick="showPayModal({{$solicitud}}, {{Auth::user()}}, {{$ofrecimiento}})">Contratar
+                    </button>
                 @endif
             </div>
         @endforeach
     </div>
 
-    <script type="text/javascript" src="https://checkout.epayco.co/checkout.js">   </script>
+    <script type="text/javascript" src="https://checkout.epayco.co/checkout.js"></script>
 
     <!--PAGO-->
     <script>
@@ -111,7 +125,7 @@
             key: '71c83236ba0231c2d3e4048be66fc298',
             test: true
         });
-        var data={
+        var data = {
             //Parametros compra (obligatorio)
             name: "Servicio de entrenamiento",
             description: "Servicio de entrenamiento",
@@ -129,17 +143,16 @@
             response: "https://intraining.com.co/response_pago",
         };
 
-        function showPayModal(solicitud, cliente, oferta){
-            data.amount=oferta.precio;
-            data.extra1=solicitud.id;
-            data.extra2=oferta.id;
+        function showPayModal(solicitud, cliente, oferta) {
+            data.amount = oferta.precio;
+            data.extra1 = solicitud.id;
+            data.extra2 = oferta.id;
             //Atributos cliente
-            data.type_doc_billing= "cc";
-            data.mobilephone_billing= cliente.telefono;
+            data.type_doc_billing = "cc";
+            data.mobilephone_billing = cliente.telefono;
             handler.open(data)
         }
     </script>
     <!--FIN PAGO-->
-
 
 @endsection

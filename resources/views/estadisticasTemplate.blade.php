@@ -7,9 +7,9 @@
     <div style="justify-content: space-around;" class="d-flex">
         <div class="contador-container">
             <div class="numero-contador-container">
-                <h2 class="counter-count">{{$user->entrenamientosRealizados()->count()}}</h2>
+                <h2 class="counter-count">{{$user->nivel}}</h2>
             </div>
-            <h4>ENTRENAMIENTOS</h4>
+            <h4>NIVEL</h4>
         </div>
 
         @yield('contador2')
