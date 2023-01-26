@@ -46,7 +46,7 @@ class ForeignKeys extends Migration
         });
 
         Schema::table('reviews', function (Blueprint $table) {
-            $table->foreign('usuario_id')->references('id')->on('usuarios');
+            $table->foreign('sesion_cliente_id')->references('id')->on('sesiones_cliente');
             $table->foreign('reviewer_id')->references('id')->on('usuarios');
         });
 
@@ -157,9 +157,9 @@ class ForeignKeys extends Migration
         });
 
         Schema::table('reviews', function (Blueprint $table) {
-            $table->dropForeign(['usuario_id']);
+            $table->dropForeign(['sesion_cliente_id']);
             $table->dropForeign(['reviewer_id']);
-            $table->dropColumn('usuario_id');
+            $table->dropColumn('sesion_cliente_id');
             $table->dropColumn('reviewer_id');
         });
 

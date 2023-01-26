@@ -67,7 +67,7 @@
     @endif
 @endsection
 
-@section('scripts')
+@push('scripts')
     <!--Asignar id de la oferta a eliminar-->
     <script>
         $('#solicitudModalEliminar').on('shown.bs.modal', function (event) {
@@ -95,4 +95,4 @@
             }
         }
     </script>
-@endsection
+@endpush

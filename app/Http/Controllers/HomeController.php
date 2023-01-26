@@ -10,6 +10,7 @@ use App\Model\Ofrecimientos;
 use App\Model\Peso;
 use App\Model\Review;
 use App\Model\Evento;
+use App\Model\SesionCliente;
 use App\User;
 use App\Utils\Constantes;
 use Illuminate\Http\Request;
@@ -40,11 +41,10 @@ class HomeController extends Controller
         SeguridadController::verificarUsuario($user);
         $visitante = false;
         if(strcasecmp ( $user->rol, Constantes::ROL_CLIENTE ) == 0){
-            $entrenamientosAgendados = SolicitudServicio::
-                                        where('usuario_id', $user->id)
+            $entrenamientosAgendados = SesionCliente::
+                                        where('cliente_id', $user->id)
                                         ->entrenamientosAgendados($user->rol)
                                         ->get();
-
             return view('cliente.perfilCliente', compact('user', 'entrenamientosAgendados', 'visitante'));
         }
         if(strcasecmp ($user->rol, Constantes::ROL_ENTRENADOR) == 0){

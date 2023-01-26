@@ -47,8 +47,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/{user}/home', 'HomeController@index')->name('home');
     Route::delete('/{user}/home', 'SolicitudServicioController@eliminar')->name('eliminarSolicitud');
     Route::put('/{user}/home', 'HomeController@actualizarPerfil')->name('actualizarPerfil');
-    Route::post('/finalizar_entrenamiento/', 'SolicitudServicioController@finalizarSolicitud')->name('finalizarEntrenamiento');
-    Route::delete('/cancelar_entrenamiento', 'SolicitudServicioController@cancelarEntrenamiento')->name('cancelarEntrenamiento');
     Route::get('/visitar/{user}', 'HomeController@visitar')->name('visitarPerfil');
 
     Route::put('completar_registro_redes_sociales', 'HomeController@completarRegistroRedesSociales')->name('completarRegistroRedesSociales');
@@ -69,6 +67,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('/response_payment',[PagosController::class, 'responsePayment']);
     Route::get('/response_payment', [PagosController::class, 'responsePayment']);
+
+    Route::post('/check_kangoo_availability',[SesionClienteController::class, 'assignKangoos'])->name('checkKangooAvailability');
+    Route::post('/finalizar_entrenamiento/', 'SolicitudServicioController@finalizarSolicitud')->name('finalizarEntrenamiento');
+    Route::delete('/cancelar_entrenamiento', [SesionClienteController::class, 'cancelTraining'])->name('cancelarEntrenamiento');
 
 });
 /*Route::resources([

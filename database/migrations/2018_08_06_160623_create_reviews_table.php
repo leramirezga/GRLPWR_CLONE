@@ -15,7 +15,7 @@ class CreateReviewsTable extends Migration
     {
         Schema::create('reviews', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('usuario_id');//usuario al que pertenece el rating; foreign
+            $table->unsignedInteger('sesion_cliente');//foreign
             $table->integer('rating');//el rating solo se puede dar entero. Cuando se calcula el promedio si queda decimal
             $table->string('review',280)->nullable();
             $table->unsignedInteger('reviewer_id');//usuario que realiza el review; foreign

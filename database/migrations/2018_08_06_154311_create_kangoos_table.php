@@ -17,8 +17,8 @@ class CreateKangoosTable extends Migration
             $table->increments('id');
             $table->String('marca');
             $table->String('referencia');
-            $table->String('SKU');
-            $table->unsignedFloat('talla',3,1);
+            $table->String('SKU')->unique();
+            $table->String('talla',1);
             $table->unsignedInteger('resistencia');
             $table->String('estado');//(disponible, asignado, en mantenimiento, dañado, borrado)
             $table->String('anotaciones');
