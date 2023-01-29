@@ -35,16 +35,17 @@
 
     @if(!$entrenamientosAgendados->isEmpty())
         @foreach($entrenamientosAgendados as $entrenamiento)
-            <div class="solicitud-container d-md-flex floating-card bg-semi-transparent mb-3">
+            <div class="solicitud-container  text-center text-md-left d-md-flex floating-card bg-semi-transparent mb-3">
                 <div>
-                    <p class="d-block">{{$entrenamiento->nombre}}</p>
-                    <p class="d-block">{{$entrenamiento->fecha_inicio}}</p>
-                    <p class="d-block">Lugar: {{$entrenamiento->lugar}}</p>
+                    <h3 class="d-block my-2">{{$entrenamiento->nombre}}</h3>
+                    <p class="d-block my-1"><strong>Día:</strong> {{$entrenamiento->fecha_inicio->isoFormat('dddd D MMMM')}}</p>
+                    <p class="d-block my-1"><strong>Hora:</strong> {{$entrenamiento->fecha_inicio->format('g:i A')}}</p>
+                    <p class="d-block my-1"><strong>Lugar: </strong>{{$entrenamiento->lugar}}</p>
                     @isset($entrenamiento->SKU)
-                        <p class="d-block">Kangoo: {{$entrenamiento->SKU}}</p>
+                        <p class="d-block my-1"><strong>Kangoo: </strong>{{$entrenamiento->SKU}}</p>
                     @endisset
                 </div>
-            <div class="ml-auto">
+            <div class="ml-auto my-3">
                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelarEntrenamientoModal" onclick="prepararCancelarEntrenamiento({{$entrenamiento->id}})">Cancelar</button>
                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#reviewModal" onclick="asignarReview()">Finalizar</button>
             </div>

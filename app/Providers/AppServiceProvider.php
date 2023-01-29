@@ -22,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
         ]);
 
         Carbon::setLocale(config('app.locale'));
-        //\Carbon\Carbon::setLocale('es');//para métodos de carbon
+        setlocale(LC_TIME, 'app.locale_time');
 
         Schema::defaultStringLength(191);//para que los indices de tablas y demás no sobrepasen la longitud de MySQL
     }

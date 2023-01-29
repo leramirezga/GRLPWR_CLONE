@@ -21,6 +21,11 @@ class SesionCliente extends Model
         'cliente_id','kangoo_id','sesion_evento_id', 'reservado_hasta'
     ];
 
+    /**
+     * Transforms dates to carbon
+     * @var string[]
+     */
+    protected $dates = ['created_at', 'updated_at', 'fecha_inicio', 'fecha_fin'];
 
     public function scopeEntrenamientosAgendados($query, $tipoUsuario){
         switch ($tipoUsuario){
@@ -36,4 +41,5 @@ class SesionCliente extends Model
         }
         return null;
     }
+
 }
