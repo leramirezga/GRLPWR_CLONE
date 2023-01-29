@@ -148,27 +148,19 @@
 
     <div class="full"></div><!--para el background de la imagen-->
 
-    <div class="flash-message">
-        @foreach (['danger', 'warning', 'success', 'info'] as $msg)
-            @if(Session::has('alert-' . $msg))
-
-                <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
-            @endif
-        @endforeach
-    </div> <!-- end .flash-message -->
-
-    @if(session('msg'))
-        <div class="alert alert-{{session('msg_level')}} flashMessage">
-            <p>{{session('msg')}}</p>
-        </div>
-        @php(\Illuminate\Support\Facades\Session::forget('msg'))
-    @endif
+    <div class="container-fluid w-100">
+        @if(session('msg'))
+            <div class=" alert-{{session('msg_level')}} ">
+                <p>{{session('msg')}}</p>
+            </div>
+            @php(\Illuminate\Support\Facades\Session::forget('msg'))
+        @endif
+        @yield('content')
+    </div>
 
     @auth
         <script src="{{asset('js/app.js')}}"></script>
     @endauth
-
-    @yield('content')
 
     @stack('scripts')
 

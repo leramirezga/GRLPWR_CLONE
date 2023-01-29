@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        'App\Console\Commands\ValidarKangoosReservados',
     ];
 
     /**
@@ -25,6 +25,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command("validator:transaccionesPendientes")->cron("*/5 * * * *");
+        $schedule->command("validator:kangosReservados")->everyMinute();
     }
 
     /**

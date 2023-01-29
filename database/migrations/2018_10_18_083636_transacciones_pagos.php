@@ -22,6 +22,7 @@ class TransaccionesPagos extends Migration
             $table->bigInteger('sesion_evento_id', unsigned: true);
             $table->unsignedInteger('cliente_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

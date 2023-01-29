@@ -12,6 +12,15 @@ class SesionCliente extends Model
     use HasFactory;
     use SoftDeletes;
     protected $table = 'sesiones_cliente';
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'cliente_id','kangoo_id','sesion_evento_id', 'reservado_hasta'
+    ];
+
 
     public function scopeEntrenamientosAgendados($query, $tipoUsuario){
         switch ($tipoUsuario){

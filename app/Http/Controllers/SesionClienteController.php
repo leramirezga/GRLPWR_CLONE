@@ -3,22 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Model\Cliente;
-use App\Model\Kangoo;
 use App\Model\SesionCliente;
+use App\Model\SesionEvento;
+use App\Utils\KangooResistancesEnum;
 use App\Utils\KangooStatesEnum;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Validator;
 
 class SesionClienteController extends Controller
 {
-    public function save(int $sesionEventoId, int $clienteId, $kangooId)
+    public function save(int $sesionEventoId, int $clienteId, $sesionClienteId)
     {
-        $sesionCliente = new SesionCliente();
-        $sesionCliente->cliente_id = $clienteId;
-        $sesionCliente->sesion_evento_id = $sesionEventoId;
-        if($kangooId!="null"){
-            $sesionCliente->kangoo_id = $kangooId;
+        if($sesionClienteId != "null"){//La sesion fue creada con reserva de kangoo, así que se confirma
+            $sesionCliente = SesionCliente::find($sesionClienteId);
+            $sesionCliente->reservado_hasta = null;
+        }else{
+            $sesionCliente = new SesionCliente();
+            $sesionCliente->cliente_id = $clienteId;
+            $sesionCliente->sesion_evento_id = $sesionEventoId;
         }
         $sesionCliente->save();
     }
@@ -62,20 +67,35 @@ class SesionClienteController extends Controller
             $resistance = 4;
         }
 
-        $kangoos = Kangoo::where('estado', KangooStatesEnum::Available)
-            ->whereIn('talla', $tallaKangoo)
-            ->where('resistencia', '>=', $resistance)
-            ->orderBy('resistencia', 'asc')
+        $sesionEvento = SesionEvento::find($request->get('sesionEventoId'));
+
+        $kangoos = DB::table('kangoos')->whereNotIn('id', function($q) use($sesionEvento){
+            $q->select('kangoos.id')->from('kangoos')
+            ->leftJoin('sesiones_cliente', 'kangoos.id', '=', 'sesiones_cliente.kangoo_id')
+            ->join('sesiones_evento', 'sesiones_cliente.sesion_evento_id', '=', 'sesiones_evento.id')
+            ->where('sesiones_evento.fecha_fin', '>', $sesionEvento->fecha_inicio)
+            ->where('sesiones_evento.fecha_inicio', '<', $sesionEvento->fecha_fin);
+        })->where('kangoos.estado', KangooStatesEnum::Available)
+            ->where('kangoos.resistencia', '>=', $resistance)
+            ->orderBy('kangoos.resistencia', 'asc')
+            ->select('kangoos.id', 'kangoos.resistencia')
             ->get();
 
-        if($kangoos->isEmpty()){
-            return response()->json(['error' =>  __('general.quotas_not_available')], 404);
+        for ($i = $resistance; $i <= KangooResistancesEnum::getMaxResistance(); $i++) {
+            $kangooId = ($kangoos->where('resistencia', $i)->whenNotEmpty(function ($kangoos) {
+                return $kangoos->random(1)[0]->id;
+            }));
+            if(is_numeric($kangooId)){
+                $sesionCliente = SesionCliente::create([
+                    'cliente_id' => $clientId,
+                    'kangoo_id' => $kangooId,
+                    'sesion_evento_id' => $sesionEvento->id,
+                    'reservado_hasta' => Carbon::now()->addMinutes(5)
+                ]);
+                return response()->json(['success' =>  __('general.reserved_5_minutes'), 'sesionClienteId' => $sesionCliente->id], 200);
+            }
         }
-        $kangoo = ($kangoos->random(1))[0];
-        $kangoo->estado = KangooStatesEnum::Assigned;
-        $kangoo->save();
-
-        return response()->json(['success' =>  __('general.not_supported_shoe_size'), 'kangooId' => $kangoo->id], 200);
+        return response()->json(['error' =>  __('general.quotas_not_available')], 404);
     }
 
     public function cancelTraining(){

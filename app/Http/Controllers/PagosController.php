@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\SesionCliente;
 use App\Model\TransaccionesPagos;
 use App\Model\TransaccionesPendientes;
 use GuzzleHttp\Client;
@@ -45,7 +46,7 @@ class PagosController extends Controller
             switch ((int)$x_cod_response) {
                 case 1:
                     # code transacción aceptada
-                    (new SesionClienteController())->save(sesionEventoId: $data->x_extra1, clienteId: $data->x_extra2, kangooId: $data->x_extra3);
+                    (new SesionClienteController())->save(sesionEventoId: $data->x_extra1, clienteId: $data->x_extra2, sesionClienteId: $data->x_extra3);
                     Session::put('msg_level', 'success');
                     Session::put('msg', __('general.success_purchase'));
                     Session::save();
@@ -55,6 +56,10 @@ class PagosController extends Controller
                     Session::put('msg_level', 'danger');
                     Session::put('msg', __('general.failed_purchase'));
                     Session::save();
+                    if($data->x_extra3 != "null") {//La sesion fue creada con reserva de kangoo, así que se debe eliminar
+                        $sesionCLiente = SesionCliente::find($data->x_extra3);
+                        $sesionCLiente->delete();
+                    }
                     break;
                 case 3:# code transacción pendiente //ESTO SE MANEJA EN EL GUARDAR TRANSACCIÓN
                     Session::put('msg_level', 'info');

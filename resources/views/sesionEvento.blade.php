@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <div class="container-fluid w-100 text-center">
+    <div class="text-center">
         @if(strcasecmp (\Illuminate\Support\Facades\Auth::user()->rol, 'cliente' ) == 0 && \Illuminate\Support\Facades\Auth::user()->cliente == null)
             <h2>Para agendarte a los eventos debes completar tu perfil</h2>
             <button class="btn btn-success d-block ml-auto mr-auto" data-toggle="modal"
@@ -75,9 +75,11 @@
                     },
                     url: "{{ route('checkKangooAvailability') }}",
                     method: "POST",
-                    data: {clientId:{{\Illuminate\Support\Facades\Auth::id()}}},
+                    data: {clientId:{{\Illuminate\Support\Facades\Auth::id()}},
+                            sesionEventoId: {{$sesionEvento->id}}},
+
                     success: function (data) {
-                        showPayModal(data['kangooId']);
+                        showPayModal(data['sesionClienteId']);
                     },
                 });
             }else{
@@ -106,12 +108,12 @@
             response: "{{config('app.url')}}/response_payment",
         };
 
-        function showPayModal(kangooId = null) {
+        function showPayModal(sesionClienteId = null) {
             data.currency = '{{\Illuminate\Support\Facades\Session::get('currency_id') ? \Illuminate\Support\Facades\Session::get('currency_id') : 'COP'}}';
             data.amount = {{$sesionEvento->precio}}
                 data.extra1 = {{$sesionEvento->id }}
                 data.extra2 = {{ \Illuminate\Support\Facades\Auth::id() }}
-                data.extra3 = kangooId;
+                data.extra3 = sesionClienteId;
             data.type_doc_billing = "cc";
             handler.open(data)
         }

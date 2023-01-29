@@ -23,7 +23,7 @@
             $('#completarPerfilModal').modal({show: true});
         });
     </script>
-@endif;
+@endif
 
 <div class="modal fade" id="completarPerfilModal" tabindex="-1" role="dialog">
     <div class="modal-dialog wizard-completar-perfil" role="document">

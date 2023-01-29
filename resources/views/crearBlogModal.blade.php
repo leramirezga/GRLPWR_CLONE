@@ -4,7 +4,7 @@
             $('#crearInfoBlogModal').modal({show: true});
         });
     </script>
-@endif;
+@endif
 
 
 <!--modal crear blogs-->
