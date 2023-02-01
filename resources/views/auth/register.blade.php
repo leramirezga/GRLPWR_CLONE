@@ -9,19 +9,6 @@
 
                     <form method="POST" action="{{ route('register') }}" aria-label="{{ __('Register') }}">
                         @csrf
-                        <div class="divSocialNetwork text-center">
-                            <a href="{{ route('social.auth', 'facebook') }}" class="fb btn" onclick="gtag_report_conversion()">
-                                <i class="fab fa-facebook-f mr-2"></i> Registrarme con Facebook
-                            </a>
-                        </div>
-                        <div class="divLines">
-                            <div  class="d-inline-block line" >
-                                </div>
-                                    <p class="separator">o</p>
-                                <div class="d-inline-block line" >
-                            </div>
-                        </div>
-
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
 

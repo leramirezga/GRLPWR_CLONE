@@ -11,19 +11,6 @@
                     <form method="POST" novalidate action="{{ route('login') }}" aria-label="{{ __('Login') }}">
                         <!--el novalidate evita los mensaje de validación del navegador-->
                         @csrf
-                        <div class="divSocialNetwork text-center">
-                            <a href="{{ route('social.auth', 'facebook') }}" class="fb btn">
-                                <i class="fab fa-facebook-f mr-2"></i> Iniciar sesión con Facebook
-                            </a>
-                        </div>
-                        <div class="divLines">
-                            <div  class="d-inline-block line" >
-                            </div>
-
-                            <p class="separator">o</p>
-                            <div class="d-inline-block line" >
-                            </div>
-                        </div>
                         <div class="form-group row">
                             <label for="email" class="col-sm-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
