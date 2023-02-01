@@ -18,6 +18,8 @@ return new class extends Migration
             $table->unsignedInteger('cliente_id');//foreign. Is necessary the unsigned to match with the other table
             $table->unsignedInteger('kangoo_id')->nullable();//foreign. nullable because the client can has his/her own kangoos. Is necessary the unsigned to match with the other table
             $table->bigInteger('sesion_evento_id',unsigned: true);//foreign. Is necessary the unsigned to match with the other table
+            $table->dateTime('reservado_hasta')->nullable();
+            $table->unsignedInteger('calorias')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -46,8 +46,17 @@ class ForeignKeys extends Migration
         });
 
         Schema::table('reviews', function (Blueprint $table) {
-            $table->foreign('sesion_cliente_id')->references('id')->on('sesiones_cliente');
             $table->foreign('reviewer_id')->references('id')->on('usuarios');
+        });
+
+        Schema::table('reviews_user', function (Blueprint $table) {
+            $table->foreign('review_id')->references('id')->on('reviews');
+            $table->foreign('user_id')->references('id')->on('usuarios');
+        });
+
+        Schema::table('reviews_session', function (Blueprint $table) {
+            $table->foreign('review_id')->references('id')->on('reviews');
+            $table->foreign('session_id')->references('id')->on('sesiones_cliente');
         });
 
         Schema::table('solicitudes_servicio', function (Blueprint $table) {
@@ -157,10 +166,22 @@ class ForeignKeys extends Migration
         });
 
         Schema::table('reviews', function (Blueprint $table) {
-            $table->dropForeign(['sesion_cliente_id']);
             $table->dropForeign(['reviewer_id']);
-            $table->dropColumn('sesion_cliente_id');
             $table->dropColumn('reviewer_id');
+        });
+
+        Schema::table('reviews_user', function (Blueprint $table) {
+            $table->dropForeign(['review_id']);
+            $table->dropColumn('review_id');
+            $table->dropForeign(['user_id']);
+            $table->dropColumn('user_id');
+        });
+
+        Schema::table('reviews_session', function (Blueprint $table) {
+            $table->dropForeign(['review_id']);
+            $table->dropColumn('review_id');
+            $table->dropForeign(['session_id']);
+            $table->dropColumn('session_id');
         });
 
         Schema::table('solicitudes_servicio', function (Blueprint $table) {

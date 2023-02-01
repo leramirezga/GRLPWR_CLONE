@@ -63,19 +63,24 @@
 @section('card2')
     @if(!$visitante)
         @include('entrenamientosAgendados')
+        @if(isset($reviewFor))
+            @include('modalDarReviewEntrenamiento')
+        @endif
         @include('proximasSesiones')
     @endif
 @endsection
 
 @push('scripts')
-    <!--Asignar id de la oferta a eliminar-->
-    <script>
-        $('#solicitudModalEliminar').on('shown.bs.modal', function (event) {
-            var button = $(event.relatedTarget);
-            document.getElementById('solicitudIDEliminar').value = button.data('solicitudid');
+    <!--Pop-up Review Session-->
+    <script type="text/javascript">
+        $(document).ready(function(){
+            if({{!session('msg')}} && !sessionStorage.getItem('training-review-showed') && {{isset($reviewFor)}}) {
+                sessionStorage.setItem('training-review-showed', 'true');//at the beginning, it won't be present in the session, and if we get it, it will be false
+                setTimeout(function() {$('#reviewEntrenamiento').modal('show');},
+                    3000);
+            }
         });
     </script>
-
     <!--Validar completar perfil-->
     <script>
         $(document).ready(function () {

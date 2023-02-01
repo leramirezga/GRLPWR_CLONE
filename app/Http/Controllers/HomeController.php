@@ -9,7 +9,7 @@ use App\Model\Estatura;
 use App\Model\Ofrecimientos;
 use App\Model\Peso;
 use App\Model\Review;
-use App\Model\Evento;
+use App\Model\ReviewUser;
 use App\Model\SesionCliente;
 use App\User;
 use App\Utils\Constantes;
@@ -45,7 +45,19 @@ class HomeController extends Controller
                                         where('cliente_id', $user->id)
                                         ->entrenamientosAgendados($user->rol)
                                         ->get();
-            return view('cliente.perfilCliente', compact('user', 'entrenamientosAgendados', 'visitante'));
+
+            $lastSessionWithoutReview =DB::table('sesiones_cliente')
+                            ->join('sesiones_evento', 'sesiones_cliente.sesion_evento_id', 'sesiones_evento.id')
+                            ->leftJoin('reviews_session', 'reviews_session.session_id', '=', 'sesiones_cliente.id')
+                            ->whereNull('reviews_session.session_id')
+                            ->where('sesiones_evento.fecha_fin', '<', today())
+                            ->orderBy('sesiones_evento.fecha_fin', 'desc')
+                            ->select('sesiones_cliente.id')
+                            ->first();
+
+            $reviewFor = $lastSessionWithoutReview?->id;
+
+            return view('cliente.perfilCliente', compact('user', 'entrenamientosAgendados', 'visitante', 'reviewFor'));
         }
         if(strcasecmp ($user->rol, Constantes::ROL_ENTRENADOR) == 0){
             $ofrecimientos = Ofrecimientos::where('usuario_id', $user->id)->get();
@@ -163,9 +175,16 @@ class HomeController extends Controller
         }
 
 
-        Review::firstOrCreate(
-            ['reviewer_id' => '1', 'usuario_id' => $user->id],
-            ['review' => $review, 'rating' => 5]
+        $review = Review::create(
+            ['reviewer_id' => '1',
+            'review' => $review,
+            'rating' => 5]
+        );
+
+        ReviewUser::create(
+            ['review_id' => $review->id,
+                'user_id' => $user->id,
+            ]
         );
 
         return back();

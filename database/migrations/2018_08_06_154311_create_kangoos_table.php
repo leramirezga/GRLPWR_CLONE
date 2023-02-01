@@ -21,7 +21,7 @@ class CreateKangoosTable extends Migration
             $table->String('talla',1);
             $table->unsignedInteger('resistencia');
             $table->String('estado');//(disponible, asignado, en mantenimiento, dañado, borrado)
-            $table->String('anotaciones');
+            $table->String('anotaciones')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

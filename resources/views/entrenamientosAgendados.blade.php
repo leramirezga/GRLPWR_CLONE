@@ -45,10 +45,9 @@
                         <p class="d-block my-1"><strong>Kangoo: </strong>{{$entrenamiento->SKU}}</p>
                     @endisset
                 </div>
-            <div class="ml-auto my-3">
-                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelarEntrenamientoModal" onclick="prepararCancelarEntrenamiento({{$entrenamiento->id}})">Cancelar</button>
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#reviewModal" onclick="asignarReview()">Finalizar</button>
-            </div>
+                <div class="ml-auto my-3">
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelarEntrenamientoModal" onclick="prepararCancelarEntrenamiento({{$entrenamiento->id}})">Cancelar</button>
+                </div>
             </div>
         @endforeach
     @else
@@ -66,11 +65,11 @@
             document.getElementById('entrenamientoCancelar').value= sessionId;
         }
         <!--Review-->
-        function asignarReview(entrenamientoAgendado) {
-            document.getElementById('entrenamientoReview').value= entrenamientoAgendado.id;
+        function asignarReview(sessionId) {
+            document.getElementById('reviewFor').value= sessionId;
             document.getElementById('rating').value= null;
             $('#ratingSeleccionado').css('width', '0');
         }
     </script>
-            @endpush
+@endpush
 

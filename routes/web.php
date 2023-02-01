@@ -69,7 +69,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/response_payment', [PagosController::class, 'responsePayment']);
 
     Route::post('/check_kangoo_availability',[SesionClienteController::class, 'assignKangoos'])->name('checkKangooAvailability');
-    Route::post('/finalizar_entrenamiento/', 'SolicitudServicioController@finalizarSolicitud')->name('finalizarEntrenamiento');
+    Route::post('/dar_review_entrenamiento/', [SesionClienteController::class, 'darReview'])->name('darReviewEntrenamiento');
     Route::delete('/cancelar_entrenamiento', [SesionClienteController::class, 'cancelTraining'])->name('cancelarEntrenamiento');
 
 });

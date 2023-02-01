@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Model\Cliente;
+use App\Model\Review;
+use App\Model\ReviewSession;
 use App\Model\SesionCliente;
 use App\Model\SesionEvento;
 use App\Utils\KangooResistancesEnum;
 use App\Utils\KangooStatesEnum;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Validator;
@@ -110,6 +113,21 @@ class SesionClienteController extends Controller
         Session::put('msg_level', 'success');
         Session::put('msg', __('general.successfully_cancelled'));
         Session::save();
+        return back();
+    }
+
+    public function darReview(){
+        if(request()->rating != null){
+            $review = Review::create([
+                'rating' => request()->rating,
+                'review' => request()->review,
+                'reviewer_id' => Auth::id(),
+            ]);
+            ReviewSession::create([
+               'review_id' => $review->id,
+               'session_id' => request()->reviewFor
+            ]);
+        }
         return back();
     }
 }
