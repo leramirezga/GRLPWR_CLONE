@@ -64,9 +64,9 @@
     <script type="text/javascript" src="https://checkout.epayco.co/checkout.js"></script>
     <script>
         document.getElementById("agendarForm").addEventListener("submit", checkKangooAvailability, true);
-
+        var rentKangoos = false
         function checkKangooAvailability(event) {
-            var rentKangoos = document.querySelector('input[name="rentKangoos"]:checked').value;
+            rentKangoos = document.querySelector('input[name="rentKangoos"]:checked').value;
             event.preventDefault();
             if(rentKangoos==true){
                 $.ajax({
@@ -110,10 +110,10 @@
 
         function showPayModal(sesionClienteId = null) {
             data.currency = '{{\Illuminate\Support\Facades\Session::get('currency_id') ? \Illuminate\Support\Facades\Session::get('currency_id') : 'COP'}}';
-            data.amount = {{$sesionEvento->precio}}
-                data.extra1 = {{$sesionEvento->id }}
-                data.extra2 = {{ \Illuminate\Support\Facades\Auth::id() }}
-                data.extra3 = sesionClienteId;
+            data.amount = rentKangoos==true ? {{$sesionEvento->precio}} : {{$sesionEvento->precio - $sesionEvento->descuento}}
+            data.extra1 = {{$sesionEvento->id }}
+            data.extra2 = {{ \Illuminate\Support\Facades\Auth::id() }}
+            data.extra3 = sesionClienteId;
             data.type_doc_billing = "cc";
             handler.open(data)
         }
