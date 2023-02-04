@@ -1,8 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.auth')
+
+@push('head-content')
+    <link rel="stylesheet" href="{{asset('css/login.css')}}">
+@endpush
 
 @section('content')
-<link rel="stylesheet" href="{{asset('css/login.css')}}">
-
 <div class="container">
     <div class="row justify-content-center loginDiv">
         <div class="col-md-8">

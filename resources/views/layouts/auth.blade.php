@@ -67,6 +67,7 @@
         }
     </script>
 
+    @stack('head-content')
 </head>
 <body>
 <div class="register"></div>
