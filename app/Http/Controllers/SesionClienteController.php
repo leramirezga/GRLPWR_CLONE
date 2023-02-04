@@ -31,9 +31,23 @@ class SesionClienteController extends Controller
         $sesionCliente->save();
     }
 
-    public function assignKangoos(Request $request)
+    public function checkAvailability(Request $request){
+        $sesionEvento = SesionEvento::find($request->get('sesionEventoId'));
+        $scheduled_clients = SesionCliente::where('sesion_evento_id', $sesionEvento->id)->count();
+        if($sesionEvento->cupos <= $scheduled_clients){
+            Session::put('msg_level', 'danger');
+            Session::put('msg', __('general.quotas_not_available'));
+            Session::save();
+            return response()->json(['error' =>  __('general.quotas_not_available')], 404);
+        }
+        if($request->get('rentKangoos')){
+            return $this->assignKangoos($sesionEvento, $request->get('clientId'));
+        }
+        return response()->json(['success'], 200);
+    }
+
+    public function assignKangoos(SesionEvento $sesionEvento, $clientId)
     {
-        $clientId = $request->get('clientId');
         $client = Cliente::find($clientId);
         switch ($client->talla_zapato){
             case 35:
@@ -68,9 +82,12 @@ class SesionClienteController extends Controller
             $resistance = 3;
         } elseif ($weight < 80) {
             $resistance = 4;
+        }else{
+            Session::put('msg_level', 'danger');
+            Session::put('msg', __('general.not_supported_shoe_size'));
+            Session::save();
+            return response()->json(['error' =>  __('general.not_supported_shoe_size')], 404);
         }
-
-        $sesionEvento = SesionEvento::find($request->get('sesionEventoId'));
 
         $kangoos = DB::table('kangoos')->whereNotIn('id', function($q) use($sesionEvento){
             $q->select('kangoos.id')->from('kangoos')
@@ -79,6 +96,7 @@ class SesionClienteController extends Controller
             ->where('sesiones_evento.fecha_fin', '>', $sesionEvento->fecha_inicio)
             ->where('sesiones_evento.fecha_inicio', '<', $sesionEvento->fecha_fin);
         })->where('kangoos.estado', KangooStatesEnum::Available)
+            ->whereIn('talla', $tallaKangoo)
             ->where('kangoos.resistencia', '>=', $resistance)
             ->orderBy('kangoos.resistencia', 'asc')
             ->select('kangoos.id', 'kangoos.resistencia')
@@ -98,6 +116,9 @@ class SesionClienteController extends Controller
                 return response()->json(['success' =>  __('general.reserved_5_minutes'), 'sesionClienteId' => $sesionCliente->id], 200);
             }
         }
+        Session::put('msg_level', 'danger');
+        Session::put('msg', __('general.quotas_not_available'));
+        Session::save();
         return response()->json(['error' =>  __('general.quotas_not_available')], 404);
     }
 

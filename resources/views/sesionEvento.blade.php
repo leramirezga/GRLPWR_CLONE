@@ -63,28 +63,33 @@
     <!--PAYMENT-->
     <script type="text/javascript" src="https://checkout.epayco.co/checkout.js"></script>
     <script>
-        document.getElementById("agendarForm").addEventListener("submit", checkKangooAvailability, true);
+        document.getElementById("agendarForm").addEventListener("submit", checkAvailability, true);
         var rentKangoos = false
-        function checkKangooAvailability(event) {
+        function checkAvailability(event) {
             rentKangoos = document.querySelector('input[name="rentKangoos"]:checked').value;
             event.preventDefault();
-            if(rentKangoos==true){
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    url: "{{ route('checkKangooAvailability') }}",
-                    method: "POST",
-                    data: {clientId:{{\Illuminate\Support\Facades\Auth::id()}},
-                            sesionEventoId: {{$sesionEvento->id}}},
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{ route('checkAvailability') }}",
+                method: "POST",
+                data: {clientId:{{\Illuminate\Support\Facades\Auth::id()}},
+                        sesionEventoId: {{$sesionEvento->id}},
+                        rentKangoos: rentKangoos},
 
-                    success: function (data) {
+                success: function (data) {
+                    if(rentKangoos){
                         showPayModal(data['sesionClienteId']);
-                    },
-                });
-            }else{
-                showPayModal();
-            }
+                    }else{
+                        showPayModal();
+                    }
+                },
+                error: function(data) {
+                    $('html, body').animate({ scrollTop: 0 }, 0);
+                    location.reload();
+                }
+            });
         }
 
         var handler = ePayco.checkout.configure({
