@@ -15,7 +15,6 @@
 
 // Material Bootstrap Wizard Functions
 
-var searchVisible = 0;
 var transparent = true;
 var mobile_device = false;
 

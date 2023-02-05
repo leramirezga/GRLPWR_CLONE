@@ -128,11 +128,13 @@
                                 <div class="tab-pane" id="contact">
                                     <div class="col-12 p-0 col-md-9 m-auto">
                                         <h4 class="info-text"></h4>
+                                        <!--
                                         <div class="col-sm-12">
                                             <div class="input-group">
                                                 <span class="iconos">
                                                     <i class="material-icons">place</i>
                                                 </span>
+
                                                 <div class="form-group label-floating">
                                                     <label class="control-label">Ciudad <small>(requerido)</small></label>
                                                     <select class="form-control" name="ciudad">
@@ -143,6 +145,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        -->
                                         <div class="col-sm-12">
                                             <div class="input-group">
                                                                 <span class="iconos">

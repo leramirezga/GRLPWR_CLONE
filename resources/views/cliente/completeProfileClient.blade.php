@@ -11,7 +11,7 @@
                     <span class="fas fa-weight"></span>
                 </span>
                 <div class="form-group label-floating">
-                    <label class="control-label">Peso inicial <small>(kilogramos)</small></label>
+                    <label class="control-label">Peso aproximado <small>(kilogramos)</small></label>
                     @if(Auth::user()->cliente != null &&  Auth::user()->cliente->peso())
                         <input name="peso" type="number" step="any" class="form-control" required
                                value="{{number_format(Auth::user()->cliente->peso()->peso, 2)}}">
@@ -49,6 +49,7 @@
                     @endif
                 </div>
             </div>
+            <!--
             <div class="input-group">
                 <span class="input-group-addon iconos">
                     <span class="fas fa-weight"></span>
@@ -63,6 +64,7 @@
                     @endif
                 </div>
             </div>
+            -->
             <div class="input-group">
                 <span class="iconos" style="padding: 0/*para que en firefox queden horizontales*/">
                     <i class="fas fa-venus-mars"></i>
@@ -83,6 +85,7 @@
                 </div>
             </div>
         </div>
+        <!--
         <div class="col-sm-8" style="text-align: center">
             <h4>¿Qué tipo de cuerpo tienes?</h4>
             <a style="cursor: help" data-toggle="modal" data-target="#modalExplicacionCuerpo">
@@ -140,9 +143,10 @@
                 </div>
             </div>
         </div>
-    g</div>
+        -->
+    </div>
 
-    <!-- Modal explicación tipo cuerpo-->
+    <!-- Modal explicación tipo cuerpo
     <div class="modal fade" id="modalExplicacionCuerpo" data-backdrop="false" tabindex="-1" role="dialog"
          aria-labelledby="modalExplicacionCuerpoTitle" aria-hidden="true" style="z-index: 1100">
         <div class="modal-dialog modal-lg" role="document">

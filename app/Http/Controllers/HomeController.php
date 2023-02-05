@@ -109,7 +109,7 @@ class HomeController extends Controller
                 'lastname' => 'string|nullable',
                 'dateborn' => 'date|required',
                 'genero' => 'string|required',
-                'ciudad' => 'string|required',
+                //'ciudad' => 'string|required',
                 'numCel' => 'numeric|required',
                 'email' => 'email|required|string',
             ]);
@@ -129,7 +129,7 @@ class HomeController extends Controller
         $user -> telefono = request()->numCel;
         $user -> descripcion = request()->descripcion;
         $user -> genero = request()->genero;
-        $user -> ciudad = request()->ciudad;
+        $user -> ciudad = 'bogota';//request()->ciudad;
 
         $image = $request->file('avatar');
         if($image != null){
@@ -145,9 +145,9 @@ class HomeController extends Controller
 
             Cliente::updateOrCreate(
                 ['usuario_id' => $user->id],
-                ['peso_ideal' => request()->pesoIdeal,
-                 'talla_zapato' => request()->tallaZapato,
-                 'biotipo' => request()->tipoCuerpo]
+                [//'peso_ideal' => request()->pesoIdeal,
+                 'talla_zapato' => request()->tallaZapato]
+                 //'biotipo' => request()->tipoCuerpo]
             );
 
             Peso::updateOrCreate(
