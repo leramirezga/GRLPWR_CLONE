@@ -56,7 +56,7 @@
 @endsection
 
 @section('card1')
-    @include('cliente.estadisticasCliente')
+    <!--include('cliente.estadisticasCliente')-->
 @endsection
 
 
