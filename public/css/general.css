@@ -164,8 +164,8 @@ body{
     border: 1px solid white!important;
 }
 .bg-semi-transparent{
-    background-color: rgba(0,0,0,0.5);
-    color: white;
+    background-color: rgba(256,256,256,0.8);
+    color: cadetblue;
 }
 .bg-grey{
     background-color: rgba(52,58,64,0.6);
