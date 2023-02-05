@@ -52,19 +52,17 @@
                             </div>
                         </div>
 
+                        <!--
                         <div class="form-group row">
-
                             <label for="role" class="d-inline-block col-md-4 col-form-label text-md-right">{{ __('Role') }}</label>
-
                             <div class="col-md-6">
-                                <select class="form-control" id="role" name="role">
-                                    <option value="cliente">Atleta</option>
+                                <select class="foroptionm-control" id="role" name="role">
+                                    < value="cliente">Atleta</option>
                                     <option>Entrenador</option>
                                 </select>
                             </div>
-
                         </div>
-
+                        -->
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">

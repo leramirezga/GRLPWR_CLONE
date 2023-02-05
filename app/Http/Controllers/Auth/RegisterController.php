@@ -65,7 +65,7 @@ class RegisterController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:usuarios',
             'password' => 'required|string|min:6',
-            'role' => 'required|string',
+            //'role' => 'required|string',
         ]);
     }
 
@@ -77,9 +77,10 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        if (strcasecmp($data['role'],'usuario')==0){
+        /*if (strcasecmp($data['role'],'usuario')==0){
             $data['role'] = 'cliente';
-        }
+        }*/
+
         $statement = DB::select("show table status like 'usuarios'");
         $id = $statement[0]->Auto_increment;
         $splitName = explode(' ', $data['name'], 3); // Restricts it to only 2 values, for names like Billy Bob Jones
@@ -95,7 +96,7 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'nivel' => 0,
             'slug' => $id,//por defecto se coloca el id como la URL (slug) inicial
-            'rol' => strtolower($data['role']),
+            'rol' => 'cliente',//strtolower($data['role']),
         ]);
     }
 
