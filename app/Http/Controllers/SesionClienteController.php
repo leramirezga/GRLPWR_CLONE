@@ -117,9 +117,9 @@ class SesionClienteController extends Controller
             }
         }
         Session::put('msg_level', 'danger');
-        Session::put('msg', __('general.quotas_not_available'));
+        Session::put('msg', __('general.not_available_kangoos'));
         Session::save();
-        return response()->json(['error' =>  __('general.quotas_not_available')], 404);
+        return response()->json(['error' =>  __('general.not_available_kangoos')], 404);
     }
 
     public function cancelTraining(){
