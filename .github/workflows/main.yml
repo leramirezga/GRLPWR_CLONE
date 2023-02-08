@@ -23,19 +23,6 @@ jobs:
         # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
         uses: actions/checkout@v2
 
-      - name: Sync files
-        uses: SamKirkland/FTP-Deploy-Action@4.1.0
-        with:
-          server: ftp.exaltaclub.com
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: /exalta/
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/node_modules/**
-            **/public/**
-
       - name: Sync public files
         uses: SamKirkland/FTP-Deploy-Action@4.1.0
         with:
@@ -44,7 +31,4 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: /public_html/
           exclude: |
-            **
-            !**/public/**
-          include: |
-            **/public/
+          - "!**/public"
