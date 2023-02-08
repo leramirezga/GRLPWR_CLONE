@@ -63,7 +63,7 @@
     <nav id="top-navbar" class="navbar navbar-expand-md navbar-dark fixed-top">
         <a class="navbar-brand" href="#" style="width: 60px; padding: 0">
             <!--<img src="{{asset('images/logo-navbar.png')}}" width="100%" height="100%">-->
-            <h3 class="d-inline-block brand-name"><span>Gravity</span>Force</h3>
+            <h3 class="d-inline-block brand-name"><span>Kangoo</span>Flow</h3>
         </a>
         <div class="top-right links">
             <a href="{{ route('blogs') }}">Blogs</a>
@@ -80,7 +80,7 @@
     <div id="welcome" class="flex-center position-ref full-height">
         <div class="content">
             <div class="title mb-3">
-                Gravity Force
+                Kangoo Flow
             </div>
             <h4 class="mb-5">Ven a <strong>Saltar</strong> hasta el cielo, con el deporte <strong>Más Divertido.</strong></h4>
             <a class="btn btn-success" style="font-size: 20px; padding: 7px 35px;" href="{{ route('register') }}">
@@ -250,7 +250,7 @@
 
         <div class="footer-left">
 
-            <h3><span>In</span>Training</h3>
+            <h3><span>Kangoo</span>Flow</h3>
 
             <!--<p class="footer-links">
                 <a href="#quienesSomos">Quienes somos</a>
@@ -264,7 +264,7 @@
                 <a href="#equipo">Equipo de trabajo</a>
             </p>-->
 
-            <p class="footer-company-name mt-4">Desarrollado por: Innovative Industries &copy; 2018</p>
+            <p class="footer-company-name mt-4">Desarrollado por: Educlick &copy; 2018</p>
             <p class="footer-company-name">322 243 42 96</p>
         </div>
 
@@ -282,7 +282,7 @@
 
             <div>
                 <i class="fa fa-envelope"></i>
-                <p><a href="mailto:soporte@intraning.com.co">soporte@intraning.com.co</a></p>
+                <p><a href="mailto:soporte@exaltaclub.com">soporte@exaltaclub.com</a></p>
             </div>
 
         </div>
@@ -296,7 +296,7 @@
             <div class="footer-icons">
 
                 <!--<a href="#"><i class="fab fa-facebook"></i></a>-->
-                <a href="https://www.instagram.com/intraining_colombia/"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.instagram.com/exaltaclub/"><i class="fab fa-instagram"></i></a>
 
             </div>
 

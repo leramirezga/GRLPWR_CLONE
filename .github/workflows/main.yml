@@ -39,3 +39,4 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: /public_html/
           local-dir: public/
+          exclude: index.php

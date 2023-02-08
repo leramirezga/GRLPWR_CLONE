@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="utf-8">
-    <title>@yield('title') - InTraining</title>
+    <title>@yield('title') - Kangoo Flow</title>
     <base href="/">
 
     <!-- bootstrap 4.1.0 -->
@@ -83,7 +83,7 @@
     <div id="app">
         <div id="top-navbar" class="navbar navbar-dark fixed-top">
             <a class="navbar-brand d-none d-md-inline-block" href="@auth{{route('home', ['user'=> Auth::user()->slug])}}@else # @endauth">
-                <span class="d-inline-block brand-name"><span>In</span>Training</span>
+                <span class="d-inline-block brand-name"><span>Kangoo</span>Flow</span>
             </a>
             <!--
             <form id="buscarEntrenadores-form" action="{{ route('buscarEntrenadores') }}" method="GET">
