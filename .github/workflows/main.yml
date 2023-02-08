@@ -30,3 +30,15 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: /exalta/
+          exclude: |
+            **/public
+
+      - name: Sync public files
+        uses: SamKirkland/FTP-Deploy-Action@4.1.0
+        with:
+          server: ftp.exaltaclub.com
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: /public_html/
+          include: |
+            **/public
