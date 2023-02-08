@@ -63,31 +63,39 @@
     <!--PAYMENT-->
     <script type="text/javascript" src="https://checkout.epayco.co/checkout.js"></script>
     <script>
-        document.getElementById("agendarForm").addEventListener("submit", checkAvailability, true);
+        document.getElementById("agendarForm").addEventListener("submit", scheduleEvent, true);
         var rentKangoos = false
-        function checkAvailability(event) {
+        function scheduleEvent(event) {
             rentKangoos = document.querySelector('input[name="rentKangoos"]:checked').value;
             event.preventDefault();
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: "{{ route('checkAvailability') }}",
+                url: "{{ route('scheduleEvent') }}",
                 method: "POST",
                 data: {clientId:{{\Illuminate\Support\Facades\Auth::id()}},
                         sesionEventoId: {{$sesionEvento->id}},
                         rentKangoos: rentKangoos},
 
                 success: function (data) {
-                    if(rentKangoos){
-                        showPayModal(data['sesionClienteId']);
-                    }else{
-                        showPayModal();
+                    switch (data['status']){
+                        case 'success':
+                            $('html, body').animate({ scrollTop: 0 }, 0);
+                            location.reload();
+                            break;
+                        case 'reserved':
+                            showPayModal(data['sesionClienteId']);
+                            break;
+                        case 'goToPay':
+                            showPayModal();
+                            break;
                     }
                 },
                 error: function(data) {
-                    $('html, body').animate({ scrollTop: 0 }, 0);
-                    location.reload();
+                    console.log(data);
+                    //$('html, body').animate({ scrollTop: 0 }, 0);
+                    //location.reload();
                 }
             });
         }

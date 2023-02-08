@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\Cliente;
+use App\Model\ClientPlan;
 use App\Model\Review;
 use App\Model\ReviewSession;
 use App\Model\SesionCliente;
@@ -13,6 +14,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
 use Validator;
 
@@ -31,7 +33,7 @@ class SesionClienteController extends Controller
         $sesionCliente->save();
     }
 
-    public function checkAvailability(Request $request){
+    public function scheduleEvent(Request $request){
         $sesionEvento = SesionEvento::find($request->get('sesionEventoId'));
         $scheduled_clients = SesionCliente::where('sesion_evento_id', $sesionEvento->id)->count();
         if($sesionEvento->cupos <= $scheduled_clients){
@@ -40,10 +42,11 @@ class SesionClienteController extends Controller
             Session::save();
             return response()->json(['error' =>  __('general.quotas_not_available')], 404);
         }
+        $clientId = $request->get('clientId');
         if($request->get('rentKangoos')){
-            return $this->assignKangoos($sesionEvento, $request->get('clientId'));
+            $sesionCliente = $this->assignKangoos($sesionEvento, $clientId);
         }
-        return response()->json(['success'], 200);
+        return $this->validatePlan($clientId, $sesionCliente ?? null, $sesionEvento->id);
     }
 
     public function assignKangoos(SesionEvento $sesionEvento, $clientId)
@@ -107,19 +110,47 @@ class SesionClienteController extends Controller
                 return $kangoos->random(1)[0]->id;
             }));
             if(is_numeric($kangooId)){
-                $sesionCliente = SesionCliente::create([
-                    'cliente_id' => $clientId,
-                    'kangoo_id' => $kangooId,
-                    'sesion_evento_id' => $sesionEvento->id,
-                    'reservado_hasta' => Carbon::now()->addMinutes(5)
-                ]);
-                return response()->json(['success' =>  __('general.reserved_5_minutes'), 'sesionClienteId' => $sesionCliente->id], 200);
+                $sesionCliente = new SesionCliente;
+                $sesionCliente->cliente_id = $clientId;
+                $sesionCliente->sesion_evento_id = $sesionEvento->id;
+                $sesionCliente->kangoo_id = $kangooId;
+                return $sesionCliente;
             }
         }
         Session::put('msg_level', 'danger');
         Session::put('msg', __('general.not_available_kangoos'));
         Session::save();
         return response()->json(['error' =>  __('general.not_available_kangoos')], 404);
+    }
+
+    public function validatePlan($clientId, $sesionCliente = null, $sesionEventoId = null)
+    {
+        $clientPlan = ClientPlan::where('client_id', $clientId)
+                    ->where('expiration_date', '>', now())
+                    ->where('remaining_classes', '>', 0)
+                    ->first();
+        if($clientPlan){
+            $clientPlan->remaining_classes = $clientPlan->remaining_classes-1;
+            $clientPlan->save();
+            if(!isset($sesionCliente)){
+                $sesionCliente = new SesionCliente;
+                $sesionCliente->cliente_id = $clientId;
+                $sesionCliente->sesion_evento_id = $sesionEventoId;
+            }
+            $sesionCliente->save();
+            Session::put('msg_level', 'success');
+            Session::put('msg', __('general.success_purchase'));
+            Session::save();
+            return response()->json(['status' =>  'success'], 201);
+        }else if(isset($sesionCliente)){
+            $sesionCliente->reservado_hasta = Carbon::now()->addMinutes(5);
+            $sesionCliente->save();
+            Session::put('msg_level', 'success');
+            Session::put('msg', __('general.reserved_5_minutes'));
+            Session::save();
+            return response()->json(['status' =>  'reserved', 'sesionClienteId' => $sesionCliente->id], 200);
+        }
+        return response()->json(['status' =>  'goToPay'], 200);
     }
 
     public function cancelTraining(){

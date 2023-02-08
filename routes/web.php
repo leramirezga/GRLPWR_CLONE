@@ -68,9 +68,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/response_payment',[PagosController::class, 'responsePayment']);
     Route::get('/response_payment', [PagosController::class, 'responsePayment']);
 
-    Route::post('/checkAvailability',[SesionClienteController::class, 'checkAvailability'])->name('checkAvailability');
+    Route::post('/scheduleEvent',[SesionClienteController::class, 'scheduleEvent'])->name('scheduleEvent');
     Route::post('/dar_review_entrenamiento/', [SesionClienteController::class, 'darReview'])->name('darReviewEntrenamiento');
     Route::delete('/cancelar_entrenamiento', [SesionClienteController::class, 'cancelTraining'])->name('cancelarEntrenamiento');
+    Route::get('/plans', [PagosController::class, 'responsePayment'])->name('plans');
 
 });
 /*Route::resources([

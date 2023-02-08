@@ -92,6 +92,7 @@
             <div id="right-div" class="ml-md-auto m-3">
                 @yield('card1')
                 @yield('card2')
+                @stack('cards')
 
                 <div class="mb-5">
                     <h1 class="text-center">

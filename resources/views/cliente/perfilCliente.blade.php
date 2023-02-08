@@ -70,6 +70,10 @@
     @endif
 @endsection
 
+@push('cards')
+    @include('cliente/clientPlan')
+@endpush
+
 @push('scripts')
     <!--Pop-up Review Session-->
     <script type="text/javascript">

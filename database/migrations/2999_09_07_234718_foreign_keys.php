@@ -114,6 +114,11 @@ class ForeignKeys extends Migration
             $table->foreign('parte_id')->references('id')->on('partes');
             $table->foreign('kangoo_id')->references('id')->on('kangoos');
         });
+
+        Schema::table('client_plan', function (Blueprint $table) {
+            $table->foreign('client_id')->references('usuario_id')->on('clientes');
+            $table->foreign('plan_id')->references('id')->on('plans');
+        });
     }
 
     /**
@@ -260,6 +265,11 @@ class ForeignKeys extends Migration
         Schema::table('transacciones_pendientes', function (Blueprint $table) {
             $table->dropForeign(['id_transaccion']);
             $table->dropColumn('id_transaccion');
+        });
+
+        Schema::table('client_plan', function (Blueprint $table) {
+            $table->dropForeign(['client_id']);
+            $table->dropColumn('plan_id');
         });
     }
 }

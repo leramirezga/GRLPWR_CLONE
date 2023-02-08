@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Auth\SeguridadController;
 use App\Model\Cliente;
+use App\Model\ClientPlan;
 use App\Model\Entrenador;
 use App\Model\Estatura;
 use App\Model\Ofrecimientos;
@@ -46,6 +47,11 @@ class HomeController extends Controller
                                         ->entrenamientosAgendados($user->rol)
                                         ->get();
 
+            $clientPlan = ClientPlan::where('client_id', $user->id)
+                ->where('expiration_date', '>', now())
+                ->where('remaining_classes', '>', 0)
+                ->first();
+
             $lastSessionWithoutReview =DB::table('sesiones_cliente')
                             ->join('sesiones_evento', 'sesiones_cliente.sesion_evento_id', 'sesiones_evento.id')
                             ->leftJoin('reviews_session', 'reviews_session.session_id', '=', 'sesiones_cliente.id')
@@ -57,7 +63,7 @@ class HomeController extends Controller
 
             $reviewFor = $lastSessionWithoutReview?->id;
 
-            return view('cliente.perfilCliente', compact('user', 'entrenamientosAgendados', 'visitante', 'reviewFor'));
+            return view('cliente.perfilCliente', compact('user', 'entrenamientosAgendados', 'visitante', 'reviewFor', 'clientPlan'));
         }
         if(strcasecmp ($user->rol, Constantes::ROL_ENTRENADOR) == 0){
             $ofrecimientos = Ofrecimientos::where('usuario_id', $user->id)->get();
