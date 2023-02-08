@@ -31,7 +31,10 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: /exalta/
           exclude: |
-            **/public
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/public/**
 
       - name: Sync public files
         uses: SamKirkland/FTP-Deploy-Action@4.1.0
@@ -42,5 +45,6 @@ jobs:
           server-dir: /public_html/
           exclude: |
             **
+            !**/public/**
           include: |
-            **/public
+            **/public/
