@@ -12,6 +12,7 @@
 */
 
 use App\Http\Controllers\PagosController;
+use App\Http\Controllers\PlanController;
 use App\Http\Controllers\SesionClienteController;
 use App\Http\Controllers\SesionEventoController;
 use \Illuminate\Support\Facades\Auth;
@@ -71,7 +72,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/scheduleEvent',[SesionClienteController::class, 'scheduleEvent'])->name('scheduleEvent');
     Route::post('/dar_review_entrenamiento/', [SesionClienteController::class, 'darReview'])->name('darReviewEntrenamiento');
     Route::delete('/cancelar_entrenamiento', [SesionClienteController::class, 'cancelTraining'])->name('cancelarEntrenamiento');
-    Route::get('/plans', [PagosController::class, 'responsePayment'])->name('plans');
+    Route::get('/plans/{plan}', [PlanController::class, 'show'])->name('plans');
 
 });
 /*Route::resources([

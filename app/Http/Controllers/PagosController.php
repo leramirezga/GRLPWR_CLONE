@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\SesionCliente;
 use App\Model\TransaccionesPagos;
 use App\Model\TransaccionesPendientes;
+use App\Utils\PayTypesEnum;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -41,37 +42,24 @@ class PagosController extends Controller
 
         //Validamos la firma
         if ($x_signature == $signature) {
+            $payment_id = $this->guardarRespuestaTx($data);
             /*Si la firma esta bien podemos verificar el estado de la transacción*/
             $x_cod_response = $data->x_cod_response;
-            switch ((int)$x_cod_response) {
-                case 1:
-                    # code transacción aceptada
-                    (new SesionClienteController())->save(sesionEventoId: $data->x_extra1, clienteId: $data->x_extra2, sesionClienteId: $data->x_extra3);
-                    Session::put('msg_level', 'success');
-                    Session::put('msg', __('general.success_purchase'));
-                    Session::save();
+            switch ((string) $data->x_extra1) {
+                case PayTypesEnum::Plan->value:
+                    $this->processPlanPayment($x_cod_response,$data->x_extra3, $data->x_extra2, $payment_id);
                     break;
-                case 2:# code transacción rechazada //EN ESTOS CASOS NO SE DEBE HACER NADA
-                case 4:# code transacción fallida
-                    Session::put('msg_level', 'danger');
-                    Session::put('msg', __('general.failed_purchase'));
-                    Session::save();
-                    if($data->x_extra3 != "null") {//La sesion fue creada con reserva de kangoo, así que se debe eliminar
-                        $sesionCLiente = SesionCliente::find($data->x_extra3);
-                        $sesionCLiente->delete();
-                    }
+                case PayTypesEnum::Session->value:
+                    $this->processSessionPayment($x_cod_response,$data->x_extra3, $data->x_extra2);
                     break;
-                case 3:# code transacción pendiente //ESTO SE MANEJA EN EL GUARDAR TRANSACCIÓN
-                    Session::put('msg_level', 'info');
-                    Session::put('msg', __('general.pending_purchase'));
-                    Session::save();
-                    break;
+                default:
+                    die("Tipo de pago desconocido");
             }
         } else {
             die("Firma no valida");
         };
 
-        $this->guardarRespuestaTx($data);
+
 
         return response()->json([
             'success' => true,
@@ -79,21 +67,71 @@ class PagosController extends Controller
         ], 200);
     }
 
-    private function guardarRespuestaTx($data){
+    private function processPlanPayment($x_cod_response, $planId, $clientId, $payment_id ){
+        switch ((int)$x_cod_response) {
+            case 1:
+                # code transacción aceptada
+                (new ClientPlanController())->save($clientId, $planId, $payment_id);
+                Session::put('msg_level', 'success');
+                Session::put('msg', __('general.success_purchase'));
+                Session::save();
+                break;
+            case 2:# code transacción rechazada
+            case 4:# code transacción fallida
+                Session::put('msg_level', 'danger');
+                Session::put('msg', __('general.failed_purchase'));
+                Session::save();
+                break;
+            case 3:# code transacción pendiente //ESTO SE MANEJA EN EL GUARDAR TRANSACCIÓN
+                Session::put('msg_level', 'info');
+                Session::put('msg', __('general.pending_purchase'));
+                Session::save();
+                break;
+        }
+    }
+    private function processSessionPayment($x_cod_response, $eventId, $clientId, $sessionClientId ){
+        switch ((int)$x_cod_response) {
+            case 1:
+                # code transacción aceptada
+                (new SesionClienteController())->save(sesionEventoId: $eventId, clienteId: $clientId, sesionClienteId: $sessionClientId);
+                Session::put('msg_level', 'success');
+                Session::put('msg', __('general.success_purchase'));
+                Session::save();
+                break;
+            case 2:# code transacción rechazada
+            case 4:# code transacción fallida
+                Session::put('msg_level', 'danger');
+                Session::put('msg', __('general.failed_purchase'));
+                Session::save();
+                if($sessionClientId != "null") {//La sesion fue creada con reserva de kangoo, así que se debe eliminar
+                    $sesionCLiente = SesionCliente::find($sessionClientId);
+                    $sesionCLiente->delete();
+                }
+                break;
+            case 3:# code transacción pendiente //ESTO SE MANEJA EN EL GUARDAR TRANSACCIÓN
+                Session::put('msg_level', 'info');
+                Session::put('msg', __('general.pending_purchase'));
+                Session::save();
+                break;
+        }
+    }
+    private function guardarRespuestaTx($data): int
+    {
         $id = TransaccionesPagos::create([
             'ref_payco' => $data->x_ref_payco,
+            'payment_method_id' => 1,
             'codigo_respuesta' => $data->x_cod_response,
             'respuesta' => $data->x_response_reason_text,
             'data' => json_encode($data),
-            'sesion_evento_id' => $data->x_extra1,
-            'cliente_id' => $data->x_extra2,
+            'user_id' => $data->x_extra2,
         ])->id;
-        // Cuando esta pendiente
+        // Cuando está pendiente
         if ($data->x_cod_response == 3){
             TransaccionesPendientes::create([
                 'id_transaccion' => $id,
                 'verificada' => false,
             ]);
         }
+        return $id;
     }
 }

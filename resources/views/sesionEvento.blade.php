@@ -18,9 +18,9 @@
                 </h1>
                 <div class="h-75 w-75 m-auto">
                     <img src="{{asset($sesionEvento->evento->imagen)}}" class="h-100 w-100 d-none d-lg-block "
-                         alt="Eventos Atraparte">
+                         alt="Eventos Exalta">
                     <img src="{{asset($sesionEvento->evento->imagen)}}" class="h-100 w-100 d-block d-lg-none"
-                         alt="Eventos Atraparte">
+                         alt="Eventos Exalta">
                 </div>
             </div>
             <div class="d-flex flex-wrap">
@@ -124,9 +124,10 @@
         function showPayModal(sesionClienteId = null) {
             data.currency = '{{\Illuminate\Support\Facades\Session::get('currency_id') ? \Illuminate\Support\Facades\Session::get('currency_id') : 'COP'}}';
             data.amount = rentKangoos==true ? {{$sesionEvento->precio}} : {{$sesionEvento->precio - $sesionEvento->descuento}}
-            data.extra1 = {{$sesionEvento->id }}
+            data.extra1 = {{ \App\Utils\PayTypesEnum::Session }}
             data.extra2 = {{ \Illuminate\Support\Facades\Auth::id() }}
-            data.extra3 = sesionClienteId;
+            data.extra3 = {{$sesionEvento->id }}
+            data.extra4 = sesionClienteId;
             data.type_doc_billing = "cc";
             handler.open(data)
         }

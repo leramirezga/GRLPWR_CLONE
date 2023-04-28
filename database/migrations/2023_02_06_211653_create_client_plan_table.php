@@ -14,11 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('client_plan', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->unsignedInteger('client_id');//foreign. Is necessary the unsigned to match with the other table
-            $table->unsignedBigInteger('plan_id');//foreign. Is necessary the unsigned to match with the other table
+            $table->unsignedInteger('plan_id');//foreign. Is necessary the unsigned to match with the other table
             $table->unsignedInteger('remaining_classes');
             $table->dateTime('expiration_date');
+            $table->unsignedInteger('payment_id');//foreign. Is necessary the unsigned to match with the other table
             $table->timestamps();
         });
     }

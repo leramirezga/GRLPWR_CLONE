@@ -80,8 +80,8 @@ class ForeignKeys extends Migration
         });
 
         Schema::table('transacciones_pagos', function (Blueprint $table) {
-            $table->foreign('cliente_id')->references('usuario_id')->on('clientes');
-            $table->foreign('sesion_evento_id')->references('id')->on('sesiones_evento');
+            $table->foreign('user_id')->references('id')->on('usuarios');
+            $table->foreign('payment_method_id')->references('id')->on('payment_methods');
         });
         Schema::table('transacciones_pendientes', function (Blueprint $table) {
             $table->foreign('id_transaccion')->references('id')->on('transacciones_pagos');
@@ -116,9 +116,11 @@ class ForeignKeys extends Migration
         });
 
         Schema::table('client_plan', function (Blueprint $table) {
-            $table->foreign('client_id')->references('usuario_id')->on('clientes');
+            $table->foreign('client_id')->references('id')->on('usuarios');
             $table->foreign('plan_id')->references('id')->on('plans');
+            $table->foreign('payment_id')->references('id')->on('transacciones_pagos');
         });
+
     }
 
     /**
@@ -258,8 +260,8 @@ class ForeignKeys extends Migration
         Schema::table('transacciones_pagos', function (Blueprint $table) {
             $table->dropForeign(['cliente_id']);
             $table->dropColumn('cliente_id');
-            $table->dropForeign(['sesion_evento_id']);
-            $table->dropColumn('sesion_evento_id');
+            $table->dropForeign(['payment_method_id']);
+            $table->dropColumn('payment_method_id');
         });
 
         Schema::table('transacciones_pendientes', function (Blueprint $table) {
@@ -270,6 +272,8 @@ class ForeignKeys extends Migration
         Schema::table('client_plan', function (Blueprint $table) {
             $table->dropForeign(['client_id']);
             $table->dropColumn('plan_id');
+            $table->dropForeign(['payment_id']);
+            $table->dropColumn('payment_id');
         });
     }
 }
