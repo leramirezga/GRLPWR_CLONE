@@ -42,8 +42,7 @@
                         <div class="tab-pane fade" id="additional-info" role="tabpanel"
                              aria-labelledby="additional-info-tab">{{$sesionEvento->evento->info_adicional}}</div>
                     </div>
-                    <button type="button" class="btn bg-fifth ms-3" data-toggle="modal"
-                            data-target="#scheduleModal">Agendar</button>
+                    <button type="button" class="btn bg-fifth ms-3" onclick="checkPlan()">Agendar</button>
                 </div>
             </div>
             @include('scheduleModal')
@@ -63,11 +62,26 @@
     <!--PAYMENT-->
     <script type="text/javascript" src="https://checkout.epayco.co/checkout.js"></script>
     <script>
-        document.getElementById("agendarForm").addEventListener("submit", scheduleEvent, true);
+        function checkPlan(){
+            if({{isset($plan) ? 1 : 0}}){
+                scheduleEvent({{(isset($plan) && \App\Utils\PlanTypesEnum::Kangoo_rent->value - $plan->plan->plan_type) == 0 ? 1 : 0}});
+            }
+            else{
+                var scheduleModal = new bootstrap.Modal(document.getElementById('scheduleModal'));
+                scheduleModal.show();
+            }
+        }
+    </script>
+    <script>
+        document.getElementById("agendarForm").addEventListener("submit", submitListener, true);
         var rentKangoos = false
-        function scheduleEvent(event) {
+        function submitListener(event) {
             rentKangoos = document.querySelector('input[name="rentKangoos"]:checked').value;
             event.preventDefault();
+            scheduleEvent(rentKangoos);
+        }
+
+        function scheduleEvent(rentKangoos){
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -75,8 +89,8 @@
                 url: "{{ route('scheduleEvent') }}",
                 method: "POST",
                 data: {clientId:{{\Illuminate\Support\Facades\Auth::id()}},
-                        sesionEventoId: {{$sesionEvento->id}},
-                        rentKangoos: rentKangoos},
+                    sesionEventoId: {{$sesionEvento->id}},
+                    rentKangoos: rentKangoos},
 
                 success: function (data) {
                     switch (data['status']){
@@ -93,13 +107,12 @@
                     }
                 },
                 error: function(data) {
-                    console.log(data);
-                    //$('html, body').animate({ scrollTop: 0 }, 0);
-                    //location.reload();
+                    //console.log(data); if you want to debug yo need to uncomment this line and comment reload
+                    $('html, body').animate({ scrollTop: 0 }, 0);
+                    location.reload();
                 }
             });
         }
-
         var handler = ePayco.checkout.configure({
             key: "{{env('EPAYCO_PUBLIC_KEY')}}",
             test: Boolean({{env('EPAYCO_TEST')}})
@@ -124,7 +137,7 @@
         function showPayModal(sesionClienteId = null) {
             data.currency = '{{\Illuminate\Support\Facades\Session::get('currency_id') ? \Illuminate\Support\Facades\Session::get('currency_id') : 'COP'}}';
             data.amount = rentKangoos==true ? {{$sesionEvento->precio}} : {{$sesionEvento->precio - $sesionEvento->descuento}}
-            data.extra1 = {{ \App\Utils\PayTypesEnum::Session }}
+            data.extra1 = '{{ \App\Utils\PayTypesEnum::Session }}'
             data.extra2 = {{ \Illuminate\Support\Facades\Auth::id() }}
             data.extra3 = {{$sesionEvento->id }}
             data.extra4 = sesionClienteId;

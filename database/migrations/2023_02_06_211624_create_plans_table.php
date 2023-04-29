@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedInteger('number_of_classes');
             $table->unsignedInteger('duration_days');//how many days the user has to use the plan
             $table->unsignedFloat('price', 9, 2);
+            $table->unsignedInteger('plan_type');//1 kangoo -> sin kangoos; 2 kangoo -> con kangoos; 3 Baile; 4 Gym
             $table->string('description')->nullable();
             $table->dateTime('expiration_date')->nullable();
             $table->unsignedInteger('available_plans')->nullable();

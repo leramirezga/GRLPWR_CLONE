@@ -11,6 +11,7 @@ use App\Model\SesionEvento;
 use App\Utils\KangooResistancesEnum;
 use App\Utils\KangooStatesEnum;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -43,10 +44,13 @@ class SesionClienteController extends Controller
             return response()->json(['error' =>  __('general.quotas_not_available')], 404);
         }
         $clientId = $request->get('clientId');
-        if($request->get('rentKangoos')){
-            $sesionCliente = $this->assignKangoos($sesionEvento, $clientId);
+        if(filter_var($request->get('rentKangoos'), FILTER_VALIDATE_BOOLEAN)){
+            $assignResponse = $this->assignKangoos($sesionEvento, $clientId);
+            if($assignResponse instanceof JsonResponse){
+                return $assignResponse;
+            }
         }
-        return $this->validatePlan($clientId, $sesionCliente ?? null, $sesionEvento->id);
+        return $this->validatePlan($clientId, $assignResponse ?? null, $sesionEvento->id);
     }
 
     public function assignKangoos(SesionEvento $sesionEvento, $clientId)
@@ -55,19 +59,22 @@ class SesionClienteController extends Controller
         switch ($client->talla_zapato){
             case 35:
             case 36:
+            case 37:
                 $tallaKangoo = ["S"];
                 break;
-            case 37:
+            case 38:
                 $tallaKangoo = ["S", "M"];
                 break;
-            case 38:
+            case 39:
                 $tallaKangoo = ["M"];
                 break;
-            case 39:
+            case 40:
                 $tallaKangoo = ["M", "L"];
                 break;
-            case 40:
             case 41:
+            case 42:
+            case 43:
+            case 44:
                 $tallaKangoo = ["L"];
                 break;
             default:
