@@ -33,7 +33,7 @@ return [
     'Phone' => 'Celular',
     'required' => 'requerido',
     'Continue' => 'Continuar',
-    'transaction_name' => @lang('general.AppName') + ' Shopping',
+    'transaction_name' => 'FitFlyr Shopping',
     'added_to_cart' => '¡Añadido al carrito correctamente!',
     'Go_to_Cart' => 'Ir al carrito',
     'Products_in_cart' => 'Productos en el carrito',
