@@ -5,9 +5,9 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-        <title>In Training</title>
+        <title>@lang('general.AppName')</title>
         <meta name="description" content="Recibe Ofertas de Entrenadores Personales, Compara y Elige al Entrenador Correcto por el Precio que Quieres"/>
-        <link rel="canonical" href="https://www.intraining.com.co/"/>
+        <link rel="canonical" href="{{env('APP_URL')}}/"/>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,900|K2D" rel="stylesheet" type="text/css">
@@ -63,7 +63,7 @@
     <nav id="top-navbar" class="navbar navbar-expand-md navbar-dark fixed-top">
         <a class="navbar-brand" href="#" style="width: 60px; padding: 0">
             <!--<img src="{{asset('images/logo-navbar.png')}}" width="100%" height="100%">-->
-            <h3 class="d-inline-block brand-name"><span>Kangoo</span>Flow</h3>
+            <h3 class="d-inline-block brand-name"><span>Fit</span>Flyr</h3>
         </a>
         <div class="top-right links">
             <a href="{{ route('blogs') }}">Blogs</a>
@@ -80,7 +80,7 @@
     <div id="welcome" class="flex-center position-ref full-height">
         <div class="content">
             <div class="title mb-3">
-                Kangoo Flow
+                @lang('general.AppName')
             </div>
             <h4 class="mb-5">Ven a <strong>Saltar</strong> hasta el cielo, con el deporte <strong>Más Divertido.</strong></h4>
             <a class="btn btn-success" style="font-size: 20px; padding: 7px 35px;" href="{{ route('register') }}">
@@ -232,7 +232,7 @@
         <h1 class="mt-5">¿Qué Esperas?</h1>
         <div class="h-50 d-flex">
             <div class="m-auto">
-                <h3>¡Cumple tu meta <strong>Fitness</strong> con In Training!</h3>
+                <h3>¡Cumple tu meta <strong>Fitness</strong> con @lang('general.AppName')!</h3>
                 <a class="btn btn-success mt-5" style="font-size: 20px; padding: 7px 35px;" href="{{ route('register') }}">
                     Quiero Ser Fitness
                 </a>
@@ -250,7 +250,7 @@
 
         <div class="footer-left">
 
-            <h3><span>Kangoo</span>Flow</h3>
+            <h3><span>Fit</span>Flyr</h3>
 
             <!--<p class="footer-links">
                 <a href="#quienesSomos">Quienes somos</a>
@@ -282,7 +282,7 @@
 
             <div>
                 <i class="fa fa-envelope"></i>
-                <p><a href="mailto:soporte@exaltaclub.com">soporte@exaltaclub.com</a></p>
+                <p><a href="mailto:soporte@fitflyr.com">soporte@fitflyr.com</a></p>
             </div>
 
         </div>
@@ -296,7 +296,7 @@
             <div class="footer-icons">
 
                 <!--<a href="#"><i class="fab fa-facebook"></i></a>-->
-                <a href="https://www.instagram.com/exaltaclub/"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.instagram.com/fitflyr/"><i class="fab fa-instagram"></i></a>
 
             </div>
 

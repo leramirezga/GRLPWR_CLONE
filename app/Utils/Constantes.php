@@ -33,7 +33,7 @@ class Constantes {
     const HORARIOS_SOLICITUD_SERVICIO_ESTADO_CANCELADO = 4;
 
     //REVIEW
-    const REVIEW_COMPLETAR_PERFIL = 'Felicitaciones de parte del equipo de Kangoo Flow por haber completado tu perfil.';
+    const REVIEW_COMPLETAR_PERFIL = 'Felicitaciones de parte del equipo de Fit Flyr por haber completado tu perfil.';
     const REVIE_COMPLETAR_PERFIL_CLIENTE = 'Esperamos ayudarte a cumplir tus metas. Disfruta tus entrenamientos y recuerda que para lograr tus objetivos hay que ser constantes. A ENTRENAR!';
     const REVIE_COMPLETAR_PERFIL_ENTRENADOR = 'Bienvenido a esta gran familia. Queremos que ayudes a todos nuestros atletas a cumplir sus metas, siempre siendo un gran profesional. Vamos a buscar atletas!';
 

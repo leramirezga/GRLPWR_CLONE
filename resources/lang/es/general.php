@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'AppName' => 'Kangoo Flow',
+    'AppName' => 'Fit Flyr',
     'of' => 'de',
     'Buy' => 'Comprar',
     'Add_to_cart' => 'Agregar al carrito',
@@ -33,7 +33,7 @@ return [
     'Phone' => 'Celular',
     'required' => 'requerido',
     'Continue' => 'Continuar',
-    'transaction_name' => 'Exalta Shopping',
+    'transaction_name' => @lang('general.AppName') + ' Shopping',
     'added_to_cart' => '¡Añadido al carrito correctamente!',
     'Go_to_Cart' => 'Ir al carrito',
     'Products_in_cart' => 'Productos en el carrito',

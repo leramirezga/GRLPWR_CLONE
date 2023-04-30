@@ -18,9 +18,9 @@
                 </h1>
                 <div class="h-75 w-75 m-auto">
                     <img src="{{asset($sesionEvento->evento->imagen)}}" class="h-100 w-100 d-none d-lg-block "
-                         alt="Eventos Exalta">
+                         alt="Eventos @lang('general.AppName')">
                     <img src="{{asset($sesionEvento->evento->imagen)}}" class="h-100 w-100 d-block d-lg-none"
-                         alt="Eventos Exalta">
+                         alt="Eventos @lang('general.AppName')">
                 </div>
             </div>
             <div class="d-flex flex-wrap">

@@ -6,10 +6,10 @@
 
 @section('head-content')
 
-    <meta property="og:url" content="https://www.intraining.com.co/blog/{{$blog->slug}}"/>
+    <meta property="og:url" content="https://{{@lang('general.AppName')}}/blog/{{$blog->slug}}"/>
     <meta property="og:type" content="article"/>
     <meta property="og:title" content="{{$blog->titulo}}"/>
-    <meta property="og:image" content="https://www.intraining.com.co/images/blogs/{{$blog->portada}}"/>
+    <meta property="og:image" content="{{env('APP_URL')}}/images/blogs/{{$blog->portada}}"/>
     <meta property="og:image:alt" content="{{$blog->portada}}">
     <meta property="fb:app_id" content="364663920399879">
     <!--<meta property="og:description"        content="How much does culture influence creative thinking?" />Esta no se tiene en los blogs-->
@@ -45,7 +45,7 @@
         <div style="width: max-content">
             <hr class="mb-4" style="border: solid 1px rgba(255,255,255,0.5); margin-top: 30vh!important;"/>
             <h2 class="color-white d-inline-block mr-3 mb-0" style="vertical-align: middle">Compartir</h2>
-            <a href="http://www.facebook.com/sharer.php?u=https://intraining.com.co/blog/{{$blog->slug}}"
+            <a href="http://www.facebook.com/sharer.php?u={{env('APP_URL')}}/blog/{{$blog->slug}}"
                target="_blank">
                 <img class="mr-3" src="{{asset('images/facebook.png')}}" width="50">
             </a>

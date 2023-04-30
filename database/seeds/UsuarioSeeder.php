@@ -13,12 +13,12 @@ class UsuarioSeeder extends Seeder
     public function run()
     {
         User::create([
-            'email' => 'soporte@intraining.com.co',
+            'email' => 'soporte@fitflyr.com.co',
             'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
             'rol' => 'administrador',
             'nivel'=>'0',
-            'nombre'=>'InTraining',
-            'apellido_1'=>'InTraining',
+            'nombre'=>'FitFlyr',
+            'apellido_1'=>'FitFlyr',
             'telefono'=>'3222434296',
             'fecha_nacimiento'=>'1993-05-09 00:00:00',
             'slug' => '',
