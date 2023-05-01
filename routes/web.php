@@ -72,7 +72,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/scheduleEvent',[SesionClienteController::class, 'scheduleEvent'])->name('scheduleEvent');
     Route::post('/dar_review_entrenamiento/', [SesionClienteController::class, 'darReview'])->name('darReviewEntrenamiento');
     Route::delete('/cancelar_entrenamiento', [SesionClienteController::class, 'cancelTraining'])->name('cancelarEntrenamiento');
-    Route::get('/plans/{plan}', [PlanController::class, 'show'])->name('plans');
+    Route::get('/planess/{plan}', [PlanController::class, 'show'])->name('plan');
+    Route::get('/planes', [PlanController::class, 'index'])->name('plans');
 
 });
 /*Route::resources([

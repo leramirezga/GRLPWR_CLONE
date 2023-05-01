@@ -13,7 +13,7 @@
     @else
         <div class="text-center">
             <p class="my-3">Aún no tienes planes</p>
-            <a href="{{route('plans', 1)}}" class="my-1">
+            <a href="{{route('plans')}}" class="my-1">
                 <button type="button" class="btn btn-success">Ver planes</button>
             </a>
         </div>
