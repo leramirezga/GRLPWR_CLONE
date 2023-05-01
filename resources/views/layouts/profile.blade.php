@@ -115,7 +115,7 @@
                             </div>
 
                             <div class="user-info d-inline-block">
-                                <h4>{{$review->reviewer->nombre}}</h4>
+                                <h4>{{$review->reviewer->nombre}} {{$review->reviewer->apellido_1}}</h4>
                                 <div class="fullRating-container"
                                      style="min-width: calc(64px*{{$review->rating/5}}); max-width: calc(100px*{{$review->rating/5}}); width: calc(10vw*{{$review->rating/5}});"></div>
                                 <img id="emptyRating" alt="rating" src="{{asset('images/empty_rating.png')}}">

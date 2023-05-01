@@ -146,9 +146,9 @@ class HomeController extends Controller
 
         $user->save();
 
-        $review = Constantes::REVIEW_COMPLETAR_PERFIL;
+        $reviewId = 0;
         if(strcasecmp ($user->rol, Constantes::ROL_CLIENTE ) == 0) {
-
+            $reviewId = 1;
             Cliente::updateOrCreate(
                 ['usuario_id' => $user->id],
                 [//'peso_ideal' => request()->pesoIdeal,
@@ -168,30 +168,27 @@ class HomeController extends Controller
 
             request()->session()->flash('alert-success', Constantes::MENSAJE_ACTUALIZACION_PERFIL_EXITOSA);
 
-            $review = $review . ' ' . Constantes::REVIE_COMPLETAR_PERFIL_CLIENTE;
         }elseif (strcasecmp ($user->rol, Constantes::ROL_ENTRENADOR ) == 0){
+            $reviewId = 2;
             Entrenador::updateOrCreate(
                 ['usuario_id' => $user->id],
                 ['tipo_cuenta' => request()->tipoCuenta, 'banco' => request()->banco, 'numero_cuenta' => request()->numeroCuenta, 'tarifa' => request()->tarifa]
             );
 
             request()->session()->flash('alert-success', 'Tu perfil ahora está actualizado, A BUSCAR ATLETAS!');
-
-            $review = $review . ' ' . Constantes::REVIE_COMPLETAR_PERFIL_ENTRENADOR;
         }
 
+        $reviewUser = ReviewUser::where('review_id', 1)
+            ->where('user_id', $user->id)
+            ->first();
+        if ($reviewUser === null && $reviewId != 0) {
 
-        $review = Review::create(
-            ['reviewer_id' => '1',
-            'review' => $review,
-            'rating' => 5]
-        );
-
-        ReviewUser::create(
-            ['review_id' => $review->id,
-                'user_id' => $user->id,
-            ]
-        );
+            ReviewUser::create(
+                ['review_id' => $reviewId,
+                    'user_id' => $user->id,
+                ]
+            );
+        }
 
         return back();
     }
