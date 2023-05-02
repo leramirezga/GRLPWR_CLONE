@@ -15,7 +15,8 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^4.2",
         "laraveles/spanish": "^1.0",
-        "pusher/pusher-php-server": "^5.0"
+        "pusher/pusher-php-server": "^5.0",
+        "ylsideas/feature-flags": "2.0"
     },
     "require-dev": {
         "filp/whoops": "^2.0",

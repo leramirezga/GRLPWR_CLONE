@@ -28,14 +28,14 @@
     </div>
 </div>
 
-<div class="floating-card bg-semi-transparent p-3 mb-3">
+<div class="{{\Illuminate\Support\Facades\Blade::check('feature', 'dark_theme', false) ? "floating-card bg-semi-transparent" : ""}} p-3 mb-3">
     <div class="mb-5">
         <h3>Entrenamientos agendados:</h3>
     </div>
 
     @if(!$entrenamientosAgendados->isEmpty())
         @foreach($entrenamientosAgendados as $entrenamiento)
-            <div class="solicitud-container  text-center text-md-left d-md-flex floating-card bg-semi-transparent mb-3">
+            <div class="solicitud-container  text-center text-md-left d-md-flex {{\Illuminate\Support\Facades\Blade::check('feature', 'dark_theme', false) ? "floating-card bg-semi-transparent" : "box-shadow"}} mb-3">
                 <div>
                     <h3 class="d-block my-2">{{$entrenamiento->nombre}}</h3>
                     <p class="d-block my-1"><strong>Día:</strong> {{$entrenamiento->fecha_inicio->isoFormat('dddd D MMMM')}}</p>
@@ -51,7 +51,7 @@
             </div>
         @endforeach
     @else
-        <div class="solicitud-container d-md-flex floating-card bg-semi-transparent mb-3">
+        <div class="solicitud-container d-md-flex {{\Illuminate\Support\Facades\Blade::check('feature', 'dark_theme', false) ? "floating-card bg-semi-transparent" : "box-shadow"}} mb-3">
             <p>Aún no tienes entrenamientos agendados</p>
         </div>
     @endif

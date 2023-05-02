@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <div class="d-md-flex justify-content-between w-75 m-auto">
+    <div class="d-md-flex justify-content-between justify-content-md-around w-75 m-auto">
         @foreach($plans as $plan)
            @include('planCard')
         @endforeach

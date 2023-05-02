@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "548c3986e370f324adfff86312f710e4",
+    "content-hash": "44a2d433132190150b4fb01d121c5027",
     "packages": [
         {
             "name": "brick/math",
@@ -5966,6 +5966,83 @@
                 "source": "https://github.com/webmozarts/assert/tree/1.11.0"
             },
             "time": "2022-06-03T18:03:27+00:00"
+        },
+        {
+            "name": "ylsideas/feature-flags",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ylsideas/feature-flags.git",
+                "reference": "c6e9455f94efd59e8c9a64ad26943c4490a4ed86"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ylsideas/feature-flags/zipball/c6e9455f94efd59e8c9a64ad26943c4490a4ed86",
+                "reference": "c6e9455f94efd59e8c9a64ad26943c4490a4ed86",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "9.*",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.2",
+                "nunomaduro/collision": "^6.0|^5.0",
+                "nunomaduro/larastan": "^2.0|^1.0",
+                "orchestra/testbench": "^7.0",
+                "pestphp/pest": "^1.21",
+                "pestphp/pest-plugin-laravel": "^1.1",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan-deprecation-rules": "^1.0",
+                "phpstan/phpstan-phpunit": "^1.0",
+                "phpunit/phpunit": "^9.5.13",
+                "rector/rector": "^0.14.2",
+                "spatie/laravel-ray": "^1.26"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "YlsIdeas\\FeatureFlags\\FeatureFlagsServiceProvider"
+                    ],
+                    "aliases": {
+                        "Features": "YlsIdeas\\FeatureFlags\\Facades\\Features"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "YlsIdeas\\FeatureFlags\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Peter Fox",
+                    "email": "peter.fox@ylsideas.co",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A Laravel package for handling feature flags",
+            "homepage": "https://github.com/ylsideas/feature-flags",
+            "keywords": [
+                "feature-flags",
+                "ylsideas"
+            ],
+            "support": {
+                "issues": "https://github.com/ylsideas/feature-flags/issues",
+                "source": "https://github.com/ylsideas/feature-flags/tree/v2.0.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/peterfox",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-09-18T10:48:32+00:00"
         }
     ],
     "packages-dev": [
@@ -7727,7 +7804,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^8.0"
+        "php": "^8.1"
     },
     "platform-dev": [],
     "plugin-api-version": "2.3.0"

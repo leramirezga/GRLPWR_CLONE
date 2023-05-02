@@ -146,7 +146,9 @@
         </div>
     </div>
 
-    <div class="full"></div><!--para el background de la imagen-->
+    @feature('dark_theme', false)
+        <div class="full"></div><!--para el background de la imagen-->
+    @endfeature
 
     <div class="container-fluid w-100">
         @if(session('msg'))

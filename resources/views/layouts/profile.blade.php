@@ -56,7 +56,7 @@
 
     <div class="container-fluid">
         <div class="d-md-flex">
-            <div class="floating-card bg-semi-transparent perfil-container m-3">
+            <div class="{{\Illuminate\Support\Facades\Blade::check('feature', 'dark_theme', false) ? "floating-card bg-semi-transparent" : "box-shadow"}}  perfil-container m-3">
                 <img src="{{asset('images/avatars/'.$user->foto)}}?{{time()}}" class="user-profile-icon">
                 @if(!$visitante)
 
@@ -105,7 +105,7 @@
                     </div>
                 </div>
                 -->
-                <div class="floating-card bg-semi-transparent p-3 mb-3">
+                <div class="{{\Illuminate\Support\Facades\Blade::check('feature', 'dark_theme', false) ? "floating-card bg-semi-transparent" : "box-shadow"}} p-3 mb-3">
                     <h3 class="mb-5">Reviews ({{$user->reviews->count()}}):</h3>
                     @foreach($user->reviews as $review)
                         <div class="floating-card bg-dark p-3 mb-3">
