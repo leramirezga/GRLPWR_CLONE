@@ -50,7 +50,7 @@ class PagosController extends Controller
                     $this->processPlanPayment($x_cod_response,$data->x_extra3, $data->x_extra2, $payment_id);
                     break;
                 case PayTypesEnum::Session->value:
-                    $this->processSessionPayment($x_cod_response,$data->x_extra3, $data->x_extra2);
+                    $this->processSessionPayment($x_cod_response,$data->x_extra3, $data->x_extra2, $data->x_extra4);
                     break;
                 default:
                     die("Tipo de pago desconocido");
