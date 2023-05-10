@@ -8,16 +8,6 @@
         font-size: 4.125rem;
     }
 }
-@media only screen and (max-width: 600px) {
-    .sub-section-image {
-        width: 90vw;
-    }
-}
-@media only screen and (min-width: 601px) {
-    .sub-section-image {
-        width: 70vw;
-    }
-}
 @media only screen and (max-width: 767px) {
     .section{
         display: block;
@@ -27,7 +17,8 @@
         text-align: center;
     }
     .section > *{
-        margin: 10vh auto;
+        margin-left: auto;
+        margin-right: auto;
     }
     .pay-image{
         height: 50vw;
@@ -41,6 +32,14 @@
     .overflow-text{/*Si el texto es demasiado grande para dispositivos mobiles*/
         font-size: 3rem;
     }
+    #welcome::after {
+        background-size: 180% 100%!important;
+        /*MOVING IMAGE
+        instead of background put this:
+        background-image: url(../images/botas.jpg);
+        background-position: 0px;*/
+        background: url("../images/botas.jpg") no-repeat center center fixed;
+    }
 }
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
@@ -50,10 +49,6 @@
     }
     .sub-section-info{
         width: 45vw;
-    }
-    .sub-section-image{
-        width: 40vw;
-        height: 50vh;
     }
     .section > *{
         margin: auto 0;
@@ -67,10 +62,14 @@
         width: 10vw;
         bottom: 10vw;
     }
-}
-body{
-    font-family: 'K2D', sans-serif;
-    overflow-x: hidden;
+    #welcome::after {
+        /*MOVING IMAGE
+        instead of background put this:
+        background-image: url(../images/botas.jpg);
+        background-position: 214px;*/
+        background: url("../images/botas3.jpg") no-repeat 0px center fixed;
+        background-size: 120% 120%!important;
+    }
 }
 .full-height {
     height: 100vh;
@@ -116,23 +115,24 @@ body{
 .section{
     min-height: 90vh;
     height: fit-content;
-    padding-top: 24px;
+    padding-top: 50px;
+    padding-bottom: 50px;
     position: relative;/*necesario para que las imágenes se ubiquen donde debe ser*/
 }
 body{
-    background-color: currentColor;
+    background: linear-gradient(rgb(13,158,151), rgb(17,28,91));
     overflow-x: hidden;
+    font-family: 'Barlow Regular', sans-serif;
 }
 #welcome{
     color: white!important;
+    min-height: 400px;
 }
 #welcome::after {
     content: "";
-    background: url("../images/welcomeBackground.jpg") no-repeat center center fixed;
-    background-size: 100% 100%;
     opacity: 0.4;
     top: 0;
-    left: 0;
+    left: 0px;
     bottom: 0;
     right: 0;
     position: absolute;/*necesario para que solo se vea en la primera parte*/
@@ -156,19 +156,16 @@ h1{
     position: relative;/*Sin esto no funciona el shadow*/
 }
 #section1{
-    background-color: cornflowerblue;
+    /*background-color: cornflowerblue;*/
     color: white;
 }
 #section2{
-    background-color: white;
     color: black;
 }
 #section3{
-    background-color: cornflowerblue;
     color: white;
 }
 #section4{
-    background-color: white;
     color: black;
 }
 #section5{
@@ -220,5 +217,23 @@ h1{
 }
 .color-white{
     color: white!important;
+}
+.benefits_icon{
+    width: 70px;
+    height: 70px;
+}
+@font-face {
+    font-family: "Barlow Thin";
+    src:  url('../fonts/barlow/Barlow-Thin.ttf') format("truetype");
+}
+@font-face {
+    font-family: "Barlow Regular";
+    src:  url('../fonts/barlow/Barlow-Regular.ttf') format("truetype");
+}
+.svg_white{
+    filter: invert(100%) sepia(0%) saturate(7500%) hue-rotate(270deg) brightness(103%) contrast(102%);
+}
+.boots-image{
+    height: 400px;
 }
 

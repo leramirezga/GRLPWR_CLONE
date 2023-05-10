@@ -82,8 +82,8 @@
 <body>
     <div id="app">
         <div id="top-navbar" class="navbar navbar-dark fixed-top">
-            <a class="navbar-brand d-none d-md-inline-block" href="@auth{{route('home', ['user'=> Auth::user()->slug])}}@else # @endauth">
-                <span class="d-inline-block brand-name"><span>Fit</span>Flyr</span>
+            <a class="navbar-brand position-absolute" style="width: 60px" href="@auth{{route('home', ['user'=> Auth::user()->slug])}}@else # @endauth">
+                <img width="100%" alt="logo" src="{{asset('images/brand/Imago_principal.png')}}">
             </a>
             <!--
             <form id="buscarEntrenadores-form" action="{{ route('buscarEntrenadores') }}" method="GET">
@@ -166,11 +166,13 @@
 
     @stack('scripts')
 
+    <!--Navbar color effect
     <script>
         $(window).on("scroll", function() {
             $("#top-navbar").css("backgroundColor", 'rgba(0, 0, 0, '+$(window).scrollTop());
         });
     </script>
+    -->
 
     <!--activación de los tooltip-->
     <script>

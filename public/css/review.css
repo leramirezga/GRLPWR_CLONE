@@ -1,0 +1,92 @@
+/* Extra small devices (phones, 600px and down) */
+
+.user-info{
+    display: inline-block;
+    margin-left: 1%!important;/*Whit Angular "!important" have to be used*/
+    line-height: 0;/*Para que en firefox queden bien sobrepuestas las estrellas*/
+}
+.user-info>*{
+    display:table-row;/*this prevent space between component*/
+}
+.user-info-horizontal>*{
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 16px!important;/*Whit Angular "!important" have to be used*/
+}
+
+
+@media only screen and (max-width: 600px) {
+    .user-info{
+        width: 50%;
+    }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    .user-info{
+        width: 40%;
+    }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    .user-info{
+        width: 20%;
+    }
+}
+
+.user-icon{
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+/*end checkbox*/
+.floating-card{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 20px!important;
+}
+.rating-container{
+    height: 2.5vw;
+    min-height: 16px;
+    max-height: 25px;
+    width: fit-content;
+}
+.fullRating-container {
+    position: absolute;
+    background-image: url('../images/rating.png');
+    height: 2.5vw;
+    min-height: 16px;
+    max-height: 25px;
+    background-size: cover;/* Make the background image cover the area of the <div>, and clip the excess */
+    z-index: 100;
+}
+#emptyRating{
+    position: absolute;
+    width: 10vw;
+    height: 2.5vw;
+    min-width: 64px;
+    min-height: 16px;
+    max-width: 100px;
+    max-height: 25px;
+}
+.numero-contador-container{
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    border: 5px solid white;
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    text-align: center;
+    padding: 3vh;
+    margin: 0 auto 3vh auto;
+}
+.numero-contador-container>*{
+    margin: 0;
+}
+.contador-container{
+    display: inline-block;
+    text-align: center;
+    width: fit-content;
+}

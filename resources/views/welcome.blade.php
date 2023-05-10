@@ -9,6 +9,7 @@
         <meta name="description" content="Recibe Ofertas de Entrenadores Personales, Compara y Elige al Entrenador Correcto por el Precio que Quieres"/>
         <link rel="canonical" href="{{env('APP_URL')}}/"/>
 
+        <link rel="stylesheet" href="{{asset('css/review.css')}}">
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,900|K2D" rel="stylesheet" type="text/css">
 
@@ -54,16 +55,18 @@
     </head>
     <body data-spy="scroll" data-target=".navbar">
 
+    <!--Navbar color effect
     <script>
         $(window).on("scroll", function() {
             $("#top-navbar").css("backgroundColor", 'rgba(0, 0, 0, '+$(window).scrollTop());
         });
     </script>
+    -->
 
     <nav id="top-navbar" class="navbar navbar-expand-md navbar-dark fixed-top">
         <a class="navbar-brand" href="#" style="width: 60px; padding: 0">
-            <!--<img src="{{asset('images/logo-navbar.png')}}" width="100%" height="100%">-->
-            <h3 class="d-inline-block brand-name"><span>Fit</span>Flyr</h3>
+            <img src="{{asset('images/brand/logo_letras_blanco.svg')}}" width="70%" height="70%">
+            <!--<h3 class="d-inline-block brand-name"><span>FIT</span>FLYR</h3>-->
         </a>
         <div class="top-right links">
             <a href="{{ route('blogs') }}">Blogs</a>
@@ -80,177 +83,123 @@
     <div id="welcome" class="flex-center position-ref full-height">
         <div class="content">
             <div class="title mb-3">
-                @lang('general.AppName')
+                <img src="{{asset('images/brand/imago_blanco.svg')}}" width="30%" height="30%">
             </div>
             <h4 class="mb-5">Ven a <strong>Saltar</strong> hasta el cielo, con el deporte <strong>Más Divertido.</strong></h4>
-            <a class="btn btn-success" style="font-size: 20px; padding: 7px 35px;" href="{{ route('register') }}">
+            <a class="btn btn-success d-inline" style="font-size: 20px; padding: 7px 35px;" href="{{ route('register') }}">
                 ¡Quiero Saltar!
             </a>
         </div>
     </div>
     <div class="section" id="section1">
         <div class="sub-section-info">
-            <h1 class="mb-5 d-none d-md-block">1. Publica tu entrenamiento</h1>
-            <h1 class="mb-5 d-block d-md-none">1. Publica</h1>
-            <h3>Describe que clase de entrenamiento quieres hacer (TRX, Yoga, Workout, Funcional, Rumba, etc)</h3>
-            <br/>
-            <h3><strong>Escoge la fecha y lugar.</strong></h3>
-            <h3><strong>Cuando tú quieras, Donde tú quieras.</strong></h3>
+            <h1 class="mb-5">¿Qué es el ejercicio de rebote?</h1>
+            <p class="text-justify">
+            Es un programa de ejercicio cardiovascular de bajo impacto que utiliza botas especiales con resortes y el sistema de protección de impacto IPS. Este sistema absorbe la mayoría del impacto en las articulaciones, lo que lo hace más seguro que otros ejercicios de alto impacto.
+            Es una forma divertida y efectiva de mejorar la salud cardiovascular, la coordinación y quemar calorías mientras proteges tus articulaciones.
+            </p>
         </div>
-        <div class="sub-section-image">
-            <div class="shadow-bottom h-100 w-100">
-                <img class="d-block w-100 h-100 how-works-image redondeado" src="{{asset('images/publicar.PNG')}}" alt="First slide">
-            </div>
+        <div class="boots-image d-flex align-items-center">
+            <img class="h-100 w-100 how-works-image m-auto" src="{{asset('images/botas_2.png')}}" alt="First slide">
         </div>
     </div>
-    <div class="section" id="section2">
+    <div class="text-center section d-block color-white" id="section2">
         <!--repetido pero con el orden de la info y la imagen diferente para que en dispositivos pequeños el texto esté siempre arriba-->
-        <div class="d-block d-md-none sub-section-info">
-            <h1 class="mb-5">2. Recibe ofertas</h1>
-            <h3>Recibe ofertas de diferentes entrenadores que compiten por ayudarte a lograr tu meta <strong>fitness</strong></h3>
+        <div class="m-auto">
+            <h1 class="mb-4">Beneficios</h1>
         </div>
-        <div class="d-block d-md-none sub-section-image">
-            <div class="shadow-bottom h-100 w-100">
-                <img class="d-block w-100 h-100 how-works-image" src="{{asset('images/recibeOfertas.PNG')}}" alt="First slide">
+        <table class="col-md-6 m-auto" style="border-collapse: separate;
+border-spacing: 1em;">
+            <tr>
+                <td><i class="fas fa-heartbeat benefits_icon text-center d-table-cell align-middle" style="font-size: 50px"></i></td>
+                <td class="h4">Mejora la resistencia cardiovascular.</td>
+            </tr>
+            <tr>
+                <td><img src = "{{asset('images/fire_icon.svg')}} " alt="Calorias" class="benefits_icon svg_white"/></td>
+                <td class="h4">Quema 20% más calorías que un ejercicio cardiovascular tradicional.</td>
+            </tr>
+            <tr>
+                <td><img src = "{{asset('images/muscle_icon.svg')}} " alt="Tonifica" class="benefits_icon svg_white"/></td>
+                <td class="h4">Ayuda a tonificar los músculos de las piernas, glúteos y abdominales.</td>
+            </tr>
+            <tr>
+                <td><img src = "{{asset('images/balance_icon.svg')}} " alt="Balance" class="benefits_icon svg_white"/></td>
+                <td class="h4">Mejorar la coordinación y el equilibrio.</td>
+            </tr>
+            <tr>
+                <td><img src = "{{asset('images/happy_icon.svg')}} " alt="Felicidad" class="benefits_icon svg_white"/></td>
+                <td class="h4">Reduce el estrés y mejorar el estado de ánimo, gracias a la liberación de endorfinas.</td>
+            </tr>
+        </table>
+    </div>
+    <div class="section text-center d-block" id="section3">
+        <h1 class="mb-5">Modalidades</h1>
+        <div class="d-flex flex-wrap justify-content-around m-auto" style="width: 80%">
+            <div class="floating-card col-12 col-md-3 p-3 mb-5 mb-md-0" style="background-image: linear-gradient(rgb(140,229,223), rgb(13,158,151));">
+                <img src = "{{asset('images/Power.png')}} " alt="Felicidad" height="100px" width="150px"/>
+                <p class="text-justify mt-3"><strong>Kangoo Power</strong> es un programa de entrenamiento de alta intensidad que combina movimientos cardiovasculares y de fuerza con el uso de botas Kangoo Jumps, lo que aumenta la <strong>intensidad del ejercicio y la quema de calorías.</strong></p>
             </div>
-        </div>
-
-
-        <div class="d-none d-md-block sub-section-image">
-            <div class="shadow-bottom h-100 w-100">
-                <img class="d-block w-100 h-100 how-works-image" src="{{asset('images/recibeOfertas.PNG')}}" alt="First slide">
+            <div class="floating-card col-12 col-md-3 p-3 mb-5 mb-md-0" style="background-image: linear-gradient(rgb(140,229,223), rgb(13,158,151));">
+                <img src = "{{asset('images/Dance.png')}} " alt="Felicidad" height="100px" width="150px"/>
+                <p class="text-justify mt-3"><strong>Kangoo Dance</strong> es un programa de fitness que utiliza las botas Kangoo Jumps para crear una experiencia de baile enérgica y divertida que combina movimientos de <strong>baile</strong> con <strong>saltos</strong> y <strong>rebotes.</strong></p>
             </div>
-        </div>
-        <div class="d-none d-md-block sub-section-info">
-            <h1 class="mb-5">2. Recibe ofertas</h1>
-            <h3>Recibe ofertas de diferentes entrenadores que compiten por ayudarte a lograr tu meta <strong>fitness</strong></h3>
+            <div class="floating-card col-12 col-md-3 p-3 mb-5 mb-md-0" style="background-image: linear-gradient(rgb(140,229,223), rgb(13,158,151));">
+                <img src = "{{asset('images/Kick and punch.png')}} " alt="Felicidad" height="100px" width="150px"/>
+                <p class="text-justify mt-3"><strong>Kangoo Kick & Punch</strong> es un programa de entrenamiento que combina movimientos de <strong>artes marciales</strong> con <strong>ejercicios cardiovasculares</strong> y de <strong>fuerza</strong> utilizando las botas Kangoo Jumps para un entrenamiento de <strong>bajo impacto</strong> y <strong>alta intensidad</strong> que ayuda a mejorar la <strong>coordinación</strong>, <strong>la fuerza</strong> y la <strong>resistencia cardiovascular.</strong></p>
+            </div>
         </div>
     </div>
-    <div class="section" id="section3">
-        <div class="sub-section-info">
-            <h1 class="mb-5">3. Selecciona tu entrenador</h1>
-            <h3>Compara los precios, puntuaciones y reviews y selecciona al <strong>Entrenador Ideal</strong> por el <strong>Mejor Precio</strong></h3>
-        </div>
-        <div class="sub-section-image">
-            <div class="shadow-bottom h-100 w-100">
-                <img class="d-block w-100 h-100 how-works-image" src="{{asset('images/seleccionar.PNG')}}" alt="First slide">
+    <!--
+    <div class="section text-center d-block color-white">
+        <h1 class="mb-5">Experiencias</h1>
+        <div class="floating-card bg-dark p-3 mb-3 text-left col-8 col-md-6 mx-auto color-white">
+            <div class="float-left">
+                <img class="rounded-circle" height="48px" width="48px" alt="user"
+                     src="{{asset('images/avatars/1')}}">
             </div>
-        </div>
-    </div>
-    <div class="section" id="section4">
-        <!--repetido pero con el orden de la info y la imagen diferente para que en dispositivos pequeños el texto esté siempre arriba-->
-        <div class="d-block d-md-none sub-section-info">
-            <h1 class="mb-5">5. Pago seguro</h1>
-            <h3>El pago se libera cuando has finalizado el entrenamiento, solo pagas por los entrenamientos que hagas</h3>
-        </div>
-        <div class="d-block d-md-none pay-image">
-            <img class="rounded-circle d-block how-works-image w-100 h-100" src="{{asset('images/safePay1.png')}}" alt="First slide">
-            <img class="pay-image2 d-block how-works-image position-relative" src="{{asset('images/safePay2.png')}}" alt="First slide">
+            <div class="user-info d-inline-block w-auto">
+                <h6>Camilo Hernandez</h6>
+                <div class="fullRating-container"
+                     style="min-width: calc(64px); max-width: calc(100px); width: calc(10vw);"></div>
+                <img id="emptyRating" alt="rating" src="{{asset('images/empty_rating.png')}}">
+            </div>
+            <div style="height: 2.5vw; min-height: 16px; max-height: 25px;"></div>
+            <blockquote class="blockquote" style="font-size: 1rem">
+                    <h5 class="mb-0">"Me encanta"</h5>
+                    <footer class="blockquote-footer">{{now()}}</footer>
+            </blockquote>
         </div>
 
-        <div class="d-none d-md-block pay-image">
-            <img class="rounded-circle d-block how-works-image w-100 h-100" src="{{asset('images/safePay1.png')}}" alt="First slide">
-            <img class="pay-image2 d-block how-works-image position-relative" src="{{asset('images/safePay2.png')}}" alt="First slide">
-        </div>
-        <div class="d-none d-md-block sub-section-info">
-            <h1 class="mb-5">5. Pago seguro</h1>
-            <h3>El pago se libera cuando has finalizado el entrenamiento, solo pagas por los entrenamientos que hagas</h3>
-        </div>
-    </div>
-    <!--Hasta que no se tengan imágenes o videos de los entrenamientos se dejará comentada esta sección
-    <div class="section d-block" id="section6">
-        <h1 class="mt-5 text-center overflow-text color-white">Experiencias InTraining</h1>
-        <div id="myCarousel" class="carousel slide mt-5" data-ride="carousel">
-            <div class="carousel-inner row w-75 mx-auto">
-                <div class="carousel-item col-md-4 active">
-                    <div class="card">
-                        <video controls class="media-slider">
-                            <source src="{{asset('video/video.mp4')}}" type="video/mp4">
-                            Entrenamiento
-                        </video>
-                        <div class="card-body media-descripcion">
-                            <h4 class="card-title">Card 1</h4>
-                            <p class="card-text ellipsis">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item col-md-4">
-                    <div class="card">
-                        <video controls class="media-slider">
-                            <source src="{{asset('video/video.mp4')}}" type="video/mp4">
-                            Entrenamiento
-                        </video>
-                        <div class="card-body media-descripcion">
-                            <h4 class="card-title">Card 2</h4>
-                            <p class="card-text ellipsis">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item col-md-4">
-                    <div class="card">
-                        <video controls class="media-slider">
-                            <source src="{{asset('video/video.mp4')}}" type="video/mp4">
-                            Entrenamiento
-                        </video>
-                        <div class="card-body media-descripcion">
-                            <h4 class="card-title">Card 3</h4>
-                            <p class="card-text ellipsis">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item col-md-4">
-                    <div class="card">
-                        <video controls class="media-slider">
-                            <source src="{{asset('video/video.mp4')}}" type="video/mp4">
-                            Entrenamiento
-                        </video>
-                        <div class="card-body media-descripcion">
-                            <h4 class="card-title">Card 5</h4>
-                            <p class="card-text ellipsis">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                        </div>
-                    </div>
-                </div>
-
+        <div class="floating-card bg-dark p-3 mb-3 text-left col-8 col-md-6 mx-auto color-white">
+            <div class="float-left">
+                <img class="rounded-circle" height="48px" width="48px" alt="user"
+                     src="{{asset('images/avatars/2')}}">
             </div>
-            <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
+            <div class="user-info d-inline-block w-auto">
+                <h6>Camilo Hernandez</h6>
+                <div class="fullRating-container"
+                     style="min-width: calc(64px); max-width: calc(100px); width: calc(10vw);"></div>
+                <img id="emptyRating" alt="rating" src="{{asset('images/empty_rating.png')}}">
+            </div>
+            <div style="height: 2.5vw; min-height: 16px; max-height: 25px;"></div>
+            <blockquote class="blockquote" style="font-size: 1rem">
+                <h5 class="mb-0">"Me encanta"</h5>
+                <footer class="blockquote-footer">{{now()}}</footer>
+            </blockquote>
         </div>
     </div>
     -->
 
-    <div class="section d-block text-center" id="section5">
-        <h1 class="mt-5">¿Qué Esperas?</h1>
-        <div class="h-50 d-flex">
-            <div class="m-auto">
-                <h3>¡Cumple tu meta <strong>Fitness</strong> con @lang('general.AppName')!</h3>
-                <a class="btn btn-success mt-5" style="font-size: 20px; padding: 7px 35px;" href="{{ route('register') }}">
-                    Quiero Ser Fitness
-                </a>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="draggable purechat-button-expand" style="background-image: url(&quot;https://app.purechat.com/assets/spanish.c1fabaeb81f83ee3f3db.png&quot;) !important; background-size: cover; position: fixed; right: 0; bottom: 0; margin: 3vh; height: 80.55px !important; width: 90px !important; z-index: 9 !important;">
-
-    </div>
-
+    <!--Pure Chat component
+    <div class="draggable purechat-button-expand" style="background-image: url(&quot;https://app.purechat.com/assets/spanish.c1fabaeb81f83ee3f3db.png&quot;) !important; background-size: cover; position: fixed; right: 0; bottom: 0; margin: 3vh; height: 80.55px !important; width: 90px !important; z-index: 9 !important;"></div>
+    -->
 
     <footer style="margin: 0" class="footer-distributed">
 
         <div class="footer-left">
 
-            <h3><span>Fit</span>Flyr</h3>
+            <!--<h3><span>Fit</span>Flyr</h3>-->
+            <img src="{{asset('images/brand/logo_letras_blanco.svg')}}" width="70%" height="70%">
 
             <!--<p class="footer-links">
                 <a href="#quienesSomos">Quienes somos</a>
@@ -264,16 +213,17 @@
                 <a href="#equipo">Equipo de trabajo</a>
             </p>-->
 
-            <p class="footer-company-name mt-4">Desarrollado por: Educlick &copy; 2018</p>
-            <p class="footer-company-name">322 243 42 96</p>
+
+            <p class="footer-company-name mt-4 d-none d-md-block">Desarrollado por: Educlick &copy; 2018</p>
+            <p class="footer-company-name d-none d-md-block">322 243 42 96</p>
         </div>
 
         <div class="footer-center">
 
-            <!--<div>
+            <div>
                 <i class="fa fa-map-marker"></i>
-                <p><span>Calle 8A # 100-44</span> World trade center, Bogotá</p>
-            </div>-->
+                <p><span>Av. Esperanza #75-25</span> Modelia, Bogotá</p>
+            </div>
 
             <div>
                 <i class="fa fa-phone"></i>
@@ -282,29 +232,22 @@
 
             <div>
                 <i class="fa fa-envelope"></i>
-                <p><a href="mailto:soporte@fitflyr.com">soporte@fitflyr.com</a></p>
+                <p><a href="mailto:contacto@fitflyr.com">contacto@fitflyr.com</a></p>
             </div>
 
         </div>
 
         <div class="footer-right">
-
-            <p class="footer-company-about">
-
-            </p>
-
-            <div class="footer-icons">
-
-                <!--<a href="#"><i class="fab fa-facebook"></i></a>-->
-                <a href="https://www.instagram.com/fitflyr/"><i class="fab fa-instagram"></i></a>
-
-            </div>
-
+            <!--<a href="#"><i class="fab fa-facebook"></i></a>-->
+            <a href="https://www.instagram.com/fitflyr/">
+                <i class="fab fa-instagram" style="font-size: 25px"></i>
+                <p>@fitflyr</p>
+            </a>
         </div>
 
     </footer>
 
-    <!--Script para que vuelva a la primer card cuando llegue a la última (slider ciclico)-->
+    <!--Script para que vuelva a la primer card cuando llegue a la última (slider ciclico)
     <script>
         $(document).ready(function() {
             var itemsPerSlide = 3;
@@ -347,12 +290,13 @@
             });*/
         });
     </script>
-
-    <!--subscribers-->
+    -->
+    <!--subscribers
     <script type="text/javascript">
         var subscribersSiteId = 'cd602984-8642-4484-8a8b-431d84a5faf0';
     </script>
     <script type="text/javascript" src="https://cdn.subscribers.com/assets/subscribers.js"></script>
+    -->
 
     <!--google analytics-->
     <script>
@@ -366,7 +310,7 @@
     </script>
 
     <!--chat de soporte-->
-        <!--Para que se dragable pero que no muestre el chat al finalizar el drag-->
+        <!--Para que se dragable pero que no muestre el chat al finalizar el drag
             <script>
                 $(function() {
                     $( ".draggable" ).draggable({
@@ -379,9 +323,9 @@
                     });
                 });
             </script>
-            <!--<script src="https://code.jquery.com/jquery-1.9.1.js"></script> Si se deja se daña el slider y al parecer ya está en otro lugar o no se necesita porque se quita y aún así funciona correctamente el draggable.-->
+            <!--<script src="https://code.jquery.com/jquery-1.9.1.js"></script> Si se deja se daña el slider y al parecer ya está en otro lugar o no se necesita porque se quita y aún así funciona correctamente el draggable.
             <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-        <!--fin Para que se dragable pero que no muestre el chat al finalizar el drag-->
+        <!--fin Para que se dragable pero que no muestre el chat al finalizar el drag
 
         <script type='text/javascript' data-cfasync='false'>window.purechatApi = { l: [], t: [], on: function () { this.l.push(arguments); } }; (function () { var done = false; var script = document.createElement('script'); script.async = true; script.type = 'text/javascript'; script.src = 'https://app.purechat.com/VisitorWidget/WidgetScript'; document.getElementsByTagName('HEAD').item(0).appendChild(script); script.onreadystatechange = script.onload = function (e) { if (!done && (!this.readyState || this.readyState == 'loaded' || this.readyState == 'complete')) { var w = new PCWidget({c: '1e110dc0-e024-4b2b-a871-4e07f3dec0d3', f: true }); done = true; } }; })();</script>
     <!--fin chat de soporte-->
