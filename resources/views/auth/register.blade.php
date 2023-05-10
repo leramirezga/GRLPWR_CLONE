@@ -75,7 +75,14 @@
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <br />
-                                <small>Al registrarte aceptas los <a style="text-decoration: none" href="javascript:void(0);" data-toggle="modal" data-target="#modalPoliticas"><b><u>Términos de Servicio</u></b></a> y la <a style="text-decoration: none" href="javascript:void(0);" data-toggle="modal" data-target="#modalPoliticas"><b><u>Política de privacidad</u></b></a></small>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="aceptacion" id="aceptacion" required>
+
+                                    <label class="form-check-label" for="aceptacion">
+                                        <small>He leido y acepto los <a style="text-decoration: none" href="javascript:void(0);" data-toggle="modal" data-target="#modalTerminos"><b><u>Términos de Servicio</u></b></a> y la <a style="text-decoration: none" href="javascript:void(0);" data-toggle="modal" data-target="#modalConsentimiento"><b><u>Política de privacidad</u></b></a></small>        {{ __('Remember Me') }}
+                                    </label>
+                                </div>
+
                             </div>
                         </div>
                     </form>
@@ -85,17 +92,30 @@
     </div>
 </div>
 <!-- Modal terminos y condiciones-->
-<div class="modal" tabindex="-1" role="dialog" id="modalPoliticas">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5>Política de privacidad</h5>
+<div class="modal" tabindex="-1" role="dialog" id="modalTerminos">
+    <div role="document" class="h-100">
+        <div class="modal-content h-100">
+            <div class="modal-header h-100">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
+                <embed src="{{asset('pdf/terminos_y_condiciones.pdf')}}" width="100%" height="100%" />
             </div>
-            <div class="modal-body">
-                <p></p>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="modalConsentimiento">
+    <div role="document" class="h-100">
+        <div class="modal-content h-100">
+            <div class="modal-header h-100">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <embed src="{{asset('pdf/Consentimiento informado.pdf')}}" width="100%" height="100%" />
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
