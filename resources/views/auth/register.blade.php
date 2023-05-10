@@ -79,7 +79,7 @@
                                     <input class="form-check-input" type="checkbox" name="aceptacion" id="aceptacion" required>
 
                                     <label class="form-check-label" for="aceptacion">
-                                        <small>He leido y acepto los <a style="text-decoration: none" href="javascript:void(0);" data-toggle="modal" data-target="#modalTerminos"><b><u>Términos de Servicio</u></b></a> y la <a style="text-decoration: none" href="javascript:void(0);" data-toggle="modal" data-target="#modalConsentimiento"><b><u>Política de privacidad</u></b></a></small>        {{ __('Remember Me') }}
+                                        <small>He leido y acepto los <a style="text-decoration: none" href="javascript:void(0);" data-toggle="modal" data-target="#modalTerminos"><b><u>Términos de Servicio</u></b></a> y el <a style="text-decoration: none" href="javascript:void(0);" data-toggle="modal" data-target="#modalConsentimiento"><b><u>Consentimiento Informado</u></b></a></small>
                                     </label>
                                 </div>
 
