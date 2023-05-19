@@ -1,4 +1,4 @@
-<?php
+php<?php
 
 return [
 
@@ -56,7 +56,8 @@ return [
         ],
         'uploads' => [
             'driver' => 'local',
-            'root'   => base_path() . '/public',
+            #'root'   => base_path() . '/public' #Local config,
+            'root'   => base_path() . '/../public_html',
         ],
 
         's3' => [

@@ -109,7 +109,7 @@ class HomeController extends Controller
 
         /*Para que sepan de cual modal viene el error y poder mostrarlo*/
             $validator = Validator::make($request->all(), [
-                'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:5048',
                 'firstname' => 'string|required',
                 'lastname' => 'string|required',
                 'lastname' => 'string|nullable',
