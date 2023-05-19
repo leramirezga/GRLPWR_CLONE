@@ -78,7 +78,7 @@
     <!--Pop-up Review Session-->
     <script type="text/javascript">
         $(document).ready(function(){
-            if({{!session('msg')}} && !sessionStorage.getItem('training-review-showed') && {{isset($reviewFor)}}) {
+            if({{!session('msg')}} && !sessionStorage.getItem('training-review-showed') && {{isset($reviewFor) ? 1 : 0}}) {
                 sessionStorage.setItem('training-review-showed', 'true');//at the beginning, it won't be present in the session, and if we get it, it will be false
                 setTimeout(function() {$('#reviewEntrenamiento').modal('show');},
                     3000);
