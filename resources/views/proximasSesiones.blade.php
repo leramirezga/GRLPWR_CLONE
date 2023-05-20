@@ -1,41 +1,13 @@
-@push('head-content')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"/>
-@endpush
-
-<!-- Event calendar -->
-<div id='calendar' class="my-3"></div>
-
-@push('scripts')
-    <script>
-        $(document).ready(function () {
-            var SITEURL = "{{env('APP_URL')}}";
-
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            var calendar = $('#calendar').fullCalendar({
-                height: 400,
-                editable: true,
-                events: SITEURL + "/eventos",
-                displayEventTime: true,
-                eventRender: function (event, element, view) {
-                    event.allDay = event.allDay === 'true';
-                }, eventColor: '#378006',
-            });
-        });
-
-        function displayMessage(message) {
-            toastr.success(message, 'Event');
-        }
-
-    </script>
-
-    <!--DONT CHANGE THE ORDER-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-@endpush
+@foreach($events as $event)
+    <div class="solicitud-container  text-center text-md-left d-md-flex {{\Illuminate\Support\Facades\Blade::check('feature', 'dark_theme', false) ? "floating-card bg-semi-transparent" : "box-shadow"}} mb-3">
+        <div>
+            <h3 class="d-block my-2">{{$event->evento->nombre}} </h3>
+            <p class="d-block my-1"><strong>Día:</strong> {{$event->fecha_inicio->isoFormat('dddd D MMMM')}}</p>
+            <p class="d-block my-1"><strong>Hora:</strong> {{$event->fecha_inicio->format('g:i A')}}</p>
+            <p class="d-block my-1"><strong>Lugar: </strong>{{$event->lugar}}</p>
+        </div>
+        <div class="ml-auto my-3">
+            <a type="button" class="btn btn-success" href="{{route('evento', ['sesion'=> $event->id])}}">Ver mas</a>
+        </div>
+    </div>
+@endforeach
