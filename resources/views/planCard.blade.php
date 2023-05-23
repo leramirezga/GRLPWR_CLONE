@@ -1,7 +1,17 @@
 <div class="card floating-card bg-dark text-center py-5 px-3 mb-5 d-flex flex-column align-items-start" style="height: 75vh">
     <div class="mx-auto mb-auto">
         <h2>{{$plan->name}}</h2>
-        <p>a</p>
+        <div style="height: 160px" class="d-flex">
+        @switch($plan->plan_type)
+            @case(\App\Utils\PlanTypesEnum::Kangoo_rent->value)
+                <img src="{{asset("images/brand/imalogo_trazo_blanco.png")}}" class="m-auto"/>
+            @break
+
+            @case(\App\Utils\PlanTypesEnum::Kangoo_own->value)
+                <img src="{{asset("images/trainers_white_empty.png")}}" height="80%" class="m-auto align-middle"/>
+            @break
+        @endswitch
+        </div>
     </div>
     <div class="mx-auto w-75">
         <h2><strong> ${{number_format($plan->price, 0, '.', ',')}}</strong></h2>
