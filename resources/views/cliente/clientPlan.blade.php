@@ -8,6 +8,7 @@
             <div>
                 <h3 class="d-block my-2">{{$clientPlan->plan->name}}</h3>
                 <p class="d-block my-1"><strong>Clases Restantes:</strong> {{$clientPlan->remaining_classes}}</p>
+                <p class="d-block my-1"><strong>Válido hasta:</strong> {{$clientPlan->expiration_date}}</p>
             </div>
         </div>
     @else
