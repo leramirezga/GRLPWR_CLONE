@@ -12,17 +12,14 @@
                     data-target="#completarPerfilModal">Completar perfil
             </button>
         @else
-            <div style="height: 70vh">
+            <div>
                 <h1 class="text-center mt-3">
                     {{$sesionEvento->evento->nombre}}
                 </h1>
-                <p class="text-center mb-1"><strong>Día:</strong> {{$sesionEvento->fecha_inicio->isoFormat('dddd D MMMM')}}</p>
-                <p class="text-center mb-1"><strong>Hora:</strong> {{$sesionEvento->fecha_inicio->format('g:i A')}}</>
-                <p class="text-center mb-1"><strong>Lugar: </strong>{{$sesionEvento->lugar}}</p>
-                <div class="h-75 w-75 m-auto">
-                    <img src="{{asset('images/'.$sesionEvento->evento->imagen)}}" class="h-100 w-100 d-none d-lg-block "
-                         alt="Eventos @lang('general.AppName')">
-                    <img src="{{asset('images/'.$sesionEvento->evento->imagen)}}" class="h-100 w-100 d-block d-lg-none"
+                <p class="text-center mb-1"><strong>{{$sesionEvento->fecha_inicio->isoFormat('dddd D MMMM')}} {{$sesionEvento->fecha_inicio->format('g:i A')}}</strong></p>
+                <p class="text-center mb-1">Lugar: {{$sesionEvento->lugar}}</p>
+                <div class="w-75 m-auto d-flex justify-content-center">
+                    <img src="{{asset('images/'.$sesionEvento->evento->imagen)}}" height="600px"
                          alt="Eventos @lang('general.AppName')">
                 </div>
             </div>
