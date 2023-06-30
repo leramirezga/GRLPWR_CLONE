@@ -112,7 +112,7 @@ class HomeController extends Controller
                 'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:5048',
                 'firstname' => 'string|required',
                 'lastname' => 'string|required',
-                'dateborn' => 'required|date',
+                'dateborn' => 'required',
                 'genero' => 'string|required',
                 //'ciudad' => 'string|required',
                 'numCel' => 'numeric|required',
