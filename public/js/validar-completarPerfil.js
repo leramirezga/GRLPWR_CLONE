@@ -38,7 +38,6 @@ $(document).ready(function(){
 		    },
             dateborn: {
               required: true,
-              minlength: 3,
             },
 		    email: {
 		      required: true,
