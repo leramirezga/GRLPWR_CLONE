@@ -114,11 +114,7 @@
                                                             </span>
                                                 <div id="dateContainer" class="form-group label-floating">
                                                     <label class="control-label">Fecha de nacimiento <small>(requerido)</small></label>
-                                                    @if(Auth::user()->fecha_nacimiento != null)
-                                                        <input name="dateborn" class="form-control input-group-addon" type="text" value="{{Auth::user()->fecha_nacimiento->format('d/m/Y')}}">
-                                                    @else
-                                                        <input name="dateborn" class="form-control input-group-addon" type="text">
-                                                    @endif
+                                                    <input name="dateborn" class="form-control input-group-addon" type="text" value="{{Auth::user()->fecha_nacimiento ? Auth::user()->fecha_nacimiento->format('d/m/Y') : ''}}">
                                                 </div>
                                             </div>
                                             @yield('generoEntrenador')
