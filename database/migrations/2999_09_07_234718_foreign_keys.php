@@ -121,6 +121,24 @@ class ForeignKeys extends Migration
             $table->foreign('payment_id')->references('id')->on('transacciones_pagos');
         });
 
+        Schema::table('anthropometries', function (Blueprint $table) {
+            $table->foreign('client_id')->references('id')->on('usuarios');
+        });
+        Schema::table('cardiovascular_risks', function (Blueprint $table) {
+            $table->foreign('client_id')->references('id')->on('usuarios');
+        });
+        Schema::table('max_heart_rates', function (Blueprint $table) {
+            $table->foreign('client_id')->references('id')->on('usuarios');
+        });
+        Schema::table('fitness_components', function (Blueprint $table) {
+            $table->foreign('client_id')->references('id')->on('usuarios');
+        });
+        Schema::table('exercise_prescriptions', function (Blueprint $table) {
+            $table->foreign('client_id')->references('id')->on('usuarios');
+        });
+        Schema::table('nutrition_and_health', function (Blueprint $table) {
+            $table->foreign('client_id')->references('id')->on('usuarios');
+        });
     }
 
     /**
@@ -274,6 +292,30 @@ class ForeignKeys extends Migration
             $table->dropColumn('plan_id');
             $table->dropForeign(['payment_id']);
             $table->dropColumn('payment_id');
+        });
+        Schema::table('anthropometries', function (Blueprint $table) {
+            $table->dropForeign(['client_id']);
+            $table->dropColumn('client_id');
+        });
+        Schema::table('cardiovascular_risks', function (Blueprint $table) {
+            $table->dropForeign(['client_id']);
+            $table->dropColumn('client_id');
+        });
+        Schema::table('max_heart_rates', function (Blueprint $table) {
+            $table->dropForeign(['client_id']);
+            $table->dropColumn('client_id');
+        });
+        Schema::table('fitness_components', function (Blueprint $table) {
+            $table->dropForeign(['client_id']);
+            $table->dropColumn('client_id');
+        });
+        Schema::table('exercise_prescriptions', function (Blueprint $table) {
+            $table->dropForeign(['client_id']);
+            $table->dropColumn('client_id');
+        });
+        Schema::table('nutrition_and_health', function (Blueprint $table) {
+            $table->dropForeign(['client_id']);
+            $table->dropColumn('client_id');
         });
     }
 }
