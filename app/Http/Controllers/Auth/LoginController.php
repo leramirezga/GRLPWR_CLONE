@@ -203,7 +203,7 @@ class LoginController extends Controller
 
     public function redirectTo(){
         $user = Auth::user();
-        $redirectTo = '/' . $user->slug . '/home';
+        $redirectTo = '/user/' . $user->slug . '/home';
         return $redirectTo;
     }
 

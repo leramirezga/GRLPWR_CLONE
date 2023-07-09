@@ -19,7 +19,7 @@ use \Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     if(Auth::check()){
-        return redirect(Auth::user()->slug.'/home');
+        return redirect('user/'.Auth::user()->slug.'/home');
     }
     return view('welcome');
 });
@@ -45,10 +45,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/autocomplete', 'AutoCompleteController@index');
     Route::post('/autocomplete/fetch', 'AutoCompleteController@fetch')->name('autocomplete.fetch');
 
-    Route::get('/{user}/home', 'HomeController@index')->name('home');
+    Route::get('/user/{user}/home', 'HomeController@index')->name('home');
     Route::delete('/{user}/home', 'SolicitudServicioController@eliminar')->name('eliminarSolicitud');
-    Route::put('/{user}/home', 'HomeController@actualizarPerfil')->name('actualizarPerfil');
+    Route::put('/user/{user}/home', 'HomeController@actualizarPerfil')->name('actualizarPerfil');
     Route::get('/visitar/{user}', 'HomeController@visitar')->name('visitarPerfil');
+
+    Route::get('/user/{user}', 'ProfileController@index')->name('profile');
 
     Route::put('completar_registro_redes_sociales', 'HomeController@completarRegistroRedesSociales')->name('completarRegistroRedesSociales');
 
@@ -72,7 +74,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/scheduleEvent',[SesionClienteController::class, 'scheduleEvent'])->name('scheduleEvent');
     Route::post('/dar_review_entrenamiento/', [SesionClienteController::class, 'darReview'])->name('darReviewEntrenamiento');
     Route::delete('/cancelar_entrenamiento', [SesionClienteController::class, 'cancelTraining'])->name('cancelarEntrenamiento');
-    Route::get('/planess/{plan}', [PlanController::class, 'show'])->name('plan');
+    Route::get('/planes/{plan}', [PlanController::class, 'show'])->name('plan');
     Route::get('/planes', [PlanController::class, 'index'])->name('plans');
 
 });

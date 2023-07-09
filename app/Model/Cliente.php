@@ -2,8 +2,10 @@
 
 namespace App\Model;
 
+use App\Anthropometry;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Cliente extends Model
 {
@@ -37,6 +39,16 @@ class Cliente extends Model
 
     public function peso(){
         return $this->pesos('desc')->first();
+    }
+
+    public function anthropometries($order = 'asc')
+    {
+        return $this->hasMany(Anthropometry::class, 'client_id', 'usuario_id')->orderBy('created_at', $order);
+    }
+
+    public function anthropometry()
+    {
+        return $this->anthropometries('desc')->first();
     }
 
     public function getPorcentajeMetaAttribute(){

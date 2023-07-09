@@ -55,6 +55,6 @@ class SocialAuthController extends Controller
     {
         Auth::login($user);
 
-        return redirect()->to('/'.$user->slug.'/home');
+        return redirect()->to('/user/'.$user->slug.'/home');
     }
 }

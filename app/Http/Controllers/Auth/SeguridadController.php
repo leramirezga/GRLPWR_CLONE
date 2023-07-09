@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Utils\AuthEnum;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
@@ -23,9 +24,11 @@ class SeguridadController extends Controller
         }
     }
 
-    public static function verificarUsuario($logeado){
+    public static function verificarUsuario($logeado, $return = false){
         $user = Auth::user();
-        if($user != $logeado){
+        if ($return) {
+            return ($user != $logeado) ? AuthEnum::VISITOR : AuthEnum::SAME_USER;
+        } elseif ($user != $logeado) {
             abort(403, 'usuario incorrecto');
         }
     }

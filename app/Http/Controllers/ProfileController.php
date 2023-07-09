@@ -13,6 +13,7 @@ use App\Model\Review;
 use App\Model\ReviewUser;
 use App\Model\SesionCliente;
 use App\User;
+use App\Utils\AuthEnum;
 use App\Utils\Constantes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +21,7 @@ use App\Model\SolicitudServicio;
 use Illuminate\Support\Facades\DB;
 use Validator;
 
-class HomeController extends Controller
+class ProfileController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -39,68 +40,18 @@ class HomeController extends Controller
      */
     public function index(User $user)
     {
-        SeguridadController::verificarUsuario($user);
-        $visitante = false;
+        $userType = SeguridadController::verificarUsuario($user, true);
         if(strcasecmp ( $user->rol, Constantes::ROL_CLIENTE ) == 0){
-            $entrenamientosAgendados = SesionCliente::
-                                        where('cliente_id', $user->id)
-                                        ->entrenamientosAgendados($user->rol)
-                                        ->get();
-
-            $clientPlan = ClientPlan::where('client_id', $user->id)
-                ->where('expiration_date', '>', now())
-                ->where('remaining_classes', '>', 0)
-                ->first();
-
-            $lastSessionWithoutReview =DB::table('sesiones_cliente')
-                            ->join('sesiones_evento', 'sesiones_cliente.sesion_evento_id', 'sesiones_evento.id')
-                            ->leftJoin('reviews_session', 'reviews_session.session_id', '=', 'sesiones_cliente.id')
-                            ->whereNull('reviews_session.session_id')
-                            ->where('sesiones_evento.fecha_fin', '<', today())
-                            ->orderBy('sesiones_evento.fecha_fin', 'desc')
-                            ->select('sesiones_cliente.id')
-                            ->first();
-
-            $reviewFor = $lastSessionWithoutReview?->id;
-
-            return view('cliente.homeCliente', compact('user', 'entrenamientosAgendados', 'visitante', 'reviewFor', 'clientPlan'));
+            return $userType == AuthEnum::SAME_USER ?
+                view('cliente.profileClient', compact('user')) :
+                redirect()->route('visitarPerfil', ['user' => $user]);
         }
         if(strcasecmp ($user->rol, Constantes::ROL_ENTRENADOR) == 0){
-            $ofrecimientos = Ofrecimientos::where('usuario_id', $user->id)->get();
-            $solicitudes_id = array();
-            foreach ($ofrecimientos as $ofrecimiento){
-                array_push($solicitudes_id, $ofrecimiento->solicitud_servicio_id);
-            }
-            $solicitudes= SolicitudServicio::
-                            whereIn('id', $solicitudes_id )
-                            ->whereIn('estado', [0, 5])//solicitud activa o modificada
-                            ->get();
-
-            $entrenamientosAgendados = SolicitudServicio::
-                                        whereIn('solicitudes_servicio.id', $solicitudes_id )
-                                        ->entrenamientosAgendados($user->rol)
-                                        ->get();
-
             return view('perfilEntrenador', compact('user', 'solicitudes', 'entrenamientosAgendados', 'visitante'));
         }
-
         //cuando se registra con redes sociales
         if(strcasecmp ($user->rol, 'indefinido' ) == 0){
             return view('register.completearRegistroRedesSociales');
-        }
-    }
-
-    public function visitar(User $user){
-        if($user==Auth::user()){//si el mismo va a visitar su perfil se redirecciona para que vea su perfil normal
-            return redirect()->route('home', ['user' => $user]);
-        }
-        $solicitudes = null;
-        $visitante = true;
-        if(strcasecmp ($user->rol, Constantes::ROL_ENTRENADOR ) == 0) {
-            return view('perfilEntrenador', compact('user', 'solicitudes', 'visitante'));
-        }
-        if(strcasecmp ($user->rol, Constantes::ROL_CLIENTE ) == 0) {
-            return view('cliente.homeCliente', compact('user', 'solicitudes', 'visitante'));
         }
     }
 

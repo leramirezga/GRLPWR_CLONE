@@ -1,0 +1,29 @@
+
+@media only screen and (min-width: 768px) {
+    .perfil-container{
+        display: inline-block;
+        width: 30%;
+    }
+}
+.user-profile-icon{
+    display: block;/*evita que las estrellas se desacomoden*/
+    width: 140px;
+    height: 140px;
+    margin: 0 auto 3vh  auto !important;
+    border-radius: 50%;
+}
+.perfil-container{
+    padding: 3vh;
+    text-align: center;
+    height: fit-content;
+    height: -moz-fit-content;
+
+}
+.perfil-container>*{
+    margin-bottom: 2vh;
+}
+div>*{/*This prevent event information to get many space between lines*/
+    margin: 0;/*Whit this margin can't use important because Tags stops working*/
+}
+
+

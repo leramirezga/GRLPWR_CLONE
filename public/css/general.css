@@ -699,3 +699,6 @@ a.coral:hover{
 body {
     font-family: "Barlow Regular";
 }
+.tooltip {
+    z-index: 10700;
+}

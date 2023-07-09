@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Mi Perfil
+    Home
 @endsection
 
 @push('head-content')
@@ -9,7 +9,7 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
 
-    <link rel="stylesheet" href="{{asset('css/profile.css')}}">
+    <link rel="stylesheet" href="{{asset('css/home.css')}}">
 
     <!--     Fonts and icons     -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
@@ -70,9 +70,9 @@
                                 data-target="#completarPerfilModal">Completar perfil
                         </button>
                     @else
-                        <button class="btn btn-success d-block ml-auto mr-auto" data-toggle="modal"
-                                data-target="#completarPerfilModal">Editar perfil
-                        </button>
+                        <a href="{{route('profile', ['user'=> Auth::user()->slug])}}" class="d-block ml-auto mr-auto">
+                            <button type="button" class="btn btn-success mt-2">Ver mi perfil</button>
+                        </a>
                     @endif
 
                 @endif
@@ -87,7 +87,6 @@
                 <h4>{{$user->nombre}} {{$user->apellido_1}}</h4>
                 <p>@yield('tipoUsuario')</p>
                 <p>{{$user->edad}}</p>
-                @yield('medidasCliente')
             </div>
             <div id="right-div" class="ml-md-auto m-3">
                 @yield('card1')

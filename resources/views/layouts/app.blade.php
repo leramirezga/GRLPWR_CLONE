@@ -5,6 +5,10 @@
     <title>@yield('title') - @lang('general.AppName')</title>
     <base href="/">
 
+    <!--This is loading before boostrap because a conflit with bootstrap tooltip (https://stackoverflow.com/questions/13731400/jqueryui-tooltips-are-competing-with-twitter-bootstrap)
+     but I think is being used in solicitud servicio and complete profile-->
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
     <!-- bootstrap 4.1.0 -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
 
@@ -22,8 +26,6 @@
     <!-- End bootstrap -->
 
     <link rel="stylesheet" href="{{asset('css/general.css')}}">
-
-    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <script src="{{asset('js/general.js')}}"></script>
 
@@ -113,7 +115,7 @@
                         <img class="rounded-circle user-icon ml-3 cursor-pointer" alt="user" src="{{asset('images/avatars/'.Auth::user()->foto)}}?{{time()}}" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
                         <div class="dropdown-menu dropdown-menu-right floating-card bg-dark" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{route('home', ['user'=> Auth::user()->slug])}}">Mi perfil</a>
+                            <a class="dropdown-item" href="{{route('home', ['user'=> Auth::user()->slug])}}">Home</a>
                             <a class="dropdown-item d-block d-md-none" href="{{route('blogs')}}">
                                 Blogs
                             </a>

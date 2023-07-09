@@ -116,28 +116,28 @@ class ForeignKeys extends Migration
         });
 
         Schema::table('client_plan', function (Blueprint $table) {
-            $table->foreign('client_id')->references('id')->on('usuarios');
+            $table->foreign('client_id')->references('id')->on('usuarios');//This client id points to user table to allow a user buy a plan even if he/she has not completed profile
             $table->foreign('plan_id')->references('id')->on('plans');
             $table->foreign('payment_id')->references('id')->on('transacciones_pagos');
         });
 
         Schema::table('anthropometries', function (Blueprint $table) {
-            $table->foreign('client_id')->references('id')->on('usuarios');
+            $table->foreign('client_id')->references('usuario_id')->on('clientes');
         });
         Schema::table('cardiovascular_risks', function (Blueprint $table) {
-            $table->foreign('client_id')->references('id')->on('usuarios');
+            $table->foreign('client_id')->references('usuario_id')->on('clientes');
         });
         Schema::table('max_heart_rates', function (Blueprint $table) {
-            $table->foreign('client_id')->references('id')->on('usuarios');
+            $table->foreign('client_id')->references('usuario_id')->on('clientes');
         });
         Schema::table('fitness_components', function (Blueprint $table) {
-            $table->foreign('client_id')->references('id')->on('usuarios');
+            $table->foreign('client_id')->references('usuario_id')->on('clientes');
         });
         Schema::table('exercise_prescriptions', function (Blueprint $table) {
-            $table->foreign('client_id')->references('id')->on('usuarios');
+            $table->foreign('client_id')->references('usuario_id')->on('clientes');
         });
         Schema::table('nutrition_and_health', function (Blueprint $table) {
-            $table->foreign('client_id')->references('id')->on('usuarios');
+            $table->foreign('client_id')->references('usuario_id')->on('clientes');
         });
     }
 

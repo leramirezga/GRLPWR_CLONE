@@ -1,4 +1,4 @@
-@extends('layouts.profile')
+@extends('layouts.home')
 
 @section('title')
     Mi Perfil
@@ -54,11 +54,6 @@
         <p>{{number_format($user->cliente->peso()->peso, 2)}} {{$user->cliente->peso()->unidadMedidaAbreviatura}}</p>
     @endif
 @endsection
-
-@section('card1')
-    <!--include('cliente.estadisticasCliente')-->
-@endsection
-
 
 @section('card2')
     @if(!$visitante)
