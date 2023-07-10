@@ -59,7 +59,7 @@
             <p class="counter-count-decimal">{{$user->nivel}}</p>
 
             <div class="{{\Illuminate\Support\Facades\Blade::check('feature', 'dark_theme', false) ? "floating-card bg-semi-transparent" : "box-shadow"}} col-12 col-md-10 mx-auto mt-4 p-2">
-                <h2 class="my-3">Antropometría:</h2>
+                <h2 class="section-title">Antropometría:</h2>
                 <p><strong>Peso: </strong>{{number_format($user->cliente->peso()->peso, 2)}} Kg</p>
                 <p><strong>Estatura: </strong>{{number_format($user->cliente->estatura()->estatura/100, 2)}} m</p>
                 <div class="contador-container mt-3">
@@ -115,7 +115,7 @@
 
 
             <div class="{{\Illuminate\Support\Facades\Blade::check('feature', 'dark_theme', false) ? "floating-card bg-semi-transparent" : "box-shadow"}} col-12 col-md-10 mx-auto mt-4 p-2">
-                <h2 class="my-3">Riesgo Cardiovascular:</h2>
+                <h2 class="section-title">Riesgo Cardiovascular:</h2>
                 @php($cardiovascularRisk = $user->cliente->cardiovascularRisk())
                 <div class="d-flex mb-3">
                     <div class="col-4 bg-success">
@@ -142,7 +142,7 @@
             @php($maxHeartRate = $user->cliente->maxHeartRate()?->max_heart_rate)
             @isset($maxHeartRate)
                 <div class="{{\Illuminate\Support\Facades\Blade::check('feature', 'dark_theme', false) ? "floating-card bg-semi-transparent" : "box-shadow"}} col-12 col-md-10 mx-auto mt-4 p-2">
-                    <h2 class="my-3">Frecuencias Cardiacas de actividad:</h2>
+                    <h2 class="section-title">Frecuencias Cardiacas de actividad:</h2>
                     <div>
                         <p class="d-inline-block">Frecuencia Máxima</p>
                         <p class="d-inline-block counter-count"> {{$maxHeartRate}}</p>
@@ -168,7 +168,7 @@
             @php($fitnessComponent = $user->cliente->fitnessComponent())
             @isset($fitnessComponent)
                 <div class="{{\Illuminate\Support\Facades\Blade::check('feature', 'dark_theme', false) ? "floating-card bg-semi-transparent" : "box-shadow"}} col-12 col-md-10 mx-auto mt-3 p-4">
-                    <h2 class="my-3">COMPONENTES FITNESS:</h2>
+                    <h2 class="section-title">COMPONENTES FITNESS:</h2>
                     @isset($fitnessComponent->muscular_endurance)
                         <div>
                             <h3>Resistencia Muscular:</h3>
@@ -197,7 +197,7 @@
             @php($exercisePrescription = $user->cliente->exercisePrescription())
             @isset($exercisePrescription)
                 <div class="{{\Illuminate\Support\Facades\Blade::check('feature', 'dark_theme', false) ? "floating-card bg-semi-transparent" : "box-shadow"}} col-12 col-md-10 mx-auto mt-3 p-4">
-                    <h2 class="my-3">RECOMENDACIONES DE PRESCRIPCION DE EJERCICIO:</h2>
+                    <h2 class="section-title">RECOMENDACIONES DE PRESCRIPCION DE EJERCICIO:</h2>
                     <ul class="mr-3">
                     @foreach($exercisePrescription as $prescription)
                         <li class="text-justify">{{$prescription}}</li>
@@ -209,7 +209,7 @@
             @php($nutritionAndHealth = $user->cliente->nutritionAndHealth())
             @isset($nutritionAndHealth)
                 <div class="{{\Illuminate\Support\Facades\Blade::check('feature', 'dark_theme', false) ? "floating-card bg-semi-transparent" : "box-shadow"}} col-12 col-md-10 mx-auto mt-3 p-4">
-                    <h2 class="my-3">RECOMENDACIONES DE NUTRICION Y SALUD:</h2>
+                    <h2 class="section-title">RECOMENDACIONES DE NUTRICION Y SALUD:</h2>
                     <ul class="mr-3">
                         @foreach($nutritionAndHealth as $recommendation)
                             <li class="text-justify">{{$recommendation}}</li>
