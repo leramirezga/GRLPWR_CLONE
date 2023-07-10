@@ -3,6 +3,11 @@
 namespace App\Model;
 
 use App\Anthropometry;
+use App\CardiovascularRisk;
+use App\ExercisePrescription;
+use App\FitnessComponent;
+use App\MaxHeartRate;
+use App\NutritionAndHealth;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -49,6 +54,54 @@ class Cliente extends Model
     public function anthropometry()
     {
         return $this->anthropometries('desc')->first();
+    }
+
+    public function cardiovascularRisks($order = 'asc')
+    {
+        return $this->hasMany(CardiovascularRisk::class, 'client_id', 'usuario_id')->orderBy('created_at', $order);
+    }
+
+    public function cardiovascularRisk()
+    {
+        return $this->cardiovascularRisks('desc')->first();
+    }
+
+    public function maxHeartRates($order = 'asc')
+    {
+        return $this->hasMany(MaxHeartRate::class, 'client_id', 'usuario_id')->orderBy('created_at', $order);
+    }
+
+    public function maxHeartRate()
+    {
+        return $this->maxHeartRates('desc')->first();
+    }
+
+    public function fitnessComponents($order = 'asc')
+    {
+        return $this->hasMany(FitnessComponent::class, 'client_id', 'usuario_id')->orderBy('created_at', $order);
+    }
+
+    public function fitnessComponent()
+    {
+        return $this->fitnessComponents('desc')->first();
+    }
+
+    public function exercisePrescription()
+    {
+        $exercisePrescription = $this->hasOne(ExercisePrescription::class, 'client_id', 'usuario_id')->first();
+        if($exercisePrescription){
+            return json_decode( preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $exercisePrescription->recommendations), true );
+        }
+        return null;
+    }
+
+    public function nutritionAndHealth()
+    {
+        $nutritionAndHealth = $this->hasOne(NutritionAndHealth::class, 'client_id', 'usuario_id')->first();
+        if($nutritionAndHealth){
+            return json_decode( preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $nutritionAndHealth->recommendations), true );
+        }
+        return null;
     }
 
     public function getPorcentajeMetaAttribute(){
