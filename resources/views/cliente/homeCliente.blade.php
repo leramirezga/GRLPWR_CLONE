@@ -71,7 +71,9 @@
 @endsection
 
 @push('cards')
-    @include('cliente/clientPlan')
+    @if(!$visitante)
+        @include('cliente/clientPlan')
+    @endif
 @endpush
 
 @push('scripts')
