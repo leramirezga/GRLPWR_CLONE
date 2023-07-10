@@ -99,7 +99,7 @@ class Cliente extends Model
     {
         $nutritionAndHealth = $this->hasOne(NutritionAndHealth::class, 'client_id', 'usuario_id')->first();
         if($nutritionAndHealth){
-            return json_decode( preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $nutritionAndHealth->recommendations), true );
+            return json_decode( preg_replace('/[\x00-\x1F]/', '', $nutritionAndHealth->recommendations), true );
         }
         return null;
     }
