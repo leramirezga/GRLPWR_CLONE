@@ -7,7 +7,9 @@
 @section('content')
     <div class="d-md-flex justify-content-between justify-content-md-around w-75 m-auto">
         @foreach($plans as $plan)
-           @include('planCard')
+            @if($plan->available_plans === null || $plan->available_plans > 0)
+                @include('planCard')
+            @endif
         @endforeach
     </div>
 @endsection
