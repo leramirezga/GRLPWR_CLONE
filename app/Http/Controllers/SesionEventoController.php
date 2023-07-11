@@ -34,10 +34,13 @@ class SesionEventoController extends Controller
      */
     public function fullcalendar(Request $request)
     {
-        $sesionesEvento = DB::table('sesiones_evento')
+        $sesionesEvento = $request->end ? DB::table('sesiones_evento')
             ->where('fecha_inicio', '>=', today())
             ->where('fecha_fin', '<=', $request->end)
-            ->get();
+            ->get() :
+            DB::table('sesiones_evento')
+                ->where('fecha_inicio', '>=', today())
+                ->get();
 
         return $sesionesEvento->map(function($item) {
             $data['id'] = $item->id;

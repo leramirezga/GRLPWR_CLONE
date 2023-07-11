@@ -65,7 +65,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/rotate-image', 'BlogsController@uploadImage');//TODO ROTATE AND CROP
 
     Route::get('/eventos/{sesion}', [SesionEventoController::class, 'show'])->name('evento');
-    Route::get('/eventos', [SesionEventoController::class, 'fullcalendar'])->name('eventos');
+    //Route::get('/eventos', [SesionEventoController::class, 'fullcalendar'])->name('eventos');
     Route::post('/agendar', [SesionClienteController::class, 'save'])->name('agendar');
 
     Route::post('/response_payment',[PagosController::class, 'responsePayment']);
