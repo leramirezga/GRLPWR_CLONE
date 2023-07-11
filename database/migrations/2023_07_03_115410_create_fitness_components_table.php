@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedInteger('client_id');//foreign. Is necessary the unsigned to match with the other table
             $table->unsignedInteger('muscular_endurance');
             $table->unsignedInteger('muscle_strength');
-            $table->unsignedInteger('flexibility')->nullable();
+            $table->integer('flexibility')->nullable();
             $table->timestamps();
         });
     }
