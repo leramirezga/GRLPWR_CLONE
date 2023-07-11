@@ -93,7 +93,7 @@
                 @yield('card2')
                 @stack('cards')
 
-                <!--
+
                 <div>
                     <h1 class="text-center">
                         Síguenos en nuestras redes sociales
@@ -103,7 +103,7 @@
                             data-mc-src="cecec7ae-a1de-4791-919b-3cd0b328b251#instagram">
                     </div>
                 </div>
-                -->
+
                 <div class="{{\Illuminate\Support\Facades\Blade::check('feature', 'dark_theme', false) ? "floating-card bg-semi-transparent" : "box-shadow"}} p-3 mb-3">
                     <h3 class="mb-5">Reviews ({{$user->reviews->count()}}):</h3>
                     @foreach($user->reviews as $review)
@@ -150,12 +150,11 @@
         });
     </script>
 
-    <!--Instagram
+    <!--Instagram-->
     <script
             src="https://cdn2.woxo.tech/a.js#616af38872a6520016a29c25"
             async data-usrc>
     </script>
-    -->
 
     <!--Maps-->
     <script>
