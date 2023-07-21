@@ -15,4 +15,8 @@ class SesionEvento extends Model
     public function evento(){
         return $this->belongsTo(Evento::class);
     }
+
+    public function attendees(){
+        return $this->hasMany(SesionCliente::class, 'sesion_evento_id', 'id');
+    }
 }

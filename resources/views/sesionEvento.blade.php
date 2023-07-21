@@ -22,6 +22,9 @@
                     <img src="{{asset('images/'.$sesionEvento->evento->imagen)}}" height="600px"
                          alt="Eventos @lang('general.AppName')">
                 </div>
+                @if((strcasecmp (\Illuminate\Support\Facades\Auth::user()->rol, \App\Utils\Constantes::ROL_ADMIN ) == 0))
+                    @include('admin.attendeesTable')
+                @endif
             </div>
             <div class="d-flex flex-wrap">
                 <div id="sesionInfo" class="mt-3 w-100 text-center">
@@ -45,7 +48,9 @@
                     <button type="button" class="btn bg-fifth ms-3" onclick="checkPlan()">Agendar</button>
                 </div>
             </div>
-            @include('scheduleModal')
+            @if((strcasecmp (\Illuminate\Support\Facades\Auth::user()->rol, \App\Utils\Constantes::ROL_ADMIN ) != 0))
+                @include('scheduleModal')
+            @endif
             <h1 class="text-center mt-5">
                 Próximos Eventos
             </h1>
@@ -54,8 +59,10 @@
         @endif
     </div>
 
-    @include('cliente.completeProfileClient')
-    @include('modalCompletarPerfil')
+    @if((strcasecmp (\Illuminate\Support\Facades\Auth::user()->rol, \App\Utils\Constantes::ROL_ADMIN ) != 0))
+        @include('cliente.completeProfileClient')
+        @include('modalCompletarPerfil')
+    @endif
 @endsection
 
 @push('scripts')

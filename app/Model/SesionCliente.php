@@ -42,4 +42,12 @@ class SesionCliente extends Model
         return null;
     }
 
+    public function client(){
+        return $this->belongsTo(Cliente::class,'cliente_id', 'usuario_id');
+    }
+
+    public function kangoo(){
+        return $this->hasOne(Kangoo::class,'id', 'kangoo_id');
+    }
+
 }

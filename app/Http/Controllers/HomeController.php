@@ -41,6 +41,9 @@ class HomeController extends Controller
     {
         SeguridadController::verificarUsuario($user);
         $visitante = false;
+        if(strcasecmp ( $user->rol, Constantes::ROL_ADMIN ) == 0){
+            return view('admin.homeAdmin', compact('user'));
+        }
         if(strcasecmp ( $user->rol, Constantes::ROL_CLIENTE ) == 0){
             $entrenamientosAgendados = SesionCliente::
                                         where('cliente_id', $user->id)
