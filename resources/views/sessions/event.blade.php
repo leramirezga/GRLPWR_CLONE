@@ -17,7 +17,7 @@
                 <h1 class="text-center mt-3">
                     {{$event->nombre}}
                 </h1>
-                <p class="text-center mb-1"><strong>{{$event->fecha_inicio->isoFormat('dddd D MMMM')}} {{$event->start_hour}}</strong></p>
+                <p class="text-center mb-1"><strong>{{Carbon\Carbon::parse($event->fecha_inicio)->translatedFormat('l d F', 'es')}} {{$event->start_hour}}</strong></p>
                 <p class="text-center mb-1">Lugar: {{$event->lugar}}</p>
                 <div class="w-75 m-auto d-flex justify-content-center">
                     <img src="{{asset('images/'.$event->imagen)}}" height="600px"
