@@ -1365,3 +1365,16 @@ fieldset[disabled] .checkbox, fieldset[disabled] .checkbox input[type=checkbox],
     color: #89229b;
     text-decoration: none;
 }
+
+textarea.form-control {
+    height: auto;
+}
+/*this fix the select width if you use a selector in wizard
+input,
+select  {
+    width: 160px!important;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+*/

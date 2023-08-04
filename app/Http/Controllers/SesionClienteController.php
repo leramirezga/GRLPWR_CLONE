@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\EditedEvent;
 use App\Model\Cliente;
 use App\Model\ClientPlan;
+use App\Model\Evento;
 use App\Model\Review;
 use App\Model\ReviewSession;
 use App\Model\SesionCliente;
@@ -21,7 +23,7 @@ use Validator;
 
 class SesionClienteController extends Controller
 {
-    public function save(int $sesionEventoId, int $clienteId, $sesionClienteId)
+    public function save(int $eventId, int $clienteId, $sesionClienteId)
     {
         if($sesionClienteId != "null"){//La sesion fue creada con reserva de kangoo, así que se confirma
             $sesionCliente = SesionCliente::find($sesionClienteId);
@@ -29,15 +31,23 @@ class SesionClienteController extends Controller
         }else{
             $sesionCliente = new SesionCliente();
             $sesionCliente->cliente_id = $clienteId;
-            $sesionCliente->sesion_evento_id = $sesionEventoId;
+            $sesionCliente->evento_id = $eventId;
         }
         $sesionCliente->save();
     }
 
     public function scheduleEvent(Request $request){
-        $sesionEvento = SesionEvento::find($request->get('sesionEventoId'));
-        $scheduled_clients = SesionCliente::where('sesion_evento_id', $sesionEvento->id)->count();
-        if($sesionEvento->cupos <= $scheduled_clients){
+        $editedEvent = EditedEvent::where('evento_id', $request->get('eventId'))
+            ->where('fecha_inicio', '=', $request->get('startDate'))
+            ->where('start_hour', '=', $request->get('startHour'))
+            ->first();
+        $event = $editedEvent ?: Evento::find($request->get('eventId'));
+        $startDateTime = $request->get('startDate') . ' ' . $event->start_hour;
+        $endDateTime = $request->get('endDate') . ' ' . $event->end_hour;
+        $scheduled_clients = SesionCliente::where('evento_id', $event->id)
+            ->where('fecha_inicio', '=', $startDateTime)
+            ->where('fecha_fin', '=', $endDateTime)->count();
+        if($event->cupos <= $scheduled_clients){
             Session::put('msg_level', 'danger');
             Session::put('msg', __('general.quotas_not_available'));
             Session::save();
@@ -45,15 +55,15 @@ class SesionClienteController extends Controller
         }
         $clientId = $request->get('clientId');
         if(filter_var($request->get('rentKangoos'), FILTER_VALIDATE_BOOLEAN)){
-            $assignResponse = $this->assignKangoos($sesionEvento, $clientId);
+            $assignResponse = $this->assignKangoos($event, $clientId, $startDateTime, $endDateTime);
             if($assignResponse instanceof JsonResponse){
                 return $assignResponse;
             }
         }
-        return $this->validatePlan($clientId, $assignResponse ?? null, $sesionEvento->id);
+        return $this->validatePlan($clientId, $assignResponse ?? null, $event->id, $request->get('startDate'), $request->get('endDate'));
     }
 
-    public function assignKangoos(SesionEvento $sesionEvento, $clientId)
+    public function assignKangoos(Evento $event, $clientId, $start_date, $end_date)
     {
         $client = Cliente::find($clientId);
         switch ($client->talla_zapato){
@@ -99,12 +109,11 @@ class SesionClienteController extends Controller
             return response()->json(['error' =>  __('general.not_supported_shoe_size')], 404);
         }
 
-        $kangoos = DB::table('kangoos')->whereNotIn('id', function($q) use($sesionEvento){
+        $kangoos = DB::table('kangoos')->whereNotIn('id', function($q) use($event, $start_date, $end_date){
             $q->select('kangoos.id')->from('kangoos')
             ->leftJoin('sesiones_cliente', 'kangoos.id', '=', 'sesiones_cliente.kangoo_id')
-            ->join('sesiones_evento', 'sesiones_cliente.sesion_evento_id', '=', 'sesiones_evento.id')
-            ->where('sesiones_evento.fecha_fin', '>', $sesionEvento->fecha_inicio)
-            ->where('sesiones_evento.fecha_inicio', '<', $sesionEvento->fecha_fin);
+            ->where('sesiones_cliente.fecha_fin', '>', $start_date)
+            ->where('sesiones_cliente.fecha_inicio', '<', $end_date);
         })->where('kangoos.estado', KangooStatesEnum::Available)
             ->whereIn('talla', $tallaKangoo)
             ->where('kangoos.resistencia', '>=', $resistance)
@@ -119,8 +128,10 @@ class SesionClienteController extends Controller
             if(is_numeric($kangooId)){
                 $sesionCliente = new SesionCliente;
                 $sesionCliente->cliente_id = $clientId;
-                $sesionCliente->sesion_evento_id = $sesionEvento->id;
+                $sesionCliente->evento_id = $event->id;
                 $sesionCliente->kangoo_id = $kangooId;
+                $sesionCliente->fecha_inicio = $start_date;
+                $sesionCliente->fecha_fin = $end_date;
                 return $sesionCliente;
             }
         }
@@ -130,7 +141,7 @@ class SesionClienteController extends Controller
         return response()->json(['error' =>  __('general.not_available_kangoos')], 404);
     }
 
-    public function validatePlan($clientId, $sesionCliente = null, $sesionEventoId = null)
+    public function validatePlan($clientId, $sesionCliente = null, $eventId = null, $start_date, $end_date)
     {
         $clientPlan = ClientPlan::where('client_id', $clientId)
                     ->where('expiration_date', '>', now())
@@ -139,12 +150,14 @@ class SesionClienteController extends Controller
         if($clientPlan){
             $clientPlan->remaining_classes = $clientPlan->remaining_classes-1;
             $clientPlan->save();
-            if(!isset($sesionCliente)){
+            if(!isset($sesionCliente)){//The customer has his own kangoos
                 $sesionCliente = new SesionCliente;
                 $sesionCliente->cliente_id = $clientId;
-                $sesionCliente->sesion_evento_id = $sesionEventoId;
+                $sesionCliente->evento_id = $eventId;
+                $sesionCliente->fecha_inicio = $start_date;
+                $sesionCliente->fecha_fin = $end_date;
             }
-            $sesionCliente->save();
+            $sesionCliente->save();//This was created above or it was created in assign kangoos method
             Session::put('msg_level', 'success');
             Session::put('msg', __('general.success_purchase'));
             Session::save();

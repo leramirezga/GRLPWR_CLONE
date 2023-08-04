@@ -702,3 +702,7 @@ body {
 .tooltip {
     z-index: 10700;
 }
+
+.w-0 {
+    width: 0px !important;
+}

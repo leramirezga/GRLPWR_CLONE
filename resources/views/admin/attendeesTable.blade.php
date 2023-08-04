@@ -10,7 +10,7 @@
             </tr>
         </thead>
         <tbody>
-        @foreach($sesionEvento->attendees as $clientSession)
+        @foreach($event->attendees as $clientSession)
             <tr>
                 <td>{{$clientSession->client->usuario->nombre}}</td>
                 <td>{{$clientSession->client->peso()->peso}}</td>

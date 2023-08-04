@@ -160,37 +160,37 @@ class SolicitudServicioController extends Controller
                         $programacion->lunes =   true;
                         $programacion->hora_inicio_lunes = date('H:i:s', strtotime( $data['horaInicioLunes']));
                         $programacion->hora_fin_lunes = date('H:i:s', strtotime( $data['horaFinLunes']));
-                        continue;
+                        break;
                     case 2:
                         $programacion->martes =   true;
                         $programacion->hora_inicio_martes = date('H:i:s', strtotime( $data['horaInicioMartes']));
                         $programacion->hora_fin_martes = date('H:i:s', strtotime( $data['horaFinMartes']));
-                        continue;
+                        break;
                     case 3:
                         $programacion->miercoles =   true;
                         $programacion->hora_inicio_miercoles = date('H:i:s', strtotime( $data['horaInicioMiércoles']));
                         $programacion->hora_fin_miercoles = date('H:i:s', strtotime( $data['horaFinMiércoles']));
-                        continue;
+                        break;
                     case 4:
                         $programacion->jueves=   true;
                         $programacion->hora_inicio_jueves = date('H:i:s', strtotime( $data['horaInicioJueves']));
                         $programacion->hora_fin_jueves = date('H:i:s', strtotime( $data['horaFinJueves']));
-                        continue;
+                        break;
                     case 5:
                         $programacion->viernes =   true;
                         $programacion->hora_inicio_viernes = date('H:i:s', strtotime( $data['horaInicioViernes']));
                         $programacion->hora_fin_viernes = date('H:i:s', strtotime( $data['horaFinViernes']));
-                        continue;
+                        break;
                     case 6:
                         $programacion->sabado =   true;
                         $programacion->hora_inicio_sabado = date('H:i:s', strtotime( $data['horaInicioSábado']));
                         $programacion->hora_fin_sabado = date('H:i:s', strtotime( $data['horaFinSábado']));
-                        continue;
+                        break;
                     case 7:
                         $programacion->domingo =   true;
                         $programacion->hora_inicio_domingo = date('H:i:s', strtotime( $data['horaInicioDomingo']));
                         $programacion->hora_inicio_domingo = date('H:i:s', strtotime( $data['horaInicioDomingo']));
-                        continue;
+                        break;
                 }
             }
 
@@ -265,37 +265,37 @@ class SolicitudServicioController extends Controller
                         $programacion->lunes =   true;
                         $programacion->hora_inicio_lunes = date('H:i:s', strtotime( $data['horaInicioLunes']));
                         $programacion->hora_fin_lunes = date('H:i:s', strtotime( $data['horaFinLunes']));
-                        continue;
+                        break;
                     case 2:
                         $programacion->martes =   true;
                         $programacion->hora_inicio_martes = date('H:i:s', strtotime( $data['horaInicioMartes']));
                         $programacion->hora_fin_martes = date('H:i:s', strtotime( $data['horaFinMartes']));
-                        continue;
+                        break;
                     case 3:
                         $programacion->miercoles =   true;
                         $programacion->hora_inicio_miercoles = date('H:i:s', strtotime( $data['horaInicioMiércoles']));
                         $programacion->hora_fin_miercoles = date('H:i:s', strtotime( $data['horaFinMiércoles']));
-                        continue;
+                        break;
                     case 4:
                         $programacion->jueves=   true;
                         $programacion->hora_inicio_jueves = date('H:i:s', strtotime( $data['horaInicioJueves']));
                         $programacion->hora_fin_jueves = date('H:i:s', strtotime( $data['horaFinJueves']));
-                        continue;
+                        break;
                     case 5:
                         $programacion->viernes =   true;
                         $programacion->hora_inicio_viernes = date('H:i:s', strtotime( $data['horaInicioViernes']));
                         $programacion->hora_fin_viernes = date('H:i:s', strtotime( $data['horaFinViernes']));
-                        continue;
+                        break;
                     case 6:
                         $programacion->sabado =   true;
                         $programacion->hora_inicio_sabado = date('H:i:s', strtotime( $data['horaInicioSábado']));
                         $programacion->hora_fin_sabado = date('H:i:s', strtotime( $data['horaFinSábado']));
-                        continue;
+                        break;
                     case 7:
                         $programacion->domingo =   true;
                         $programacion->hora_inicio_domingo = date('H:i:s', strtotime( $data['horaInicioDomingo']));
                         $programacion->hora_inicio_domingo = date('H:i:s', strtotime( $data['horaInicioDomingo']));
-                        continue;
+                        break;
                 }
             }
 
