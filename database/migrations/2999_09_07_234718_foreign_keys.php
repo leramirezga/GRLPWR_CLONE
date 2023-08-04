@@ -100,14 +100,18 @@ class ForeignKeys extends Migration
             $table->foreign('reply_id')->references('id')->on('comentarios');
         });
 
-        Schema::table('sesiones_evento', function (Blueprint $table) {
+        Schema::table('edited_events', function (Blueprint $table) {
             $table->foreign('evento_id')->references('id')->on('eventos');
+        });
+
+        Schema::table('event_hours', function (Blueprint $table) {
+            $table->foreign('event_id')->references('id')->on('eventos');
         });
 
         Schema::table('sesiones_cliente', function (Blueprint $table) {
             $table->foreign('cliente_id')->references('usuario_id')->on('clientes');
             $table->foreign('kangoo_id')->references('id')->on('kangoos');
-            $table->foreign('sesion_evento_id')->references('id')->on('sesiones_evento');
+            $table->foreign('evento_id')->references('id')->on('eventos');
         });
 
         Schema::table('kangoo_partes', function (Blueprint $table) {
@@ -254,9 +258,14 @@ class ForeignKeys extends Migration
             $table->dropColumn('reply_id');
         });
 
-        Schema::table('sesiones_evento', function (Blueprint $table) {
+        Schema::table('edited_events', function (Blueprint $table) {
             $table->dropForeign(['evento_id']);
             $table->dropColumn('evento_id');
+        });
+
+        Schema::table('event_hours', function (Blueprint $table) {
+            $table->dropForeign(['event_id']);
+            $table->dropColumn('event_id');
         });
 
         Schema::table('sesiones_cliente', function (Blueprint $table) {
@@ -264,8 +273,8 @@ class ForeignKeys extends Migration
             $table->dropColumn('cliente_id');
             $table->dropForeign(['kangoo_id']);
             $table->dropColumn('kangoo_id');
-            $table->dropForeign(['sesion_evento_id']);
-            $table->dropColumn('sesion_evento_id');
+            $table->dropForeign(['evento_id']);
+            $table->dropColumn('evento_id');
         });
 
         Schema::table('kangoo_partes', function (Blueprint $table) {

@@ -87,23 +87,4 @@
             }
         });
     </script>
-    <!--Validar completar perfil-->
-    <script>
-        $(document).ready(function () {
-            $('.icon').click(function () {
-                $('.icon').css("border-color", "");
-            });
-        });
-
-        function validar() {
-            if (typeof $("input[name='genero']:checked").val() === "undefined") {
-                $('.radio-label').css("cssText", "color: red!important;")
-            } else {
-                $('.radio-label').css("color", "red")
-            }
-            if (typeof $("input[name='tipoCuerpo']:checked").val() === "undefined") {
-                $('.icon').css("border-color", "red");
-            }
-        }
-    </script>
 @endpush

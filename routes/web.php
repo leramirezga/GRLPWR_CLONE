@@ -14,7 +14,7 @@
 use App\Http\Controllers\PagosController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\SesionClienteController;
-use App\Http\Controllers\SesionEventoController;
+use App\Http\Controllers\EventController;
 use \Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
@@ -64,7 +64,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/upload-image', 'BlogsController@uploadImage');
     Route::post('/rotate-image', 'BlogsController@uploadImage');//TODO ROTATE AND CROP
 
-    Route::get('/eventos/{sesion}', [SesionEventoController::class, 'show'])->name('evento');
+    Route::get('/eventos/crear', [EventController::class, 'create'])->name('eventos.create');
+    Route::get('/eventos/{evento}/{date}/{hour}', [EventController::class, 'show'])->name('eventos.show');
+    Route::post('/eventos/crear', [EventController::class, 'save'])->name('eventos.store');
+
     //Route::get('/eventos', [SesionEventoController::class, 'fullcalendar'])->name('eventos');
     Route::post('/agendar', [SesionClienteController::class, 'save'])->name('agendar');
 

@@ -18,7 +18,7 @@ class SesionCliente extends Model
      * @var array
      */
     protected $fillable = [
-        'cliente_id','kangoo_id','sesion_evento_id', 'reservado_hasta'
+        'cliente_id','kangoo_id','evento_id', 'reservado_hasta', 'fecha_inicio', 'fecha_fin'
     ];
 
     /**
@@ -30,11 +30,10 @@ class SesionCliente extends Model
     public function scopeEntrenamientosAgendados($query, $tipoUsuario){
         switch ($tipoUsuario){
             case Constantes::ROL_CLIENTE:
-                 return $query->join('sesiones_evento', 'sesiones_cliente.sesion_evento_id', 'sesiones_evento.id')
-                     ->join('eventos', 'sesiones_evento.evento_id', 'eventos.id')
+                 return $query->join('eventos', 'sesiones_cliente.evento_id', 'eventos.id')
                      ->leftJoin('kangoos', 'sesiones_cliente.kangoo_id', 'kangoos.id')
-                     ->where('sesiones_evento.fecha_inicio', '>=', today())
-                     ->select('sesiones_cliente.id','sesiones_evento.fecha_inicio','sesiones_evento.fecha_fin', 'sesiones_evento.lugar',
+                     ->where('sesiones_cliente.fecha_inicio', '>=', today())
+                     ->select('sesiones_cliente.id','sesiones_cliente.fecha_inicio','sesiones_cliente.fecha_fin', 'eventos.lugar',
                                 'eventos.nombre', 'kangoos.SKU');
             case Constantes::ROL_ENTRENADOR:
                 //TODO

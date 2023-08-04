@@ -196,6 +196,7 @@
     <script src="{{asset('js/jquery.bootstrap.js')}}" type="text/javascript"></script>
     <!--  Plugin for the Wizard -->
     <script src="{{asset('js/validar-completarPerfil.js')}}"></script>
+    <script src="{{asset('js/wizard.js')}}"></script>
 
     <!--  More information about jquery.validate here: http://jqueryvalidation.org/	 -->f
     <script src="{{asset('js/jquery.validate.min.js')}}"></script>
@@ -227,5 +228,25 @@
         $(document).on('hidden.bs.modal', '.modal', function () {
             $('.modal:visible').length && $(document.body).addClass('modal-open');
         });
+    </script>
+
+    <!--Validar completar perfil-->
+    <script>
+        $(document).ready(function () {
+            $('.icon').click(function () {
+                $('.icon').css("border-color", "");
+            });
+        });
+
+        function validar() {
+            if (typeof $("input[name='genero']:checked").val() === "undefined") {
+                $('.radio-label').css("cssText", "color: red!important;")
+            } else {
+                $('.radio-label').css("color", "red")
+            }
+            if (typeof $("input[name='tipoCuerpo']:checked").val() === "undefined") {
+                $('.icon').css("border-color", "red");
+            }
+        }
     </script>
 @endpush

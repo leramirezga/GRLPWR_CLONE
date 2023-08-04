@@ -93,7 +93,7 @@ class PagosController extends Controller
         switch ((int)$x_cod_response) {
             case 1:
                 # code transacción aceptada
-                (new SesionClienteController())->save(sesionEventoId: $eventId, clienteId: $clientId, sesionClienteId: $sessionClientId);
+                (new SesionClienteController())->save(EventId: $eventId, clienteId: $clientId, sesionClienteId: $sessionClientId);
                 Session::put('msg_level', 'success');
                 Session::put('msg', __('general.success_purchase'));
                 Session::save();

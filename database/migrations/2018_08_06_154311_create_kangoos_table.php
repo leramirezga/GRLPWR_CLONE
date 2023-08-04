@@ -18,8 +18,10 @@ class CreateKangoosTable extends Migration
             $table->String('marca');
             $table->String('referencia');
             $table->String('SKU')->unique();
+            //TODO change for enum
             $table->String('talla',1);
             $table->unsignedInteger('resistencia');
+            //TODO change for enum
             $table->String('estado');//(disponible, asignado, en mantenimiento, dañado, borrado)
             $table->String('anotaciones')->nullable();
             $table->timestamps();

@@ -1,10 +1,11 @@
 @extends('layouts.app')
 
 @section('title')
-    {{$sesionEvento->evento->nombre}}
+    {{$event->nombre}}
 @endsection
 
 @section('content')
+
     <div class="text-center">
         @if(strcasecmp (\Illuminate\Support\Facades\Auth::user()->rol, 'cliente' ) == 0 && \Illuminate\Support\Facades\Auth::user()->cliente == null)
             <h2>Para agendarte a los eventos debes completar tu perfil</h2>
@@ -14,12 +15,12 @@
         @else
             <div>
                 <h1 class="text-center mt-3">
-                    {{$sesionEvento->evento->nombre}}
+                    {{$event->nombre}}
                 </h1>
-                <p class="text-center mb-1"><strong>{{$sesionEvento->fecha_inicio->isoFormat('dddd D MMMM')}} {{$sesionEvento->fecha_inicio->format('g:i A')}}</strong></p>
-                <p class="text-center mb-1">Lugar: {{$sesionEvento->lugar}}</p>
+                <p class="text-center mb-1"><strong>{{$event->fecha_inicio->isoFormat('dddd D MMMM')}} {{$event->start_hour}}</strong></p>
+                <p class="text-center mb-1">Lugar: {{$event->lugar}}</p>
                 <div class="w-75 m-auto d-flex justify-content-center">
-                    <img src="{{asset('images/'.$sesionEvento->evento->imagen)}}" height="600px"
+                    <img src="{{asset('images/'.$event->imagen)}}" height="600px"
                          alt="Eventos @lang('general.AppName')">
                 </div>
                 @if((strcasecmp (\Illuminate\Support\Facades\Auth::user()->rol, \App\Utils\Constantes::ROL_ADMIN ) == 0))
@@ -41,9 +42,9 @@
                     </ul>
                     <div class="tab-content w-100 w-md-75 m-3" id="infoTabContent" style="text-align: justify;">
                         <div class="tab-pane fade show active" id="description" role="tabpanel"
-                             aria-labelledby="description-tab">{{$sesionEvento->evento->descripcion}}</div>
+                             aria-labelledby="description-tab">{{$event->descripcion}}</div>
                         <div class="tab-pane fade" id="additional-info" role="tabpanel"
-                             aria-labelledby="additional-info-tab">{{$sesionEvento->evento->info_adicional}}</div>
+                             aria-labelledby="additional-info-tab">{{$event->info_adicional}}</div>
                     </div>
                     <button type="button" class="btn bg-fifth ms-3" onclick="checkPlan()">Agendar</button>
                 </div>
@@ -69,7 +70,7 @@
     <!--PAYMENT-->
     <script type="text/javascript" src="https://checkout.epayco.co/checkout.js"></script>
     <script>
-        function checkPlan(){
+        function checkPlan() {
             if({{isset($plan) ? 1 : 0}}){
                 scheduleEvent({{(isset($plan) && \App\Utils\PlanTypesEnum::Kangoo_rent->value - $plan->plan->plan_type) == 0 ? 1 : 0}});
             }
@@ -78,8 +79,7 @@
                 scheduleModal.show();
             }
         }
-    </script>
-    <script>
+
         document.getElementById("agendarForm").addEventListener("submit", submitListener, true);
         var rentKangoos = false
         function submitListener(event) {
@@ -96,7 +96,11 @@
                 url: "{{ route('scheduleEvent') }}",
                 method: "POST",
                 data: {clientId:{{\Illuminate\Support\Facades\Auth::id()}},
-                    sesionEventoId: {{$sesionEvento->id}},
+                    eventId: {{$event->id}},
+                    startDate: "{{$event->fecha_inicio->format('d-m-Y')}}",
+                    startHour: "{{$event->start_hour}}",
+                    endDate: "{{$event->fecha_fin->format('d-m-Y')}}",
+                    endHour: "{{$event->end_hour}}",
                     rentKangoos: rentKangoos},
 
                 success: function (data) {
@@ -114,12 +118,13 @@
                     }
                 },
                 error: function(data) {
-                    //console.log(data); if you want to debug yo need to uncomment this line and comment reload
+                    //console.log(data); //if you want to debug yo need to uncomment this line and comment reload
                     $('html, body').animate({ scrollTop: 0 }, 0);
                     location.reload();
                 }
             });
         }
+
         var handler = ePayco.checkout.configure({
             key: "{{env('EPAYCO_PUBLIC_KEY')}}",
             test: Boolean({{env('EPAYCO_TEST')}})
@@ -143,10 +148,10 @@
 
         function showPayModal(sesionClienteId = null) {
             data.currency = '{{\Illuminate\Support\Facades\Session::get('currency_id') ? \Illuminate\Support\Facades\Session::get('currency_id') : 'COP'}}';
-            data.amount = rentKangoos==true ? {{$sesionEvento->precio}} : {{$sesionEvento->precio - $sesionEvento->descuento}}
+            data.amount = rentKangoos==true ? {{$event->precio}} : {{$event->precio_sin_botas}}
             data.extra1 = '{{ \App\Utils\PayTypesEnum::Session }}'
             data.extra2 = {{ \Illuminate\Support\Facades\Auth::id() }}
-            data.extra3 = {{$sesionEvento->id }}
+            data.extra3 = {{$event->id }}
             data.extra4 = sesionClienteId;
             data.type_doc_billing = "cc";
             handler.open(data)
