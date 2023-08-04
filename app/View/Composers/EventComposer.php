@@ -26,8 +26,7 @@ class EventComposer
             ->where('fecha_fin', '<=', today()->addWeek())
             ->orderBy('fecha_inicio', 'asc')
             ->get();
-        $repeatableEvents = Evento::doesntHave('edited_events')
-            ->where('repeatable', '=', true)
+        $repeatableEvents = Evento::where('repeatable', '=', true)
             ->join('event_hours', 'eventos.id', 'event_hours.event_id')
             ->get();
 
@@ -36,12 +35,16 @@ class EventComposer
         $dateTime = today();
         for ($i = 0; $i < 7; $i++) {
             $dayName = $dateTime->format('l');
-            $updatedCollection = $repeatableEvents->where('day', '=', $dayName)->map(function($element) use ($dateTime) {
-                $element['id'] = $element->event_id;
-                $element['fecha_inicio'] = $dateTime->format('d-m-Y');
-                $element['fecha_fin'] = $dateTime->format('d-m-Y');
-                return $element;
-            });
+            $updatedCollection = $repeatableEvents->where('day', '=', $dayName)->map(function($element) use ($dateTime, $editedEvents) {
+                if ($editedEvents->where('fecha_inicio', '=', $dateTime->format('Y-m-d'))->count() > 0) {
+                    $element['id'] = $element->event_id;
+                    $element['fecha_inicio'] = $dateTime->format('d-m-Y');
+                    $element['fecha_fin'] = $dateTime->format('d-m-Y');
+                    return $element;
+                }
+            })->filter(function($item) {
+                return $item !== null;
+            });;
             $events = $events->concat($updatedCollection);
             $dateTime = $dateTime->addDay();
         }
