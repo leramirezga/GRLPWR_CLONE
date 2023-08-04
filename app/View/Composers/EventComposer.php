@@ -31,7 +31,7 @@ class EventComposer
             ->join('event_hours', 'eventos.id', 'event_hours.event_id')
             ->get();
 
-        $events = $editedEvents->merge($uniqueEvents);
+        $events = $editedEvents->concat($uniqueEvents);
 
         $dateTime = today();
         for ($i = 0; $i < 7; $i++) {
@@ -42,7 +42,7 @@ class EventComposer
                 $element['fecha_fin'] = $dateTime->format('d-m-Y');
                 return $element;
             });
-            $events = $events->merge($updatedCollection);
+            $events = $events->concat($updatedCollection);
             $dateTime = $dateTime->addDay();
         }
 
