@@ -34,7 +34,7 @@ class EventController extends Controller
      */
     public function show(Evento $evento, $date, $hour)
     {
-
+        $date = Carbon::parse($date)->format('Y-m-d');
         $editedEvent = EditedEvent::where('fecha_inicio', '=', $date)->first();
         if ($editedEvent){
             $evento = $editedEvent;

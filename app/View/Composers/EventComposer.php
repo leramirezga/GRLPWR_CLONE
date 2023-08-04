@@ -19,7 +19,10 @@ class EventComposer
         $editedEvents = EditedEvent::where('fecha_inicio', '>=', today())
             ->where('fecha_fin', '<=', today()->addWeek())
             ->orderBy('fecha_inicio', 'asc')
-            ->get();
+            ->get()->map(function($element) {
+                $element['id'] = $element->evento_id;
+                return $element;
+            });
         $uniqueEvents = Evento::doesntHave('edited_events')
             ->where('repeatable', '=', false)
             ->where('fecha_inicio', '>=', today())
@@ -37,6 +40,8 @@ class EventComposer
             $dayName = $dateTime->format('l');
             $updatedCollection = $repeatableEvents->where('day', '=', $dayName)->map(function($element) use ($dateTime, $editedEvents) {
                 if ($editedEvents->where('fecha_inicio', '=', $dateTime->format('Y-m-d'))->count() > 0) {
+                    return null;
+                }else{
                     $element['id'] = $element->event_id;
                     $element['fecha_inicio'] = $dateTime->format('d-m-Y');
                     $element['fecha_fin'] = $dateTime->format('d-m-Y');

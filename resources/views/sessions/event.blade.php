@@ -97,9 +97,9 @@
                 method: "POST",
                 data: {clientId:{{\Illuminate\Support\Facades\Auth::id()}},
                     eventId: {{$event->id}},
-                    startDate: "{{$event->fecha_inicio->format('d-m-Y')}}",
+                    startDate: "{{Carbon\Carbon::parse($event->fecha_inicio)->format('d-m-Y')}}",
                     startHour: "{{$event->start_hour}}",
-                    endDate: "{{$event->fecha_fin->format('d-m-Y')}}",
+                    endDate: "{{Carbon\Carbon::parse($event->fecha_fin)->format('d-m-Y')}}",
                     endHour: "{{$event->end_hour}}",
                     rentKangoos: rentKangoos},
 
