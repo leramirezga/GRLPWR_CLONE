@@ -37,6 +37,7 @@ class EventComposer
         for ($i = 0; $i < 7; $i++) {
             $dayName = $dateTime->format('l');
             $updatedCollection = $repeatableEvents->where('day', '=', $dayName)->map(function($element) use ($dateTime) {
+                $element['id'] = $element->event_id;
                 $element['fecha_inicio'] = $dateTime->format('d-m-Y');
                 $element['fecha_fin'] = $dateTime->format('d-m-Y');
                 return $element;
