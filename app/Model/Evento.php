@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use App\EditedEvent;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,8 +20,8 @@ class Evento extends Model
 
     public function attendees(){
         return $this->hasMany(SesionCliente::class, 'evento_id', 'id')
-            ->where('fecha_inicio', '=', $this->fecha_inicio->format('Y-m-d') . ' ' . $this->start_hour)
-            ->where('fecha_fin', '=', $this->fecha_fin->format('Y-m-d') . ' ' . $this->end_hour);
+            ->where('fecha_inicio', '=', Carbon::parse($this->fecha_inicio)->format('Y-m-d') . ' ' . $this->start_hour)
+            ->where('fecha_fin', '=', Carbon::parse($this->fecha_fin)->format('Y-m-d') . ' ' . $this->end_hour);
     }
 
     public function edited_events(){
