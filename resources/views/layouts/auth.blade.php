@@ -127,11 +127,12 @@
     </div>
 
 
-    <!--subscribers-->
+    <!--subscribers
     <script type="text/javascript">
         var subscribersSiteId = 'cd602984-8642-4484-8a8b-431d84a5faf0';
     </script>
     <script type="text/javascript" src="https://cdn.subscribers.com/assets/subscribers.js"></script>
+    -->
 
     <!--google analytics-->
     <script>

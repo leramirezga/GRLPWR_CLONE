@@ -1,0 +1,38 @@
+.floating_button {
+    position: fixed;
+    bottom: 10vh;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
+    height: fit-content;
+    right: 10vh;
+    z-index: 100;
+}
+.chats a, .icon-chat{
+    display: block;
+    text-decoration: none;
+    background: var(--fourth-color);
+    color: white;
+    width: 55px;
+    height: 55px;
+    line-height: 50px;
+    text-align: center;
+    border-radius: 50%;
+    box-shadow: 0px, 1px, 10px rgba(0, 0, 0, 0.4);
+    transition: all 500ms ease;
+}
+
+.chats a:hover{
+    background: #fff;
+    color: #cc2b2b;
+}
+
+.chats a{
+    margin-bottom: -15px;
+    /*opacity: 0;
+    visibility: hidden;*/
+}
+#btn-chat:checked~ .chats a{
+    margin-bottom: 10px;
+    opacity: 1;
+    visibility: visible;
+}

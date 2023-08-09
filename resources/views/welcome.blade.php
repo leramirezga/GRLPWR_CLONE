@@ -41,6 +41,7 @@
 
         <link rel="stylesheet" href="{{asset('css/utils.css')}}">
 
+        <link rel="stylesheet" href="{{asset('css/chats.css')}}">
 
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-N08XQ68NZ4"></script>
@@ -227,7 +228,7 @@ border-spacing: 1em;">
 
             <div>
                 <i class="fa fa-phone"></i>
-                <p>322 243 42 96</p>
+                <p><a href="https://api.whatsapp.com/send/?phone=573001395018&text=Hola,%20quisiera%20información%20sobre%20las%20clases%20de%20rebote&app_absent=0" target=”_blank”>300 139 50 18</a></p>
             </div>
 
             <div>
@@ -297,6 +298,15 @@ border-spacing: 1em;">
     </script>
     <script type="text/javascript" src="https://cdn.subscribers.com/assets/subscribers.js"></script>
     -->
+    <!--Floating button-->
+
+    <div class="floating_button">
+        <div class="chats">
+            <a href="https://api.whatsapp.com/send/?phone=573001395018&text=Hola,%20quisiera%20información%20sobre%20las%20clases%20de%20rebote&app_absent=0" class="icon-whatsapp" target=”_blank”>
+                <img class="icon" width="100%" height="100%" alt="whatsapp" src="{{asset('images/wathsapp_icon.png')}}">
+            </a>
+        </div>
+    </div>
 
     <!--google analytics-->
     <script>
