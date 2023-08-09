@@ -222,13 +222,17 @@ border-spacing: 1em;">
         <div class="footer-center">
 
             <div>
-                <i class="fa fa-map-marker"></i>
-                <p><span>Av. Esperanza #75-25</span> Modelia, Bogotá</p>
+                <a href="https://goo.gl/maps/xTk22i9AogNk5DZ66" target=”_blank”>
+                    <i class="fa fa-map-marker"></i>
+                    <p><span>Av. Esperanza #75-25</span> Modelia, Bogotá</p>
+                </a>
             </div>
 
             <div>
-                <i class="fa fa-phone"></i>
-                <p><a href="https://api.whatsapp.com/send/?phone=573001395018&text=Hola,%20quisiera%20información%20sobre%20las%20clases%20de%20rebote&app_absent=0" target=”_blank”>300 139 50 18</a></p>
+                <a href="https://api.whatsapp.com/send/?phone=573001395018&text=Hola,%20quisiera%20información%20sobre%20las%20clases%20de%20rebote&app_absent=0" target=”_blank”>
+                    <i class="fa fa-phone"></i>
+                    <p>300 139 50 18</p>
+                </a>
             </div>
 
             <div>
