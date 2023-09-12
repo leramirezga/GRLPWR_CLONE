@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('fitness_components', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('client_id');//foreign. Is necessary the unsigned to match with the other table
+            $table->unsignedBigInteger('client_id');//foreign. Is necessary the unsigned to match with the other table
             $table->float('muscular_endurance');
             $table->unsignedInteger('muscle_strength');
             $table->integer('flexibility')->nullable();

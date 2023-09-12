@@ -72,7 +72,7 @@
     <script>
         function checkPlan() {
             if({{isset($plan) ? 1 : 0}}){
-                scheduleEvent({{(isset($plan) && \App\Utils\PlanTypesEnum::Kangoo_rent->value - $plan->plan->plan_type) == 0 ? 1 : 0}});
+                scheduleEvent({{$event->classType->required_equipment !== null && isset($equipmentIncluded) && $equipmentIncluded ? 1 : 0}});
             }
             else{
                 var scheduleModal = new bootstrap.Modal(document.getElementById('scheduleModal'));
@@ -81,14 +81,14 @@
         }
 
         document.getElementById("agendarForm").addEventListener("submit", submitListener, true);
-        var rentKangoos = false
+        var rentEquipment = false
         function submitListener(event) {
-            rentKangoos = document.querySelector('input[name="rentKangoos"]:checked').value;
+            rentEquipment = document.querySelector('input[name="rentEquipment"]:checked').value;
             event.preventDefault();
-            scheduleEvent(rentKangoos);
+            scheduleEvent(rentEquipment);
         }
 
-        function scheduleEvent(rentKangoos){
+        function scheduleEvent(rentEquipment){
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -101,7 +101,7 @@
                     startHour: "{{$event->start_hour}}",
                     endDate: "{{Carbon\Carbon::parse($event->fecha_fin)->format('d-m-Y')}}",
                     endHour: "{{$event->end_hour}}",
-                    rentKangoos: rentKangoos},
+                    rentEquipment: rentEquipment},
 
                 success: function (data) {
                     switch (data['status']){
@@ -118,7 +118,7 @@
                     }
                 },
                 error: function(data) {
-                    //console.log(data); //if you want to debug yo need to uncomment this line and comment reload
+                    //console.log(data); //if you want to debug you need to uncomment this line and comment reload
                     $('html, body').animate({ scrollTop: 0 }, 0);
                     location.reload();
                 }
@@ -148,13 +148,15 @@
 
         function showPayModal(sesionClienteId = null) {
             data.currency = '{{\Illuminate\Support\Facades\Session::get('currency_id') ? \Illuminate\Support\Facades\Session::get('currency_id') : 'COP'}}';
-            data.amount = rentKangoos==true ? {{$event->precio}} : {{$event->precio_sin_botas}}
-            data.extra1 = '{{ \App\Utils\PayTypesEnum::Session }}'
-            data.extra2 = {{ \Illuminate\Support\Facades\Auth::id() }}
-            data.extra3 = {{$event->id }}
+            data.amount = rentEquipment==true ? {{$event->precio}} : {{$event->precio_sin_implementos}};
+            data.extra1 = '{{ \App\Utils\PayTypesEnum::Session }}';
+            data.extra2 = {{ \Illuminate\Support\Facades\Auth::id() }};
+            data.extra3 = {{$event->id }};
             data.extra4 = sesionClienteId;
+            data.extra5 = '{{Carbon\Carbon::parse($event->fecha_inicio)->format('d-m-Y') . ' ' . $event->start_hour }}';
+            data.extra6 = '{{Carbon\Carbon::parse($event->fecha_fin)->format('d-m-Y')  . ' ' . $event->end_hour }}';
             data.type_doc_billing = "cc";
-            handler.open(data)
+            handler.open(data);
         }
     </script>
     <!--END PAYMENT-->

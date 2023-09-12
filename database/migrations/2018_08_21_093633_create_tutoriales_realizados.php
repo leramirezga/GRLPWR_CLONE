@@ -15,7 +15,7 @@ class CreateTutorialesRealizados extends Migration
     {
         Schema::create('tutoriales_realizados', function (Blueprint $table) {
             $table->unsignedInteger('tutorial_id');//foreign
-            $table->unsignedInteger('usuario_id');//foreing
+            $table->bigInteger('usuario_id', unsigned: true);;//foreing
             //TODO unique entre tutorial id y usuario id
             $table->timestamps();
         });

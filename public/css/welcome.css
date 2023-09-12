@@ -38,7 +38,7 @@
         instead of background put this:
         background-image: url(../images/botas.jpg);
         background-position: 0px;*/
-        background: url("../images/botas.jpg") no-repeat center center fixed;
+        background: url("../images/landing.jpg") no-repeat center center fixed;
     }
 }
 /* Medium devices (landscape tablets, 768px and up) */
@@ -67,7 +67,7 @@
         instead of background put this:
         background-image: url(../images/botas.jpg);
         background-position: 214px;*/
-        background: url("../images/botas3.jpg") no-repeat 0px center fixed;
+        background: url("../images/landing.jpg") no-repeat 0px center fixed;
         background-size: 120% 120%!important;
     }
 }
@@ -120,7 +120,7 @@
     position: relative;/*necesario para que las imágenes se ubiquen donde debe ser*/
 }
 body{
-    background: linear-gradient(rgb(13,158,151), rgb(17,28,91));
+    background: rgb(67,5,68);
     overflow-x: hidden;
     font-family: 'Barlow Regular', sans-serif;
 }
@@ -218,6 +218,9 @@ h1{
 .color-white{
     color: white!important;
 }
+.color-salmon{
+    color: rgb(236, 155, 126);
+}
 .benefits_icon{
     width: 70px;
     height: 70px;
@@ -235,5 +238,13 @@ h1{
 }
 .boots-image{
     height: 400px;
+}
+.bg-grey{
+    background-color: rgba(52,58,64,0.6);
+    color: white;
+}
+.bg-semi-transparent{
+    background-color: rgb(67,5,68, 0.9);
+    color: white;
 }
 

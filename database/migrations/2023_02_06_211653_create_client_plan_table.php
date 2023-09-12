@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('client_plan', function (Blueprint $table) {
+        Schema::create('client_plans', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('client_id');//foreign. Is necessary the unsigned to match with the other table
-            $table->unsignedInteger('plan_id');//foreign. Is necessary the unsigned to match with the other table
-            $table->unsignedInteger('remaining_classes');
+            $table->unsignedBigInteger('client_id');//foreign. Is necessary the unsigned to match with the other table
+            $table->bigInteger('plan_id', unsigned: true);//foreign. Is necessary the unsigned to match with the other table
+            $table->unsignedInteger('remaining_shared_classes')->nullable();
             $table->dateTime('expiration_date');
             $table->unsignedInteger('payment_id');//foreign. Is necessary the unsigned to match with the other table
             $table->timestamps();
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('client_plan');
+        Schema::dropIfExists('client_plans');
     }
 };

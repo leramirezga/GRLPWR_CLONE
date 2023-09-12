@@ -15,7 +15,7 @@ class CreateTagsEntrenadorTable extends Migration
     {
         Schema::create('tags_entrenador', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('usuario_id');
+            $table->bigInteger('usuario_id', unsigned: true);
             $table->unsignedInteger('tag_id');
             $table->timestamps();
         });

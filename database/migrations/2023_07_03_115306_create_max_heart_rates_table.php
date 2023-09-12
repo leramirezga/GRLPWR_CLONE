@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('max_heart_rates', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('client_id');//foreign. Is necessary the unsigned to match with the other table
+            $table->unsignedBigInteger('client_id');//foreign. Is necessary the unsigned to match with the other table
             $table->unsignedInteger('max_heart_rate');
             $table->timestamps();
         });

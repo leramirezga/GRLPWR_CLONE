@@ -10,7 +10,7 @@
             @endif
         </div>
         <div class="ml-auto my-3">
-            <a type="button" class="btn btn-success" href="{{route('eventos.show',['evento' => $event, 'date' => Carbon\Carbon::parse($event->fecha_inicio)->format('d-m-Y'), 'hour' => $event->start_hour])}}">Ver mas</a>
+            <a type="button" class="btn btn-success" href="{{route('eventos.show',['event' => $event, 'date' => Carbon\Carbon::parse($event->fecha_inicio)->format('d-m-Y'), 'hour' => $event->start_hour])}}">Ver mas</a>
         </div>
     </div>
 @endforeach

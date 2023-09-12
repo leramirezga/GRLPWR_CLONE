@@ -12,6 +12,7 @@ use App\Model\Peso;
 use App\Model\Review;
 use App\Model\ReviewUser;
 use App\Model\SesionCliente;
+use App\Repositories\ClientPlanRepository;
 use App\User;
 use App\Utils\Constantes;
 use Illuminate\Http\Request;
@@ -50,10 +51,8 @@ class HomeController extends Controller
                                         ->entrenamientosAgendados($user->rol)
                                         ->get();
 
-            $clientPlan = ClientPlan::where('client_id', $user->id)
-                ->where('expiration_date', '>', now())
-                ->where('remaining_classes', '>', 0)
-                ->first();
+            $clientPlanRepository = new ClientPlanRepository();
+            $clientPlans = $clientPlanRepository->findValidClientPlan();
 
             $lastSessionWithoutReview =DB::table('sesiones_cliente')
                             ->leftJoin('reviews_session', 'reviews_session.session_id', '=', 'sesiones_cliente.id')
@@ -65,7 +64,7 @@ class HomeController extends Controller
 
             $reviewFor = $lastSessionWithoutReview?->id;
 
-            return view('cliente.homeCliente', compact('user', 'entrenamientosAgendados', 'visitante', 'reviewFor', 'clientPlan'));
+            return view('cliente.homeCliente', compact('user', 'entrenamientosAgendados', 'visitante', 'reviewFor', 'clientPlans'));
         }
         if(strcasecmp ($user->rol, Constantes::ROL_ENTRENADOR) == 0){
             $ofrecimientos = Ofrecimientos::where('usuario_id', $user->id)->get();

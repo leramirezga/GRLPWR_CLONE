@@ -14,7 +14,7 @@ class CreateUsuariosTable extends Migration
     public function up()
     {
         Schema::create('usuarios', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->String('email',64)->unique();
             $table->String('password')->nullable();//nullable for login with facebook.
             $table->String('rol');

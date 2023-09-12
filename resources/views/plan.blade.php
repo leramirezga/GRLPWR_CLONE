@@ -7,12 +7,12 @@
 @section('content')
     <div class="text-center w-75 m-auto">
         <h1 class="text-center my-5">
-            {{$plan->name}}
+            {{$plan->name}}sada
         </h1>
         @isset($plan->description)
             <p class="mb-4"> {{$plan->description}}</p>
         @endisset
-        <h4><strong>Numero de clases: </strong>{{$plan->number_of_classes}}</h4>
+        <h4><strong>Numero de clases: </strong>{{$plan->number_of_shared_classes}}</h4>
         <h4><strong>Precio: </strong> ${{number_format($plan->price, 0, '.', ',')}}</h4>
         @isset($plan->available_plans)
             <p><strong>Planes disponibles: </strong>{{$plan->available_plans}}</p>

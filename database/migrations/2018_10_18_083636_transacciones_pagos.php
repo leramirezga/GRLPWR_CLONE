@@ -20,7 +20,7 @@ class TransaccionesPagos extends Migration
             $table->integer('codigo_respuesta');
             $table->string('respuesta');
             $table->longText('data');
-            $table->unsignedInteger('user_id');
+            $table->bigInteger('user_id', unsigned: true);
             $table->timestamps();
             $table->softDeletes();
         });

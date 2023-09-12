@@ -2,13 +2,13 @@
 
 namespace App\Model;
 
+use App\RemainingClass;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class ClientPlan extends Model
 {
     use HasFactory;
-    protected $table = 'client_plan';
 
     /**
      * Transforms dates to carbon
@@ -18,6 +18,27 @@ class ClientPlan extends Model
 
     public function plan(){
         return $this->belongsTo(Plan::class);
+    }
+
+    public function allClasses(){
+        return $this->hasMany(PlanClass::class, 'plan_id', 'id');
+    }
+
+    public function specificClasses(){
+        return $this->hasMany(RemainingClass::class, 'client_plan_id', 'id')
+            ->where('unlimited', '=', )
+            ->where('remaining_classes', '!=', null);
+    }
+
+    public function unlimitedClasses(){
+        return $this->hasMany(RemainingClass::class, 'client_plan_id', 'id')
+            ->where('unlimited', '=', 1);
+    }
+
+    public function sharedClasses(){
+        return $this->hasMany(RemainingClass::class, 'client_plan_id', 'id')
+            ->where('unlimited', '=', 0)
+            ->where('remaining_classes', '=', null);
     }
 
 }

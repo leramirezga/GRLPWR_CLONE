@@ -62,7 +62,7 @@
             @include('modalDarReviewEntrenamiento')
         @endif
         <div class="{{\Illuminate\Support\Facades\Blade::check('feature', 'dark_theme', false) ? "floating-card bg-semi-transparent" : ""}} p-3 mb-3">
-            <div class="mb-5">
+            <div class="mb-2 d-flex justify-content-between">
                 <h3>Próximas sesiones:</h3>
             </div>
             @include('proximasSesiones')

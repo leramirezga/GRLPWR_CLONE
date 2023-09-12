@@ -14,10 +14,10 @@ class CreateReviewsTable extends Migration
     public function up()
     {
         Schema::create('reviews', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->integer('rating');//el rating solo se puede dar entero. Cuando se calcula el promedio si queda decimal
             $table->string('review',280)->nullable();
-            $table->unsignedInteger('reviewer_id');//usuario que realiza el review; foreign
+            $table->bigInteger('reviewer_id', unsigned: true);//usuario que realiza el review; foreign
             $table->timestamps();
         });
     }

@@ -16,7 +16,7 @@ class CreateOfrecimientosTable extends Migration
         Schema::create('ofrecimientos', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('solicitud_servicio_id');//foreign
-            $table->unsignedInteger('usuario_id');//foreign
+            $table->bigInteger('usuario_id', unsigned: true);//foreign
             $table->float('precio', 10, 2);
             $table->unsignedInteger('estado')->default(0);//0 activo; 2 de solicitud modificada
             $table->timestamps();

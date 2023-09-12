@@ -66,7 +66,7 @@
 
     <nav id="top-navbar" class="navbar navbar-expand-md navbar-dark fixed-top">
         <a class="navbar-brand" href="#" style="width: 60px; padding: 0">
-            <img src="{{asset('images/brand/logo_letras_blanco.svg')}}" width="70%" height="70%">
+            <img src="{{asset('images/brand/logo_letras_blanco.png')}}" width="70%" height="70%">
             <!--<h3 class="d-inline-block brand-name"><span>FIT</span>FLYR</h3>-->
         </a>
         <div class="top-right links">
@@ -84,72 +84,109 @@
     <div id="welcome" class="flex-center position-ref full-height">
         <div class="content">
             <div class="title mb-3">
-                <img src="{{asset('images/brand/imago_blanco.svg')}}" width="30%" height="30%">
+                <img src="{{asset('images/brand/imago_fondo_oscuro.png')}}" width="50%" height="50%">
             </div>
-            <h4 class="mb-5">Ven a <strong>Saltar</strong> hasta el cielo, con el deporte <strong>Más Divertido.</strong></h4>
+            <h4 class="mb-5">El refugio donde las <strong style="font-size: xx-large">Mujeres</strong> desarrollan todo su <strong style="font-size: xx-large">Potencial</strong></h4>
             <a class="btn btn-success d-inline" style="font-size: 20px; padding: 7px 35px;" href="{{ route('register') }}">
-                ¡Quiero Saltar!
+                ¡Quiero Registrarme!
             </a>
         </div>
     </div>
-    <div class="section" id="section1">
+    <div class="section" id="welcome">
         <div class="sub-section-info">
-            <h1 class="mb-5">¿Qué es el ejercicio de rebote?</h1>
+            <h1 class="mb-5">¿Porqué Girl Power?</h1>
             <p class="text-justify">
-            Es un programa de ejercicio cardiovascular de bajo impacto que utiliza botas especiales con resortes y el sistema de protección de impacto IPS. Este sistema absorbe la mayoría del impacto en las articulaciones, lo que lo hace más seguro que otros ejercicios de alto impacto.
-            Es una forma divertida y efectiva de mejorar la salud cardiovascular, la coordinación y quemar calorías mientras proteges tus articulaciones.
+            En GRL PWR ofrecemos un refugio para que puedas encontrar y desarrollar todo tu POWER. Unimos cuerpo, mente y espíritu, para que te sientas cómoda entrenando en la gran variedad de ejercicios que ofrecemos.
             </p>
         </div>
+        {{--
         <div class="boots-image d-flex align-items-center">
             <img class="h-100 w-100 how-works-image m-auto" src="{{asset('images/botas_2.png')}}" alt="First slide">
         </div>
+        --}}
     </div>
-    <div class="text-center section d-block color-white" id="section2">
-        <!--repetido pero con el orden de la info y la imagen diferente para que en dispositivos pequeños el texto esté siempre arriba-->
-        <div class="m-auto">
-            <h1 class="mb-4">Beneficios</h1>
+    <div class="section text-center d-block" id="welcome">
+        <h1>Modalidades</h1>
+
+        <div id="immediateDeliveryCarousel" class="carousel slide mt-3" data-ride="carousel">
+            <div id="innerImmediateDelivery" class="carousel-inner row mx-auto carousel-inner-cyclic" style="width: 75%">
+                <div class="carousel-item carousel-item-cyclic col-12 itemDivImmediateDelivery my-5">
+                    <a class="card-link">
+                        <div class="card floating-card bg-semi-transparent p-0 carousel-card col-12 col-md-3 mx-auto"  style="min-width: 230px">
+                            <div style="height: 70%; background-image: url('{{asset('images/funcional.jpg')}}'); background-size: cover; background-position: 70%"></div>
+                            <div class="pt-2 px-3 text-center">
+                                <h4><strong>Funcional</strong></h4>
+                                <p><small>Entrenamiento semipersonalizado que mejora la vida diaria al fortalecer movimientos naturales y el núcleo, promoviendo la salud y la funcionalidad. 💪🏋️‍</small></p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="carousel-item carousel-item-cyclic col-12 itemDivImmediateDelivery my-5">
+                    <a class="card-link ">
+                        <div class="card floating-card bg-semi-transparent p-0 carousel-card col-12 col-md-3 mx-auto"  style="min-width: 230px">
+                            <div style="height: 50%; background-image: url('{{asset('images/boxeo.jpg')}}'); background-size: cover; background-position: center"></div>
+                            <div class="pt-2 px-3 text-center">
+                                <h4 class="card-text"><small><strong>Boxeo</strong></small></h4>
+                                <p><small>El boxeo es un arte marcial y deporte que combina fuerza, velocidad y estrategia, donde los puños son las herramientas de expresión, para desestresarte y sacar el fuego que llevas por dentro. 🥊 💥</small></p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="carousel-item carousel-item-cyclic col-12 itemDivImmediateDelivery my-5">
+                    <a class="card-link ">
+                        <div class="card floating-card bg-semi-transparent p-0 carousel-card col-12 col-md-3 mx-auto" style="min-width: 230px">
+                            <div style="height: 70%; background-image: url('{{asset('images/actividad_kangoo.jpg')}}'); background-size: contain; background-position: center; background-repeat: no-repeat"></div>
+                            <div class="pt-2 px-3 text-center">
+                                <h4 class="card-text"><small><strong>Kangoo</strong></small></h4>
+                                <p class="text-justify"><small>Entrenamiento de rebote con el que podrás quemar 1000 calorias en una clase de 1 hora, reduciendo el impacto en tus articulaciones hasta en un 80% 🦘</small></p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="carousel-item carousel-item-cyclic col-12 itemDivImmediateDelivery my-5">
+                    <a class="card-link ">
+                        <div class="card floating-card bg-semi-transparent p-0 carousel-card col-12 col-md-3 mx-auto" style="min-width: 230px">
+                            <div style="height: 70%; background-image: url('{{asset('images/yoga.jpg')}}'); background-size: cover; background-position: 100%"></div>
+                            <div class="pt-2 px-3 text-center">
+                                <h4 class="card-text"><small><strong>Yoga</strong></small></h4>
+                                <p class="text-justify"><small>Conecta cuerpo y mente a través de posturas, respiración y meditación, mejora tu equilibrio y bienestar con movimientos concientes. 🧘‍♀️🌼</small></p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="carousel-item carousel-item-cyclic col-12 itemDivImmediateDelivery my-5">
+                    <a class="card-link ">
+                        <div class="card floating-card bg-semi-transparent p-0 carousel-card col-12 col-md-3 mx-auto"  style="min-width: 230px">
+                            <div style="height: 70%; background-image: url('{{asset('images/fitdance.jpg')}}'); background-size: cover; background-position: center"></div>
+                            <div class="pt-2 px-3 text-center">
+                                <h4 class="card-text"><small><strong>FitDance</strong></small></h4>
+                                <p class="text-justify"><small>Quema calorias al ritmo de la música, cambiando de género cada 10 minutos en una clase dinámica y divertida 💃🕺🎶</small></p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <a class="carousel-control-prev-personalized carousel-control-cyclic immediateDeliveryControl" href="#immediateDeliveryCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next-personalized carousel-control-cyclic immediateDeliveryControl" href="#immediateDeliveryCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
         </div>
-        <table class="col-md-6 m-auto" style="border-collapse: separate;
-border-spacing: 1em;">
-            <tr>
-                <td><i class="fas fa-heartbeat benefits_icon text-center d-table-cell align-middle" style="font-size: 50px"></i></td>
-                <td class="h4">Mejora la resistencia cardiovascular.</td>
-            </tr>
-            <tr>
-                <td><img src = "{{asset('images/fire_icon.svg')}} " alt="Calorias" class="benefits_icon svg_white"/></td>
-                <td class="h4">Quema 20% más calorías que un ejercicio cardiovascular tradicional.</td>
-            </tr>
-            <tr>
-                <td><img src = "{{asset('images/muscle_icon.svg')}} " alt="Tonifica" class="benefits_icon svg_white"/></td>
-                <td class="h4">Ayuda a tonificar los músculos de las piernas, glúteos y abdominales.</td>
-            </tr>
-            <tr>
-                <td><img src = "{{asset('images/balance_icon.svg')}} " alt="Balance" class="benefits_icon svg_white"/></td>
-                <td class="h4">Mejorar la coordinación y el equilibrio.</td>
-            </tr>
-            <tr>
-                <td><img src = "{{asset('images/happy_icon.svg')}} " alt="Felicidad" class="benefits_icon svg_white"/></td>
-                <td class="h4">Reduce el estrés y mejorar el estado de ánimo, gracias a la liberación de endorfinas.</td>
-            </tr>
-        </table>
     </div>
-    <div class="section text-center d-block" id="section3">
-        <h1 class="mb-5">Modalidades</h1>
-        <div class="d-flex flex-wrap justify-content-around m-auto" style="width: 80%">
-            <div class="floating-card col-12 col-md-3 p-3 mb-5 mb-md-0" style="background-image: linear-gradient(rgb(140,229,223), rgb(13,158,151));">
-                <img src = "{{asset('images/Power.png')}} " alt="Felicidad" height="100px" width="150px"/>
-                <p class="text-justify mt-3"><strong>Kangoo Power</strong> es un programa de entrenamiento de alta intensidad que combina movimientos cardiovasculares y de fuerza con el uso de botas Kangoo Jumps, lo que aumenta la <strong>intensidad del ejercicio y la quema de calorías.</strong></p>
-            </div>
-            <div class="floating-card col-12 col-md-3 p-3 mb-5 mb-md-0" style="background-image: linear-gradient(rgb(140,229,223), rgb(13,158,151));">
-                <img src = "{{asset('images/Dance.png')}} " alt="Felicidad" height="100px" width="150px"/>
-                <p class="text-justify mt-3"><strong>Kangoo Dance</strong> es un programa de fitness que utiliza las botas Kangoo Jumps para crear una experiencia de baile enérgica y divertida que combina movimientos de <strong>baile</strong> con <strong>saltos</strong> y <strong>rebotes.</strong></p>
-            </div>
-            <div class="floating-card col-12 col-md-3 p-3 mb-5 mb-md-0" style="background-image: linear-gradient(rgb(140,229,223), rgb(13,158,151));">
-                <img src = "{{asset('images/Kick and punch.png')}} " alt="Felicidad" height="100px" width="150px"/>
-                <p class="text-justify mt-3"><strong>Kangoo Kick & Punch</strong> es un programa de entrenamiento que combina movimientos de <strong>artes marciales</strong> con <strong>ejercicios cardiovasculares</strong> y de <strong>fuerza</strong> utilizando las botas Kangoo Jumps para un entrenamiento de <strong>bajo impacto</strong> y <strong>alta intensidad</strong> que ayuda a mejorar la <strong>coordinación</strong>, <strong>la fuerza</strong> y la <strong>resistencia cardiovascular.</strong></p>
-            </div>
+
+    <div class="section text-center d-block color-white" id="welcome">
+        <h1 class="text-center">
+            Síguenos en nuestras redes sociales
+        </h1>
+        <div
+            loading="lazy"
+            data-mc-src="b0d5ad7d-5646-435f-9f97-9bb2c4e2f014#instagram">
         </div>
     </div>
+
     <!--
     <div class="section text-center d-block color-white">
         <h1 class="mb-5">Experiencias</h1>
@@ -200,7 +237,7 @@ border-spacing: 1em;">
         <div class="footer-left">
 
             <!--<h3><span>Fit</span>Flyr</h3>-->
-            <img src="{{asset('images/brand/logo_letras_blanco.svg')}}" width="70%" height="70%">
+            <img src="{{asset('images/brand/logo_letras_blanco.png')}}" width="70%" height="70%">
 
             <!--<p class="footer-links">
                 <a href="#quienesSomos">Quienes somos</a>
@@ -222,95 +259,49 @@ border-spacing: 1em;">
         <div class="footer-center">
 
             <div>
-                <a href="https://goo.gl/maps/xTk22i9AogNk5DZ66" target=”_blank”>
+                <a href="https://goo.gl/maps/SZKV84zvwuorBJha8" target=”_blank”>
                     <i class="fa fa-map-marker"></i>
                     <p><span>Av. Esperanza #75-25</span> Modelia, Bogotá</p>
                 </a>
             </div>
 
             <div>
-                <a href="https://api.whatsapp.com/send/?phone=573001395018&text=Hola,%20quisiera%20información%20sobre%20las%20clases%20de%20rebote&app_absent=0" target=”_blank”>
+                <a href="https://api.whatsapp.com/send/?phone=573123781174<&text=Hola,%20quiero%20conocer%20Girl%20Power&app_absent=0" target=”_blank”>
                     <i class="fa fa-phone"></i>
-                    <p>300 139 50 18</p>
+                    <p>312 378 11 74</p>
                 </a>
             </div>
 
             <div>
                 <i class="fa fa-envelope"></i>
-                <p><a href="mailto:contacto@fitflyr.com">contacto@fitflyr.com</a></p>
+                <p><a href="mailto:contacto@girlpower.com.co">contacto@girlpower.com.co</a></p>
             </div>
 
         </div>
 
         <div class="footer-right">
             <!--<a href="#"><i class="fab fa-facebook"></i></a>-->
-            <a href="https://www.instagram.com/fitflyr/">
+            <a href="https://www.instagram.com/girlpowerstudio/">
                 <i class="fab fa-instagram" style="font-size: 25px"></i>
-                <p>@fitflyr</p>
+                <p>@girlpowerstudio</p>
             </a>
         </div>
 
     </footer>
 
-    <!--Script para que vuelva a la primer card cuando llegue a la última (slider ciclico)
-    <script>
-        $(document).ready(function() {
-            var itemsPerSlide = 3;
-            var totalItems = $(".carousel-item").length;
-            if(itemsPerSlide >= totalItems){//se ocultan las flechas de mover el carrousel cuando tiene 3 o menos items para mostrar
-                $("a[class^='carousel-control-']").css('display', 'none');
-            }
-
-            $("#myCarousel").on("slide.bs.carousel", function(e) {
-
-                if(itemsPerSlide >= totalItems) {//solo se mueve el carousel cuando hay más de 3 cards
-                    return false
-                }
-
-                var $e = $(e.relatedTarget);
-                var idx = $e.index();
-                console.log('indice: '+idx);
-                if (idx >= totalItems - (itemsPerSlide - 1)) {
-                    var it = itemsPerSlide - (totalItems - idx);
-                    console.log('otro: '+it);
-                    for (var i = 0; i < it; i++) {
-                        // append slides to end
-                        if (e.direction == "left") {
-                            $(".carousel-item")
-                                .eq(i)
-                                .appendTo(".carousel-inner");
-                        } else {
-                            $(".carousel-item")
-                                .eq(0)
-                                .appendTo(".carousel-inner");
-                        }
-                    }
-                    /*$(".media-slider").css('width', '100');*/
-                }
-
-
-            });
-            /*$("#myCarousel").on("slid.bs.carousel", function(e) {
-                $(".media-slider").css('width', '100%');
-            });*/
-        });
-    </script>
-    -->
-    <!--subscribers
-    <script type="text/javascript">
-        var subscribersSiteId = 'cd602984-8642-4484-8a8b-431d84a5faf0';
-    </script>
-    <script type="text/javascript" src="https://cdn.subscribers.com/assets/subscribers.js"></script>
-    -->
-    <!--Floating button-->
-
     <div class="floating_button">
         <div class="chats">
-            <a href="https://api.whatsapp.com/send/?phone=573001395018&text=Hola,%20quisiera%20información%20sobre%20las%20clases%20de%20rebote&app_absent=0" class="icon-whatsapp" target=”_blank”>
+            <a href="https://api.whatsapp.com/send/?phone=573123781174<&text=Hola,%20quiero%20conocer%20Girl%20Power&app_absent=0" class="icon-whatsapp" target=”_blank”>
                 <img class="icon" width="100%" height="100%" alt="whatsapp" src="{{asset('images/wathsapp_icon.png')}}">
             </a>
         </div>
     </div>
+
+    <!--Instagram-->
+    <script
+            src="https://cdn2.woxo.tech/a.js#616af38872a6520016a29c25"
+            async data-usrc>
+    </script>
 
     <!--google analytics-->
     <script>
@@ -323,25 +314,53 @@ border-spacing: 1em;">
         ga('send', 'pageview');
     </script>
 
-    <!--chat de soporte-->
-        <!--Para que se dragable pero que no muestre el chat al finalizar el drag
-            <script>
-                $(function() {
-                    $( ".draggable" ).draggable({
-                        stop: function(event, ui) {
-                            $('.purechat-expanded').attr('style', 'display: none!important');
-                        }
-                    });
-                    $( ".draggable" ).click(function(){
-                        $('.purechat-expanded').attr('style', 'display: ');
-                    });
-                });
-            </script>
-            <!--<script src="https://code.jquery.com/jquery-1.9.1.js"></script> Si se deja se daña el slider y al parecer ya está en otro lugar o no se necesita porque se quita y aún así funciona correctamente el draggable.
-            <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-        <!--fin Para que se dragable pero que no muestre el chat al finalizar el drag
+    <script src="{{asset('js/bootstrap-swipe-carousel.min.js')}}" type="text/javascript"></script>
 
-        <script type='text/javascript' data-cfasync='false'>window.purechatApi = { l: [], t: [], on: function () { this.l.push(arguments); } }; (function () { var done = false; var script = document.createElement('script'); script.async = true; script.type = 'text/javascript'; script.src = 'https://app.purechat.com/VisitorWidget/WidgetScript'; document.getElementsByTagName('HEAD').item(0).appendChild(script); script.onreadystatechange = script.onload = function (e) { if (!done && (!this.readyState || this.readyState == 'loaded' || this.readyState == 'complete')) { var w = new PCWidget({c: '1e110dc0-e024-4b2b-a871-4e07f3dec0d3', f: true }); done = true; } }; })();</script>
-    <!--fin chat de soporte-->
+    <!--Script para carousel con items que vienen de backend-->
+    <script>
+        $(document).ready(function() {
+            $(".carousel-item:first-child").addClass('active');
+        });
+    </script>
+
+    <!--Scripts para que vuelvan a la primer card cuando llegue a la última (slider ciclico)-->
+    <script>
+        $(document).ready(function() {
+            var totalItems = $(".itemDivAlmostReady").length;
+            //console.log('totalItems: '+totalItems);//for debug purpose
+
+            $("#almostReadyCarousel").on("slide.bs.carousel", function(e) {
+                var $e = $(e.relatedTarget);
+                var idx = $e.index();
+                //console.log('index: '+idx);//for debug purpose
+                if (idx == totalItems) {
+                    var it = (totalItems - idx);
+                    //console.log('otro: '+it);//for debug purpose
+                    for (var i = 0; i < it; i++) {
+                        // append slides to end
+                        if (e.direction == "left") {//forward
+                            $(".itemDivAlmostReady")
+                                .eq(i)
+                                .appendTo("#innerAlmostReady");
+                        }
+                    }
+                    /*$(".media-slider").css('width', '100');*/
+                }
+                if (e.direction == "right") {
+                    //console.log('index: '+idx);//for debug purpose
+                    if(idx == 0){
+                        $(".itemDivAlmostReady")
+                            .eq(totalItems-1)
+                            .prependTo("#innerAlmostReady");
+                    }
+
+                }
+            });
+            /*$("#myCarousel").on("slid.bs.carousel", function(e) {
+                $(".media-slider").css('width', '100%');
+            });*/
+        });
+    </script>
+
     </body>
 </html>

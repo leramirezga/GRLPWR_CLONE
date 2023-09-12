@@ -14,7 +14,7 @@ class CreateClientesTable extends Migration
     public function up()
     {
         Schema::create('clientes', function (Blueprint $table) {
-            $table->unsignedInteger('usuario_id')->unique();//foreign
+            $table->bigInteger('usuario_id', unsigned: true)->unique();//foreign
             $table->unsignedFloat('peso_ideal',5,2)->nullable();
             $table->unsignedFloat('talla_zapato', 3, 1);
             $table->String('biotipo')->nullable();

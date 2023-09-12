@@ -34,6 +34,8 @@
     <!--brand-name-->
     <link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet" type="text/css">
 
+    <link rel="shortcut icon" type="image/png" href="{{ asset('images/brand/imago_32x32.png') }}">
+
     <!--Scrollbar -->
     <style>
         /* width */

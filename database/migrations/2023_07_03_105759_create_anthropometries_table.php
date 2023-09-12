@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('anthropometries', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('client_id');//foreign. Is necessary the unsigned to match with the other table
+            $table->unsignedBigInteger('client_id');//foreign. Is necessary the unsigned to match with the other table
             $table->unsignedInteger('heart_rate')->nullable();
             $table->unsignedInteger('systolic_pressure')->nullable();
             $table->unsignedInteger('diastolic_pressure')->nullable();

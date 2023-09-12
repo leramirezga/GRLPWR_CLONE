@@ -102,10 +102,35 @@ class ForeignKeys extends Migration
 
         Schema::table('edited_events', function (Blueprint $table) {
             $table->foreign('evento_id')->references('id')->on('eventos');
+            $table->foreign('branch_id')->references('id')->on('branches');
+            $table->foreign('class_type_id')->references('id')->on('class_types');
+        });
+
+        Schema::table('eventos', function (Blueprint $table) {
+            $table->foreign('branch_id')->references('id')->on('branches');
+            $table->foreign('class_type_id')->references('id')->on('class_types');
         });
 
         Schema::table('event_hours', function (Blueprint $table) {
             $table->foreign('event_id')->references('id')->on('eventos');
+        });
+
+        Schema::table('plans', function (Blueprint $table) {
+            $table->foreign('branch_id')->references('id')->on('branches');
+        });
+
+        Schema::table('plan_classes', function (Blueprint $table) {
+            $table->foreign('class_type_id')->references('id')->on('class_types');
+            $table->foreign('plan_id')->references('id')->on('plans');
+        });
+
+        Schema::table('remaining_classes', function (Blueprint $table) {
+            $table->foreign('class_type_id')->references('id')->on('class_types');
+            $table->foreign('client_plan_id')->references('id')->on('client_plans');
+        });
+
+        Schema::table('plan_benefits', function (Blueprint $table) {
+            $table->foreign('plan_id')->references('id')->on('plans');
         });
 
         Schema::table('sesiones_cliente', function (Blueprint $table) {
@@ -119,7 +144,7 @@ class ForeignKeys extends Migration
             $table->foreign('kangoo_id')->references('id')->on('kangoos');
         });
 
-        Schema::table('client_plan', function (Blueprint $table) {
+        Schema::table('client_plans', function (Blueprint $table) {
             $table->foreign('client_id')->references('id')->on('usuarios');//This client id points to user table to allow a user buy a plan even if he/she has not completed profile
             $table->foreign('plan_id')->references('id')->on('plans');
             $table->foreign('payment_id')->references('id')->on('transacciones_pagos');
@@ -259,8 +284,38 @@ class ForeignKeys extends Migration
         });
 
         Schema::table('edited_events', function (Blueprint $table) {
-            $table->dropForeign(['evento_id']);
+            $table->dropForeign(['evento_id', 'branch_id', 'class_type_id']);
             $table->dropColumn('evento_id');
+            $table->dropColumn('branch_id');
+            $table->dropColumn('class_type_id');
+        });
+
+        Schema::table('eventos', function (Blueprint $table) {
+            $table->dropForeign(['branch_id', 'class_type_id']);
+            $table->dropColumn('branch_id');
+            $table->dropColumn('class_type_id');
+        });
+
+        Schema::table('plans', function (Blueprint $table) {
+            $table->dropForeign(['branch_id']);
+            $table->dropColumn('branch_id');
+        });
+
+        Schema::table('plan_classes', function (Blueprint $table) {
+            $table->dropForeign(['class_type_id', 'plan_id']);
+            $table->dropColumn('class_type_id');
+            $table->dropColumn('plan_id');
+        });
+
+        Schema::table('plan_benefits', function (Blueprint $table) {
+            $table->dropForeign(['plan_id']);
+            $table->dropColumn('plan_id');
+        });
+
+        Schema::table('remaining_classes', function (Blueprint $table) {
+            $table->dropForeign(['class_type_id', 'plan_id']);
+            $table->dropColumn('class_type_id');
+            $table->dropColumn('plan_id');
         });
 
         Schema::table('event_hours', function (Blueprint $table) {
@@ -296,7 +351,7 @@ class ForeignKeys extends Migration
             $table->dropColumn('id_transaccion');
         });
 
-        Schema::table('client_plan', function (Blueprint $table) {
+        Schema::table('client_plans', function (Blueprint $table) {
             $table->dropForeign(['client_id']);
             $table->dropColumn('plan_id');
             $table->dropForeign(['payment_id']);

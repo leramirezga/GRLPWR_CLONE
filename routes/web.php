@@ -65,7 +65,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/rotate-image', 'BlogsController@uploadImage');//TODO ROTATE AND CROP
 
     Route::get('/eventos/crear', [EventController::class, 'create'])->name('eventos.create');
-    Route::get('/eventos/{evento}/{date}/{hour}', [EventController::class, 'show'])->name('eventos.show');
+    Route::get('/eventos/{event}/{date}/{hour}', [EventController::class, 'show'])->name('eventos.show');
     Route::post('/eventos/crear', [EventController::class, 'save'])->name('eventos.store');
 
     //Route::get('/eventos', [SesionEventoController::class, 'fullcalendar'])->name('eventos');
@@ -79,6 +79,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/cancelar_entrenamiento', [SesionClienteController::class, 'cancelTraining'])->name('cancelarEntrenamiento');
     Route::get('/planes/{plan}', [PlanController::class, 'show'])->name('plan');
     Route::get('/planes', [PlanController::class, 'index'])->name('plans');
+
+    Route::get('/nextSessions/{branchId}',[EventController::class, 'nextSessions'])->name('nextSessions');
 
 });
 /*Route::resources([

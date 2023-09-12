@@ -21,6 +21,8 @@ return new class extends Migration
             $table->time('start_hour');
             $table->time('end_hour');
             $table->boolean('deleted');
+            $table->bigInteger('branch_id',unsigned: true)->nullable();
+            $table->bigInteger('class_type_id',unsigned: true)->nullable();
             $table->string('nombre')->nullable();
             $table->string('descripcion')->nullable();
             $table->string('imagen')->nullable();
@@ -28,7 +30,7 @@ return new class extends Migration
             $table->string('lugar')->nullable();
             $table->integer('cupos')->nullable();
             $table->float('precio', '9', '2')->nullable();
-            $table->float('precio_sin_botas', '9', '2')->nullable();
+            $table->float('precio_sin_implementos', '9', '2')->nullable();
             $table->float('descuento', '9', '2')->nullable();
             $table->float('oferta', '5', '2')->nullable();
             $table->timestamps();

@@ -50,7 +50,7 @@ class PagosController extends Controller
                     $this->processPlanPayment($x_cod_response,$data->x_extra3, $data->x_extra2, $payment_id);
                     break;
                 case PayTypesEnum::Session->value:
-                    $this->processSessionPayment($x_cod_response,$data->x_extra3, $data->x_extra2, $data->x_extra4);
+                    $this->processSessionPayment($x_cod_response,$data->x_extra3, $data->x_extra2, $data->x_extra4, $data->x_extra5, $data->x_extra6);
                     break;
                 default:
                     die("Tipo de pago desconocido");
@@ -89,11 +89,11 @@ class PagosController extends Controller
                 break;
         }
     }
-    private function processSessionPayment($x_cod_response, $eventId, $clientId, $sessionClientId ){
+    private function processSessionPayment($x_cod_response, $eventId, $clientId, $sessionClientId, $startDate, $endDate ){
         switch ((int)$x_cod_response) {
             case 1:
                 # code transacción aceptada
-                (new SesionClienteController())->save(EventId: $eventId, clienteId: $clientId, sesionClienteId: $sessionClientId);
+                (new SesionClienteController())->save($eventId, $clientId, $sessionClientId, $startDate, $endDate);
                 Session::put('msg_level', 'success');
                 Session::put('msg', __('general.success_purchase'));
                 Session::save();

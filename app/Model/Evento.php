@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use App\ClassType;
 use App\EditedEvent;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,7 +14,9 @@ class Evento extends Model
     protected $table = 'eventos';
 
     protected $fillable = [
-        'nombre', 'descripcion', 'imagen', 'info_adicional'
+        'nombre', 'descripcion', 'imagen', 'info_adicional', 'branch_id', 'class_type_id',
+        'lugar', 'cupos', 'precio', 'precio_sin_implementos', 'descuento', 'oferta', 'repeatable',
+        'fecha_inicio', 'fecha_fin', 'start_hour', 'end_hour'
     ];
 
     protected $dates = ['fecha_inicio', 'fecha_fin'];
@@ -28,5 +31,7 @@ class Evento extends Model
         return $this->hasMany(EditedEvent::class, 'evento_id', 'id');
     }
 
-
+    public function classType(){
+        return $this->hasOne(ClassType::class,'id', 'class_type_id');
+    }
 }

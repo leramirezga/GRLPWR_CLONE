@@ -1,10 +1,10 @@
 .floating_button {
     position: fixed;
-    bottom: 10vh;
+    bottom: 5vh;
     height: -webkit-fit-content;
     height: -moz-fit-content;
     height: fit-content;
-    right: 10vh;
+    right: 5vh;
     z-index: 100;
 }
 .chats a, .icon-chat{
@@ -26,11 +26,6 @@
     color: #cc2b2b;
 }
 
-.chats a{
-    margin-bottom: -15px;
-    /*opacity: 0;
-    visibility: hidden;*/
-}
 #btn-chat:checked~ .chats a{
     margin-bottom: 10px;
     opacity: 1;

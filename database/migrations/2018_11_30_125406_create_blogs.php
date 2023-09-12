@@ -15,7 +15,7 @@ class CreateBlogs extends Migration
     {
         Schema::create('blogs', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('usuario_id');//foreign
+            $table->bigInteger('usuario_id', unsigned: true);;//foreign
             $table->string('titulo');
             $table->string('portada');//Si es solo un video en la portada se coloca el link
             $table->text('contenido')->nullable();//65535 caracteres

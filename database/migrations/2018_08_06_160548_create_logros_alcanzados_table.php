@@ -16,7 +16,7 @@ class CreateLogrosAlcanzadosTable extends Migration
         Schema::create('logros_alcanzados', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('logro_id');//foreign
-            $table->unsignedInteger('usuario_id');//foreign
+            $table->bigInteger('usuario_id', unsigned: true);//foreign
             $table->timestamps();
         });
     }

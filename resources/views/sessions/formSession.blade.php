@@ -138,7 +138,10 @@
                                             </span>
                                             <div class="form-group label-floating">
                                                 <label class="control-label">Lugar <small>(requerido)</small></label>
-                                                <input name="place" type="text" class="form-control color-white">
+                                                <select class="form-control color-white" id="place" name="place">
+                                                    <option value="cliente">Atleta</option>
+                                                    <option value="entrenador">Entrenador</option>
+                                                </select>
                                             </div>
                                         </div>
 

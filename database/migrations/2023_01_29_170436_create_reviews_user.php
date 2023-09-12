@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('reviews_user', function (Blueprint $table) {
-            $table->unsignedInteger('review_id');//foreign
-            $table->unsignedInteger('user_id');//foreign
+            $table->bigInteger('review_id', unsigned: true);//foreign
+            $table->bigInteger('user_id', unsigned: true);//foreign
             $table->timestamps();
         });
     }

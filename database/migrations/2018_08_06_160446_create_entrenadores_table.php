@@ -14,7 +14,7 @@ class CreateEntrenadoresTable extends Migration
     public function up()
     {
         Schema::create('entrenadores', function (Blueprint $table) {
-            $table->unsignedInteger('usuario_id')->unique();//foreign
+            $table->bigInteger('usuario_id', unsigned: true)->unique();//foreign
             /*Los atributos financieros pueden ser nulos para que pueda registrarse sin llenar estos datos*/
             $table->String('banco',140)->nullable();
             $table->boolean('tipo_cuenta')->nullable();//0 ahorros, 1 corriente)

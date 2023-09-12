@@ -2,8 +2,7 @@
 
 namespace App\Utils;
 
-enum PlanTypesEnum: int
+enum PlanTypesEnum: string
 {
-    case Kangoo_rent = 1;
-    case Kangoo_own = 2;
+    case Kangoo = 'Kangoo';
 }

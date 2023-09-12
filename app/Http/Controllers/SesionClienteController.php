@@ -10,20 +10,22 @@ use App\Model\Review;
 use App\Model\ReviewSession;
 use App\Model\SesionCliente;
 use App\Model\SesionEvento;
+use App\RemainingClass;
+use App\Repositories\ClientPlanRepository;
 use App\Utils\KangooResistancesEnum;
 use App\Utils\KangooStatesEnum;
+use App\Utils\PlanTypesEnum;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
 use Validator;
 
 class SesionClienteController extends Controller
 {
-    public function save(int $eventId, int $clienteId, $sesionClienteId)
+    public function save(int $eventId, int $clienteId, $sesionClienteId, $startDate, $endDate)
     {
         if($sesionClienteId != "null"){//La sesion fue creada con reserva de kangoo, así que se confirma
             $sesionCliente = SesionCliente::find($sesionClienteId);
@@ -32,6 +34,8 @@ class SesionClienteController extends Controller
             $sesionCliente = new SesionCliente();
             $sesionCliente->cliente_id = $clienteId;
             $sesionCliente->evento_id = $eventId;
+            $sesionCliente->fecha_inicio = $startDate;
+            $sesionCliente->fecha_fin = $endDate;
         }
         $sesionCliente->save();
     }
@@ -54,13 +58,19 @@ class SesionClienteController extends Controller
             return response()->json(['error' =>  __('general.quotas_not_available')], 404);
         }
         $clientId = $request->get('clientId');
-        if(filter_var($request->get('rentKangoos'), FILTER_VALIDATE_BOOLEAN)){
-            $assignResponse = $this->assignKangoos($event, $clientId, $startDateTime, $endDateTime);
+        if(filter_var($request->get('rentEquipment'), FILTER_VALIDATE_BOOLEAN)){
+            $assignResponse = $this->assignEquipment($event, $clientId, $startDateTime, $endDateTime);
             if($assignResponse instanceof JsonResponse){
                 return $assignResponse;
             }
         }
-        return $this->validatePlan($clientId, $assignResponse ?? null, $event->id, $request->get('startDate'), $request->get('endDate'));
+        return $this->validatePlan($clientId, $assignResponse ?? null, $event, $request->get('startDate'), $request->get('endDate'));
+    }
+
+    public function assignEquipment(Evento $event, $clientId, $start_date, $end_date){
+        if(strcasecmp($event->classType->type, PlanTypesEnum::Kangoo->value) == 0){
+            return $this->assignKangoos($event, $clientId, $start_date, $end_date);
+        }
     }
 
     public function assignKangoos(Evento $event, $clientId, $start_date, $end_date)
@@ -112,8 +122,8 @@ class SesionClienteController extends Controller
         $kangoos = DB::table('kangoos')->whereNotIn('id', function($q) use($event, $start_date, $end_date){
             $q->select('kangoos.id')->from('kangoos')
             ->leftJoin('sesiones_cliente', 'kangoos.id', '=', 'sesiones_cliente.kangoo_id')
-            ->where('sesiones_cliente.fecha_fin', '>', $start_date)
-            ->where('sesiones_cliente.fecha_inicio', '<', $end_date);
+            ->where('sesiones_cliente.fecha_fin', '>=', Carbon::parse($start_date)->format('Y-m-d H:i:s'))
+            ->where('sesiones_cliente.fecha_inicio', '<=', Carbon::parse($end_date)->format('Y-m-d H:i:s'));
         })->where('kangoos.estado', KangooStatesEnum::Available)
             ->whereIn('talla', $tallaKangoo)
             ->where('kangoos.resistencia', '>=', $resistance)
@@ -141,19 +151,27 @@ class SesionClienteController extends Controller
         return response()->json(['error' =>  __('general.not_available_kangoos')], 404);
     }
 
-    public function validatePlan($clientId, $sesionCliente = null, $eventId = null, $start_date, $end_date)
+    public function validatePlan($clientId, $sesionCliente = null, $event, $start_date, $end_date)
     {
-        $clientPlan = ClientPlan::where('client_id', $clientId)
-                    ->where('expiration_date', '>', now())
-                    ->where('remaining_classes', '>', 0)
-                    ->first();
-        if($clientPlan){
-            $clientPlan->remaining_classes = $clientPlan->remaining_classes-1;
-            $clientPlan->save();
+        $clientPlanRepository = new ClientPlanRepository();
+        $clientPlan = $clientPlanRepository->findValidClientPlan($event);
+
+        if ($clientPlan && $clientPlan->isNotEmpty()) {
+            $clientPlan = $clientPlan->first();
+            $remainingClass = RemainingClass::find($clientPlan->remaining_classes_id);
+            if($remainingClass->unlimited == 0) {
+                if ($remainingClass->remaining_classes == null){
+                    $clientPlan->remaining_shared_classes = $clientPlan->remaining_shared_classes - 1;
+                    $clientPlan->save();
+                }elseif($remainingClass->remaining_classes >= 0){
+                    $remainingClass->remaining_classes = $remainingClass->remaining_classes - 1;
+                    $remainingClass->save();
+                }
+            }
             if(!isset($sesionCliente)){//The customer has his own kangoos
                 $sesionCliente = new SesionCliente;
                 $sesionCliente->cliente_id = $clientId;
-                $sesionCliente->evento_id = $eventId;
+                $sesionCliente->evento_id = $event->id;
                 $sesionCliente->fecha_inicio = $start_date;
                 $sesionCliente->fecha_fin = $end_date;
             }

@@ -15,7 +15,7 @@ class CreatePesosTable extends Migration
     {
         Schema::create('pesos', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('usuario_id');//foreign
+            $table->bigInteger('usuario_id', unsigned: true);//foreign
             $table->unsignedFloat('peso',5,2);
             $table->unsignedInteger('unidad_medida');//0 kg, 1 libras
             $table->timestamps();

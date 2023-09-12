@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('reviews_session', function (Blueprint $table) {
-            $table->unsignedInteger('review_id');//foreign
+            $table->unsignedBigInteger('review_id');//foreign
             $table->unsignedBigInteger('session_id');//foreign. Is necessary the unsigned to match with the other table
             $table->timestamps();
         });

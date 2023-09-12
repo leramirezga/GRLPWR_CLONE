@@ -22,7 +22,7 @@ class CreateHorariosSolicitudServicioTable extends Migration
             $table->unsignedInteger('estado');//0 activo, 3 con reclamación, 4 cancelado
             $table->boolean('finalizado_cliente')->nullable();
             $table->boolean('finalizado_entrenador')->nullable();
-            $table->unsignedInteger('usuario_cancelacion')->nullable();//foreign
+            $table->bigInteger('usuario_cancelacion', unsigned: true)->nullable();//foreign
             $table->dateTime('canceled_at')->nullable();//es importante la fecha de cancelación para los posibles reembolsos
             $table->timestamps();
         });

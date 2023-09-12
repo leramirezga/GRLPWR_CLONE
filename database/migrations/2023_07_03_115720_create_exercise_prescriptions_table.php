@@ -15,7 +15,7 @@ return new  class extends Migration
     {
         Schema::create('exercise_prescriptions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('client_id');//foreign. Is necessary the unsigned to match with the other table
+            $table->unsignedBigInteger('client_id');//foreign. Is necessary the unsigned to match with the other table
             $table->json('recommendations');
             $table->timestamps();
         });

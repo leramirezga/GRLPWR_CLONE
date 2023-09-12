@@ -8,12 +8,12 @@
                 </div>
                 <div class="modal-body">
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="rentKangoos1" name="rentKangoos" value="1" class="custom-control-input" required>
-                        <label class="custom-control-label" for="rentKangoos1">Alquilar Kangoos</label>
+                        <input type="radio" id="rentEquipment1" name="rentEquipment" value="1" class="custom-control-input" required>
+                        <label class="custom-control-label" for="rentEquipment1">Alquilar {{$event->classType->required_equipment}}</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="rentKangoos2" name="rentKangoos" value="0" class="custom-control-input" required>
-                        <label class="custom-control-label" for="rentKangoos2">Tengo mis propios Kangoos</label>
+                        <input type="radio" id="rentEquipment2" name="rentEquipment" value="0" class="custom-control-input" required>
+                        <label class="custom-control-label" for="rentEquipment2">Tengo mis propi@s {{$event->classType->required_equipment}}</label>
                     </div>
                 </div>
                 <div class="modal-footer">

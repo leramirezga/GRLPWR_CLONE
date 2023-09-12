@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('sesiones_cliente', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('cliente_id');//foreign. Is necessary the unsigned to match with the other table
+            $table->unsignedBigInteger('cliente_id');//foreign. Is necessary the unsigned to match with the other table
             $table->unsignedInteger('kangoo_id')->nullable();//foreign. nullable because the client can has his/her own kangoos. Is necessary the unsigned to match with the other table
             $table->bigInteger('evento_id',unsigned: true);//foreign. Is necessary the unsigned to match with the other table
             $table->dateTime('fecha_inicio');

@@ -15,7 +15,7 @@ class CreateSolicitudesServicioTable extends Migration
     {
         Schema::create('solicitudes_servicio', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('usuario_id');//foreign
+            $table->bigInteger('usuario_id', unsigned: true);//foreign
             $table->string('titulo', 32);
             $table->string('descripcion', 140)->nullable();
             $table->string('ciudad', 64);
