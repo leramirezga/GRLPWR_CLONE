@@ -2,8 +2,7 @@
     <div>
         <h3>Mis planes:</h3>
     </div>
-
-    @isset($clientPlans)
+    @if($clientPlans and $clientPlans->isNotEmpty())
         @foreach($clientPlans as $clientPlan)
             <div class="solicitud-container  text-center text-md-left d-md-flex {{\Illuminate\Support\Facades\Blade::check('feature', 'dark_theme', false) ? "floating-card bg-semi-transparent" : "box-shadow"}} mb-3 mt-5">
                 <div>

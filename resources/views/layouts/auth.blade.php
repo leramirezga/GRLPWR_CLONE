@@ -74,8 +74,8 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-dark navbar-laravel" style="background: rgba(0,0,0,.7);">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    <h3 class="d-inline-block brand-name"><span>Fit</span>Flyr</h3>
+                <a class="navbar-brand" style="width: 200px" href="{{ url('/') }}">
+                    <img class="d-inline-block brand-name" src="{{asset('images/brand/logo_letras_blanco.png')}}" width="100%">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>

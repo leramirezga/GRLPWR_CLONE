@@ -57,7 +57,7 @@
     <div class="container-fluid">
         <div class="d-md-flex">
             <div class="{{\Illuminate\Support\Facades\Blade::check('feature', 'dark_theme', false) ? "floating-card bg-semi-transparent" : "box-shadow"}}  perfil-container m-3">
-                <img src="{{asset('images/avatars/'.$user->foto)}}?{{time()}}" class="user-profile-icon">
+                <img src="{{asset('images/avatars/'.$user->foto)}}" class="user-profile-icon">
                 @if(!$visitante)
 
                     @if((strcasecmp ($user->rol, 'entrenador' ) == 0 && $user->entrenador == null) || (strcasecmp ($user->rol, 'cliente' ) == 0 && $user->cliente == null))
@@ -100,7 +100,7 @@
                     </h1>
                     <div
                             loading="lazy"
-                            data-mc-src="cecec7ae-a1de-4791-919b-3cd0b328b251#instagram">
+                            data-mc-src="b0d5ad7d-5646-435f-9f97-9bb2c4e2f014#instagram">
                     </div>
                 </div>
 

@@ -67,7 +67,6 @@
     <nav id="top-navbar" class="navbar navbar-expand-md navbar-dark fixed-top">
         <a class="navbar-brand" href="#" style="width: 60px; padding: 0">
             <img src="{{asset('images/brand/logo_letras_blanco.png')}}" width="70%" height="70%">
-            <!--<h3 class="d-inline-block brand-name"><span>FIT</span>FLYR</h3>-->
         </a>
         <div class="top-right links">
             <a href="{{ route('blogs') }}">Blogs</a>
@@ -236,7 +235,6 @@
 
         <div class="footer-left">
 
-            <!--<h3><span>Fit</span>Flyr</h3>-->
             <img src="{{asset('images/brand/logo_letras_blanco.png')}}" width="70%" height="70%">
 
             <!--<p class="footer-links">

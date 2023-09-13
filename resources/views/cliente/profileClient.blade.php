@@ -28,7 +28,7 @@
 
     <div class="container-fluid">
         <div class="perfil-container col-12 col-md-10 m-auto">
-            <img src="{{asset('images/avatars/'.$user->foto)}}?{{time()}}" class="user-profile-icon">
+            <img src="{{asset('images/avatars/'.$user->foto)}}" class="user-profile-icon">
             @if((strcasecmp ($user->rol, 'entrenador' ) == 0 && $user->entrenador == null) || (strcasecmp ($user->rol, 'cliente' ) == 0 && $user->cliente == null))
                 <div class="progress bg-dark ml-auto mr-auto" style="width: 80%;">
                     <div class="progress-bar bg-white" role="progressbar" style="width: 25%; color: black"

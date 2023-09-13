@@ -71,7 +71,7 @@
                                         <div class="col-sm-4 offset-sm-1 mb-3">
                                             <div class="picture-container">
                                                 <div class="picture">
-                                                    <img src="{{asset('images/avatars/'. Auth::user()->foto)}}?{{time()}}" class="picture-src" id="wizardPicturePreview" title=""/>
+                                                    <img src="{{asset('images/avatars/'. Auth::user()->foto)}}" class="picture-src" id="wizardPicturePreview" title=""/>
                                                     <input type="file" id="wizard-picture" name="avatar" accept="image/*">
                                                 </div>
                                                 <h6>Carga una foto de perfil</h6>

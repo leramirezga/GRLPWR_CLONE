@@ -87,7 +87,7 @@
     <div id="app">
         <div id="top-navbar" class="navbar navbar-dark fixed-top">
             <a class="navbar-brand position-absolute" style="width: 60px" href="@auth{{route('home', ['user'=> Auth::user()->slug])}}@else # @endauth">
-                <img width="100%" alt="logo" src="{{asset('images/brand/Imago_principal.png')}}">
+                <img width="100%" alt="logo" src="{{asset('images/brand/imago_fondo_oscuro.png')}}">
             </a>
             <!--
             <form id="buscarEntrenadores-form" action="{{ route('buscarEntrenadores') }}" method="GET">
@@ -114,7 +114,7 @@
                     <notification class="cursor-pointer" v-bind:unread_notifications="unread_notifications" v-bind:notifications="notifications"></notification>
 
                     <div class="dropdown d-inline-block">
-                        <img class="rounded-circle user-icon ml-3 cursor-pointer" alt="user" src="{{asset('images/avatars/'.Auth::user()->foto)}}?{{time()}}" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img class="rounded-circle user-icon ml-3 cursor-pointer" alt="user" src="{{asset('images/avatars/'.Auth::user()->foto)}}" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
                         <div class="dropdown-menu dropdown-menu-right floating-card bg-dark" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{route('home', ['user'=> Auth::user()->slug])}}">Home</a>
