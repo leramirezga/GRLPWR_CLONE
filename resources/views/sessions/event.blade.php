@@ -70,20 +70,27 @@
     <!--PAYMENT-->
     <script type="text/javascript" src="https://checkout.epayco.co/checkout.js"></script>
     <script>
+        document.getElementById("agendarForm").addEventListener("submit", submitListener, true);
+        let rentEquipment = false;
+        const requiresEquipment = {{$event->classType->required_equipment !== null ? 1 : 0}};
+
         function checkPlan() {
             if({{isset($plan) ? 1 : 0}}){
-                scheduleEvent({{$event->classType->required_equipment !== null && isset($equipmentIncluded) && $equipmentIncluded ? 1 : 0}});
+                scheduleEvent(requiresEquipment && {{isset($equipmentIncluded) && $equipmentIncluded ? 1 : 0}});
             }
             else{
-                var scheduleModal = new bootstrap.Modal(document.getElementById('scheduleModal'));
-                scheduleModal.show();
+                if({{$event->classType->required_equipment !== null ? 1 : 0}}){
+                    var scheduleModal = new bootstrap.Modal(document.getElementById('scheduleModal'));
+                    scheduleModal.show();
+                }else{
+                    scheduleEvent(false);
+                }
             }
         }
 
-        document.getElementById("agendarForm").addEventListener("submit", submitListener, true);
-        var rentEquipment = false
+
         function submitListener(event) {
-            rentEquipment = document.querySelector('input[name="rentEquipment"]:checked').value;
+            rentEquipment = !!+document.querySelector('input[name="rentEquipment"]:checked').value;
             event.preventDefault();
             scheduleEvent(rentEquipment);
         }
@@ -148,7 +155,7 @@
 
         function showPayModal(sesionClienteId = null) {
             data.currency = '{{\Illuminate\Support\Facades\Session::get('currency_id') ? \Illuminate\Support\Facades\Session::get('currency_id') : 'COP'}}';
-            data.amount = rentEquipment==true ? {{$event->precio}} : {{$event->precio_sin_implementos}};
+            data.amount = !requiresEquipment || (requiresEquipment && rentEquipment) ? {{$event->precio}} : {{$event->precio_sin_implementos ?? -1}};//The -1 is only to fix sintax. Because an event that requires equipment alway should hace precio_sin_implementos
             data.extra1 = '{{ \App\Utils\PayTypesEnum::Session }}';
             data.extra2 = {{ \Illuminate\Support\Facades\Auth::id() }};
             data.extra3 = {{$event->id }};
