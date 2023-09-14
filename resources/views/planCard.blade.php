@@ -69,5 +69,5 @@
             </tbody>
         </table>
     </div>
-    <button style="bottom: -20px" class="btn btn-success mt-3 position-absolute" onclick="showPayModal({{$plan}})">Seleccionar</button>
+    <a style="bottom: -20px" class="btn btn-success mt-3 position-absolute" @if(auth()->guest()) href="{{ route('register') }}" @else onclick="showPayModal({{$plan}})" @endif>Seleccionar</a>
 </div>

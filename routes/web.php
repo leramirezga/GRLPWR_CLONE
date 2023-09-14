@@ -17,13 +17,6 @@ use App\Http\Controllers\SesionClienteController;
 use App\Http\Controllers\EventController;
 use \Illuminate\Support\Facades\Auth;
 
-Route::get('/', function () {
-    if(Auth::check()){
-        return redirect('user/'.Auth::user()->slug.'/home');
-    }
-    return view('welcome');
-});
-
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/mis_solicitudes/crear', 'SolicitudServicioController@irCrear')->name('irCrearSolicitud');
     Route::post('/mis_solicitudes/crear', 'SolicitudServicioController@save')->name('crearSolicitud');
@@ -78,25 +71,32 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/dar_review_entrenamiento/', [SesionClienteController::class, 'darReview'])->name('darReviewEntrenamiento');
     Route::delete('/cancelar_entrenamiento', [SesionClienteController::class, 'cancelTraining'])->name('cancelarEntrenamiento');
     Route::get('/planes/{plan}', [PlanController::class, 'show'])->name('plan');
-    Route::get('/planes', [PlanController::class, 'index'])->name('plans');
 
     Route::get('/nextSessions/{branchId}',[EventController::class, 'nextSessions'])->name('nextSessions');
 
 });
-/*Route::resources([
-    'mis_solicitudes' => 'SolicitudServicioController',
-]);*/
 
-Auth::routes();
+/*Open routes*/
+    Auth::routes();
 
-Route::post('notification/get', 'NotificationController@get');
-Route::post('/notification/read', 'NotificationController@read');
+    Route::get('/', function () {
+        if(Auth::check()){
+            return redirect('user/'.Auth::user()->slug.'/home');
+        }
+        return view('welcome');
+    });
 
-Route::get('auth/{provider}', 'Auth\SocialAuthController@redirectToProvider')->name('social.auth');
-Route::get('auth/{provider}/callback', 'Auth\SocialAuthController@handleProviderCallback');
+    Route::get('/planes', [PlanController::class, 'index'])->name('plans');
 
-Route::get('/blogs', 'BlogsController@allBlogs')->name('blogs');
-Route::get('/{user}/blog', 'BlogsController@blogUsuario')->name('blogsUsuario');
-Route::get('/blog/{blog}', 'BlogsController@verBlog')->name('blog');
-Route::post('/comentar/{blog}', 'BlogsController@comentarBlog')->name('comentarblog');
-Route::post('/reply/{comentario}', 'BlogsController@replyComentario')->name('replyComentario');
+    Route::post('notification/get', 'NotificationController@get');
+    Route::post('/notification/read', 'NotificationController@read');
+
+    Route::get('auth/{provider}', 'Auth\SocialAuthController@redirectToProvider')->name('social.auth');
+    Route::get('auth/{provider}/callback', 'Auth\SocialAuthController@handleProviderCallback');
+
+    Route::get('/blogs', 'BlogsController@allBlogs')->name('blogs');
+    Route::get('/{user}/blog', 'BlogsController@blogUsuario')->name('blogsUsuario');
+    Route::get('/blog/{blog}', 'BlogsController@verBlog')->name('blog');
+    Route::post('/comentar/{blog}', 'BlogsController@comentarBlog')->name('comentarblog');
+    Route::post('/reply/{comentario}', 'BlogsController@replyComentario')->name('replyComentario');
+/*End Open routes*/
