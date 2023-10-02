@@ -6,6 +6,25 @@
 
 @section('content')
 
+    <div class="modal fade" id="alertaCancelaciontemprana" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Recordatorio de cancelación</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p id="advertenciaPenalidad">Recuerda que debes cancelar con 12 horas de antelacion para que no se te descuente la clase,
+                        la fecha limite es: {{$event->fecha_inicio->subHours(12)}}</p>
+                        <!--//[[Carbon\Carbon::parse($event->fecha_inicio->subHours(12))->translatedFormat('l d F', 'es')}} [[$event->start_hour}}-->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-dismiss="modal" aria-label="Close" onclick="checkPlan()">Cerrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <div class="text-center">
         @if(strcasecmp (\Illuminate\Support\Facades\Auth::user()->rol, 'cliente' ) == 0 && \Illuminate\Support\Facades\Auth::user()->cliente == null)
             <h2>Para agendarte a los eventos debes completar tu perfil</h2>
@@ -46,7 +65,7 @@
                         <div class="tab-pane fade" id="additional-info" role="tabpanel"
                              aria-labelledby="additional-info-tab">{{$event->info_adicional}}</div>
                     </div>
-                    <button type="button" class="btn bg-fifth ms-3" onclick="checkPlan()">Agendar</button>
+                    <button type="button" class="btn bg-fifth ms-3" data-toggle="modal" data-target="#alertaCancelaciontemprana" >Agendar</button>
                 </div>
             </div>
             @if((strcasecmp (\Illuminate\Support\Facades\Auth::user()->rol, \App\Utils\Constantes::ROL_ADMIN ) != 0))

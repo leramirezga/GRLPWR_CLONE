@@ -34,6 +34,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        define('HOURS_TO_CANCEL_TRAINING', 5);
     }
 }

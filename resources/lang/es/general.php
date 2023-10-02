@@ -65,6 +65,7 @@ return [
     'reserved_5_minutes' => 'Recuerda completar tu compra en los siguientes 5 minutos.',
     'not_available_kangoos' => 'No tenemos más Kangoos para alquilar, pero puedes reservar tu cupo para la siguiente clase',
     'message_late_cancellation' => 'El entrenamiento ya ha empezado, no podemos realizar la cancelación',
+    'message_enable_late_cancellation' => 'Cancelacion exitosa, al ser cancelada con menos de 12 horas de antelacion se descontará del número de clases restantes',
     'successfully_cancelled' => 'Cancelación exitosa.',
     'Plans' => 'Planes',
 

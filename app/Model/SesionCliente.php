@@ -49,4 +49,8 @@ class SesionCliente extends Model
         return $this->hasOne(Kangoo::class,'id', 'kangoo_id');
     }
 
+    public function event(){
+        return $this->belongsTo(Evento::class,'evento_id', 'id');
+    }
+
 }
