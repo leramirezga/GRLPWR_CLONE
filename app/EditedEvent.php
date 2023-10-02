@@ -6,10 +6,12 @@ use App\Model\SesionCliente;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class EditedEvent extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     public function attendees(){
         return $this->hasMany(SesionCliente::class, 'evento_id', 'evento_id')

@@ -7,11 +7,13 @@ use App\EditedEvent;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Evento extends Model
 {
     use HasFactory;
     protected $table = 'eventos';
+    use SoftDeletes;
 
     protected $fillable = [
         'nombre', 'descripcion', 'imagen', 'info_adicional', 'branch_id', 'class_type_id',
