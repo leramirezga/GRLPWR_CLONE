@@ -11,27 +11,31 @@ class ClientPlanRepository
     public function findValidClientPlan($event = null)
     {
         $clientPlanQuery = ClientPlan::selectRaw(
-                'client_plans.*, remaining_classes.id as remaining_classes_id, remaining_classes.*, client_plans.id as id'
+                ($event ? 'remaining_classes.id as remaining_classes_id, remaining_classes.*, ' : '') . 'client_plans.*, client_plans.id as id'
             )
+            ->distinct()
             ->where('client_id', Auth::id())
             ->where('expiration_date', '>', now())
             ->join('remaining_classes', 'client_plans.id', 'remaining_classes.client_plan_id')
-            ->where(function ($query) {
+            ->where(function ($query) use ($event) {
                 $query->where('remaining_classes.unlimited', '=', '1')
-                    ->orWhere(function ($innerSubquery) {
-                        $innerSubquery->where('remaining_classes.unlimited', '=', '0')
+                    ->orWhere(function ($innerSubquery) use ($event) {
+                        $innerSubquery->when($event, function ($query, $event) {
+                                return $query->where('remaining_classes.class_type_id', $event->class_type_id);
+                            })
+                            ->where('remaining_classes.unlimited', '=', '0')
                             ->where('remaining_classes.remaining_classes', '>', '0');
                     })
-                    ->orWhere(function ($innerSubquery){
-                        $innerSubquery->where('remaining_classes.unlimited', '=', '0')
+                    ->orWhere(function ($innerSubquery) use ($event){
+                        $innerSubquery->when($event, function ($query, $event) {
+                                return $query->where('remaining_classes.class_type_id', $event->class_type_id);
+                            })
+                            ->where('remaining_classes.unlimited', '=', '0')
                             ->where('remaining_classes.remaining_classes', '=', null)
                             ->where('client_plans.remaining_shared_classes', '>', 0);
                     });
             });
 
-            if (isset($event)) {
-                $clientPlanQuery->where('remaining_classes.class_type_id', $event->class_type_id);
-            }
             return $clientPlanQuery->get();
     }
 }
