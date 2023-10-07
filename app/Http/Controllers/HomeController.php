@@ -116,7 +116,7 @@ class HomeController extends Controller
                 'dateborn' => 'required',
                 'genero' => 'string|required',
                 //'ciudad' => 'string|required',
-                'numCel' => 'numeric|required',
+                'cellphone' => 'numeric|required',
                 'email' => 'email|required|string',
             ]);
 
@@ -132,7 +132,7 @@ class HomeController extends Controller
         $user -> nombre = request()->firstname;
         $user -> apellido_1 = request()->lastname;
         $user -> apellido_2 = request()->lastname2;
-        $user -> telefono = request()->numCel;
+        $user -> telefono = request()->cellphone;
         $user -> descripcion = request()->descripcion;
         $user -> genero = request()->genero;
         $user -> ciudad = 'bogota';//request()->ciudad;

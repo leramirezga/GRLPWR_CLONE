@@ -74,15 +74,7 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <br />
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="aceptacion" id="aceptacion" required>
-
-                                    <label class="form-check-label" for="aceptacion">
-                                        <small>He leido y acepto los <a style="text-decoration: none" href="javascript:void(0);" data-toggle="modal" data-target="#modalTerminos"><b><u>Términos de Servicio</u></b></a> y el <a style="text-decoration: none" href="javascript:void(0);" data-toggle="modal" data-target="#modalConsentimiento"><b><u>Consentimiento Informado</u></b></a></small>
-                                    </label>
-                                </div>
-
+                                @include('termsAndConditions')
                             </div>
                         </div>
                     </form>
@@ -91,40 +83,5 @@
         </div>
     </div>
 </div>
-<!-- Modal terminos y condiciones-->
-<div class="modal" tabindex="-1" role="dialog" id="modalTerminos">
-    <div role="document" class="h-100 w-75 m-auto">
-        <div class="modal-content h-100">
-            <div class="modal-header h-100">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <object data="https://drive.google.com/file/d/1tqjcPDTw0j4S6IgAQnpz1IH0vE_mxaGa/preview?usp=share_link" type="application/pdf" frameborder="0" width="100%" height="100%" style="padding: 20px;">
-                    <embed src="https://drive.google.com/file/d/1tqjcPDTw0j4S6IgAQnpz1IH0vE_mxaGa/preview?usp=share_link" type='application/pdf' width="100%" height="100%" />
-                </object>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
 
-<div class="modal" tabindex="-1" role="dialog" id="modalConsentimiento">
-    <div role="document" class="h-100 w-75 m-auto">
-        <div class="modal-content h-100">
-            <div class="modal-header h-100">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <object data="https://drive.google.com/file/d/1tjTuDN1YO9v0H7epzbdqryguXMh8S1MF/preview?usp=share_link" type="application/pdf" frameborder="0" width="100%" height="100%" style="padding: 20px;">
-                    <embed src="https://drive.google.com/file/d/1tjTuDN1YO9v0H7epzbdqryguXMh8S1MF/preview?usp=share_link" type='application/pdf' width="100%" height="100%" />
-                </object>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection

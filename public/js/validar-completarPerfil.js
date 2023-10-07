@@ -43,7 +43,7 @@ $(document).ready(function(){
 		      required: true,
 		      minlength: 3,
 		    },
-            numCel:{
+            cellphone:{
               required: true,
               minlength: 10,
             },

@@ -3,25 +3,35 @@
 namespace App\Http\Controllers;
 
 use App\EditedEvent;
+use App\Exceptions\NoAvailableEquipmentException;
+use App\Exceptions\NoVacancyException;
+use App\Exceptions\ShoeSizeNotSupportedException;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Services\KangooService;
 use App\Model\Cliente;
 use App\Model\Evento;
+use App\Model\Peso;
 use App\Model\Review;
 use App\Model\ReviewSession;
 use App\Model\SesionCliente;
 use App\RemainingClass;
 use App\Repositories\ClientPlanRepository;
-use App\Utils\KangooResistancesEnum;
-use App\Utils\KangooStatesEnum;
 use App\Utils\PlanTypesEnum;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Symfony\Component\HttpFoundation\Response;
 
 class SesionClienteController extends Controller
 {
+    public function __construct(KangooService $kangooService)
+    {
+        $this->kangooService = $kangooService;
+    }
+
     public function save(int $eventId, int $clienteId, $sesionClienteId, $startDate, $endDate)
     {
         if($sesionClienteId != "null"){//La sesion fue creada con reserva de kangoo, así que se confirma
@@ -38,118 +48,123 @@ class SesionClienteController extends Controller
     }
 
     public function scheduleEvent(Request $request){
-        $editedEvent = EditedEvent::where('evento_id', $request->get('eventId'))
-            ->where('fecha_inicio', '=', $request->get('startDate'))
-            ->where('start_hour', '=', $request->get('startHour'))
+        try {
+            $client = Cliente::find($request->clientId);
+            return $this->schedule($request->eventId, $request->startDate, $request->startHour, $request->endDate, $request->endHour, $client, $request->rentEquipment, false);
+        }catch (Exception $exception){
+            Session::put('msg_level', 'danger');
+            Session::put('msg', $exception->getMessage());
+            Session::save();
+            return response()->json(['error' =>  $exception->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function scheduleCourtesy(Request $request){
+
+        $registerController = new RegisterController();
+        $request->merge(['password' => '1234']);
+        $user = $registerController->create($request->all());
+
+
+        $client = new Cliente();
+        $client->usuario_id = $user->id;
+        if($request->shoeSize){
+            $client->talla_zapato = $request->shoeSize;
+        }
+        $client->save();
+        $client->usuario_id = $user->id;
+
+        if($request->weight){
+            Peso::updateOrCreate(
+                ['usuario_id' => $user->id],
+                ['peso' => $request->weight, 'unidad_medida' => 0]
+            );
+        }
+
+        try {
+            $eventArray = json_decode($request->event, true);
+            return $this->schedule($eventArray['id'], $eventArray['startDate'], $eventArray['startHour'], $eventArray['endDate'], $eventArray['endHour'], $client, $request->get('rentEquipment'), true);
+        }catch (Exception $exception){
+            return redirect()->back()->with('errors', $exception->getMessage());
+        }
+    }
+
+    /**
+     * @throws ShoeSizeNotSupportedException
+     * @throws NoVacancyException
+     * @throws NoAvailableEquipmentException
+     *
+     */
+    private function schedule($id, $startDate, $startHour, $endDate, $endHour, $client, $isRenting, $isCourtesy){
+        $editedEvent = EditedEvent::where('evento_id', $id)
+            ->where('fecha_inicio', '=', $startDate)
+            ->where('start_hour', '=', $startHour)
             ->first();
-        $event = $editedEvent ?: Evento::find($request->get('eventId'));
-        $startDateTime = $request->get('startDate') . ' ' . $request->get('startHour');
-        $endDateTime = $request->get('endDate') . ' ' . $request->get('endHour') ;
+        $event = $editedEvent ?: Evento::find($id);
+        $startDateTime = $startDate . ' ' . $startHour;
+        $endDateTime = $endDate . ' ' . $endHour ;
         $scheduled_clients = SesionCliente::where('evento_id', $event->id)
             ->where('fecha_inicio', '=', $startDateTime)
             ->where('fecha_fin', '=', $endDateTime)->count();
         if($event->cupos <= $scheduled_clients){
-            Session::put('msg_level', 'danger');
-            Session::put('msg', __('general.quotas_not_available'));
-            Session::save();
-            return response()->json(['error' =>  __('general.quotas_not_available')], 404);
+           throw new NoVacancyException();
         }
-        $clientId = $request->get('clientId');
-        if(filter_var($request->get('rentEquipment'), FILTER_VALIDATE_BOOLEAN)){
-            $assignResponse = $this->assignEquipment($event, $clientId, $startDateTime, $endDateTime);
-            if($assignResponse instanceof JsonResponse){
-                return $assignResponse;
-            }
+
+        if(filter_var($isRenting, FILTER_VALIDATE_BOOLEAN)){
+            $kangooId = $this->assignEquipment($event, $client->talla_zapato, $client->peso()->peso, $startDateTime, $endDateTime);
         }
-        return $this->validatePlan($clientId, $assignResponse ?? null, $event, $request->get('startDate'), $request->get('endDate'));
+        return $this->registerSession($client->usuario_id, $event, $startDateTime, $endDateTime, $isCourtesy, $kangooId ?? null);
+
     }
 
-    public function assignEquipment(Evento $event, $clientId, $start_date, $end_date){
+    /**
+     * @throws ShoeSizeNotSupportedException
+     * @throws NoAvailableEquipmentException
+     */
+    public function assignEquipment(Evento $event, $shoeSize, $weight, $startDateTime, $endDateTime){
         if(strcasecmp($event->classType->type, PlanTypesEnum::Kangoo->value) == 0){
-            return $this->assignKangoos($event, $clientId, $start_date, $end_date);
+            return $this->kangooService->assignKangoo($shoeSize, $weight, $startDateTime, $endDateTime);
         }
     }
 
-    public function assignKangoos(Evento $event, $clientId, $start_date, $end_date)
+
+    /**
+     *Renta
+        si:
+            plan:
+                si: crea sesion con kangoo y descuenta remaining   	(CASE A)
+                no: crea sesion con reserva y lo envia a pagar 		(CASE B)
+
+        no:
+            plan:
+                si: crea sesion y descuenta remaining              	(CASE C)
+                no: lo envía a pagar								(CASE D)
+     * @param $clientId
+     * @param $event
+     * @param $startDateTime
+     * @param $endDateTime
+     * @param null $kangooId
+     * @return JsonResponse
+     */
+    public function registerSession($clientId, $event, $startDateTime, $endDateTime, $isCourtesy, $kangooId=null)
     {
-        $client = Cliente::find($clientId);
-        switch ($client->talla_zapato){
-            case 35:
-            case 36:
-            case 37:
-                $tallaKangoo = ["S"];
-                break;
-            case 38:
-                $tallaKangoo = ["S", "M"];
-                break;
-            case 39:
-                $tallaKangoo = ["M"];
-                break;
-            case 40:
-                $tallaKangoo = ["M", "L"];
-                break;
-            case 41:
-            case 42:
-            case 43:
-            case 44:
-                $tallaKangoo = ["L"];
-                break;
-            default:
-                Session::put('msg_level', 'danger');
-                Session::put('msg', __('general.not_supported_shoe_size'));
-                Session::save();
-                return response()->json(['error' =>  __('general.not_supported_shoe_size')], 404);
+        $sesionCliente = new SesionCliente;
+        $sesionCliente->cliente_id = $clientId;
+        $sesionCliente->evento_id = $event->id;
+        if($kangooId){
+            $sesionCliente->kangoo_id = $kangooId;
         }
-        $weight = $client->peso()->peso;
-        if ($weight < 55){
-            $resistance = 1;
-        }elseif ($weight < 65) {
-            $resistance = 2;
-        }elseif ($weight < 76) {
-            $resistance = 3;
-        } elseif ($weight < 80) {
-            $resistance = 4;
-        }else{
-            Session::put('msg_level', 'danger');
-            Session::put('msg', __('general.not_supported_shoe_size'));
+        $sesionCliente->fecha_inicio = $startDateTime;
+        $sesionCliente->fecha_fin = $endDateTime;
+
+        if($isCourtesy){
+            $sesionCliente->save();
+            Session::put('msg_level', 'success');
+            Session::put('msg', __('general.success_courtesy'));
             Session::save();
-            return response()->json(['error' =>  __('general.not_supported_shoe_size')], 404);
+            return redirect()->back();
         }
 
-        $kangoos = DB::table('kangoos')->whereNotIn('id', function($q) use($event, $start_date, $end_date){
-            $q->select('kangoos.id')->from('kangoos')
-            ->leftJoin('sesiones_cliente', 'kangoos.id', '=', 'sesiones_cliente.kangoo_id')
-            ->where('sesiones_cliente.fecha_fin', '>=', Carbon::parse($start_date)->format('Y-m-d H:i:s'))
-            ->where('sesiones_cliente.fecha_inicio', '<=', Carbon::parse($end_date)->format('Y-m-d H:i:s'));
-        })->where('kangoos.estado', KangooStatesEnum::Available)
-            ->whereIn('talla', $tallaKangoo)
-            ->where('kangoos.resistencia', '>=', $resistance)
-            ->orderBy('kangoos.resistencia')
-            ->select('kangoos.id', 'kangoos.resistencia')
-            ->get();
-
-        for ($i = $resistance; $i <= KangooResistancesEnum::getMaxResistance(); $i++) {
-            $kangooId = ($kangoos->where('resistencia', $i)->whenNotEmpty(function ($kangoos) {
-                return $kangoos->random(1)[0]->id;
-            }));
-            if(is_numeric($kangooId)){
-                $sesionCliente = new SesionCliente;
-                $sesionCliente->cliente_id = $clientId;
-                $sesionCliente->evento_id = $event->id;
-                $sesionCliente->kangoo_id = $kangooId;
-                $sesionCliente->fecha_inicio = $start_date;
-                $sesionCliente->fecha_fin = $end_date;
-                return $sesionCliente;
-            }
-        }
-        Session::put('msg_level', 'danger');
-        Session::put('msg', __('general.not_available_kangoos'));
-        Session::save();
-        return response()->json(['error' =>  __('general.not_available_kangoos')], 404);
-    }
-
-    public function validatePlan($clientId, $sesionCliente = null, $event, $start_date, $end_date)
-    {
         $clientPlanRepository = new ClientPlanRepository();
         $clientPlan = $clientPlanRepository->findValidClientPlan($event);
 
@@ -158,26 +173,19 @@ class SesionClienteController extends Controller
             $remainingClass = RemainingClass::find($clientPlan->remaining_classes_id);
             if($remainingClass->unlimited == 0) {
                 if ($remainingClass->remaining_classes == null){
-                    $clientPlan->remaining_shared_classes = $clientPlan->remaining_shared_classes - 1;
+                    $clientPlan->remaining_shared_classes--;
                     $clientPlan->save();
                 }elseif($remainingClass->remaining_classes >= 0){
-                    $remainingClass->remaining_classes = $remainingClass->remaining_classes - 1;
+                    $remainingClass->remaining_classes--;
                     $remainingClass->save();
                 }
             }
-            if(!isset($sesionCliente)){//The customer has his own kangoos
-                $sesionCliente = new SesionCliente;
-                $sesionCliente->cliente_id = $clientId;
-                $sesionCliente->evento_id = $event->id;
-                $sesionCliente->fecha_inicio = $start_date;
-                $sesionCliente->fecha_fin = $end_date;
-            }
-            $sesionCliente->save();//This was created above or it was created in assign kangoos method
+            $sesionCliente->save();
             Session::put('msg_level', 'success');
             Session::put('msg', __('general.success_purchase'));
             Session::save();
             return response()->json(['status' =>  'success'], 201);
-        }else if(isset($sesionCliente)){
+        }else if($kangooId){
             $sesionCliente->reservado_hasta = Carbon::now()->addMinutes(5);
             $sesionCliente->save();
             Session::put('msg_level', 'success');
@@ -186,6 +194,7 @@ class SesionClienteController extends Controller
             return response()->json(['status' =>  'reserved', 'sesionClienteId' => $sesionCliente->id], 200);
         }
         return response()->json(['status' =>  'goToPay'], 200);
+
     }
 
     public function cancelTraining(){

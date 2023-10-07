@@ -68,5 +68,5 @@ return [
     'message_enable_late_cancellation' => 'Cancelacion exitosa, al ser cancelada con menos de 12 horas de antelacion se descontará del número de clases restantes',
     'successfully_cancelled' => 'Cancelación exitosa.',
     'Plans' => 'Planes',
-
+    'success_courtesy' => 'Felicidades por ese salto. Tu cortesía ha sido agendada, puedes verla ingresando con tu correo, la clave será 1234',
 ];

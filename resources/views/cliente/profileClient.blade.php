@@ -60,14 +60,18 @@
 
             <div class="{{\Illuminate\Support\Facades\Blade::check('feature', 'dark_theme', false) ? "floating-card bg-semi-transparent" : "box-shadow"}} col-12 col-md-10 mx-auto mt-4 p-2">
                 <h2 class="section-title">Antropometría:</h2>
-                <p><strong>Peso: </strong>{{number_format($user->cliente->peso()->peso, 2)}} Kg</p>
-                <p><strong>Estatura: </strong>{{number_format($user->cliente->estatura()->estatura/100, 2)}} m</p>
-                <div class="contador-container mt-3">
-                    <div class="numero-contador-container">
-                        <h2 class="counter-count-decimal">{{number_format($user->cliente->peso()->peso/(($user->cliente->estatura()->estatura/100)**2), 2)}}</h2>
+                @if($user->cliente->peso())
+                    <p><strong>Peso: </strong>{{number_format($user->cliente->peso()->peso, 2)}} Kg</p>
+                @endif
+                @if($user->cliente->estatura())
+                    <p><strong>Estatura: </strong>{{number_format($user->cliente->estatura()->estatura/100, 2)}} m</p>
+                    <div class="contador-container mt-3">
+                        <div class="numero-contador-container">
+                            <h2 class="counter-count-decimal">{{number_format($user->cliente->peso()->peso/(($user->cliente->estatura()->estatura/100)**2), 2)}}</h2>
+                        </div>
+                        <h4>IMC</h4>
                     </div>
-                    <h4>IMC</h4>
-                </div>
+                @endif
 
                 <div class="d-flex justify-content-around">
                     @php($anthropometry = $user->cliente->anthropometry())

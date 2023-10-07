@@ -3,8 +3,8 @@
 namespace App\Providers;
 
 use App\Branch;
+use App\ClassType;
 use App\Model\Evento;
-use App\View\Composers\BranchSelectorComposer;
 use App\View\Composers\EventComposer;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades;
@@ -39,6 +39,11 @@ class ViewServiceProvider extends ServiceProvider
         Facades\View::composer('components.branchSelector', function (View $view) {
             $branches = Branch::all();
             $view->with('branches', $branches);
+        });
+
+        Facades\View::composer('components.classTypeSelector', function (View $view) {
+            $classTypes = ClassType::all();
+            $view->with('classTypes', $classTypes);
         });
     }
 }

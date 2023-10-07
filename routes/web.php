@@ -15,6 +15,7 @@ use App\Http\Controllers\PagosController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\SesionClienteController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\WelcomeController;
 use \Illuminate\Support\Facades\Auth;
 
 Route::group(['middleware' => 'auth'], function () {
@@ -73,18 +74,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/planes/{plan}', [PlanController::class, 'show'])->name('plan');
 
     Route::get('/nextSessions/{branchId}',[EventController::class, 'nextSessions'])->name('nextSessions');
-
 });
 
 /*Open routes*/
     Auth::routes();
 
-    Route::get('/', function () {
-        if(Auth::check()){
-            return redirect('user/'.Auth::user()->slug.'/home');
-        }
-        return view('welcome');
-    });
+    Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 
     Route::get('/planes', [PlanController::class, 'index'])->name('plans');
 
@@ -99,4 +94,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/blog/{blog}', 'BlogsController@verBlog')->name('blog');
     Route::post('/comentar/{blog}', 'BlogsController@comentarBlog')->name('comentarblog');
     Route::post('/reply/{comentario}', 'BlogsController@replyComentario')->name('replyComentario');
+
+    Route::get('/loadSessions',[EventController::class, 'ajaxNextSessions'])->name('loadSessions');
+
+    Route::post('/scheduleCourtesy',[SesionClienteController::class, 'scheduleCourtesy'])->name('scheduleCourtesy');
 /*End Open routes*/

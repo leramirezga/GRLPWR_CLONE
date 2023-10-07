@@ -149,7 +149,7 @@
                                                                 </span>
                                                 <div class="form-group label-floating">
                                                     <label class="control-label">Télefono celular <small>(requerido)</small></label>
-                                                    <input name="numCel"  class="form-control" value="{{Auth::user()->telefono}}">
+                                                    <input name="cellphone" type="number" min="1000000000" max="9999999999" class="form-control" value="{{Auth::user()->telefono}}">
                                                 </div>
                                             </div>
                                         </div>
