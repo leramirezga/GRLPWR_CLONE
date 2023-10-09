@@ -61,18 +61,18 @@
         @if(isset($reviewFor))
             @include('modalDarReviewEntrenamiento')
         @endif
+        @include('cliente/clientPlan')
+    @endif
+@endsection
+
+@push('cards')
+    @if(!$visitante)
         <div class="{{\Illuminate\Support\Facades\Blade::check('feature', 'dark_theme', false) ? "floating-card bg-semi-transparent" : ""}} p-3 mb-3">
             <div class="mb-2 d-flex justify-content-between">
                 <h3>Próximas sesiones:</h3>
             </div>
             @include('proximasSesiones')
         </div>
-    @endif
-@endsection
-
-@push('cards')
-    @if(!$visitante)
-        @include('cliente/clientPlan')
     @endif
 @endpush
 

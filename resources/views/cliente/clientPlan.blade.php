@@ -8,7 +8,7 @@
                 <div>
                     <h3 class="d-block my-2">{{$clientPlan->plan->name}}</h3>
                     <p class="d-block my-1"><strong>Clases Restantes:</strong></p>
-                    @isset($clientPlan->sharedClasses)
+                    @if($clientPlan->sharedClasses && !$clientPlan->sharedClasses->isEmpty())
                         <p class="d-inline-block">@foreach($clientPlan->sharedClasses as $class)
                                 {{$class->classType->type}}
                                 @if(!$loop->last)
@@ -17,19 +17,24 @@
                             @endforeach
                         </p>
                         <p class="d-inline-block" style="margin-left: -4px">: {{$clientPlan->remaining_shared_classes}}</p>
-                    @endisset
+                    @endif
 
-                    @isset($clientPlan->specificClasses)
+                    @if($clientPlan->specificClasses && !$clientPlan->specificClasses->isEmpty())
                         @foreach($clientPlan->specificClasses as $class)
                             <p>{{$class->classType->type}}: {{$class->remaining_classes}}</p>
                         @endforeach
-                    @endisset
+                    @endif
 
-                    @isset($clientPlan->unlimitedClasses)
-                        @foreach($clientPlan->unlimitedClasses as $class)
-                            <p>{{$class->classType->type}}: <span class="align-middle" style="font-size: x-large;">∞</span></p>
-                        @endforeach
-                    @endisset
+                    @if($clientPlan->unlimitedClasses && !$clientPlan->unlimitedClasses->isEmpty())
+                        <p class="d-inline-block">@foreach($clientPlan->unlimitedClasses as $class)
+                                {{$class->classType->type}}
+                                @if(!$loop->last)
+                                    <span>, </span>
+                                @endif
+                            @endforeach
+                        </p>
+                        <p class="d-inline-block" style="margin-left: -4px">: ∞</p>
+                    @endif
                     <p class="d-block my-1"><strong>Válido hasta: </strong>{{$clientPlan->expiration_date}}</p>
                 </div>
             </div>
