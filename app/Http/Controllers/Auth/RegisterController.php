@@ -93,7 +93,7 @@ class RegisterController extends Controller
             'apellido_1' => $primer_apellido,
             'apellido_2' => $segundo_apellido,
             'email' => $data['email'],
-            'telefono' => $data['cellphone'] ?: null,
+            'telefono' => $data['cellphone'] ?? null,
             'password' => Hash::make($data['password']),
             'nivel' => 0,
             'slug' => $id,//por defecto se coloca el id como la URL (slug) inicial
