@@ -57,8 +57,9 @@ class HomeController extends Controller
             $lastSessionWithoutReview =DB::table('sesiones_cliente')
                             ->leftJoin('reviews_session', 'reviews_session.session_id', '=', 'sesiones_cliente.id')
                             ->whereNull('reviews_session.session_id')
+                            ->where('sesiones_cliente.cliente_id', '=', $user->id)
                             ->where('sesiones_cliente.fecha_fin', '<', today())
-                            ->orderBy('sesiones_cliente.fecha_fin', 'desc')
+                            ->orderByRaw('sesiones_cliente.fecha_fin DESC, sesiones_cliente.id DESC')
                             ->select('sesiones_cliente.id')
                             ->first();
 
