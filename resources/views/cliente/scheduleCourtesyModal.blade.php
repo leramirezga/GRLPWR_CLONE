@@ -82,7 +82,7 @@
                                                 <div class="custom-control custom-radio custom-control-inline">
 
                                                     <input type="radio" id="rentEquipment1" name="rentEquipment" value="1" class="custom-control-input" required>
-                                                    <label class="custom-control-label rentEquipmentLabel" for="rentEquipment1">Alquilar Kangoos</label>
+                                                    <label class="custom-control-label rentEquipmentLabel" for="rentEquipment1">Separar Kangoos</label>
                                                 </div>
                                                 <div class="custom-control custom-radio custom-control-inline">
 

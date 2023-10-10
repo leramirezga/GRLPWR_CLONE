@@ -11,6 +11,8 @@
 
     <link rel="stylesheet" href="{{asset('css/home.css')}}">
 
+    <link rel="stylesheet" href="{{asset('css/chats.css')}}">
+
     <!--     Fonts and icons     -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
           integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
@@ -130,6 +132,14 @@
                     @endforeach
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="floating_button">
+        <div class="chats">
+            <a href="https://api.whatsapp.com/send/?phone=573123781174<&text=Hola,%20necesito%20ayuda%20con%20la%20plataforma&app_absent=0" class="icon-whatsapp" target=”_blank”>
+                <img class="icon" width="100%" height="100%" alt="whatsapp" src="<?php echo e(asset('images/wathsapp_icon.png')); ?>">
+            </a>
         </div>
     </div>
 
