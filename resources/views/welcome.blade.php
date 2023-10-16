@@ -51,7 +51,6 @@
 
             gtag('config', '{{env('GTAG')}}');
         </script>
-        @stack('head-content')
     </head>
     <body data-spy="scroll" data-target=".navbar">
 
