@@ -3,6 +3,10 @@
 @push('head-content')
     <!-- Event snippet for register conversion page-->
     <script>
+        document.getElementById("registerForm").onsubmit = function(){
+            gtag_report_conversion();
+        };
+        
         function gtag_report_conversion(url) {
             var callback = function () {
                 if (typeof(url) != 'undefined') {
@@ -25,7 +29,7 @@
             <div class="floating-card form">
                 <div class="card-body">
 
-                    <form method="POST" action="{{ route('register') }}" aria-label="{{ __('Register') }}">
+                    <form id="registerForm" method="POST" action="{{ route('register') }}" aria-label="{{ __('Register') }}">
                         @csrf
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
@@ -84,7 +88,7 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary" style="width: inherit" onclick="gtag_report_conversion({{env('GTAG')}}+'/register')">
+                                <button type="submit" class="btn btn-primary" style="width: inherit">
                                     Registrarme
                                 </button>
                             </div>

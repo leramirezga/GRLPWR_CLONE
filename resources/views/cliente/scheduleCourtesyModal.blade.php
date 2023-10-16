@@ -1,19 +1,40 @@
-<!-- Fonts -->
-<link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+@push('head-content')
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
 
-<!-- CSS Files -->
-<link href="{{asset('css/profileWizard.css')}}" rel="stylesheet"/>
-<link href="{{asset('css/scheduleCourtesyModal.css')}}" rel="stylesheet"/>
+    <!-- CSS Files -->
+    <link href="{{asset('css/profileWizard.css')}}" rel="stylesheet"/>
+    <link href="{{asset('css/scheduleCourtesyModal.css')}}" rel="stylesheet"/>
 
-<!--     Fonts and icons     -->
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
 
-<!--datetimePicker-->
-<link href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
-<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
-<script src="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
-<script src="{{asset('js/datetimePicker.js')}}"></script>
+    <!--datetimePicker-->
+    <link href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+    <script src="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
+    <script src="{{asset('js/datetimePicker.js')}}"></script>
+
+    <script>
+        document.getElementById("scheduleCourtesyForm").onsubmit = function(){
+            gtag_report_conversion();
+        };
+        <!-- Event snippet for schedule courtesy conversion page -->
+        function gtag_report_conversion(url) {
+            var callback = function () {
+                if (typeof(url) != 'undefined') {
+                    window.location = url;
+                }
+            };
+            gtag('event', 'conversion', {
+                'send_to': 'AW-780220913/9vIhCNCpjO0YEPHzhPQC',
+                'event_callback': callback
+            });
+            return false;
+        }
+    </script>
+@endpush
 
 @if($errors->all() != null)
     <script>
@@ -321,6 +342,7 @@
             }
             return true;
         }
+
         $(document).ready(function () {
             $("input[name='rentEquipment']").click(function () {
                 $('.rentEquipmentLabel').css("cssText", "color:'';")
