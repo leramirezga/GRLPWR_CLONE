@@ -1,5 +1,23 @@
 @extends('layouts.auth')
 
+@push('head-content')
+    <!-- Event snippet for register conversion page-->
+    <script>
+        function gtag_report_conversion(url) {
+            var callback = function () {
+                if (typeof(url) != 'undefined') {
+                    window.location = url;
+                }
+            };
+            gtag('event', 'conversion', {
+                'send_to': 'AW-780220913/vt8SCIzbiO0YEPHzhPQC',
+                'event_callback': callback
+            });
+            return false;
+        }
+    </script>
+@endpush
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -66,7 +84,7 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary" style="width: inherit" onclick="gtag_report_conversion()">
+                                <button type="submit" class="btn btn-primary" style="width: inherit" onclick="gtag_report_conversion({{env('GTAG')}}+'/register')">
                                     Registrarme
                                 </button>
                             </div>
