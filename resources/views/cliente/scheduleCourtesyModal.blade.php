@@ -16,25 +16,6 @@
 <script src="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
 <script src="{{asset('js/datetimePicker.js')}}"></script>
 
-<script>
-    document.getElementById("scheduleCourtesyForm").onsubmit = function(){
-        gtag_report_conversion();
-    };
-    <!-- Event snippet for schedule courtesy conversion page -->
-    function gtag_report_conversion(url) {
-        var callback = function () {
-            if (typeof(url) != 'undefined') {
-                window.location = url;
-            }
-        };
-        gtag('event', 'conversion', {
-            'send_to': 'AW-780220913/9vIhCNCpjO0YEPHzhPQC',
-            'event_callback': callback
-        });
-        return false;
-    }
-</script>
-
 @if($errors->all() != null)
     <script>
         $(document).ready(function(){
@@ -349,5 +330,23 @@
                 $('.terms-label').css("border-color", "");
             });
         });
+
+    </script>
+    <script>
+        document.getElementById("scheduleCourtesyForm").addEventListener("submit", report_courtesy_conversion, true);
+
+        <!-- Event snippet for schedule courtesy conversion page -->
+        function report_courtesy_conversion(url) {
+            var callback = function () {
+                if (typeof(url) != 'undefined') {
+                    window.location = url;
+                }
+            };
+            gtag('event', 'conversion', {
+                'send_to': 'AW-780220913/9vIhCNCpjO0YEPHzhPQC',
+                'event_callback': callback
+            });
+            return false;
+        }
     </script>
 @endpush

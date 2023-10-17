@@ -48,20 +48,6 @@
         gtag('js', new Date());
 
         gtag('config', '{{env('GTAG')}}');
-
-        <!-- Event snippet for Registro conversion page -->
-        function gtag_report_conversion(url) {
-            var callback = function () {
-                if (typeof(url) != 'undefined') {
-                    window.location = url;
-                }
-            };
-            gtag('event', 'conversion', {
-                'send_to': 'AW-780220913/8DZwCOa_i40BEPHzhPQC',
-                'event_callback': callback
-            });
-            return false;
-        }
     </script>
 
     @stack('head-content')
@@ -131,6 +117,8 @@
     </script>
     <script type="text/javascript" src="https://cdn.subscribers.com/assets/subscribers.js"></script>
     -->
+
+    @stack('scripts')
 
 </body>
 </html>

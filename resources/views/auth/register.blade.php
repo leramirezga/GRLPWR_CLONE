@@ -1,27 +1,5 @@
 @extends('layouts.auth')
 
-@push('head-content')
-    <!-- Event snippet for register conversion page-->
-    <script>
-        document.getElementById("registerForm").onsubmit = function(){
-            gtag_report_conversion();
-        };
-        
-        function gtag_report_conversion(url) {
-            var callback = function () {
-                if (typeof(url) != 'undefined') {
-                    window.location = url;
-                }
-            };
-            gtag('event', 'conversion', {
-                'send_to': 'AW-780220913/vt8SCIzbiO0YEPHzhPQC',
-                'event_callback': callback
-            });
-            return false;
-        }
-    </script>
-@endpush
-
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
