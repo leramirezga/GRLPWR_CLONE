@@ -336,13 +336,9 @@
         document.getElementById("scheduleCourtesyForm").addEventListener("submit", report_courtesy_conversion, true);
 
         <!-- Event snippet for schedule courtesy conversion page -->
-        function report_courtesy_conversion(url) {
-            var callback = function () {
-                if (typeof(url) != 'undefined') {
-                    window.location = url;
-                }
-            };
-            gtag('event', 'conversion', {
+        function report_courtesy_conversion() {
+            var callback = function () {};
+            gtag('event', 'schedule_courtesy', {
                 'send_to': 'AW-780220913/9vIhCNCpjO0YEPHzhPQC',
                 'event_callback': callback
             });
