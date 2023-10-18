@@ -23,6 +23,14 @@ class Evento extends Model
 
     protected $dates = ['fecha_inicio', 'fecha_fin'];
 
+    public function setFechaInicioAttribute( $value ) {
+        $this->attributes['fecha_inicio'] = (new Carbon($value))->format('d-m-Y');
+    }
+
+    public function setFechaFinAttribute( $value ) {
+        $this->attributes['fecha_fin'] = (new Carbon($value))->format('d-m-Y');
+    }
+
     public function attendees(){
         return $this->hasMany(SesionCliente::class, 'evento_id', 'id')
             ->where('fecha_inicio', '=', Carbon::parse($this->fecha_inicio)->format('Y-m-d') . ' ' . $this->start_hour)

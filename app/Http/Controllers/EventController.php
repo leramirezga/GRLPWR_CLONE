@@ -13,11 +13,9 @@ use App\Model\Evento;
 use App\Repositories\ClientPlanRepository;
 use App\Utils\Constantes;
 use App\Utils\DaysEnum;
-use App\Utils\KangooStatesEnum;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class EventController extends Controller
@@ -38,16 +36,15 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  Evento  $event
+     * @param  $event
      * @return View
      */
-    public function show(Evento $event, $date, $hour)
+    public function show($event, $date, $hour, $isEdited)
     {
         $date = Carbon::parse($date)->format('Y-m-d');
-        $editedEvent = EditedEvent::where('fecha_inicio', '=', $date)->first();
-        if ($editedEvent){
-            $event = $editedEvent;
-        }elseif ($event->repeatable){
+        if($isEdited){
+            $event = EditedEvent::find($event);
+        } elseif ($event->repeatable){
             $event->fecha_inicio = $date;
             $event->fecha_fin = $date;
             $eventHour = EventHour::where('day', '=', Carbon::parse($date)->format('l'))->where('start_hour', $hour)->first();
@@ -186,7 +183,8 @@ class EventController extends Controller
         for ($i = 0; $i < 7; $i++) {
             $dayName = $dateTime->format('l');
             $updatedCollection = $repeatableEvents->where('day', '=', $dayName)->map(function($element) use ($dateTime, $editedEvents) {
-                if ($editedEvents->where('fecha_inicio', '=', $dateTime->format('Y-m-d'))->count() > 0) {
+                if ($editedEvents->where('evento_id', '=', $element->id)
+                        ->where('fecha_inicio', '=', $dateTime->format('Y-m-d'))->count() > 0) {
                     return null;
                 }else{
                     $element['id'] = $element->event_id;
@@ -196,7 +194,8 @@ class EventController extends Controller
                 }
             })->filter(function($item) {
                 return $item !== null;
-            });;
+            });
+
             $events = $events->concat($updatedCollection);
             $dateTime = $dateTime->addDay();
         }

@@ -59,7 +59,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/rotate-image', 'BlogsController@uploadImage');//TODO ROTATE AND CROP
 
     Route::get('/eventos/crear', [EventController::class, 'create'])->name('eventos.create');
-    Route::get('/eventos/{event}/{date}/{hour}', [EventController::class, 'show'])->name('eventos.show');
+    Route::get('/eventos/{event}/{date}/{hour}/{isEdited}', [EventController::class, 'show'])->name('eventos.show');
     Route::post('/eventos/crear', [EventController::class, 'save'])->name('eventos.store');
 
     //Route::get('/eventos', [SesionEventoController::class, 'fullcalendar'])->name('eventos');
