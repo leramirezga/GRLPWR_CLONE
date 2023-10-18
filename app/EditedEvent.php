@@ -18,4 +18,8 @@ class EditedEvent extends Model
             ->where('fecha_inicio', '=', Carbon::parse($this->fecha_inicio)->format('Y-m-d') . ' ' . $this->start_hour)
             ->where('fecha_fin', '=', Carbon::parse($this->fecha_fin)->format('Y-m-d') . ' ' . $this->end_hour);
     }
+
+    public function classType(){
+        return $this->hasOne(ClassType::class,'id', 'class_type_id');
+    }
 }

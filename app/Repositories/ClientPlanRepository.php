@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 class ClientPlanRepository
 {
 
-    public function findValidClientPlan(Evento $event = null, bool $withRemainingClasses = true)
+    public function findValidClientPlan($event = null, bool $withRemainingClasses = true)
     {
         $clientPlanQuery = ClientPlan::selectRaw(
                 ($event ? 'remaining_classes.id as remaining_classes_id, remaining_classes.*, ' : '') . 'client_plans.*, client_plans.id as id'

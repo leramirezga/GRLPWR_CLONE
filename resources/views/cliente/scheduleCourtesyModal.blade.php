@@ -337,10 +337,8 @@
 
         <!-- Event snippet for schedule courtesy conversion page -->
         function report_courtesy_conversion() {
-            var callback = function () {};
-            gtag('event', 'schedule_courtesy', {
-                'send_to': 'AW-780220913/9vIhCNCpjO0YEPHzhPQC',
-                'event_callback': callback
+            gtag('event', 'conversion', {
+                'send_to': 'AW-780220913/9vIhCNCpjO0YEPHzhPQC'
             });
             return false;
         }
