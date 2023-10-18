@@ -151,7 +151,7 @@ class EventController extends Controller
             })
             ->where('fecha_inicio', '>=', today())
             ->where('fecha_fin', '<=', today()->addWeek())
-            ->where('deleted', '!=', '0')
+            ->where('deleted', '==', '0')
             ->orderBy('fecha_inicio', 'asc')
             ->get()->map(function($element) {
                 $element['id'] = $element->evento_id;
