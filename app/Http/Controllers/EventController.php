@@ -43,7 +43,11 @@ class EventController extends Controller
     {
         $date = Carbon::parse($date)->format('Y-m-d');
         if($isEdited){
-            $event = EditedEvent::find($event);
+            $event = EditedEvent::where('evento_id', '=', $event)
+                        ->where('fecha_inicio', '=', $date)
+                        ->where('start_hour', '=', $hour)
+                        ->first();
+            $event->id = $event->evento_id;
         } elseif ($event->repeatable){
             $event->fecha_inicio = $date;
             $event->fecha_fin = $date;
@@ -167,7 +171,11 @@ class EventController extends Controller
             ->where('fecha_fin', '<=', today()->addWeek())
             ->orderBy('fecha_inicio', 'asc')
             ->get();
-        $repeatableEvents = Evento::when($branchId, function ($query, $branchId) {
+
+        $repeatableEvents = Evento::selectRaw(
+            'eventos.*, event_hours.*, eventos.id as id'
+            )
+            ->when($branchId, function ($query, $branchId) {
                 return $query->where('branch_id', $branchId);
             })
             ->when($classTypeId, function ($query, $classTypeId) {
@@ -179,12 +187,15 @@ class EventController extends Controller
 
         $events = $editedEvents->concat($uniqueEvents);
 
-        $dateTime = today();
+
+        $dateTime =  Carbon::now();
         for ($i = 0; $i < 7; $i++) {
             $dayName = $dateTime->format('l');
-            $updatedCollection = $repeatableEvents->where('day', '=', $dayName)->map(function($element) use ($dateTime, $editedEvents) {
-                if ($editedEvents->where('evento_id', '=', $element->id)
-                        ->where('fecha_inicio', '=', $dateTime->format('Y-m-d'))->count() > 0) {
+
+            $updatedCollection = $repeatableEvents->where('day', '=', $dayName)->map(function($element) use ($dayName, $dateTime, $editedEvents) {
+                if ($editedEvents->filter(function ($model) use ($dateTime, $element) {
+                        return $model->evento_id == $element->id && $model->fecha_inicio->equalTo($dateTime->format('Y-m-d'));
+                    })->count() > 0) {
                     return null;
                 }else{
                     $element['id'] = $element->event_id;
