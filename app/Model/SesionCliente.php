@@ -53,11 +53,11 @@ class SesionCliente extends Model
     }
 
     public function kangoo(){
-        return $this->hasOne(Kangoo::class,'id', 'kangoo_id');
+        return $this->hasOne(Kangoo::class,'id', 'kangoo_id')->withTrashed();
     }
 
     public function event(){
-        return $this->belongsTo(Evento::class,'evento_id', 'id');
+        return $this->belongsTo(Evento::class,'evento_id', 'id')->withTrashed();
     }
 
 }

@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use App\PlanClass;
 use App\RemainingClass;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,7 +18,7 @@ class ClientPlan extends Model
     protected $dates = ['created_at', 'updated_at', 'expiration_date'];
 
     public function plan(){
-        return $this->belongsTo(Plan::class);
+        return $this->belongsTo(Plan::class)->withTrashed();
     }
 
     public function allClasses(){
