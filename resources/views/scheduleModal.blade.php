@@ -9,7 +9,7 @@
                 <div class="modal-body">
                     <div class="custom-control custom-radio custom-control-inline">
                         <input type="radio" id="rentEquipment1" name="rentEquipment" value="1" class="custom-control-input" required>
-                        <label class="custom-control-label" for="rentEquipment1">Alquilar {{$event->classType->required_equipment}}</label>
+                        <label class="custom-control-label" for="rentEquipment1">Necesito {{$event->classType->required_equipment}}</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
                         <input type="radio" id="rentEquipment2" name="rentEquipment" value="0" class="custom-control-input" required>
