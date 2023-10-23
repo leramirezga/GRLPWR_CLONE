@@ -48,12 +48,15 @@ class EventController extends Controller
                         ->where('start_hour', '=', $hour)
                         ->first();
             $event->id = $event->evento_id;
-        } elseif ($event->repeatable){
-            $event->fecha_inicio = $date;
-            $event->fecha_fin = $date;
-            $eventHour = EventHour::where('day', '=', Carbon::parse($date)->format('l'))->where('start_hour', $hour)->first();
-            $event->start_hour = $eventHour->start_hour;
-            $event->end_hour = $eventHour->end_hour;
+        } else{
+            $event = Evento::find($event);
+            if ($event->repeatable){
+                $event->fecha_inicio = $date;
+                $event->fecha_fin = $date;
+                $eventHour = EventHour::where('day', '=', Carbon::parse($date)->format('l'))->where('start_hour', $hour)->first();
+                $event->start_hour = $eventHour->start_hour;
+                $event->end_hour = $eventHour->end_hour;
+            }
         }
 
         $clientPlanRepository = new ClientPlanRepository();
