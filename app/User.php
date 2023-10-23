@@ -79,6 +79,10 @@ class User extends Authenticatable
         return str_after(Carbon::parse($this->fecha_nacimiento)->diffForHumans(), 'hace ');
     }
 
+    public function getFullNameAttribute(){
+        return $this->nombre . ' ' .  $this->apellido_1 . ' ' .  $this->apellido_2;
+    }
+
     public function blogs(){
         return $this->hasMany(Blog::class, 'usuario_id', 'id');
     }

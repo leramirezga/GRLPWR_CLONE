@@ -12,10 +12,10 @@
         <tbody>
         @foreach($event->attendees as $clientSession)
             <tr>
-                <td>{{$clientSession->client->usuario->nombre}}</td>
-                <td>{{$clientSession->client->peso()->peso}}</td>
-                <td>{{$clientSession->client->talla_zapato}}</td>
-                <td>{{$clientSession->kangoo_id ? $clientSession->kangoo->SKU : ''}}</td>
+                <td><div style="max-height:3rem; overflow:hidden">{{$clientSession->client->usuario->fullName}}</div></td>
+                <td><div style="max-height:3rem; overflow:hidden">{{$clientSession->client->peso() ? $clientSession->client->peso()->peso : ''}}</div></td>
+                <td><div style="max-height:3rem; overflow:hidden">{{$clientSession->client->talla_zapato}}</div></td>
+                <td><div style="max-height:3rem; overflow:hidden">{{$clientSession->kangoo_id ? $clientSession->kangoo->SKU : ''}}</div></td>
             </tr>
         @endforeach
         <tbody>
