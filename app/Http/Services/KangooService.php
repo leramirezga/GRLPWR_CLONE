@@ -31,7 +31,8 @@ class KangooService
             $q->select('kangoos.id')->from('kangoos')
                 ->leftJoin('sesiones_cliente', 'kangoos.id', '=', 'sesiones_cliente.kangoo_id')
                 ->where('sesiones_cliente.fecha_fin', '>=', Carbon::parse($startDateTime)->format('Y-m-d H:i:s'))
-                ->where('sesiones_cliente.fecha_inicio', '<=', Carbon::parse($endDateTime)->format('Y-m-d H:i:s'));
+                ->where('sesiones_cliente.fecha_inicio', '<=', Carbon::parse($endDateTime)->format('Y-m-d H:i:s'))
+                ->whereNull('deleted_at');
         })->where('kangoos.estado', KangooStatesEnum::Available)
             ->whereIn('talla', $kangooSizes)
             ->where('kangoos.resistencia', '>=', $resistance)
