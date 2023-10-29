@@ -120,7 +120,14 @@ class EventController extends Controller
 
         $events = $this->loadNextSessions(null, $request->query('classTypeId'));
         if($request->query('rentEquipment') === "true"){
-            $events = $this->filterEvents($events, $request->query('shoeSize'), $request->query('weight'));
+            try{
+                $events = $this->filterEvents($events, $request->query('shoeSize'), $request->query('weight'));
+            }catch (ShoeSizeNotSupportedException | WeightNotSupportedException $e) {
+                Session::put('msg_level', 'danger');
+                Session::put('msg', $e->getMessage());
+                Session::save();
+                return response()->json(['error' => $e->getMessage()], $e->getCode());
+            }
         }
 
         return response()->json([
@@ -129,21 +136,21 @@ class EventController extends Controller
         ], 200);
     }
 
+    /**
+     * @throws ShoeSizeNotSupportedException
+     * @throws WeightNotSupportedException
+     */
     public function filterEvents($events, int $shoeSize, int $weight){
-        try {
-            return $events->filter(function ($event) use ($shoeSize, $weight) {
-                $startDateTime = Carbon::parse($event->fecha_fin)->format('Y-m-d') . ' ' . $event->start_hour;
-                $endDateTime = Carbon::parse($event->fecha_inicio)->format('Y-m-d') . ' ' . $event->end_hour;
-                    $kangooId = $this->kangooService->assignKangoo($shoeSize, $weight, $startDateTime, $endDateTime);
-                    return $kangooId != null;
-            });
-
-        } catch (ShoeSizeNotSupportedException | WeightNotSupportedException | NoAvailableEquipmentException $e) {
-            Session::put('msg_level', 'danger');
-            Session::put('msg', $e->getMessage());
-            Session::save();
-            return response()->json(['error' => $e->getMessage()], $e->getCode());
-        }
+        return $events->filter(function ($event) use ($shoeSize, $weight) {
+            $startDateTime = Carbon::parse($event->fecha_fin)->format('Y-m-d') . ' ' . $event->start_hour;
+            $endDateTime = Carbon::parse($event->fecha_inicio)->format('Y-m-d') . ' ' . $event->end_hour;
+            try {
+                $kangooId = $this->kangooService->assignKangoo($shoeSize, $weight, $startDateTime, $endDateTime);
+                return $kangooId != null;
+            } catch (NoAvailableEquipmentException $e){
+                return false;
+            }
+        });
     }
 
     public function loadNextSessions(int $branchId = null, int $classTypeId = null){
