@@ -86,6 +86,19 @@
     @stack('head-content')
 </head>
 <body>
+    <div class="modal fade justify-content-center align-items-center" id="msgModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="background: none; border: none">
+                <div class="modal-body" style="padding: 0 0 3vh 0">
+                    <div class="alert bg-{{session('msg_level')}} color-white redondeado">
+                        <p>{{session('msg')}}</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="app">
         <div id="top-navbar" class="navbar navbar-dark fixed-top">
             <a class="navbar-brand position-absolute" style="width: 60px" href="@auth{{route('home', ['user'=> Auth::user()->slug])}}@else # @endauth">
@@ -157,12 +170,6 @@
     @endfeature
 
     <div class="container-fluid w-100">
-        @if(session('msg'))
-            <div class=" alert-{{session('msg_level')}} ">
-                <p>{{session('msg')}}</p>
-            </div>
-            @php(\Illuminate\Support\Facades\Session::forget('msg'))
-        @endif
         @yield('content')
 
         <div class="floating_button">
@@ -180,6 +187,14 @@
 
     @stack('scripts')
 
+    @if(session('msg'))
+        <script>
+            $(document).ready(function(){
+                $('#msgModal').modal({show: true});
+            });
+        </script>
+        @php(\Illuminate\Support\Facades\Session::forget('msg'))
+    @endif
     <!--Navbar color effect
     <script>
         $(window).on("scroll", function() {

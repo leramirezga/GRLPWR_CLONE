@@ -84,6 +84,7 @@
                 $('#msgModal').modal({show: true});
             });
         </script>
+        @php(\Illuminate\Support\Facades\Session::forget('msg'))
     @endif
 
     <div class="modal fade justify-content-center align-items-center" id="msgModal" tabindex="-1" role="dialog">

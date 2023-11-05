@@ -62,7 +62,7 @@ class SesionClienteController extends Controller
     public function scheduleCourtesy(Request $request){
 
         $registerController = new RegisterController();
-        $request->merge(['password' => '1234']);
+        $request->merge(['password' => config('app.default_password')]);
         $user = $registerController->create($request->all());
 
 
@@ -156,6 +156,7 @@ class SesionClienteController extends Controller
         }
         $sesionCliente->fecha_inicio = $startDateTime;
         $sesionCliente->fecha_fin = $endDateTime;
+        $sesionCliente->is_courtesy = $isCourtesy;
 
         if($isCourtesy){
             $sesionCliente->save();
