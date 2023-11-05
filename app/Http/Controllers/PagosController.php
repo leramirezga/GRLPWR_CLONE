@@ -122,6 +122,7 @@ class PagosController extends Controller
             'payment_method_id' => 1,
             'codigo_respuesta' => $data->x_cod_response,
             'respuesta' => $data->x_response_reason_text,
+            'amount' => $data->x_amount,
             'data' => json_encode($data),
             'user_id' => $data->x_extra2,
         ])->id;

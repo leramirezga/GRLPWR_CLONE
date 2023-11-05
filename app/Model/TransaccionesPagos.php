@@ -11,7 +11,7 @@ class TransaccionesPagos extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'ref_payco', 'payment_method_id', 'codigo_respuesta','respuesta','data', 'user_id',
+        'ref_payco', 'payment_method_id', 'codigo_respuesta', 'respuesta', 'amount', 'data', 'user_id',
     ];
 
 }
