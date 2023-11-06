@@ -160,7 +160,7 @@ class EventController extends Controller
             ->when($classTypeId, function ($query, $classTypeId) {
                 return $query->where('class_type_id', $classTypeId);
             })
-            ->where('fecha_inicio', '>=', today())
+            ->where('fecha_inicio', '>=', today()) //It is only comparing by date because if it compares also with hour the repeted events that were edited will not be filtered
             ->where('fecha_fin', '<=', today()->addWeek())
             ->where('deleted', '==', '0')
             ->orderBy('fecha_inicio', 'asc')
@@ -177,8 +177,8 @@ class EventController extends Controller
                 return $query->where('class_type_id', $classTypeId);
             })
             ->where('repeatable', '=', false)
-            ->where('fecha_inicio', '>=', today())
-            ->where('fecha_fin', '<=', today()->addWeek())
+            ->whereRaw('CONCAT(fecha_inicio, " ", start_hour) >= ?', [today()])
+            ->whereRaw('CONCAT(fecha_fin, " ", end_hour) >= ?', [today()->addWeek()])
             ->orderBy('fecha_inicio', 'asc')
             ->get();
 
@@ -202,7 +202,8 @@ class EventController extends Controller
         for ($i = 0; $i < 7; $i++) {
             $dayName = $dateTime->format('l');
 
-            $updatedCollection = $repeatableEvents->where('day', '=', $dayName)->map(function($element) use ($dayName, $dateTime, $editedEvents) {
+            $updatedCollection = $repeatableEvents->where('day', '=', $dayName)
+                ->map(function($element) use ($dateTime, $editedEvents) {
                 if ($editedEvents->filter(function ($model) use ($dateTime, $element) {
                         return $model->evento_id == $element->id && $model->fecha_inicio->equalTo($dateTime->format('Y-m-d'));
                     })->count() > 0) {
@@ -221,11 +222,13 @@ class EventController extends Controller
             $dateTime = $dateTime->addDay();
         }
 
-        $events = $events->sortBy([
-            ['fecha_inicio', 'asc'],
-            ['start_hour', 'asc'],
+        return $events->filter(function ($event) {
+            $dateTime = Carbon::now();
+            $eventDateTime = Carbon::parse($event->fecha_inicio->format('Y-m-d') . ' ' . $event->start_hour);
+            return $eventDateTime->gte($dateTime);
+        })->sortBy([
+                ['fecha_inicio', 'asc'],
+                ['start_hour', 'asc'],
         ]);
-
-        return $events;
     }
 }
