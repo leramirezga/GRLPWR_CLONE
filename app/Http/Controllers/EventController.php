@@ -178,7 +178,7 @@ class EventController extends Controller
             })
             ->where('repeatable', '=', false)
             ->whereRaw('CONCAT(fecha_inicio, " ", start_hour) >= ?', [today()])
-            ->whereRaw('CONCAT(fecha_fin, " ", end_hour) >= ?', [today()->addWeek()])
+            ->whereRaw('CONCAT(fecha_fin, " ", end_hour) <= ?', [today()->addWeek()])
             ->orderBy('fecha_inicio', 'asc')
             ->get();
 
