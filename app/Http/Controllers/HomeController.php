@@ -45,27 +45,29 @@ class HomeController extends Controller
         if(strcasecmp ( $user->rol, Constantes::ROL_ADMIN ) == 0){
             return view('admin.homeAdmin', compact('user'));
         }
-        if(strcasecmp ( $user->rol, Constantes::ROL_CLIENTE ) == 0){
+        if(strcasecmp ( $user->rol, Constantes::ROL_CLIENTE ) == 0) {
             $entrenamientosAgendados = SesionCliente::
-                                        where('cliente_id', $user->id)
-                                        ->entrenamientosAgendados($user->rol)
-                                        ->get();
+            where('cliente_id', $user->id)
+                ->entrenamientosAgendados($user->rol)
+                ->get();
 
             $clientPlanRepository = new ClientPlanRepository();
             $clientPlans = $clientPlanRepository->findValidClientPlan();
 
-            $lastSessionWithoutReview =DB::table('sesiones_cliente')
-                            ->leftJoin('reviews_session', 'reviews_session.session_id', '=', 'sesiones_cliente.id')
-                            ->whereNull('reviews_session.session_id')
-                            ->where('sesiones_cliente.cliente_id', '=', $user->id)
-                            ->where('sesiones_cliente.fecha_fin', '<', today())
-                            ->orderByRaw('sesiones_cliente.fecha_fin DESC, sesiones_cliente.id DESC')
-                            ->select('sesiones_cliente.id')
-                            ->first();
+            $Aleatorynumber = rand(1, 100);
+            if ($Aleatorynumber <= config('app.probability_to_show_review_modal', 60)) {
+                $lastSessionWithoutReview = DB::table('sesiones_cliente')
+                    ->leftJoin('reviews_session', 'reviews_session.session_id', '=', 'sesiones_cliente.id')
+                    ->whereNull('reviews_session.session_id')
+                    ->where('sesiones_cliente.fecha_fin', '<', today())
+                    ->orderBy('sesiones_cliente.fecha_fin', 'desc')
+                    ->select('sesiones_cliente.id')
+                    ->first();
 
-            $reviewFor = $lastSessionWithoutReview?->id;
-
-            return view('cliente.homeCliente', compact('user', 'entrenamientosAgendados', 'visitante', 'reviewFor', 'clientPlans'));
+                $reviewFor = $lastSessionWithoutReview?->id;
+                return view('cliente.homeCliente', compact('user', 'entrenamientosAgendados', 'visitante', 'reviewFor', 'clientPlans'));
+            }
+            return view('cliente.homeCliente', compact('user', 'entrenamientosAgendados', 'visitante', 'clientPlans'));
         }
         if(strcasecmp ($user->rol, Constantes::ROL_ENTRENADOR) == 0){
             $ofrecimientos = Ofrecimientos::where('usuario_id', $user->id)->get();
