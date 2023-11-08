@@ -1,5 +1,7 @@
+@include('components.classTypeSelector')
+
 @foreach($events as $event)
-    <div class="solicitud-container  text-center text-md-left d-md-flex {{\Illuminate\Support\Facades\Blade::check('feature', 'dark_theme', false) ? "floating-card bg-semi-transparent" : "box-shadow"}} mb-3">
+    <div class-type="{{ $event->class_type_id }}" class="next-session solicitud-container text-center text-md-left d-md-flex {{\Illuminate\Support\Facades\Blade::check('feature', 'dark_theme', false) ? "floating-card bg-semi-transparent" : "box-shadow"}} mb-3">
         <div>
             <h3 class="d-block my-2">{{$event->nombre}} </h3>
             <p class="d-block my-1"><strong>Día:</strong> {{Carbon\Carbon::parse($event->fecha_inicio)->translatedFormat('l d F', 'es')}}</p>
@@ -14,3 +16,21 @@
         </div>
     </div>
 @endforeach
+
+@push('scripts')
+    <script>
+        $(document).ready(function () {
+            $('#classTypeSelector').on('change', function () {
+                var filterValue = $(this).val();
+
+                $(".next-session").removeClass("d-md-flex").addClass("d-none");
+
+                if (filterValue === 'all') {
+                    $(".next-session").removeClass("d-none").addClass("d-md-flex");
+                } else {
+                    $('.next-session[class-type="' + filterValue + '"]').removeClass("d-none").addClass("d-md-flex");
+                }
+            });
+        });
+    </script>
+@endpush
