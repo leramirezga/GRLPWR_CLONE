@@ -6,6 +6,7 @@ use App\EditedEvent;
 use App\Exceptions\NoAvailableEquipmentException;
 use App\Exceptions\NoVacancyException;
 use App\Exceptions\ShoeSizeNotSupportedException;
+use App\Exceptions\WeightNotSupportedException;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Services\KangooService;
 use App\Model\Cliente;
@@ -95,6 +96,7 @@ class SesionClienteController extends Controller
      * @throws ShoeSizeNotSupportedException
      * @throws NoVacancyException
      * @throws NoAvailableEquipmentException
+     * @throws WeightNotSupportedException
      *
      */
     private function schedule($id, $startDate, $startHour, $endDate, $endHour, $client, $isRenting, $isCourtesy){
@@ -122,6 +124,7 @@ class SesionClienteController extends Controller
     /**
      * @throws ShoeSizeNotSupportedException
      * @throws NoAvailableEquipmentException
+     * @throws WeightNotSupportedException
      */
     public function assignEquipment(Evento $event, $shoeSize, $weight, $startDateTime, $endDateTime){
         if(strcasecmp($event->classType->type, PlanTypesEnum::Kangoo->value) == 0){
