@@ -22,6 +22,8 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -144,58 +146,75 @@ class SesionClienteController extends Controller
      * @param $startDateTime
      * @param $endDateTime
      * @param null $kangooId
-     * @return JsonResponse
+     * @return JsonResponse | \Illuminate\Http\RedirectResponse
      */
     public function registerSession($clientId, $event, $startDateTime, $endDateTime, $isCourtesy, $kangooId=null)
     {
-        $sesionCliente = new SesionCliente;
-        $sesionCliente->cliente_id = $clientId;
-        $sesionCliente->evento_id = $event->id;
-        if($kangooId){
-            $sesionCliente->kangoo_id = $kangooId;
-        }
-        $sesionCliente->fecha_inicio = $startDateTime;
-        $sesionCliente->fecha_fin = $endDateTime;
-        $sesionCliente->is_courtesy = $isCourtesy;
+        DB::beginTransaction();
 
-        if($isCourtesy){
-            $sesionCliente->save();
-            Session::put('msg_level', 'success');
-            Session::put('msg', __('general.success_courtesy'));
-            Session::save();
-            return redirect()->back();
-        }
-
-        $clientPlanRepository = new ClientPlanRepository();
-        $clientPlan = $clientPlanRepository->findValidClientPlan($event);
-
-        if ($clientPlan && $clientPlan->isNotEmpty()) {
-            $clientPlan = $clientPlan->first();
-            $remainingClass = RemainingClass::find($clientPlan->remaining_classes_id);
-            if($remainingClass->unlimited == 0) {
-                if ($remainingClass->remaining_classes == null){
-                    $clientPlan->remaining_shared_classes--;
-                    $clientPlan->save();
-                }elseif($remainingClass->remaining_classes >= 0){
-                    $remainingClass->remaining_classes--;
-                    $remainingClass->save();
-                }
+        try{
+            $sesionCliente = new SesionCliente;
+            $sesionCliente->cliente_id = $clientId;
+            $sesionCliente->evento_id = $event->id;
+            if($kangooId){
+                $sesionCliente->kangoo_id = $kangooId;
             }
-            $sesionCliente->save();
-            Session::put('msg_level', 'success');
-            Session::put('msg', __('general.success_purchase'));
-            Session::save();
-            return response()->json(['status' =>  'success'], 201);
-        }else if($kangooId){
-            $sesionCliente->reservado_hasta = Carbon::now()->addMinutes(5);
-            $sesionCliente->save();
-            Session::put('msg_level', 'success');
-            Session::put('msg', __('general.reserved_5_minutes'));
-            Session::save();
-            return response()->json(['status' =>  'reserved', 'sesionClienteId' => $sesionCliente->id], 200);
-        }
-        return response()->json(['status' =>  'goToPay'], 200);
+            $sesionCliente->fecha_inicio = $startDateTime;
+            $sesionCliente->fecha_fin = $endDateTime;
+            $sesionCliente->is_courtesy = $isCourtesy;
 
+            if($isCourtesy){
+                $sesionCliente->save();
+                Session::put('msg_level', 'success');
+                Session::put('msg', __('general.success_courtesy'));
+                Session::save();
+                DB::commit();
+                return redirect()->back();
+            }
+
+            $clientPlanRepository = new ClientPlanRepository();
+            $clientPlan = $clientPlanRepository->findValidClientPlan($event);
+
+            if ($clientPlan && $clientPlan->isNotEmpty()) {
+                $sesionCliente->save();
+                $clientPlan = $clientPlan->first();
+                $remainingClass = RemainingClass::find($clientPlan->remaining_classes_id);
+                if($remainingClass->unlimited == 0) {
+                    if ($remainingClass->remaining_classes == null){
+                        $clientPlan->remaining_shared_classes--;
+                        $clientPlan->save();
+                    }elseif($remainingClass->remaining_classes >= 0){
+                        $remainingClass->remaining_classes--;
+                        $remainingClass->save();
+                    }
+                }
+                Session::put('msg_level', 'success');
+                Session::put('msg', __('general.success_purchase'));
+                Session::save();
+                DB::commit();
+                return response()->json(['status' =>  'success'], 201);
+            }else if($kangooId){
+                $sesionCliente->reservado_hasta = Carbon::now()->addMinutes(5);
+                $sesionCliente->save();
+                Session::put('msg_level', 'success');
+                Session::put('msg', __('general.reserved_5_minutes'));
+                Session::save();
+                DB::commit();
+                return response()->json(['status' =>  'reserved', 'sesionClienteId' => $sesionCliente->id], 200);
+            }
+            DB::commit();
+            return response()->json(['status' =>  'goToPay'], 200);
+        }catch (Exception $exception) {
+            DB::rollBack();
+            Log::error("ERROR SesionClienteController - registerSession - courtesy: " . $exception->getMessage());
+            Session::put('msg_level', 'danger');
+            Session::put('msg', __('general.error_schedule'));
+            Session::save();
+            if($isCourtesy){
+                return redirect()->back();
+            }
+            return response()->json(status:  500);
+        }
     }
 
     public function cancelTraining(){
