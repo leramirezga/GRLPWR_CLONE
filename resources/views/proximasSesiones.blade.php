@@ -5,7 +5,7 @@
         <div>
             <h3 class="d-block my-2">{{$event->nombre}} </h3>
             <p class="d-block my-1"><strong>Día:</strong> {{Carbon\Carbon::parse($event->fecha_inicio)->translatedFormat('l d F', 'es')}}</p>
-            <p class="d-block my-1"><strong>Hora:</strong> {{$event->start_hour}}</p>
+            <p class="d-block my-1"><strong>Hora:</strong> {{Carbon\Carbon::parse($event->start_hour)->translatedFormat('H:i')}} - {{Carbon\Carbon::parse($event->end_hour)->translatedFormat('H:i')}}</p>
             <p class="d-block my-1"><strong>Lugar: </strong>{{$event->lugar}}</p>
             @if((strcasecmp (\Illuminate\Support\Facades\Auth::user()->rol, \App\Utils\Constantes::ROL_ADMIN ) == 0))
                 <p class="d-block my-1"><strong>Asistentes: </strong>{{$event->attendees->count()}}</p>

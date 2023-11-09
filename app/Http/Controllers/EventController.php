@@ -222,10 +222,11 @@ class EventController extends Controller
             $dateTime = $dateTime->addDay();
         }
 
-        return $events->filter(function ($event) {
-            $dateTime = Carbon::now();
-            $eventDateTime = Carbon::parse($event->fecha_inicio->format('Y-m-d') . ' ' . $event->start_hour);
-            return $eventDateTime->gte($dateTime);
+        $dateTime =  Carbon::now();
+        return $events->filter(function ($event) use ($dateTime) {
+            $eventStartTime = Carbon::parse($event->fecha_inicio->format('Y-m-d') . ' ' . $event->start_hour);
+            $eventEndTime = Carbon::parse($event->fecha_fin->format('Y-m-d') . ' ' . $event->end_hour);
+            return $eventStartTime->gte($dateTime) || $eventEndTime->gte($dateTime);
         })->sortBy([
                 ['fecha_inicio', 'asc'],
                 ['start_hour', 'asc'],
