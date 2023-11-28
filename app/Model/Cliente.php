@@ -11,6 +11,7 @@ use App\NutritionAndHealth;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\DB;
 
 class Cliente extends Model
 {
@@ -107,5 +108,29 @@ class Cliente extends Model
     public function getPorcentajeMetaAttribute(){
         //no se requiere validar si el peso es nulo, porque ya hay una validación en la vista de si existe el cliente. Y si el cliente existe tiene que haber asignado el peso
         return $this->peso_ideal > $this->peso()->peso ? $this->peso()->peso*100/$this->peso_ideal : $this->peso_ideal*100/$this->peso()->peso;
+    }
+
+    public static function active(){
+        return User::join('client_plans as cp', 'usuarios.id', '=', 'cp.client_id')
+            ->join('plans as p', 'p.id', '=', 'cp.plan_id')
+            ->select(
+                'usuarios.email',
+                'usuarios.nombre',
+                'usuarios.apellido_1',
+                'usuarios.apellido_2',
+                'usuarios.telefono',
+                'usuarios.fecha_nacimiento',
+                'usuarios.created_at',
+                DB::raw('p.name as plan_name'),
+                'cp.remaining_shared_classes',
+                'cp.expiration_date'
+            )
+            ->where(function ($query) {
+                $query->where('cp.remaining_shared_classes', '>', 0)
+                    ->orWhereNull('cp.remaining_shared_classes');
+            })
+            ->where('cp.expiration_date', '>', now()->toDateString())
+            ->orderBy('cp.expiration_date', 'ASC')
+            ->get();
     }
 }

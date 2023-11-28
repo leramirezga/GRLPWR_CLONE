@@ -600,6 +600,9 @@ section {
 .color-white{
     color: white!important;
 }
+.color-black{
+    color: black!important;
+}
 .notification{
     max-height: 90vh;
     overflow: auto;

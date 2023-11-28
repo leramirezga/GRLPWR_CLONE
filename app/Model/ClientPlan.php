@@ -2,10 +2,15 @@
 
 namespace App\Model;
 
+use App\Exceptions\ShoeSizeNotSupportedException;
+use App\Exceptions\WeightNotSupportedException;
 use App\PlanClass;
 use App\RemainingClass;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class ClientPlan extends Model
 {
@@ -40,6 +45,22 @@ class ClientPlan extends Model
         return $this->hasMany(RemainingClass::class, 'client_plan_id', 'id')
             ->where('unlimited', '=', 0)
             ->where('remaining_classes', '=', null);
+    }
+
+    public function clientLastPlanWithRemainingClasses(Request $request){
+
+        $lastPlanWithRemainingClasses = ClientPlan::where('client_id', $request->query('clientId'))
+            ->where('remaining_shared_classes', '>', 0)
+            ->where('client_plans.expiration_date', '>', Carbon::now()->subDays(env('DAYS_TO_RENEW', 7)))
+            ->where('client_plans.expiration_date', '<=', Carbon::now())
+            ->join('plans', 'client_plans.plan_id', '=', 'plans.id')
+            ->select('client_plans.*', 'plans.name')
+            ->first();
+
+        return response()->json([
+            'success' => true,
+            'lastPlanWithRemainingClasses' => $lastPlanWithRemainingClasses
+        ], 200);
     }
 
 }

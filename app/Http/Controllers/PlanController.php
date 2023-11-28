@@ -16,8 +16,19 @@ class PlanController extends Controller
      */
     public function index()
     {
-        $plans = Plan::all();
+        $plans = $this->enabledPlans();
         return view('plans', ['plans' => $plans]);
+    }
+
+
+    public function enabledPlans()
+    {
+        return Plan::where(function($q) {
+            $q->where('available_plans', '>', 0)
+                ->orWhereNull('available_plans');
+            })
+            ->whereNull('deleted_at')
+            ->get();
     }
 
    public function show(Plan $plan){

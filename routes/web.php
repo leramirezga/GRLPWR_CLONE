@@ -11,11 +11,13 @@
 |
 */
 
+use App\Http\Controllers\ClientPlanController;
 use App\Http\Controllers\PagosController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\SesionClienteController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\WelcomeController;
+use App\Model\ClientPlan;
 use \Illuminate\Support\Facades\Auth;
 
 Route::group(['middleware' => 'auth'], function () {
@@ -73,7 +75,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/cancelar_entrenamiento', [SesionClienteController::class, 'cancelTraining'])->name('cancelarEntrenamiento');
     Route::get('/planes/{plan}', [PlanController::class, 'show'])->name('plan');
 
+    Route::get('/clientLastPlanWithRemainingClasses', [ClientPlan::class, 'clientLastPlanWithRemainingClasses'])->name('clientLastPlanWithRemainingClasses');
+
+
     Route::get('/nextSessions/{branchId}',[EventController::class, 'nextSessions'])->name('nextSessions');
+});
+Route::group(['middleware' => 'admin'], function () {
+    Route::get('/admin/loadPlan', [ClientPlanController::class, 'showLoadClientPlan']);
+    Route::post('/admin/loadPlan', [ClientPlanController::class, 'saveClientPlan'])->name('saveClientPlan');
 });
 
 /*Open routes*/
