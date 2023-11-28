@@ -32,6 +32,9 @@ $(document).ready(function(){
             planId:{
                 required: true,
             },
+            payDay:{
+                required: true,
+            },
 
         },
         messages: {

@@ -16,15 +16,18 @@ use Illuminate\Support\Facades\Session;
 
 class ClientPlanController extends Controller
 {
-    public function save(int $clientId,int $planId, int $payment_id, int $accumulativeClasses = 0)
+    public function save(int $clientId,int $planId, int $payment_id, $payDay = null, int $accumulativeClasses = 0)
     {
+        $payDay = $payDay ?? Carbon::now();
+
         $clientPlan = new ClientPlan();
         $clientPlan->client_id = $clientId;
         $plan = Plan::find($planId);
         $clientPlan->plan_id = $planId;
         $clientPlan->remaining_shared_classes = $plan-> number_of_shared_classes + $accumulativeClasses;
-        $clientPlan->expiration_date =  Carbon::now()->addDays($plan->duration_days);
+        $clientPlan->expiration_date =  $payDay->copy()->addDays($plan->duration_days);
         $clientPlan->payment_id = $payment_id;
+        $clientPlan->created_at = $payDay;
         $clientPlan->save();
 
         foreach ($plan->allClasses as $class){
@@ -50,6 +53,7 @@ class ClientPlanController extends Controller
         DB::beginTransaction();
 
         try {
+            $payDay = Carbon::createFromFormat('d/m/Y',$request->payDay);
             $transaction = new TransaccionesPagos();
             $transaction->payment_method_id = $request->paymentMethodId;
             $transaction->ref_payco = "1";
@@ -58,9 +62,10 @@ class ClientPlanController extends Controller
             $transaction->amount = $request->amount;
             $transaction->data = $request->data ?? "";
             $transaction->user_id = $request->clientId;
+            $transaction->created_at = $payDay;
             $transaction->save();
 
-            $this->save($request->clientId, $request->planId, $transaction->id, $request->accumulateClasses === "on" ? (int)($request->remainingClases) : 0);
+            $this->save($request->clientId, $request->planId, $transaction->id,$payDay, $request->accumulateClasses === "on" ? (int)($request->remainingClases) : 0);
             Session::put('msg_level', 'success');
             Session::put('msg', __('general.success_save_client_plan'));
             Session::save();

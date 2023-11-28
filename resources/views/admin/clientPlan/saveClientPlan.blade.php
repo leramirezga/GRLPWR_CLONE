@@ -23,6 +23,11 @@
 
     <link href="{{asset('css/profileWizard.css')}}" rel="stylesheet"/>
 
+    <!--datetimePicker-->
+    <link href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+    <script src="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
+    <script src="{{asset('js/datetimePicker.js')}}"></script>
 @endpush
 
 @section('content')
@@ -110,6 +115,15 @@
                                                 <input name="amount" type="number" step="1" class="form-control color-white">
                                             </div>
                                         </div>
+                                        <div class='input-group col-10 col-md-5 m-auto' id="datepicker">
+                                            <span class="iconos">
+                                                <i class="material-icons">calendar_today</i>
+                                            </span>
+                                            <div id="dateContainer" class="form-group label-floating">
+                                                <label class="control-label">Día de pago <small>(requerido)</small></label>
+                                                <input name="payDay" class="form-control input-group-addon color-white" type="text">
+                                            </div>
+                                        </div>
                                         <div class="input-group col-10 col-md-5 m-auto">
                                             <span class="iconos">
                                                 <i class="fa fa-comments" aria-hidden="true"></i>
@@ -176,6 +190,31 @@
             </div>
         </div>
     </div>
+
+@endsection
+
+@push('scripts')
+    <!--datetimePicker configuration-->
+    <script>
+        $(function () {
+            var actualDate = new Date();
+            actualDate.setHours(23,59);
+            $('#datepicker').datetimepicker({
+                ignoreReadonly: true,
+                format: 'DD/MM/YYYY',
+                maxDate: actualDate,
+                locale: 'es',
+                useCurrent: false //Para que con el max date no quede seleccionada por defecto esa fecha
+            });
+            $("#datepicker").on("dp.change", function (e) {
+                if(e.date == ''){
+                    $("#dateContainer").addClass( "is-empty" );
+                }else{
+                    $("#dateContainer").removeClass( "is-empty" );
+                }
+            });
+        });
+    </script>
 
     <script>
         $(document).ready(function() {
@@ -259,4 +298,4 @@
     <script src="{{asset('js/jquery.validate.min.js')}}"></script>
     <script src="{{asset('js/validate-saveClientPlan.js')}}"></script>
     <script src="{{asset('js/wizard.js')}}"></script>
-@endsection
+@endpush
