@@ -82,7 +82,7 @@
                                             <select class="form-control select2 bg-dark" id="clientId" name="clientId">
                                                 <option style="color: black" value="" disabled selected>Usuario...</option>
                                                 @foreach($clients as $client)
-                                                    <option value="{{$client->usuario_id}}">{{$client->usuario->nombre}} {{$client->usuario->apellido_1}}</option>
+                                                    <option value="{{$client->usuario_id}}">{{$client->usuario->nombre}} {{$client->usuario->apellido_1}} {{$client->usuario->telefono}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
