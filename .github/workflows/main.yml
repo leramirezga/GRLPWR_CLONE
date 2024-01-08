@@ -39,4 +39,4 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: /girlpower/public_html/
           local-dir: public/
-          exclude: index.php, video
+          exclude: index.php
