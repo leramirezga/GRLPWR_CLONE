@@ -1,0 +1,33 @@
+<?php
+
+namespace App\View\Components;
+
+use Illuminate\View\Component;
+use PhpParser\Node\Scalar\String_;
+
+class typeSection extends Component
+{
+    /**
+     * Create a new component instance.
+     *
+     * @return void
+     */
+    public function __construct(
+        public string $title,
+        public string $description,
+        public string $img,
+        public String $background = 'white',
+        public String $color = 'black'
+    )
+    {}
+
+    /**
+     * Get the view / contents that represent the component.
+     *
+     * @return \Illuminate\Contracts\View\View|\Closure|string
+     */
+    public function render()
+    {
+        return view('components.type-section');
+    }
+}

@@ -11,6 +11,9 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,900|K2D" rel="stylesheet" type="text/css">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Cinzel&display=swap" rel="stylesheet">
+
 
         <!-- bootstrap 4.1.0 -->
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
@@ -64,7 +67,7 @@
 
     <nav id="top-navbar" class="navbar navbar-expand-md navbar-dark fixed-top">
         <a class="navbar-brand" href="#" style="width: 60px; padding: 0">
-            <img src="{{asset('images/brand/logo_letras_blanco.png')}}" width="70%" height="70%">
+            <img src="{{asset('images/brand/Imago_fondo_claro.png')}}" width="70%" height="70%">
         </a>
         <div class="top-right links">
             <a href="{{ route('blogs') }}">Blogs</a>
@@ -102,101 +105,57 @@
 
     <div id="welcome" class="flex-center position-ref full-height">
         <div class="content">
-            <div class="title mb-3">
-                <img src="{{asset('images/brand/imago_fondo_oscuro.png')}}" width="50%" height="50%">
+            <div class="title">
+                <video autoplay muted class="portrait-video landingVideo" src="{{asset('video/landing_page_portrait.mp4')}}" preload="auto"></video>
+                <video muted class="landscape-video landingVideo" src="{{asset('video/landing_page_portrait.mp4')}}" preload="none"></video>
+                <button id="schedule-courtesy" class="btn btn-success ml-auto mr-auto" data-toggle="modal"
+                        data-target="#scheduleCourtesyModal">¡Agendar Cortesía!
+                </button>
+                <button id="sound" class="btn position-absolute bg-dark color-white" style="bottom:5vh; left: 5vh; height: 40px; line-height: 0">
+                    <span id="volume_off" class="material-icons" style="font-size: smaller">volume_off</span>
+                    <span id="volume_on" class="material-icons" style="font-size: smaller; display: none">volume_up</span>
+                </button>
+
             </div>
-            <h4 class="mb-5">El refugio donde las <strong style="font-size: xx-large">Mujeres</strong> desarrollan todo su <strong style="font-size: xx-large">Potencial</strong></h4>
-            <button class="btn btn-success d-block ml-auto mr-auto" data-toggle="modal"
-                    data-target="#scheduleCourtesyModal">¡Agendar Cortesía!
-            </button>
         </div>
     </div>
-    <div class="section" id="welcome">
-        <div class="sub-section-info">
-            <h1 class="mb-5">¿Porqué Girl Power?</h1>
-            <p class="text-justify">
+
+    <div class="w-100 text-center p-5 bg-brand-primary-gradient color-white">
+        <h3>CENTRO DE BIENESTAR EXCLUSIVO PARA MUJERES</h3>
+    </div>
+
+    <x-type-section title="Fit Flyr" description="Entrenamiento de rebote que reduce 80% el impacto y quema 20% más calorías" img="{{asset('images/exercise/kangoo.JPG')}}"></x-type-section>
+
+    <x-type-section title="Fit Combat" description="Mezcla de artes marciales al ritmo de la música 🤼" img="{{asset('images/exercise/combat.JPG')}}" background="linear-gradient(90deg, rgba(67,0,36,1) 0%, rgba(67,5,68,1) 72%, rgba(87,6,88,1) 100%)" color="white"></x-type-section>
+
+    <x-type-section title="Fit Mind" description="Conexión mente cuerpo, trabajmos repiración y meditación 🧘" img="{{asset('images/exercise/mind.JPG')}}"></x-type-section>
+
+    <x-type-section title="Fit Step" description="Tonifica, has cardio, sube y baja al mejor ritmo de la música" img="{{asset('images/exercise/step.JPG')}}" background="linear-gradient(90deg, rgba(67,0,36,1) 0%, rgba(67,5,68,1) 72%, rgba(87,6,88,1) 100%)" color="white"></x-type-section>
+
+    <x-type-section title="Fit Flex" description="Combinación de yoga con pilates 🤸♀" img="{{asset('images/exercise/flex.JPG')}}"></x-type-section>
+
+    <x-type-section title="Fit Dance" description="Rumboteraía al ritmo de 4 generos músicales 💃" img="{{asset('images/exercise/dance.JPG')}}" background="linear-gradient(90deg, rgba(67,0,36,1) 0%, rgba(67,5,68,1) 72%, rgba(87,6,88,1) 100%)" color="white"></x-type-section>
+
+    <x-type-section title="Fit Pound" description="Tonificación total body al ritmo de la música con baquetas 🥁" img="{{asset('images/exercise/pound.JPG')}}"></x-type-section>
+
+    <x-type-section title="Fit Box" description="El boxeo es un arte marcial y deporte que combina fuerza, velocidad y estrategia, donde los puños son las herramientas de expresión, para desestresarte y sacar el fuego que llevas por dentro. 🥊 💥‍" img="{{asset('images/exercise/box.JPG')}}" background="linear-gradient(90deg, rgba(67,0,36,1) 0%, rgba(67,5,68,1) 72%, rgba(87,6,88,1) 100%)" color="white"></x-type-section>
+
+    <x-type-section title="Fit Functional" description="Mezcla de crossfit que mejora la vida diaria al fortalecer movimientos naturales y el núcleo, promoviendo la salud y la funcionalidad. 💪🏋️‍" img="{{asset('images/exercise/functional.JPG')}}"></x-type-section>
+
+
+    <div class="section d-flex flex-column">
+        <div class="mx-auto mb-4">
+            <h1 class="w-75  text-center mx-auto mb-5">¿Porqué <br> Girl Power?</h1>
+            <p class="w-50 m-auto text-justify">
             En GRL PWR ofrecemos un refugio para que puedas encontrar y desarrollar todo tu POWER. Unimos cuerpo, mente y espíritu, para que te sientas cómoda entrenando en la gran variedad de ejercicios que ofrecemos.
             </p>
         </div>
-        {{--
-        <div class="boots-image d-flex align-items-center">
-            <img class="h-100 w-100 how-works-image m-auto" src="{{asset('images/botas_2.png')}}" alt="First slide">
-        </div>
-        --}}
-    </div>
-    <div class="section text-center d-block" id="welcome">
-        <h1>Modalidades</h1>
-
-        <div id="immediateDeliveryCarousel" class="carousel slide mt-3" data-ride="carousel">
-            <div id="innerImmediateDelivery" class="carousel-inner row mx-auto carousel-inner-cyclic" style="width: 75%">
-                <div class="carousel-item carousel-item-cyclic col-12 itemDivImmediateDelivery my-5">
-                    <a class="card-link">
-                        <div class="card floating-card bg-semi-transparent p-0 carousel-card col-12 col-md-3 mx-auto"  style="min-width: 230px">
-                            <div style="height: 70%; background-image: url('{{asset('images/funcional.jpg')}}'); background-size: cover; background-position: 70%"></div>
-                            <div class="pt-2 px-3 text-center">
-                                <h4><strong>Funcional</strong></h4>
-                                <p><small>Entrenamiento semipersonalizado que mejora la vida diaria al fortalecer movimientos naturales y el núcleo, promoviendo la salud y la funcionalidad. 💪🏋️‍</small></p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="carousel-item carousel-item-cyclic col-12 itemDivImmediateDelivery my-5">
-                    <a class="card-link ">
-                        <div class="card floating-card bg-semi-transparent p-0 carousel-card col-12 col-md-3 mx-auto"  style="min-width: 230px">
-                            <div style="height: 50%; background-image: url('{{asset('images/boxeo.jpg')}}'); background-size: cover; background-position: center"></div>
-                            <div class="pt-2 px-3 text-center">
-                                <h4 class="card-text"><small><strong>Boxeo</strong></small></h4>
-                                <p><small>El boxeo es un arte marcial y deporte que combina fuerza, velocidad y estrategia, donde los puños son las herramientas de expresión, para desestresarte y sacar el fuego que llevas por dentro. 🥊 💥</small></p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="carousel-item carousel-item-cyclic col-12 itemDivImmediateDelivery my-5">
-                    <a class="card-link ">
-                        <div class="card floating-card bg-semi-transparent p-0 carousel-card col-12 col-md-3 mx-auto" style="min-width: 230px">
-                            <div style="height: 70%; background-image: url('{{asset('images/actividad_kangoo.jpg')}}'); background-size: contain; background-position: center; background-repeat: no-repeat"></div>
-                            <div class="pt-2 px-3 text-center">
-                                <h4 class="card-text"><small><strong>Kangoo</strong></small></h4>
-                                <p class="text-justify"><small>Entrenamiento de rebote con el que podrás quemar 1000 calorias en una clase de 1 hora, reduciendo el impacto en tus articulaciones hasta en un 80% 🦘</small></p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="carousel-item carousel-item-cyclic col-12 itemDivImmediateDelivery my-5">
-                    <a class="card-link ">
-                        <div class="card floating-card bg-semi-transparent p-0 carousel-card col-12 col-md-3 mx-auto" style="min-width: 230px">
-                            <div style="height: 70%; background-image: url('{{asset('images/yoga.jpg')}}'); background-size: cover; background-position: 100%"></div>
-                            <div class="pt-2 px-3 text-center">
-                                <h4 class="card-text"><small><strong>Yoga</strong></small></h4>
-                                <p class="text-justify"><small>Conecta cuerpo y mente a través de posturas, respiración y meditación, mejora tu equilibrio y bienestar con movimientos concientes. 🧘‍♀️🌼</small></p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="carousel-item carousel-item-cyclic col-12 itemDivImmediateDelivery my-5">
-                    <a class="card-link ">
-                        <div class="card floating-card bg-semi-transparent p-0 carousel-card col-12 col-md-3 mx-auto"  style="min-width: 230px">
-                            <div style="height: 70%; background-image: url('{{asset('images/fitdance.jpg')}}'); background-size: cover; background-position: center"></div>
-                            <div class="pt-2 px-3 text-center">
-                                <h4 class="card-text"><small><strong>FitDance</strong></small></h4>
-                                <p class="text-justify"><small>Quema calorias al ritmo de la música, cambiando de género cada 10 minutos en una clase dinámica y divertida 💃🕺🎶</small></p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <a class="carousel-control-prev-personalized carousel-control-cyclic immediateDeliveryControl" href="#immediateDeliveryCarousel" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next-personalized carousel-control-cyclic immediateDeliveryControl" href="#immediateDeliveryCarousel" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
+        <div class="flex-grow-1 w-100">
+            <div class="m-auto floating-card" style="height: 400px; width: 400px; background-image: url('{{asset('images/brand/Imago_fondo_claro.png')}}'); background-size: cover; background-position: center"></div>
         </div>
     </div>
 
-    <div class="section text-center d-block color-white" id="welcome">
+    <div class="section text-center d-block">
         <h1 class="text-center">
             Síguenos en nuestras redes sociales
         </h1>
@@ -255,7 +214,7 @@
 
         <div class="footer-left">
 
-            <img src="{{asset('images/brand/logo_letras_blanco.png')}}" width="70%" height="70%">
+            <img class="mb-3" src="{{asset('images/brand/imago_sin_fondo_oscuro.png')}}" width="70%" height="70%">
 
             <!--<p class="footer-links">
                 <a href="#quienesSomos">Quienes somos</a>
@@ -277,21 +236,21 @@
         <div class="footer-center">
 
             <div>
-                <a href="https://goo.gl/maps/SZKV84zvwuorBJha8" target=”_blank”>
-                    <i class="fa fa-map-marker"></i>
+                <a href="https://goo.gl/maps/SZKV84zvwuorBJha8" target="_blank">
+                    <i class="fa fa-map-marker m-0"></i>
                     <p><span>Av. Esperanza #75-25</span> Modelia, Bogotá</p>
                 </a>
             </div>
 
             <div>
-                <a href="https://api.whatsapp.com/send/?phone=573123781174<&text=Hola,%20quiero%20conocer%20Girl%20Power&app_absent=0" target=”_blank”>
-                    <i class="fa fa-phone"></i>
+                <a href="https://api.whatsapp.com/send/?phone=573123781174<&text=Hola,%20quiero%20conocer%20Girl%20Power&app_absent=0" target="_blank">
+                    <i class="fa fa-phone m-0"></i>
                     <p>312 378 11 74</p>
                 </a>
             </div>
 
             <div>
-                <i class="fa fa-envelope"></i>
+                <i class="fa fa-envelope m-0"></i>
                 <p><a href="mailto:contacto@girlpower.com.co">contacto@girlpower.com.co</a></p>
             </div>
 
@@ -300,7 +259,7 @@
         <div class="footer-right">
             <!--<a href="#"><i class="fab fa-facebook"></i></a>-->
             <a href="https://www.instagram.com/girlpowerstudio/">
-                <i class="fab fa-instagram" style="font-size: 25px"></i>
+                <i class="fab fa-instagram m-0" style="font-size: 25px"></i>
                 <p>@girlpowerstudio</p>
             </a>
         </div>
@@ -309,7 +268,7 @@
 
     <div class="floating_button">
         <div class="chats">
-            <a href="https://api.whatsapp.com/send/?phone=573123781174<&text=Hola,%20quiero%20conocer%20Girl%20Power&app_absent=0" class="icon-whatsapp" target=”_blank”>
+            <a href="https://api.whatsapp.com/send/?phone=573123781174<&text=Hola,%20quiero%20conocer%20Girl%20Power&app_absent=0" class="icon-whatsapp" target="_blank">
                 <img class="icon" width="100%" height="100%" alt="whatsapp" src="{{asset('images/wathsapp_icon.png')}}">
             </a>
         </div>
@@ -318,7 +277,78 @@
     @include('cliente.scheduleCourtesyModal')
 
     @stack('modals')
+    <script>
+        $(document).ready(function() {
+            let options = {
+                root: null,    // browser viewport
+                rootMargin: '0px',
+                threshold: 0.5 // target element visible 50%
+            }
 
+            let observer = new IntersectionObserver(fadeOnFocus, options);
+            let targets = document.querySelectorAll('.fade-in-section');
+            targets.forEach(target => {    // adding observer for all videos
+                observer.observe(target);
+            });
+        });
+
+        let compo = null
+        const fadeOnFocus = (entries, observer) => {    // callback
+            entries.forEach((entry) => {
+                if(entry.isIntersecting) {
+                    entry.target.className += entry.target.classList.contains("is-visible") ? "" : " is-visible";
+                }
+            });
+        };
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#schedule-courtesy").delay(2000).fadeIn()
+        });
+    </script>
+
+    <script>
+        var button = document.getElementById('sound');
+        var videos = document.querySelectorAll('.landingVideo');
+        var volume_off = document.getElementById("volume_off")
+        var volume_on = document.getElementById("volume_on")
+
+        button.onclick = function (){
+
+            volume_off.style.display=window.getComputedStyle(volume_off).display === "none" ? "block" : "none";
+            volume_on.style.display=window.getComputedStyle(volume_on).display === "none" ? "block" : "none";
+
+
+            videos.forEach(video => {    // adding observer for all videos
+                if(window.getComputedStyle(video).display !== "none")
+                    video.muted = !video.muted;
+            });
+        };
+
+        $(document).ready(function() {
+            let options = {
+                root: null,    // browser viewport
+                rootMargin: '0px',
+                threshold: 0.5 // target element visible 50%
+            }
+
+            let observer = new IntersectionObserver(playOnFocus, options);
+            let targets = document.querySelectorAll('.landingVideo');
+            targets.forEach(target => {    // adding observer for all videos
+                observer.observe(target);
+            });
+        });
+
+        const playOnFocus = (entries, observer) => {    // callback
+            entries.forEach((entry) => {
+                if(entry.isIntersecting) {
+                    entry.target.play();    // play target video
+                } else {
+                    entry.target.pause();    // pause video
+                }
+            });
+        };
+    </script>
     <!--Instagram-->
     <script
             src="https://cdn2.woxo.tech/a.js#616af38872a6520016a29c25"

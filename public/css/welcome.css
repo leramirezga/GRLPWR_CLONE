@@ -32,13 +32,12 @@
     .overflow-text{/*Si el texto es demasiado grande para dispositivos mobiles*/
         font-size: 3rem;
     }
-    #welcome::after {
-        background-size: 180% 100%!important;
-        /*MOVING IMAGE
-        instead of background put this:
-        background-image: url(../images/botas.jpg);
-        background-position: 0px;*/
-        background: url("../images/landing.jpg") no-repeat center center fixed;
+
+    .landscape-video{
+        display: none;
+    }
+    .portrait-video{
+        display: block;
     }
 }
 /* Medium devices (landscape tablets, 768px and up) */
@@ -62,13 +61,12 @@
         width: 10vw;
         bottom: 10vw;
     }
-    #welcome::after {
-        /*MOVING IMAGE
-        instead of background put this:
-        background-image: url(../images/botas.jpg);
-        background-position: 214px;*/
-        background: url("../images/landing.jpg") no-repeat 0px center fixed;
-        background-size: 120% 120%!important;
+
+    .landscape-video{
+        display: block;
+    }
+    .portrait-video{
+        display: none;
     }
 }
 .full-height {
@@ -120,24 +118,36 @@
     position: relative;/*necesario para que las imágenes se ubiquen donde debe ser*/
 }
 body{
-    background: rgb(67,5,68);
     overflow-x: hidden;
-    font-family: 'Barlow Regular', sans-serif;
+    /*font-family: 'Barlow Regular', sans-serif;*/
+    font-family: 'Cinzel'!important;
+    font-weight: 200!important;
 }
-#welcome{
-    color: white!important;
-    min-height: 400px;
+footer{
+    background: rgb(67,5,68);
 }
-#welcome::after {
-    content: "";
-    opacity: 0.4;
-    top: 0;
-    left: 0px;
-    bottom: 0;
-    right: 0;
-    position: absolute;/*necesario para que solo se vea en la primera parte*/
-    z-index: -1;
+
+.landingVideo{
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover; /*   Ajusta el video para cubrir el contenedor sin distorsión */
+    position: relative;
 }
+
+#schedule-courtesy  {
+    position: absolute;
+    top: 70%; /* Ajusta la posición vertical según tus necesidades */
+    left: 50%; /* Ajusta la posición horizontal según tus necesidades */
+    transform: translate(-50%, -50%); /* Centra el botón */
+    padding: 15px 20px; /* Ajusta el tamaño y el espaciado del botón */
+    background: #28a745; /* Color de fondo del botón */
+    color: #fff; /* Color del texto del botón */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: none; /*to show after some time*/
+}
+
 .brand-name{
     color:  #ffffff;
     font: normal 36px 'Cookie', cursive;
@@ -247,4 +257,16 @@ h1{
     background-color: rgb(67,5,68, 0.9);
     color: white;
 }
-
+.bg-brand-primary-gradient{
+    background: linear-gradient(90deg, rgba(67,0,36,1) 0%, rgba(67,5,68,1) 72%, rgba(87,6,88,1) 100%);
+}
+.fade-in-section {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+    will-change: opacity, visibility;
+}
+.fade-in-section.is-visible {
+    opacity: 1;
+    visibility: visible;
+}

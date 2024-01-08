@@ -198,7 +198,7 @@
     <script src="{{asset('js/validate-scheduleCourtesy.js')}}"></script>
     <script src="{{asset('js/wizard.js')}}"></script>
 
-    <!--  More information about jquery.validate here: http://jqueryvalidation.org/	 -->f
+    <!--  More information about jquery.validate here: http://jqueryvalidation.org/	 -->
     <script src="{{asset('js/jquery.validate.min.js')}}"></script>
 
     <script>
