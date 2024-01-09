@@ -181,6 +181,11 @@ class SesionClienteController extends Controller
             if ($clientPlan && $clientPlan->isNotEmpty()) {
                 $sesionCliente->save();
                 $clientPlan = $clientPlan->first();
+                if($clientPlan->remaining_shared_classes != null){
+                    $clientPlan->remaining_shared_classes--;
+                    $clientPlan->save();
+                }
+                /*FIT-57: Uncomment this if you want specific classes
                 $remainingClass = RemainingClass::find($clientPlan->remaining_classes_id);
                 if($remainingClass->unlimited == 0) {
                     if ($remainingClass->remaining_classes == null){
@@ -190,7 +195,7 @@ class SesionClienteController extends Controller
                         $remainingClass->remaining_classes--;
                         $remainingClass->save();
                     }
-                }
+                }*/
                 Session::put('msg_level', 'success');
                 Session::put('msg', __('general.success_purchase'));
                 Session::save();
@@ -239,7 +244,7 @@ class SesionClienteController extends Controller
         Session::put('msg_level', 'success');
         Session::put('msg', __('general.successfully_cancelled'));
         Session::save();
-        $this->returnRemainingClassesAfterCancellation($session->event);
+        $this->returnClassAfterCancellation($session->event);
         return back();
     }
 
@@ -258,11 +263,16 @@ class SesionClienteController extends Controller
         return back();
     }
 
-    public function returnRemainingClassesAfterCancellation(Evento $event){
+    public function returnClassAfterCancellation(Evento $event){
         $clientPlanRepository = new ClientPlanRepository();
         $clientPlan = $clientPlanRepository->findValidClientPlan($event, false);
         if ($clientPlan && $clientPlan->isNotEmpty()) {
             $clientPlan = $clientPlan->first();
+            if($clientPlan->remaining_shared_classes != null){
+                $clientPlan->remaining_shared_classes++;
+                $clientPlan->save();
+            }
+            /*FIT-57: Uncomment this if you want specific classes
             $remainingClass = RemainingClass::find($clientPlan->remaining_classes_id);
             if ($remainingClass->unlimited == 0) {
                 if ($remainingClass->remaining_classes == null) {
@@ -273,6 +283,7 @@ class SesionClienteController extends Controller
                     $remainingClass->save();
                 }
             }
+            */
         }
     }
 

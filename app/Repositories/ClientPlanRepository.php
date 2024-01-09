@@ -11,6 +11,17 @@ class ClientPlanRepository
 
     public function findValidClientPlan($event = null, bool $withRemainingClasses = true)
     {
+        return ClientPlan::where('client_id', Auth::id())
+            ->where('expiration_date', '>', now())
+            ->when($withRemainingClasses, function ($query) {
+                return $query->where(function ($query) {
+                    $query->where('remaining_shared_classes', '>', 0)
+                        ->orWhereNull('remaining_shared_classes');
+                });
+            })->get();
+
+        /*
+         *FIT-57: Uncomment this if you want specific classes
         $clientPlanQuery = ClientPlan::selectRaw(
                 ($event ? 'remaining_classes.id as remaining_classes_id, remaining_classes.*, ' : '') . 'client_plans.*, client_plans.id as id'
             )
@@ -42,5 +53,6 @@ class ClientPlanRepository
             });
 
             return $clientPlanQuery->get();
+        */
     }
 }

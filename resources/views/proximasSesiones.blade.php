@@ -45,7 +45,7 @@
             $('#classTypeSelector').on('change', function () {
                 filterType = $(this).val();
                 $(".next-session").removeClass("d-md-flex").addClass("d-none");
-                if(filterType == 5)
+                if(filterType == 2)
                 {
                     $("#functional").removeClass("d-none").addClass("d-md-flex");
                 }else{

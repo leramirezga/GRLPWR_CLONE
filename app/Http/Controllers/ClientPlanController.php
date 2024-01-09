@@ -30,6 +30,7 @@ class ClientPlanController extends Controller
         $clientPlan->created_at = $payDay;
         $clientPlan->save();
 
+        /*FIT-57: Uncomment this if you want specific classes
         foreach ($plan->allClasses as $class){
             $remainingClass =new RemainingClass();
             $remainingClass->client_plan_id = $clientPlan->id;
@@ -38,7 +39,7 @@ class ClientPlanController extends Controller
             $remainingClass->remaining_classes = $class->number_of_classes;
             $remainingClass->equipment_included = $class->equipment_included;
             $remainingClass->save();
-        }
+        }*/
     }
 
     public function showLoadClientPlan(){

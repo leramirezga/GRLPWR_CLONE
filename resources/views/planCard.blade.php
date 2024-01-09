@@ -8,6 +8,19 @@
     <div class="mx-auto w-75">
         <h2><strong> ${{number_format($plan->price, 0, '.', ',')}}</strong></h2>
 
+        <table class="table bg-dark m-0">
+            <tbody>
+            @foreach(\App\ClassType::all() as $class)
+                <tr @if($loop->first)class="border-top"@endif>
+                    <td class="border-top-0 p-0 text-left align-middle">{{$class->type}}</td>
+                    @if($loop->first)
+                        <td class="border-top-0 text-right align-middle" rowspan="{{$loop->count}}">{{$plan->number_of_shared_classes}}</td>
+                    @endif
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
+        {{--FIT-57: Uncomment this if you want specific classes
         @isset($plan->sharedClasses)
             <table class="table bg-dark m-0">
                 <tbody>
@@ -33,22 +46,23 @@
                     @endforeach
                 </tbody>
             </table>
-            @endisset
-            @isset($plan->unlimitedClasses)
-                <table class="table bg-dark m-0">
-                    <tbody>
-                        @foreach($plan->unlimitedClasses as $class)
-                            <tr @if($loop->first)class="border-top"@endif>
-                                <td class="border-top-0 text-left align-middle">{{$class->classType->type}}</td>
-                                @if($loop->first)
-                                    <td class="border-top-0 text-right align-middle" style="font-size: xx-large; line-height: 0.8" rowspan="{{$loop->count}}">∞</td>
-                                @endif
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            @endisset
-            @isset($plan->benefits)
+        @endisset
+        @isset($plan->unlimitedClasses)
+            <table class="table bg-dark m-0">
+                <tbody>
+                    @foreach($plan->unlimitedClasses as $class)
+                        <tr @if($loop->first)class="border-top"@endif>
+                            <td class="border-top-0 text-left align-middle">{{$class->classType->type}}</td>
+                            @if($loop->first)
+                                <td class="border-top-0 text-right align-middle" style="font-size: xx-large; line-height: 0.8" rowspan="{{$loop->count}}">∞</td>
+                            @endif
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @endisset
+        --}}
+        @isset($plan->benefits)
             <table class="table bg-dark m-0">
                 <tbody>
                 @foreach($plan->benefits as $benefit)
@@ -59,7 +73,7 @@
                 @endforeach
                 </tbody>
             </table>
-            @endisset
+        @endisset
         <table class="table bg-dark m-0">
             <tbody>
             <tr class="border-top">
