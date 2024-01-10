@@ -128,13 +128,13 @@
 
     <x-type-section title="Fit Combat" description="Mezcla de artes marciales al ritmo de la música 🤼" img="{{asset('images/exercise/combat.JPG')}}" background="linear-gradient(90deg, rgba(67,0,36,1) 0%, rgba(67,5,68,1) 72%, rgba(87,6,88,1) 100%)" color="white"></x-type-section>
 
-    <x-type-section title="Fit Mind" description="Conexión mente cuerpo, trabajmos repiración y meditación 🧘" img="{{asset('images/exercise/mind.JPG')}}"></x-type-section>
+    <x-type-section title="Fit Mind" description="Conexión mente cuerpo, trabajamos respiración y meditación 🧘" img="{{asset('images/exercise/mind.JPG')}}"></x-type-section>
 
     <x-type-section title="Fit Step" description="Tonifica, has cardio, sube y baja al mejor ritmo de la música" img="{{asset('images/exercise/step.JPG')}}" background="linear-gradient(90deg, rgba(67,0,36,1) 0%, rgba(67,5,68,1) 72%, rgba(87,6,88,1) 100%)" color="white"></x-type-section>
 
     <x-type-section title="Fit Flex" description="Combinación de yoga con pilates 🤸♀" img="{{asset('images/exercise/flex.JPG')}}"></x-type-section>
 
-    <x-type-section title="Fit Dance" description="Rumboteraía al ritmo de 4 generos músicales 💃" img="{{asset('images/exercise/dance.JPG')}}" background="linear-gradient(90deg, rgba(67,0,36,1) 0%, rgba(67,5,68,1) 72%, rgba(87,6,88,1) 100%)" color="white"></x-type-section>
+    <x-type-section title="Fit Dance" description="Rumboterapia al ritmo de 4 generos músicales 💃" img="{{asset('images/exercise/dance.JPG')}}" background="linear-gradient(90deg, rgba(67,0,36,1) 0%, rgba(67,5,68,1) 72%, rgba(87,6,88,1) 100%)" color="white"></x-type-section>
 
     <x-type-section title="Fit Pound" description="Tonificación total body al ritmo de la música con baquetas 🥁" img="{{asset('images/exercise/pound.JPG')}}"></x-type-section>
 
