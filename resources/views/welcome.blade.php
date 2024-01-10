@@ -124,23 +124,23 @@
         <h3>CENTRO DE BIENESTAR EXCLUSIVO PARA MUJERES</h3>
     </div>
 
-    <x-type-section title="Fit Flyr" description="Entrenamiento de rebote que reduce 80% el impacto y quema 20% más calorías" img="{{asset('images/exercise/kangoo.JPG')}}"></x-type-section>
+    <x-type-section title="Fit Flyr" description="Entrenamiento de rebote que reduce 80% el impacto y quema 20% más calorías" img="{{asset('images/exercise/kangoo.JPG')}}" background="white" color="black"></x-type-section>
 
     <x-type-section title="Fit Combat" description="Mezcla de artes marciales al ritmo de la música 🤼" img="{{asset('images/exercise/combat.JPG')}}" background="linear-gradient(90deg, rgba(67,0,36,1) 0%, rgba(67,5,68,1) 72%, rgba(87,6,88,1) 100%)" color="white"></x-type-section>
 
-    <x-type-section title="Fit Mind" description="Conexión mente cuerpo, trabajamos respiración y meditación 🧘" img="{{asset('images/exercise/mind.JPG')}}"></x-type-section>
+    <x-type-section title="Fit Mind" description="Conexión mente cuerpo, trabajamos respiración y meditación 🧘" img="{{asset('images/exercise/mind.JPG')}}" background="white" color="black"></x-type-section>
 
     <x-type-section title="Fit Step" description="Tonifica, has cardio, sube y baja al mejor ritmo de la música" img="{{asset('images/exercise/step.JPG')}}" background="linear-gradient(90deg, rgba(67,0,36,1) 0%, rgba(67,5,68,1) 72%, rgba(87,6,88,1) 100%)" color="white"></x-type-section>
 
-    <x-type-section title="Fit Flex" description="Combinación de yoga con pilates 🤸♀" img="{{asset('images/exercise/flex.JPG')}}"></x-type-section>
+    <x-type-section title="Fit Flex" description="Combinación de yoga con pilates 🤸♀" img="{{asset('images/exercise/flex.JPG')}}" background="white" color="black"></x-type-section>
 
     <x-type-section title="Fit Dance" description="Rumboterapia al ritmo de 4 generos músicales 💃" img="{{asset('images/exercise/dance.JPG')}}" background="linear-gradient(90deg, rgba(67,0,36,1) 0%, rgba(67,5,68,1) 72%, rgba(87,6,88,1) 100%)" color="white"></x-type-section>
 
-    <x-type-section title="Fit Pound" description="Tonificación total body al ritmo de la música con baquetas 🥁" img="{{asset('images/exercise/pound.JPG')}}"></x-type-section>
+    <x-type-section title="Fit Pound" description="Tonificación total body al ritmo de la música con baquetas 🥁" img="{{asset('images/exercise/pound.JPG')}}" background="white" color="black"></x-type-section>
 
     <x-type-section title="Fit Box" description="El boxeo es un arte marcial y deporte que combina fuerza, velocidad y estrategia, donde los puños son las herramientas de expresión, para desestresarte y sacar el fuego que llevas por dentro. 🥊 💥‍" img="{{asset('images/exercise/box.JPG')}}" background="linear-gradient(90deg, rgba(67,0,36,1) 0%, rgba(67,5,68,1) 72%, rgba(87,6,88,1) 100%)" color="white"></x-type-section>
 
-    <x-type-section title="Fit Functional" description="Mezcla de crossfit que mejora la vida diaria al fortalecer movimientos naturales y el núcleo, promoviendo la salud y la funcionalidad. 💪🏋️‍" img="{{asset('images/exercise/functional.JPG')}}"></x-type-section>
+    <x-type-section title="Fit Functional" description="Mezcla de crossfit que mejora la vida diaria al fortalecer movimientos naturales y el núcleo, promoviendo la salud y la funcionalidad. 💪🏋️‍" img="{{asset('images/exercise/functional.JPG')}}" background="white" color="black"></x-type-section>
 
 
     <div class="section d-flex flex-column">
