@@ -24,7 +24,7 @@ class ClientPlanController extends Controller
         $clientPlan->client_id = $clientId;
         $plan = Plan::find($planId);
         $clientPlan->plan_id = $planId;
-        $clientPlan->remaining_shared_classes = $plan-> number_of_shared_classes + $accumulativeClasses;
+        $clientPlan->remaining_shared_classes = $plan-> number_of_shared_classes ?  $plan-> number_of_shared_classes + $accumulativeClasses : null;
         $clientPlan->expiration_date =  $payDay->copy()->addDays($plan->duration_days);
         $clientPlan->payment_id = $payment_id;
         $clientPlan->created_at = $payDay;
