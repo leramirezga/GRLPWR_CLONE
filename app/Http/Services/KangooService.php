@@ -87,7 +87,7 @@ class KangooService
             $resistance = 3;
         } elseif ($weight < 80) {
             $resistance = 4;
-        } elseif ($weight > 80) {
+        } elseif ($weight >= 80) {
             $resistance = 5;
         }else{
            throw new WeightNotSupportedException();
