@@ -15,6 +15,7 @@ use App\Utils\Constantes;
 use App\Utils\DaysEnum;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -161,14 +162,18 @@ class EventController extends Controller
                 return $query->where('class_type_id', $classTypeId);
             })
             ->where('fecha_inicio', '>=', today()) //It is only comparing by date because if it compares also with hour the repeted events that were edited will not be filtered
-            ->where('fecha_fin', '<=', today()->addWeek())
+            ->where('fecha_fin', '<=', today()->addDays(8))
             ->orderBy('fecha_inicio', 'asc')
             ->get()->map(function($element) {
                 $element['id'] = $element->evento_id;
                 return $element;
             });
 
-        $uniqueEvents = Evento::doesntHave('edited_events')
+        $uniqueEvents = Evento::
+            whereDoesntHave('edited_events', function (Builder $query) {
+                $query->whereRaw('CONCAT(fecha_inicio, " ", start_hour) >= ?', [today()])
+                    ->whereRaw('CONCAT(fecha_fin, " ", end_hour) <= ?', [today()->addDays(8)]);
+            })
             ->when($branchId, function ($query, $branchId) {
                 return $query->where('branch_id', $branchId);
             })
@@ -177,7 +182,7 @@ class EventController extends Controller
             })
             ->where('repeatable', '=', false)
             ->whereRaw('CONCAT(fecha_inicio, " ", start_hour) >= ?', [today()])
-            ->whereRaw('CONCAT(fecha_fin, " ", end_hour) <= ?', [today()->addWeek()])
+            ->whereRaw('CONCAT(fecha_fin, " ", end_hour) <= ?', [today()->addDays(8)])
             ->orderBy('fecha_inicio', 'asc')
             ->get();
 
