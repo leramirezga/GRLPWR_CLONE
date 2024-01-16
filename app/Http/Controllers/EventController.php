@@ -143,8 +143,8 @@ class EventController extends Controller
      */
     public function filterEvents($events, int $shoeSize, int $weight){
         return $events->filter(function ($event) use ($shoeSize, $weight) {
-            $startDateTime = Carbon::parse($event->fecha_fin)->format('Y-m-d') . ' ' . $event->start_hour;
-            $endDateTime = Carbon::parse($event->fecha_inicio)->format('Y-m-d') . ' ' . $event->end_hour;
+            $startDateTime = Carbon::parse($event->fecha_inicio)->format('Y-m-d') . ' ' . $event->start_hour;
+            $endDateTime = Carbon::parse($event->fecha_fin)->format('Y-m-d') . ' ' . $event->end_hour;
             try {
                 $kangooId = $this->kangooService->assignKangoo($shoeSize, $weight, $startDateTime, $endDateTime);
                 return $kangooId != null;

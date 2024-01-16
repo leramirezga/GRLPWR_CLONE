@@ -105,8 +105,8 @@ class SesionClienteController extends Controller
             ->where('start_hour', '=', $startHour)
             ->first();
         $event = $editedEvent ?: Evento::find($id);
-        $startDateTime = $startDate . ' ' . $startHour;
-        $endDateTime = $endDate . ' ' . $endHour ;
+        $startDateTime = Carbon::parse($startDate)->format('Y-m-d') . ' ' . $startHour;
+        $endDateTime = Carbon::parse($endDate)->format('Y-m-d') . ' ' . $endHour;
         $scheduled_clients = SesionCliente::where('evento_id', $event->id)
             ->where('fecha_inicio', '=', $startDateTime)
             ->where('fecha_fin', '=', $endDateTime)->count();
