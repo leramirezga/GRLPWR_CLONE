@@ -3,6 +3,7 @@
     <table class="w-100 table">
         <thead>
             <tr>
+                <th scope="col">Id</th>
                 <th scope="col">Nombre</th>
                 <th scope="col">Es cortesía</th>
                 @if(strcasecmp($event->classType->type, \App\Utils\PlanTypesEnum::Kangoo->value) == 0)
@@ -15,6 +16,7 @@
         <tbody>
         @foreach($event->attendees as $clientSession)
             <tr>
+                <td><div style="max-height:3rem; overflow:hidden">{{$clientSession->client->usuario_id}}</div></td>
                 <td><div style="max-height:3rem; overflow:hidden">{{$clientSession->client->usuario->fullName}}</div></td>
                 <td><div style="max-height:3rem; overflow:hidden">{{$clientSession->is_courtesy ? 'Si' : 'No'}}</div></td>
                 @if(strcasecmp($event->classType->type, \App\Utils\PlanTypesEnum::Kangoo->value) == 0)
