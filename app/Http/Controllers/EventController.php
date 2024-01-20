@@ -161,8 +161,8 @@ class EventController extends Controller
             ->when($classTypeId, function ($query, $classTypeId) {
                 return $query->where('class_type_id', $classTypeId);
             })
-            ->where('fecha_inicio', '>=', today()) //It is only comparing by date because if it compares also with hour the repeted events that were edited will not be filtered
-            ->where('fecha_fin', '<=', today()->addDays(8))
+            ->where('fecha_inicio', '>=', today()) //It is only comparing by date because if it compares also with hour the repeated events that were edited will not be filtered
+            ->where('fecha_fin', '<=', today()->endOfWeek())
             ->orderBy('fecha_inicio', 'asc')
             ->get()->map(function($element) {
                 $element['id'] = $element->evento_id;
@@ -172,7 +172,7 @@ class EventController extends Controller
         $uniqueEvents = Evento::
             whereDoesntHave('edited_events', function (Builder $query) {
                 $query->whereRaw('CONCAT(fecha_inicio, " ", start_hour) >= ?', [today()])
-                    ->whereRaw('CONCAT(fecha_fin, " ", end_hour) <= ?', [today()->addDays(8)]);
+                    ->whereRaw('CONCAT(fecha_fin, " ", end_hour) <= ?', [today()->endOfWeek()]);
             })
             ->when($branchId, function ($query, $branchId) {
                 return $query->where('branch_id', $branchId);
@@ -182,7 +182,7 @@ class EventController extends Controller
             })
             ->where('repeatable', '=', false)
             ->whereRaw('CONCAT(fecha_inicio, " ", start_hour) >= ?', [today()])
-            ->whereRaw('CONCAT(fecha_fin, " ", end_hour) <= ?', [today()->addDays(8)])
+            ->whereRaw('CONCAT(fecha_fin, " ", end_hour) <= ?', [today()->endOfWeek()])
             ->orderBy('fecha_inicio', 'asc')
             ->get();
 
@@ -203,7 +203,7 @@ class EventController extends Controller
 
 
         $dateTime =  Carbon::now();
-        for ($i = 0; $i < 7; $i++) {
+        for ($i = 0; $i < Carbon::today()->diffInDays(Carbon::today()->endOfWeek()); $i++) {
             $dayName = $dateTime->format('l');
 
             $updatedCollection = $repeatableEvents->where('day', '=', $dayName)
