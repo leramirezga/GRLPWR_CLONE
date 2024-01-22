@@ -28,5 +28,11 @@
         @endforeach
         <tbody>
     </table>
+
+    <button class="btn btn-success" data-toggle="modal" data-target="#registerAttendee">
+        Registrar Asistente
+    </button>
 </div>
+
+@include('components/modalRegisterAttendee')
 

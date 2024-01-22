@@ -53,7 +53,7 @@ class SesionClienteController extends Controller
     public function scheduleEvent(Request $request){
         try {
             $client = Cliente::find($request->clientId);
-            return $this->schedule($request->eventId, $request->startDate, $request->startHour, $request->endDate, $request->endHour, $client, $request->rentEquipment, false);
+            return $this->schedule($request->eventId, $request->startDate, $request->startHour, $request->endDate, $request->endHour, $client, $request->rentEquipment, $request->isCourtesy ?? false, $request->validateVacancy ?? false);
         }catch (Exception $exception){
             Session::put('msg_level', 'danger');
             Session::put('msg', $exception->getMessage());
@@ -86,7 +86,7 @@ class SesionClienteController extends Controller
 
         try {
             $eventArray = json_decode($request->event, true);
-            return $this->schedule($eventArray['id'], $eventArray['startDate'], $eventArray['startHour'], $eventArray['endDate'], $eventArray['endHour'], $client, $request->get('rentEquipment'), true);
+            return $this->schedule($eventArray['id'], $eventArray['startDate'], $eventArray['startHour'], $eventArray['endDate'], $eventArray['endHour'], $client, $request->get('rentEquipment'), true, true);
         }catch (Exception $exception){
             return redirect()->back()->with('errors', $exception->getMessage());
         }
@@ -99,7 +99,8 @@ class SesionClienteController extends Controller
      * @throws WeightNotSupportedException
      *
      */
-    private function schedule($id, $startDate, $startHour, $endDate, $endHour, $client, $isRenting, $isCourtesy){
+    private function schedule($id, $startDate, $startHour, $endDate, $endHour, $client, $isRenting, $isCourtesy, $validateVacancy): JsonResponse|\Illuminate\Http\RedirectResponse
+    {
         $editedEvent = EditedEvent::where('evento_id', $id)
             ->where('fecha_inicio', '=', $startDate)
             ->where('start_hour', '=', $startHour)
@@ -110,13 +111,14 @@ class SesionClienteController extends Controller
         $scheduled_clients = SesionCliente::where('evento_id', $event->id)
             ->where('fecha_inicio', '=', $startDateTime)
             ->where('fecha_fin', '=', $endDateTime)->count();
-        if($event->cupos <= $scheduled_clients){
+        if(filter_var($validateVacancy, FILTER_VALIDATE_BOOLEAN) && $event->cupos <= $scheduled_clients){
            throw new NoVacancyException();
         }
 
         if(filter_var($isRenting, FILTER_VALIDATE_BOOLEAN)){
             $kangooId = $this->assignEquipment($event, $client->talla_zapato, $client->peso()->peso, $startDateTime, $endDateTime);
         }
+        $isCourtesy = filter_var($isCourtesy, FILTER_VALIDATE_BOOLEAN);
         return $this->registerSession($client->usuario_id, $event, $startDateTime, $endDateTime, $isCourtesy, $kangooId ?? null);
 
     }
@@ -176,7 +178,7 @@ class SesionClienteController extends Controller
             }
 
             $clientPlanRepository = new ClientPlanRepository();
-            $clientPlan = $clientPlanRepository->findValidClientPlan($event);
+            $clientPlan = $clientPlanRepository->findValidClientPlan($event, $clientId);
 
             if ($clientPlan && $clientPlan->isNotEmpty()) {
                 $sesionCliente->save();
@@ -265,7 +267,7 @@ class SesionClienteController extends Controller
 
     public function returnClassAfterCancellation(Evento $event){
         $clientPlanRepository = new ClientPlanRepository();
-        $clientPlan = $clientPlanRepository->findValidClientPlan($event, false);
+        $clientPlan = $clientPlanRepository->findValidClientPlan(event: $event, withRemainingClasses: false);
         if ($clientPlan && $clientPlan->isNotEmpty()) {
             $clientPlan = $clientPlan->first();
             if($clientPlan->remaining_shared_classes != null){

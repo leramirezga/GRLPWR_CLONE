@@ -4,14 +4,15 @@ namespace App\Repositories;
 
 use App\Model\ClientPlan;
 use App\Model\Evento;
+use http\Client;
 use Illuminate\Support\Facades\Auth;
 
 class ClientPlanRepository
 {
 
-    public function findValidClientPlan($event = null, bool $withRemainingClasses = true)
+    public function findValidClientPlan($event = null, int $clientId = null, bool $withRemainingClasses = true)
     {
-        return ClientPlan::where('client_id', Auth::id())
+        return ClientPlan::where('client_id', $clientId ?? Auth::id())
             ->where('expiration_date', '>', now())
             ->when($withRemainingClasses, function ($query) {
                 return $query->where(function ($query) {
@@ -26,7 +27,7 @@ class ClientPlanRepository
                 ($event ? 'remaining_classes.id as remaining_classes_id, remaining_classes.*, ' : '') . 'client_plans.*, client_plans.id as id'
             )
             ->distinct()
-            ->where('client_id', Auth::id())
+            ->where('client_id', $clientId)
             ->where('expiration_date', '>', now())
             ->join('remaining_classes', 'client_plans.id', 'remaining_classes.client_plan_id')
             ->where(function ($query) use ($event, $withRemainingClasses) {
