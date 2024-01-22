@@ -51,8 +51,11 @@ class ClientPlan extends Model
 
         $lastPlanWithRemainingClasses = ClientPlan::where('client_id', $request->query('clientId'))
             ->where('remaining_shared_classes', '>', 0)
-            ->where('client_plans.expiration_date', '>', Carbon::now()->subDays(env('DAYS_TO_RENEW', 7)))
-            ->where('client_plans.expiration_date', '<=', Carbon::now())
+            ->where(function($q) {
+                $q->where('client_plans.expiration_date', '>', Carbon::now())//is not expired
+                    ->orWhere('client_plans.expiration_date', '>', Carbon::now()->subDays(env('DAYS_TO_RENEW', 7)));//expired 7 days ago
+
+            })
             ->join('plans', 'client_plans.plan_id', '=', 'plans.id')
             ->select('client_plans.*', 'plans.name')
             ->first();
