@@ -67,7 +67,7 @@ class EventController extends Controller
             return view('sessions.event', [
                 'event' => $event,
                 'plan' => $clientPlan,
-                'equipmentIncluded' => true//TODO fix this adding a column in clientPlan table to include equipment in all trainings, or removing the equipment logic $clientPlan->equipment_included
+                'equipmentIncluded' => $clientPlan->equipment_included
             ]);
         }
         return view('sessions.event', [
