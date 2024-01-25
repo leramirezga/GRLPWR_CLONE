@@ -3,9 +3,8 @@
 @endsection
 
 @section('tab3Content')
-    <h4 class="info-text">Cuentanos un poco de ti</h4>
     <div class="row m-auto">
-        <div class="col-sm-4 m-auto">
+        <div class="col-sm-12 col-md-6 m-auto">
             <div class="input-group">
                 <span class="input-group-addon iconos">
                     <span class="fas fa-weight"></span>
@@ -64,7 +63,7 @@
                     @endif
                 </div>
             </div>
-            -->
+
             <div class="input-group">
                 <span class="iconos" style="padding: 0/*para que en firefox queden horizontales*/">
                     <i class="fas fa-venus-mars"></i>
@@ -82,6 +81,27 @@
                                value="m" {{Auth::user()->genero != null && Auth::user()->genero == 'm' ? "checked=true" : ""}}>
                         Masculino
                     </label>
+                </div>
+            </div>
+            -->
+
+            <div class="input-group">
+                <span class="input-group-addon iconos">
+                    <i class="fa-solid fa-bullseye"></i>
+                </span>
+                <div class="form-group label-floating">
+                    <label class="control-label">¿Cúal es tu objetivo? <small>(requerido)</small></label>
+                    <input name="objective" class="form-control" required value="{{Auth::user()->cliente != null ? Auth::user()->cliente->objective : ''}}">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <span class="input-group-addon iconos">
+                    <i class="fa-solid fa-staff-snake"></i>
+                </span>
+                <div class="form-group label-floating">
+                    <label class="control-label">¿Tienes alguna patología? <small>(requerido)</small></label>
+                    <input name="pathology" class="form-control" required value="{{ Auth::user()->cliente ? Auth::user()->cliente->pathology : '' }}">
                 </div>
             </div>
         </div>

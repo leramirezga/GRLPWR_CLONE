@@ -14,6 +14,7 @@
 use App\Http\Controllers\ClientPlanController;
 use App\Http\Controllers\PagosController;
 use App\Http\Controllers\PlanController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SesionClienteController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\WelcomeController;
@@ -43,7 +44,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/user/{user}/home', 'HomeController@index')->name('home');
     Route::delete('/{user}/home', 'SolicitudServicioController@eliminar')->name('eliminarSolicitud');
-    Route::put('/user/{user}/home', 'HomeController@actualizarPerfil')->name('actualizarPerfil');
+    Route::put('/user/{user}/home', [ProfileController::class, 'actualizarPerfil'])->name('actualizarPerfil');
     Route::get('/visitar/{user}', 'HomeController@visitar')->name('visitarPerfil');
 
     Route::get('/user/{user}', 'ProfileController@index')->name('profile');

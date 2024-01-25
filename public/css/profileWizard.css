@@ -1348,9 +1348,6 @@ fieldset[disabled] .checkbox, fieldset[disabled] .checkbox input[type=checkbox],
 }
 
 /*wizard*/
-.moving-tab{
-    width: 33.33%!important;
-}
 .label-floating{
     -ms-flex: 1 1 auto!important;
     flex: 1 1 auto!important;
@@ -1378,3 +1375,9 @@ select  {
     box-sizing: border-box;
 }
 */
+.text-break{
+    width: 80px;
+    display: block;
+    word-wrap: break-word;
+    margin: auto auto 1vh;
+}

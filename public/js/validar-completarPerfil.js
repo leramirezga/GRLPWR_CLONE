@@ -27,22 +27,22 @@ $(document).ready(function(){
 
     // Code for the Validator
     var $validator = $('.wizard-card form').validate({
-		  rules: {
-		    firstname: {
-		      required: true,
-		      minlength: 3
-		    },
-		    lastname: {
-		      required: true,
-		      minlength: 3
-		    },
+        rules: {
+            firstname: {
+              required: true,
+              minlength: 3
+            },
+            lastname: {
+              required: true,
+              minlength: 3
+            },
             dateborn: {
               required: true,
             },
-		    email: {
-		      required: true,
-		      minlength: 3,
-		    },
+            email: {
+              required: true,
+              minlength: 3,
+            },
             cellphone:{
               required: true,
               minlength: 10,
@@ -53,7 +53,34 @@ $(document).ready(function(){
             tarifa:{
                 required: true,
             },
-
+            documentId:{
+                required: true,
+            },
+            eps:{
+                required: true,
+            },
+            maritalStatus:{
+                required: true,
+            },
+            occupation:{
+                required: true,
+            },
+            emergencyContact:{
+                required: true,
+            },
+            emergencyPhone:{
+                required: true,
+                minlength: 10,
+            },
+            objective:{
+                required: true,
+            },
+            pathology:{
+                required: true,
+            },
+            channel:{
+                required: true,
+            },
         },
         messages: {
             radio: "This is a required field"

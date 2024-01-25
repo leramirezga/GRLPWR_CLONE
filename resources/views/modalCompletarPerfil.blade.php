@@ -58,9 +58,10 @@
                             </div>
                             <div class="wizard-navigation">
                                 <ul>
-                                    <li><a class="tab-completar-perfil" href="#about" data-toggle="tab">Información básica</a></li>
-                                    <li><a class="tab-completar-perfil" href="#contact" data-toggle="tab" disabled="true">Información de contacto</a></li>
-                                    <li><a class="tab-completar-perfil" href="#address" data-toggle="tab">@yield('tab3Title')</a></li>
+                                    <li><a class="tab-completar-perfil text-break" href="#about" data-toggle="tab">Información básica</a></li>
+                                    <li><a class="tab-completar-perfil text-break" href="#moreAbout" data-toggle="tab">Más de ti</a></li>
+                                    <li><a class="tab-completar-perfil text-break" href="#contact" data-toggle="tab" disabled="true">Información de contacto</a></li>
+                                    <li><a class="tab-completar-perfil text-break" href="#address" data-toggle="tab">@yield('tab3Title')</a></li>
                                 </ul>
                             </div>
 
@@ -117,56 +118,143 @@
                                                     <input name="dateborn" class="form-control input-group-addon" type="text" value="{{Auth::user()->fecha_nacimiento ? Auth::user()->fecha_nacimiento->format('d/m/Y') : ''}}">
                                                 </div>
                                             </div>
+
+                                            <div class="input-group">
+                                                                <span class="iconos">
+                                                                    <i class="fa-solid fa-id-card"></i>
+                                                                </span>
+                                                <div class="form-group label-floating">
+                                                    <label class="control-label">Número de Identidad <small>(requerido)</small></label>
+                                                    <input name="documentId" type="number" class="form-control" value="{{Auth::user()->document_id}}">
+                                                </div>
+                                            </div>
                                             @yield('generoEntrenador')
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane" id="contact">
-                                    <div class="col-12 p-0 col-md-9 m-auto">
-                                        <h4 class="info-text"></h4>
-                                        <!--
-                                        <div class="col-sm-12">
-                                            <div class="input-group">
-                                                <span class="iconos">
-                                                    <i class="material-icons">place</i>
-                                                </span>
 
-                                                <div class="form-group label-floating">
-                                                    <label class="control-label">Ciudad <small>(requerido)</small></label>
-                                                    <select class="form-control" name="ciudad">
-                                                        <option disabled selected value style="display:none"></option>
-                                                        <option value="bogota" {{Auth::user()->ciudad === 'bogota' ? "selected" : ""}}>Bogotá</option>
-                                                        <option value="medellin" {{Auth::user()->ciudad === 'medellin' ? "selected" : ""}}>Medellin</option>
-                                                    </select>
-                                                </div>
+                                <div class="tab-pane" id="moreAbout">
+                                    <h4 class="info-text"></h4>
+                                    <div class="col-sm-12 col-md-6 m-auto">
+                                        <div class="input-group">
+                                            <span class="iconos">
+                                                <i class="fa-solid fa-user-doctor"></i>
+                                            </span>
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">EPS <small>(requerido)</small></label>
+                                                <input name="eps" type="text" class="form-control" value="{{Auth::user()->eps}}">
                                             </div>
                                         </div>
-                                        -->
-                                        <div class="col-sm-12">
-                                            <div class="input-group">
-                                                                <span class="iconos">
-                                                                    <i class="material-icons">phone_iphone</i>
-                                                                </span>
-                                                <div class="form-group label-floating">
-                                                    <label class="control-label">Télefono celular <small>(requerido)</small></label>
-                                                    <input name="cellphone" type="number" min="1000000000" max="9999999999" class="form-control" value="{{Auth::user()->telefono}}">
-                                                </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 m-auto">
+                                        <div class="input-group">
+                                            <span class="iconos">
+                                                <i class="fa-regular fa-heart"></i>
+                                            </span>
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">Estado Civil <small>(requerido)</small></label>
+                                                <select class="form-control" name="maritalStatus">
+                                                    <option disabled selected value style="display:none"></option>
+                                                    <option value="Soltera" {{Auth::user()->marital_status === 'Soltera' ? "selected" : ""}}>Soltera</option>
+                                                    <option value="Casada" {{Auth::user()->marital_status === 'Casada' ? "selected" : ""}}>Casada</option>
+                                                    <option value="Otro" {{Auth::user()->marital_status === 'Otro' ? "selected" : ""}}>Otro</option>
+                                                </select>
                                             </div>
                                         </div>
-                                        <div class="col-sm-12">
-                                            <div class="input-group">
-                                                                <span class="iconos">
-                                                                    <i class="material-icons">email</i>
-                                                                </span>
-                                                <div class="form-group label-floating">
-                                                    <label class="control-label">Correo eléctronico <small>(requerido)</small></label>
-                                                    <input name="email" type="email" class="form-control deshabilitado" value="{{Auth::user()->email}}" readonly>
-                                                </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 m-auto">
+                                        <div class="input-group">
+                                            <span class="iconos">
+                                                <i class="fa-solid fa-briefcase"></i>
+                                            </span>
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">Ocupación <small>(requerido)</small></label>
+                                                <input name="occupation" type="text" class="form-control" value="{{Auth::user()->occupation}}">
                                             </div>
                                         </div>
-                                        @yield('tab2AditionalContent')
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 m-auto">
+                                        <div class="input-group">
+                                            <span class="iconos">
+                                                <i class="fa-solid fa-house-chimney-window"></i>
+                                            </span>
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">¿Cómo nos conociste? <small>(requerido)</small></label>
+                                                <select class="form-control" name="channel">
+                                                    <option disabled selected value style="display:none"></option>
+                                                    <option value="Facebook" {{Auth::user()->cliente != null && Auth::user()->cliente->channel === 'Facebook' ? "selected" : ""}}>Facebook</option>
+                                                    <option value="Instagram" {{Auth::user()->cliente != null && Auth::user()->cliente->channel === 'Instagram' ? "selected" : ""}}>Instagram</option>
+                                                    <option value="TikTok" {{Auth::user()->cliente != null && Auth::user()->cliente->channel === 'TikTok' ? "selected" : ""}}>TikTok</option>
+                                                    <option value="Google" {{Auth::user()->cliente != null && Auth::user()->cliente->channel === 'Google' ? "selected" : ""}}>Google</option>
+                                                    <option value="Fisico" {{Auth::user()->cliente != null && Auth::user()->cliente->channel === 'Fisico' ? "selected" : ""}}>Punto Físico</option>
+                                                    <option value="Referido" {{Auth::user()->cliente != null && Auth::user()->cliente->channel === 'Referido' ? "selected" : ""}}>Referido</option>
+                                                    <option value="Otro" {{Auth::user()->cliente != null && Auth::user()->cliente->channel === 'Otro' ? "selected" : ""}}>Otro</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
+                                <div class="tab-pane" id="contact">
+                                    <h4 class="info-text"></h4>
+                                    <div class="col-sm-12 col-md-6 m-auto">
+                                        <div class="input-group">
+                                            <span class="iconos">
+                                                <i class="material-icons">phone_iphone</i>
+                                            </span>
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">Télefono celular <small>(requerido)</small></label>
+                                                <input name="cellphone" type="number" min="1000000000" max="9999999999" class="form-control" value="{{Auth::user()->telefono}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 m-auto">
+                                        <div class="input-group">
+                                            <span class="iconos">
+                                                <i class="material-icons">email</i>
+                                            </span>
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">Correo eléctronico <small>(requerido)</small></label>
+                                                <input name="email" type="email" class="form-control deshabilitado" value="{{Auth::user()->email}}" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 m-auto">
+                                        <div class="input-group">
+                                            <span class="iconos">
+                                                <i class="fa-brands fa-instagram"></i>
+                                            </span>
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">Instagram <small>(opcional)</small></label>
+                                                <input name="instagram" type="text" class="form-control" value="{{Auth::user()->instagram}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 m-auto">
+                                        <div class="input-group">
+                                            <span class="iconos">
+                                                <i class="material-icons">record_voice_over</i>
+                                            </span>
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">Nombre Contacto de emergencia <small>(requerido)</small></label>
+                                                <input name="emergencyContact" type="text" class="form-control" value="{{Auth::user()->emergency_contact}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 m-auto">
+                                        <div class="input-group">
+                                            <span class="iconos">
+                                                <i class="material-icons">phone_iphone</i>
+                                            </span>
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">Número contacto de emergencia <small>(requerido)</small></label>
+                                                <input name="emergencyPhone" type="number" min="1000000000" max="9999999999" class="form-control" value="{{Auth::user()->emergency_phone}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @yield('tab2AditionalContent')
+                                </div>
+
                                 <div class="tab-pane" id="address">
                                     @yield('tab3Content')
                                 </div>

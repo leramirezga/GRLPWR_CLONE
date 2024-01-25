@@ -4,21 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Auth\SeguridadController;
 use App\Model\Cliente;
-use App\Model\ClientPlan;
 use App\Model\Entrenador;
 use App\Model\Estatura;
-use App\Model\Ofrecimientos;
 use App\Model\Peso;
-use App\Model\Review;
 use App\Model\ReviewUser;
-use App\Model\SesionCliente;
 use App\User;
 use App\Utils\AuthEnum;
 use App\Utils\Constantes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Model\SolicitudServicio;
-use Illuminate\Support\Facades\DB;
 use Validator;
 
 class ProfileController extends Controller
@@ -56,7 +50,7 @@ class ProfileController extends Controller
     }
 
     public function actualizarPerfil(Request $request){
-        //Solo se validan lo de los 2 primeros tabs, porque el último tab se valida con JS
+        //Solo se validan lo de los primeros tabs, porque el último tab se valida con JS
 
         /*Para que sepan de cual modal viene el error y poder mostrarlo*/
             $validator = Validator::make($request->all(), [
@@ -64,7 +58,14 @@ class ProfileController extends Controller
                 'firstname' => 'string|required',
                 'lastname' => 'string|required',
                 'dateborn' => 'required',
-                'genero' => 'string|required',
+                'documentId' => 'numeric|required',
+                'eps' => 'string|required',
+                'maritalStatus' => 'string|required',
+                'occupation' => 'string|required',
+                'channel' => 'string|required',
+                'emergencyContact' => 'string|required',
+                'emergencyPhone' => 'numeric|required',
+                //'genero' => 'string|required',
                 //'ciudad' => 'string|required',
                 'cellphone' => 'numeric|required',
                 'email' => 'email|required|string',
@@ -83,8 +84,15 @@ class ProfileController extends Controller
         $user -> apellido_1 = request()->lastname;
         $user -> apellido_2 = request()->lastname2;
         $user -> telefono = request()->cellphone;
+        $user -> document_id = request()->documentId;
+        $user -> eps = request()->eps;
+        $user -> marital_status = request()->maritalStatus;
+        $user -> instagram = request()->instagram;
+        $user -> emergency_contact = request()->emergencyContact;
+        $user -> emergency_phone = request()->emergencyPhone;
+        $user -> occupation = request()->occupation;
         $user -> descripcion = request()->descripcion;
-        $user -> genero = request()->genero;
+        $user -> genero = request()->genero ?? 'f';//By default female because is a feminine gym
         $user -> ciudad = 'bogota';//request()->ciudad;
 
         $image = $request->file('avatar');
@@ -101,9 +109,14 @@ class ProfileController extends Controller
             $reviewId = 1;
             Cliente::updateOrCreate(
                 ['usuario_id' => $user->id],
-                [//'peso_ideal' => request()->pesoIdeal,
-                 'talla_zapato' => request()->tallaZapato]
-                 //'biotipo' => request()->tipoCuerpo]
+                [
+                    'talla_zapato' => request()->tallaZapato,
+                    'objective' => request()->objective,
+                    'pathology' => request()->pathology,
+                    'channel' => request()->channel
+                    //'peso_ideal' => request()->pesoIdeal,
+                    //'biotipo' => request()->tipoCuerpo
+                ]
             );
 
             Peso::updateOrCreate(

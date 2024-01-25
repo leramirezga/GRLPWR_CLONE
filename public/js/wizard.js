@@ -56,6 +56,20 @@ $(document).ready(function(){
             refreshAnimation($wizard, index);
 
             $('.moving-tab').css('transition','transform 0s');
+
+
+            mobile_device = $(document).width() < 600 && $total > 3;
+
+            if(mobile_device){
+                step_width = $wizard.width() / 2;
+            }else{
+                total_steps = $wizard.find('.nav li').length;
+                step_width = $wizard.width() / total_steps;
+            }
+            $('.moving-tab').css('width', step_width);
+
+            $wizard.find('.nav li').css('width',$li_width + '%');
+
         },
 
         onTabClick : function(tab, navigation, index, nextIndex){
@@ -188,7 +202,7 @@ function refreshAnimation($wizard, index){
     if(mobile_device){
         move_distance = $wizard.width() / 2;
         index_temp = index % 2;
-        $li_width = 50;
+        $li_width = $li_width*2;
     }
 
     $wizard.find('.nav li').css('width',$li_width + '%');
@@ -206,7 +220,7 @@ function refreshAnimation($wizard, index){
 
     if(mobile_device){
         vertical_level = parseInt(index / 2);
-        vertical_level = vertical_level * 38;
+        vertical_level = vertical_level * 50;
     }
 
     $wizard.find('.moving-tab').css('width', step_width);
