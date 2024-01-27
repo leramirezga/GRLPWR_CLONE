@@ -81,15 +81,6 @@
         </div>
     </nav>
 
-    @if(session('msg'))
-        <script>
-            $(document).ready(function(){
-                $('#msgModal').modal({show: true});
-            });
-        </script>
-        @php(\Illuminate\Support\Facades\Session::forget('msg'))
-    @endif
-
     <div class="modal fade justify-content-center align-items-center" id="msgModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content" style="background: none; border: none">
@@ -277,6 +268,16 @@
     @include('cliente.scheduleCourtesyModal')
 
     @stack('modals')
+
+    @if(session('msg'))
+        <script>
+            $(document).ready(function(){
+                $('#msgModal').modal({show: true});
+            });
+        </script>
+        @php(\Illuminate\Support\Facades\Session::forget('msg'))
+    @endif
+
     <script>
         $(document).ready(function() {
             let options = {
