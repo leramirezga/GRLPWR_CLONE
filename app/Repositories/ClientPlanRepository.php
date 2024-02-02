@@ -3,23 +3,31 @@
 namespace App\Repositories;
 
 use App\Model\ClientPlan;
-use App\Model\Evento;
-use http\Client;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class ClientPlanRepository
 {
 
-    public function findValidClientPlan($event = null, int $clientId = null, bool $withRemainingClasses = true)
+    public function findValidClientPlan($event = null, int $clientId = null, bool $withRemainingClasses = true, bool $extendedTimeToRenew = false)
     {
         return ClientPlan::where('client_id', $clientId ?? Auth::id())
-            ->where('expiration_date', '>', now())
+            ->where(function($q) use ($extendedTimeToRenew) {
+                $q->where('client_plans.expiration_date', '>', Carbon::now())//is not expired
+                ->when($extendedTimeToRenew, function ($query) {
+                    return $query->where(function ($query) {
+                        $query->orWhere('client_plans.expiration_date', '>', Carbon::now()->subDays(env('DAYS_TO_RENEW', 7)));//expired 7 days ago
+                    });
+                });
+            })
             ->when($withRemainingClasses, function ($query) {
                 return $query->where(function ($query) {
                     $query->where('remaining_shared_classes', '>', 0)
                         ->orWhereNull('remaining_shared_classes');
                 });
-            })->get();
+            })->join('plans', 'client_plans.plan_id', '=', 'plans.id')
+            ->select('client_plans.*', 'plans.name')
+            ->get();
 
         /*
          *FIT-57: Uncomment this if you want specific classes

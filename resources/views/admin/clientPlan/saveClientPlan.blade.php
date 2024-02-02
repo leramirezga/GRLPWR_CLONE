@@ -261,7 +261,7 @@
                     hasRemainingClasses = false;
                     $("#remainingClases").val(0);
 
-                    if(data.lastPlanWithRemainingClasses && planSelect.value !== "3"){
+                    if(data.lastPlanWithRemainingClasses){
                         hasRemainingClasses = true;
                         const jsDate = new Date(data.lastPlanWithRemainingClasses.expiration_date);
                         const formattedDate = jsDate.toLocaleDateString('es-ES', {
@@ -272,11 +272,12 @@
 
                         const newRow = $("<tr>");
                         newRow.append('<td><div style="max-height:3rem; overflow:hidden">' + data.lastPlanWithRemainingClasses.name + "</td>");
-                        newRow.append('<td><div style="max-height:3rem; overflow:hidden">' + data.lastPlanWithRemainingClasses.remaining_shared_classes + "</td>");
+                        newRow.append('<td><div style="max-height:3rem; overflow:hidden">' + (data.lastPlanWithRemainingClasses.remaining_shared_classes ?? '') + "</td>");
                         newRow.append('<td><div style="max-height:3rem; overflow:hidden">'+ formattedDate  + "</td>");
-                        newRow.append('<td><div class="d-flex justify-content-center" style="max-height: 3rem; overflow: hidden"><input type="checkbox" class="form-check-input" id="accumulateClasses" name="accumulateClasses"></div></td>');
-
-                        $("#remainingClases").val(data.lastPlanWithRemainingClasses.remaining_shared_classes);
+                        if(data.lastPlanWithRemainingClasses.remaining_shared_classes){
+                            newRow.append('<td><div class="d-flex justify-content-center" style="max-height: 3rem; overflow: hidden"><input type="checkbox" class="form-check-input" id="accumulateClasses" name="accumulateClasses"></div></td>');
+                            $("#remainingClases").val(data.lastPlanWithRemainingClasses.remaining_shared_classes);
+                        }
 
                         $("#lastPlanBody").append(newRow);
 

@@ -2,15 +2,12 @@
 
 namespace App\Model;
 
-use App\Exceptions\ShoeSizeNotSupportedException;
-use App\Exceptions\WeightNotSupportedException;
 use App\PlanClass;
 use App\RemainingClass;
-use Carbon\Carbon;
+use App\Repositories\ClientPlanRepository;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 
 class ClientPlan extends Model
 {
@@ -48,17 +45,14 @@ class ClientPlan extends Model
     }
 
     public function clientLastPlanWithRemainingClasses(Request $request){
+        $clientPlanRepository = new ClientPlanRepository();
+        $lastPlanWithRemainingClasses = $clientPlanRepository->findValidClientPlan(clientId: $request->query('clientId'), extendedTimeToRenew: true);
 
-        $lastPlanWithRemainingClasses = ClientPlan::where('client_id', $request->query('clientId'))
-            ->where('remaining_shared_classes', '>', 0)
-            ->where(function($q) {
-                $q->where('client_plans.expiration_date', '>', Carbon::now())//is not expired
-                    ->orWhere('client_plans.expiration_date', '>', Carbon::now()->subDays(env('DAYS_TO_RENEW', 7)));//expired 7 days ago
-
-            })
-            ->join('plans', 'client_plans.plan_id', '=', 'plans.id')
-            ->select('client_plans.*', 'plans.name')
-            ->first();
+        if ($lastPlanWithRemainingClasses  && $lastPlanWithRemainingClasses ->isNotEmpty()) {
+            $lastPlanWithRemainingClasses  = $lastPlanWithRemainingClasses ->first();
+        }else{
+            $lastPlanWithRemainingClasses = null;
+        }
 
         return response()->json([
             'success' => true,
