@@ -13,3 +13,4 @@ yarn-error.log
 .env
 /vendor.zip
 /public/video
+/.phpunit.result.cache

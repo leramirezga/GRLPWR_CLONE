@@ -262,7 +262,7 @@
                             <div class="wizard-footer">
                                 <div class="float-right">
                                     <input type='button' class='btn btn-next btn-fill btn-success btn-wd' name='next' value='Siguiente' />
-                                    <input type='submit' class='btn btn-finish btn-fill btn-success btn-wd' name='finish' value='Finalizar' onclick="validar()"/>
+                                    <input type='submit' class='btn btn-finish btn-fill btn-success btn-wd' name='finish' value='Finalizar'/>
                                 </div>
 
                                 <div class="float-left">
@@ -280,15 +280,6 @@
 </div>
 
 @push('scripts')
-    <!--   Core JS Files   -->
-    <script src="{{asset('js/jquery.bootstrap.js')}}" type="text/javascript"></script>
-    <!--  Plugin for the Wizard -->
-    <script src="{{asset('js/validar-completarPerfil.js')}}"></script>
-    <script src="{{asset('js/wizard.js')}}"></script>
-
-    <!--  More information about jquery.validate here: http://jqueryvalidation.org/	 -->f
-    <script src="{{asset('js/jquery.validate.min.js')}}"></script>
-
     <!--datetimePicker configuration-->
     <script>
         $(function () {
@@ -325,16 +316,11 @@
                 $('.icon').css("border-color", "");
             });
         });
-
-        function validar() {
-            if (typeof $("input[name='genero']:checked").val() === "undefined") {
-                $('.radio-label').css("cssText", "color: red!important;")
-            } else {
-                $('.radio-label').css("color", "red")
-            }
-            if (typeof $("input[name='tipoCuerpo']:checked").val() === "undefined") {
-                $('.icon').css("border-color", "red");
-            }
-        }
     </script>
+
+    <!--Wizard -->
+    <script src="{{asset('js/jquery.bootstrap.js')}}"></script>
+    <script src="{{asset('js/jquery.validate.min.js')}}"></script>
+    <script src="{{asset('js/validar-completarPerfil.js')}}"></script>
+    <script src="{{asset('js/wizard.js')}}"></script>
 @endpush
