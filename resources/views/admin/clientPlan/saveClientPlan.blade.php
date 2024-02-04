@@ -54,6 +54,7 @@
                     @method('POST')
                     @csrf
                         <input type="hidden" name="remainingClases" id="remainingClases">
+                        <input type="hidden" name="lastPlanId" id="lastPlanId">
 
                         <!--        You can switch " data-color="purple" "  with one of the next bright colors: "green", "orange", "red", "blue"       -->
                         <div class="wizard-header">
@@ -260,6 +261,7 @@
                     $("#lastPlanBody").empty();
                     hasRemainingClasses = false;
                     $("#remainingClases").val(0);
+                    $("#lastPlanId").val(null);
 
                     if(data.lastPlanWithRemainingClasses){
                         hasRemainingClasses = true;
@@ -277,8 +279,8 @@
                         if(data.lastPlanWithRemainingClasses.remaining_shared_classes){
                             newRow.append('<td><div class="d-flex justify-content-center" style="max-height: 3rem; overflow: hidden"><input type="checkbox" class="form-check-input" id="accumulateClasses" name="accumulateClasses"></div></td>');
                             $("#remainingClases").val(data.lastPlanWithRemainingClasses.remaining_shared_classes);
+                            $("#lastPlanId").val(data.lastPlanWithRemainingClasses.id);
                         }
-
                         $("#lastPlanBody").append(newRow);
 
                         lastPlanContainer.removeClass("d-none");

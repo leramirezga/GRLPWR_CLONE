@@ -67,6 +67,11 @@ class ClientPlanController extends Controller
             $transaction->created_at = $payDay;
             $transaction->save();
 
+            if($request->accumulateClasses === "on" ){
+                $lastPlan = ClientPlan::find($request->lastPlanId);
+                $lastPlan->expiration_date = now();
+                $lastPlan->save();
+            }
             $this->save($request->clientId, $request->planId, $transaction->id,$payDay, $request->accumulateClasses === "on" ? (int)($request->remainingClases) : 0);
             Session::put('msg_level', 'success');
             Session::put('msg', __('general.success_save_client_plan'));

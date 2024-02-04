@@ -23,10 +23,12 @@ class ClientPlanRepository
             )
             ->distinct()
             ->where('client_id', $clientId ?? Auth::id())
-            ->where('client_plans.expiration_date', '>', now())
-            ->where('client_plans.expiration_date', '>', $event->fecha_fin)
-            ->when($extendedTimeToRenew, function ($query, $extendedTimeToRenew) {
-                return $query->orWhere('client_plans.expiration_date', '>', Carbon::now()->subDays(env('DAYS_TO_RENEW', 7)));//expired 7 days ago
+            ->where(function($q) use ($extendedTimeToRenew, $event) {
+                $q->where('client_plans.expiration_date', '>', now())
+                    ->where('client_plans.expiration_date', '>', $event->fecha_fin)
+                    ->when($extendedTimeToRenew, function ($query, $extendedTimeToRenew) {
+                        return $query->orWhere('client_plans.expiration_date', '>', Carbon::now()->subDays(env('DAYS_TO_RENEW', 7)));//expired 7 days ago
+                    });
             })
             ->join('remaining_classes', 'client_plans.id', 'remaining_classes.client_plan_id')
             ->join('plans', 'client_plans.plan_id', '=', 'plans.id')->get();
@@ -49,12 +51,14 @@ class ClientPlanRepository
 
 
         $clientPlan = ClientPlan::where('client_id', $clientId ?? Auth::id())
-            ->where('client_plans.expiration_date', '>', Carbon::now())//is not expired
-            ->when($event, function ($query) use ($event) {
-                return $query->where('client_plans.expiration_date', '>', $event->fecha_fin);
-            })
-            ->when($extendedTimeToRenew, function ($query, $extendedTimeToRenew) {
-                    return $query->orWhere('client_plans.expiration_date', '>', Carbon::now()->subDays(env('DAYS_TO_RENEW', 7)));//expired 7 days ago
+            ->where(function($q) use ($extendedTimeToRenew, $event) {
+                $q->where('client_plans.expiration_date', '>', Carbon::now())//is not expired
+                ->when($event, function ($query) use ($event) {
+                    return $query->where('client_plans.expiration_date', '>', $event->fecha_fin);
+                })
+                    ->when($extendedTimeToRenew, function ($query, $extendedTimeToRenew) {
+                        return $query->orWhere('client_plans.expiration_date', '>', Carbon::now()->subDays(env('DAYS_TO_RENEW', 7)));//expired 7 days ago
+                    });
             })
             ->when($withRemainingClasses, function ($query) {
                 return $query->where(function ($query) {
@@ -69,6 +73,6 @@ class ClientPlanRepository
             return $clientPlan;
         }
         return$clientPlan && $clientPlan->isNotEmpty() ?
-             $clientPlan->first() : null;
+            $clientPlan->first() : null;
     }
 }
