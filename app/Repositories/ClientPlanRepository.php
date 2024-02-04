@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Auth;
 class ClientPlanRepository
 {
 
-    public function findValidClientPlans(){
-        return $this->findValidClientPlan(multiplePlans: true);
+    public function findValidClientPlans($clientId = null){
+        return $this->findValidClientPlan(clientId: $clientId, multiplePlans: true);
     }
 
     public function findValidClientPlan($event = null, int $clientId = null, bool $withRemainingClasses = true, bool $extendedTimeToRenew = false, bool $multiplePlans = false)

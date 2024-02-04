@@ -104,7 +104,9 @@ class HomeController extends Controller
             return view('perfilEntrenador', compact('user', 'solicitudes', 'visitante'));
         }
         if(strcasecmp ($user->rol, Constantes::ROL_CLIENTE ) == 0) {
-            return view('cliente.profileClient', compact('user', 'solicitudes', 'visitante'));
+            $clientPlanRepository = new ClientPlanRepository();
+            $clientPlans = $clientPlanRepository->findValidClientPlans(clientId: $user->id);
+            return view('cliente.profileClient', compact('user', 'solicitudes', 'visitante', 'clientPlans'));
         }
     }
 
