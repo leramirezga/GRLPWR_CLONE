@@ -52,7 +52,7 @@ class HomeController extends Controller
                 ->get();
 
             $clientPlanRepository = new ClientPlanRepository();
-            $clientPlans = $clientPlanRepository->findValidClientPlan();
+            $clientPlans = $clientPlanRepository->findValidClientPlans();
 
             $Aleatorynumber = rand(1, 100);
             if ($Aleatorynumber <= config('app.probability_to_show_review_modal', 60)) {
@@ -104,7 +104,7 @@ class HomeController extends Controller
             return view('perfilEntrenador', compact('user', 'solicitudes', 'visitante'));
         }
         if(strcasecmp ($user->rol, Constantes::ROL_CLIENTE ) == 0) {
-            return view('cliente.homeCliente', compact('user', 'solicitudes', 'visitante'));
+            return view('cliente.profileClient', compact('user', 'solicitudes', 'visitante'));
         }
     }
 

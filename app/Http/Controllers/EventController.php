@@ -62,8 +62,7 @@ class EventController extends Controller
         $clientPlanRepository = new ClientPlanRepository();
         $clientPlan = $clientPlanRepository->findValidClientPlan($event);
 
-        if ($clientPlan && $clientPlan->isNotEmpty()) {
-            $clientPlan = $clientPlan->first();
+        if ($clientPlan) {
             return view('sessions.event', [
                 'event' => $event,
                 'plan' => $clientPlan,

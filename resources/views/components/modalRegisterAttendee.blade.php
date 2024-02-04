@@ -16,7 +16,7 @@
             </div>
             <form action="" method="POST" id="register" role="form">
                 <div class="modal-body" style="padding-bottom: 0">
-                    @if(strcasecmp($event->classType->type, \App\Utils\PlanTypesEnum::Kangoo->value) == 0)
+                    @if(strcasecmp($event->classType->type, \App\Utils\PlanTypesEnum::KANGOO->value) == 0)
                         <div class="mb-2">
                             <p class="mb-1">¿Rentar {{$event->classType->required_equipment}}?</p>
                             <div class="custom-control custom-radio custom-control-inline">

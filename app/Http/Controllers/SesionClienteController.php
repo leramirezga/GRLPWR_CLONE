@@ -129,7 +129,7 @@ class SesionClienteController extends Controller
      * @throws WeightNotSupportedException
      */
     public function assignEquipment(Evento $event, $shoeSize, $weight, $startDateTime, $endDateTime){
-        if(strcasecmp($event->classType->type, PlanTypesEnum::Kangoo->value) == 0){
+        if(strcasecmp($event->classType->type, PlanTypesEnum::KANGOO->value) == 0 || strcasecmp($event->classType->type, PlanTypesEnum::KANGOO_KIDS->value) == 0){
             return $this->kangooService->assignKangoo($shoeSize, $weight, $startDateTime, $endDateTime);
         }
     }
@@ -178,26 +178,28 @@ class SesionClienteController extends Controller
             }
 
             $clientPlanRepository = new ClientPlanRepository();
+            $event->fecha_inicio = $startDateTime;
+            $event->fecha_fin = $endDateTime;
             $clientPlan = $clientPlanRepository->findValidClientPlan($event, $clientId);
 
-            if ($clientPlan && $clientPlan->isNotEmpty()) {
+            if ($clientPlan) {
                 $sesionCliente->save();
-                $clientPlan = $clientPlan->first();
                 if($clientPlan->remaining_shared_classes != null){
                     $clientPlan->remaining_shared_classes--;
                     $clientPlan->save();
                 }
-                /*FIT-57: Uncomment this if you want specific classes
-                $remainingClass = RemainingClass::find($clientPlan->remaining_classes_id);
-                if($remainingClass->unlimited == 0) {
-                    if ($remainingClass->remaining_classes == null){
-                        $clientPlan->remaining_shared_classes--;
-                        $clientPlan->save();
-                    }elseif($remainingClass->remaining_classes >= 0){
-                        $remainingClass->remaining_classes--;
-                        $remainingClass->save();
+                /*FIT-57: Uncomment this if you want specific classes*/
+                else{
+                    $remainingClass = RemainingClass::find($clientPlan->remaining_classes_id);
+                    if($remainingClass) {
+                        if($remainingClass->unlimited == 0){
+                            $remainingClass->remaining_classes--;
+                            $remainingClass->save();
+                        }
                     }
-                }*/
+                }
+                /*FIT-57: end block code*/
+
                 Session::put('msg_level', 'success');
                 Session::put('msg', __('general.success_purchase'));
                 Session::save();
@@ -268,24 +270,20 @@ class SesionClienteController extends Controller
     public function returnClassAfterCancellation(Evento $event){
         $clientPlanRepository = new ClientPlanRepository();
         $clientPlan = $clientPlanRepository->findValidClientPlan(event: $event, withRemainingClasses: false);
-        if ($clientPlan && $clientPlan->isNotEmpty()) {
-            $clientPlan = $clientPlan->first();
+        if ($clientPlan) {
             if($clientPlan->remaining_shared_classes != null){
                 $clientPlan->remaining_shared_classes++;
                 $clientPlan->save();
             }
-            /*FIT-57: Uncomment this if you want specific classes
-            $remainingClass = RemainingClass::find($clientPlan->remaining_classes_id);
-            if ($remainingClass->unlimited == 0) {
-                if ($remainingClass->remaining_classes == null) {
-                    $clientPlan->remaining_shared_classes = $clientPlan->remaining_shared_classes + 1;
-                    $clientPlan->save();
-                } elseif ($remainingClass->remaining_classes >= 0) {
-                    $remainingClass->remaining_classes = $remainingClass->remaining_classes + 1;
+            /*FIT-57: Uncomment this if you want specific classes*/
+            else{
+                $remainingClass = RemainingClass::find($clientPlan->remaining_classes_id);
+                if($remainingClass && $remainingClass->unlimited == 0) {
+                    $remainingClass->remaining_classes++;
                     $remainingClass->save();
                 }
             }
-            */
+            /*FIT-57: end block code*/
         }
     }
 

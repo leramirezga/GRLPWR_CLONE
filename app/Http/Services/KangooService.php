@@ -53,6 +53,10 @@ class KangooService
      */
     public function getKangooSizes(int $shoeSize)
     {
+        if($shoeSize < 34){
+            return ["J"];
+        }
+
         switch ($shoeSize){
             case 34:
             case 35:

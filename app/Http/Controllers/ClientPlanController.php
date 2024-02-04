@@ -25,12 +25,12 @@ class ClientPlanController extends Controller
         $plan = Plan::find($planId);
         $clientPlan->plan_id = $planId;
         $clientPlan->remaining_shared_classes = $plan-> number_of_shared_classes ?  $plan-> number_of_shared_classes + $accumulativeClasses : null;
-        $clientPlan->expiration_date =  $payDay->copy()->addDays($plan->duration_days);
+        $clientPlan->expiration_date = $payDay->copy()->addDays($plan->duration_days)->endOfDay();
         $clientPlan->payment_id = $payment_id;
         $clientPlan->created_at = $payDay;
         $clientPlan->save();
 
-        /*FIT-57: Uncomment this if you want specific classes
+        /*FIT-57: Uncomment this if you want specific classes*/
         foreach ($plan->allClasses as $class){
             $remainingClass =new RemainingClass();
             $remainingClass->client_plan_id = $clientPlan->id;
@@ -39,7 +39,8 @@ class ClientPlanController extends Controller
             $remainingClass->remaining_classes = $class->number_of_classes;
             $remainingClass->equipment_included = $class->equipment_included;
             $remainingClass->save();
-        }*/
+        }
+        /*FIT-57: end block code*/
     }
 
     public function showLoadClientPlan(){

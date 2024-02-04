@@ -10,18 +10,7 @@
                     @if($clientPlan->remaining_shared_classes)
                         <p class="d-block my-1"><strong>Clases Restantes: </strong>{{$clientPlan->remaining_shared_classes}}</p>
                     @endif
-                    {{-- FIT-57: Uncomment this if you want specific classes
-                    @if($clientPlan->sharedClasses && !$clientPlan->sharedClasses->isEmpty())
-                        <p class="d-inline-block">@foreach($clientPlan->sharedClasses as $class)
-                                {{$class->classType->type}}
-                                @if(!$loop->last)
-                                    <span> o </span>
-                                @endif
-                            @endforeach
-                        </p>
-                        <p class="d-inline-block" style="margin-left: -4px">: {{$clientPlan->remaining_shared_classes}}</p>
-                    @endif
-
+                    {{-- FIT-57: Uncomment this if you want specific classes--}}
                     @if($clientPlan->specificClasses && !$clientPlan->specificClasses->isEmpty())
                         @foreach($clientPlan->specificClasses as $class)
                             <p>{{$class->classType->type}}: {{$class->remaining_classes}}</p>
@@ -38,7 +27,7 @@
                         </p>
                         <p class="d-inline-block" style="margin-left: -4px">: ∞</p>
                     @endif
-                    --}}
+                    {{--FIT-57: end block code--}}
                     <p class="d-block my-1"><strong>Válido hasta: </strong>{{$clientPlan->expiration_date}}</p>
                 </div>
             </div>
