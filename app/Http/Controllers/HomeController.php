@@ -15,6 +15,7 @@ use App\Model\SesionCliente;
 use App\Repositories\ClientPlanRepository;
 use App\User;
 use App\Utils\Constantes;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Model\SolicitudServicio;
@@ -51,23 +52,23 @@ class HomeController extends Controller
                 ->entrenamientosAgendados($user->rol)
                 ->get();
 
-            $clientPlanRepository = new ClientPlanRepository();
-            $clientPlans = $clientPlanRepository->findValidClientPlans();
-
-            $Aleatorynumber = rand(1, 100);
-            if ($Aleatorynumber <= config('app.probability_to_show_review_modal', 60)) {
+            $randomNumber = rand(1, 100);
+            if ($randomNumber <= config('app.probability_to_show_review_modal', 60)) {
                 $lastSessionWithoutReview = DB::table('sesiones_cliente')
+                    ->join('eventos', 'sesiones_cliente.evento_id', 'eventos.id')
                     ->leftJoin('reviews_session', 'reviews_session.session_id', '=', 'sesiones_cliente.id')
                     ->whereNull('reviews_session.session_id')
+                    ->where('sesiones_cliente.fecha_inicio', '>', Carbon::now()->subDay()->startOfDay())
                     ->where('sesiones_cliente.fecha_fin', '<', today())
                     ->orderBy('sesiones_cliente.fecha_fin', 'desc')
-                    ->select('sesiones_cliente.id')
+                    ->select('sesiones_cliente.id', 'eventos.nombre')
                     ->first();
 
                 $reviewFor = $lastSessionWithoutReview?->id;
-                return view('cliente.homeCliente', compact('user', 'entrenamientosAgendados', 'visitante', 'reviewFor', 'clientPlans'));
+                $eventName = $lastSessionWithoutReview?->nombre;
+                return view('cliente.homeCliente', compact('user', 'entrenamientosAgendados', 'visitante', 'reviewFor', 'eventName'));
             }
-            return view('cliente.homeCliente', compact('user', 'entrenamientosAgendados', 'visitante', 'clientPlans'));
+            return view('cliente.homeCliente', compact('user', 'entrenamientosAgendados', 'visitante'));
         }
         if(strcasecmp ($user->rol, Constantes::ROL_ENTRENADOR) == 0){
             $ofrecimientos = Ofrecimientos::where('usuario_id', $user->id)->get();
@@ -104,9 +105,7 @@ class HomeController extends Controller
             return view('perfilEntrenador', compact('user', 'solicitudes', 'visitante'));
         }
         if(strcasecmp ($user->rol, Constantes::ROL_CLIENTE ) == 0) {
-            $clientPlanRepository = new ClientPlanRepository();
-            $clientPlans = $clientPlanRepository->findValidClientPlans(clientId: $user->id);
-            return view('cliente.profileClient', compact('user', 'solicitudes', 'visitante', 'clientPlans'));
+            return view('cliente.profileClient', compact('user', 'solicitudes', 'visitante'));
         }
     }
 

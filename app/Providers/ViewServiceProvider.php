@@ -5,7 +5,9 @@ namespace App\Providers;
 use App\Branch;
 use App\ClassType;
 use App\Model\Evento;
+use App\Repositories\ClientPlanRepository;
 use App\View\Composers\EventComposer;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades;
 use Illuminate\View\View;
@@ -44,6 +46,13 @@ class ViewServiceProvider extends ServiceProvider
         Facades\View::composer('components.classTypeSelector', function (View $view) {
             $classTypes = ClassType::all();
             $view->with('classTypes', $classTypes);
+        });
+
+        Facades\View::composer('cliente.clientPlan', function (View $view) {
+            $route = Route::current(); // Illuminate\Routing\Route
+            $clientPlanRepository = new ClientPlanRepository();
+            $clientPlans = $clientPlanRepository->findValidClientPlans(clientId: $route->parameter('user')->id);
+            $view->with('clientPlans', $clientPlans);
         });
     }
 }

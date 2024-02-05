@@ -6,6 +6,6 @@
         {{route('darReviewEntrenamiento')}}
     </x-slot>
     <x-slot:questionTitle>
-        entrenamiento
+        {{$eventName}}
     </x-slot>
 </x-modalDarReview>

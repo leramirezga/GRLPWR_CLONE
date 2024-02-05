@@ -9,7 +9,7 @@
                 <input type="hidden" name="reviewFor" id="reviewFor" value="{{$reviewFor}}">
 
                 <div class="modal-header" style="border-bottom: none">
-                    <h5 class="modal-title">¿Que tal estuvo tu {{$questionTitle}}?</h5>
+                    <h5 class="modal-title">¿Qué tal estuvo tu clase de <strong>{{$questionTitle}}</strong>?</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
