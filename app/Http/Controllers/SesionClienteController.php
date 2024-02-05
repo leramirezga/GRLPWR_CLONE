@@ -287,4 +287,15 @@ class SesionClienteController extends Controller
         }
     }
 
+    public function checkAttendee(Request $request): JsonResponse
+    {
+        $clientSession = SesionCliente::find($request->clientSessionId);
+        $clientSession->attended = $request->checked === "true";
+        $clientSession->save();
+
+        return response()->json([
+            'success' => true
+        ], 200);
+    }
+
 }

@@ -11,6 +11,7 @@
                     <th scope="col">Talla</th>
                     <th scope="col">Kangoo</th>
                 @endif
+                <th scope="col">Asistió</th>
             </tr>
         </thead>
         <tbody>
@@ -26,6 +27,9 @@
                     <td><div style="max-height:3rem; overflow:hidden">{{$clientSession->client->talla_zapato}}</div></td>
                     <td><div style="max-height:3rem; overflow:hidden">{{$clientSession->kangoo_id ? $clientSession->kangoo->SKU : ''}}</div></td>
                 @endif
+                <td><div style="max-height:3rem; overflow:hidden">
+                    <input class="form-check-input" type="checkbox" name="attended" id="attended" onclick="checkAttendee({{$clientSession->id}})" required>
+                </div></td>
             </tr>
 
         @endforeach
@@ -38,4 +42,27 @@
 </div>
 
 @include('components/modalRegisterAttendee')
+
+@push('scripts')
+    <script>
+        function checkAttendee(clientSessionId){
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{ route('checkAttendee') }}",
+                method: "POST",
+                data: {
+                    clientSessionId: clientSessionId,
+                    checked: $('#attended').is(':checked')
+                },
+
+                /*if you want to debug you need to uncomment this line and comment reload
+                error: function(data) {
+                    console.log(data);
+                }*/
+            });
+        }
+    </script>
+@endpush
 
