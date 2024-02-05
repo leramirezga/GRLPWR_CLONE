@@ -69,7 +69,7 @@ return [
     'successfully_cancelled' => 'Cancelación exitosa.',
     'Plans' => 'Planes',
     'success_courtesy' => 'Felicidades por ese salto. Tu cortesía ha sido agendada, puedes verla ingresando con tu correo, la clave será '.config('app.default_password'),
-    'error_schedule' => 'Algo salió mal. Por favor contacta al soporte en el botón de whatsapp',
+    'error_general' => 'Algo salió mal. Por favor contacta al soporte en el botón de whatsapp',
     'success_save_client_plan' => 'Plan cargado exitosamente',
     'error_save_client_plan' => 'Error al cargar el plan, contacta al soporte'
 ];

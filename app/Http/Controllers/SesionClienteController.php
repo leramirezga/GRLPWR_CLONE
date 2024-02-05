@@ -220,7 +220,7 @@ class SesionClienteController extends Controller
             DB::rollBack();
             Log::error("ERROR SesionClienteController - registerSession - courtesy: " . $exception->getMessage());
             Session::put('msg_level', 'danger');
-            Session::put('msg', __('general.error_schedule'));
+            Session::put('msg', __('general.error_general'));
             Session::save();
             if($isCourtesy){
                 return redirect()->back();
@@ -230,26 +230,37 @@ class SesionClienteController extends Controller
     }
 
     public function cancelTraining(){
-        $session = SesionCliente::find(request()->entrenamientoCancelar);
-        if($session->fecha_inicio <= now() ) {
-            Session::put('msg_level', 'danger');
-            Session::put('msg', __('general.message_late_cancellation'));
-            Session::save();
-            return back();
-        }
-        if($session->fecha_inicio->subHours(HOURS_TO_CANCEL_TRAINING) < now()){
-            $session->delete();
-            Session::put('msg_level', 'warning');
-            Session::put('msg', __('general.message_enable_late_cancellation'));
-            Session::save();
-            return back();
-        }
-        $session->delete();
-        Session::put('msg_level', 'success');
-        Session::put('msg', __('general.successfully_cancelled'));
-        Session::save();
-        $this->returnClassAfterCancellation($session->event);
-        return back();
+        return DB::transaction(function () {
+            try {
+                $session = SesionCliente::find(request()->entrenamientoCancelar);
+                if($session->fecha_inicio <= now() ) {
+                    Session::put('msg_level', 'danger');
+                    Session::put('msg', __('general.message_late_cancellation'));
+                    Session::save();
+                    return back();
+                }
+                if($session->fecha_inicio->subHours(HOURS_TO_CANCEL_TRAINING) < now()){
+                    $session->delete();
+                    Session::put('msg_level', 'warning');
+                    Session::put('msg', __('general.message_enable_late_cancellation'));
+                    Session::save();
+                    return back();
+                }
+                $session->delete();
+                Session::put('msg_level', 'success');
+                Session::put('msg', __('general.successfully_cancelled'));
+                Session::save();
+                $session->event->fecha_inicio = $session->fecha_inicio;
+                $session->event->fecha_fin = $session->fecha_fin;
+                $this->returnClassAfterCancellation($session->event);
+                return back();
+            } catch (Exception $exception) {
+                Log::error("ERROR SesionClienteController - cancelTraining: " . $exception->getMessage());
+                Session::put('msg_level', 'danger');
+                Session::put('msg', __('general.error_general'));
+                return back();
+            }
+        });
     }
 
     public function darReview(){
