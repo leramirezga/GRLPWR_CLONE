@@ -28,7 +28,7 @@
                     <td><div style="max-height:3rem; overflow:hidden">{{$clientSession->kangoo_id ? $clientSession->kangoo->SKU : ''}}</div></td>
                 @endif
                 <td><div style="max-height:3rem; overflow:hidden">
-                    <input class="form-check-input" type="checkbox" name="attended" id="attended" onclick="checkAttendee({{$clientSession->id}})" required>
+                    <input class="form-check-input" type="checkbox" name="attended" id="attended" onclick="checkAttendee({{$clientSession->id}})" {{$clientSession->attended ? 'checked' : ''}} required>
                 </div></td>
             </tr>
 
