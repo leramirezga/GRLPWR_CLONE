@@ -28,7 +28,7 @@
                     <td><div style="max-height:3rem; overflow:hidden">{{$clientSession->kangoo_id ? $clientSession->kangoo->SKU : ''}}</div></td>
                 @endif
                 <td><div style="max-height:3rem; overflow:hidden">
-                    <input class="form-check-input" type="checkbox" name="attended" id="attended" onclick="checkAttendee({{$clientSession->id}})" {{$clientSession->attended ? 'checked' : ''}} required>
+                    <input class="form-check-input" type="checkbox" name="attended" id="attended_{{$clientSession->id}}" onclick="checkAttendee({{$clientSession->id}}, this)" {{$clientSession->attended ? 'checked' : ''}} required>
                 </div></td>
             </tr>
 
@@ -45,7 +45,7 @@
 
 @push('scripts')
     <script>
-        function checkAttendee(clientSessionId){
+        function checkAttendee(clientSessionId, checkbox){
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -54,7 +54,7 @@
                 method: "POST",
                 data: {
                     clientSessionId: clientSessionId,
-                    checked: $('#attended').is(':checked')
+                    checked: $(checkbox).is(':checked')
                 },
 
                 /*if you want to debug you need to uncomment this line and comment reload
