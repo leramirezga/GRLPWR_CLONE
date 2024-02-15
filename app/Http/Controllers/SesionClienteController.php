@@ -74,6 +74,7 @@ class SesionClienteController extends Controller
         if($request->shoeSize){
             $client->talla_zapato = $request->shoeSize;
         }
+        $client->pathology = $request->pathology;
         $client->save();
         $client->usuario_id = $user->id;
 

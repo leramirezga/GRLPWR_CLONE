@@ -157,6 +157,9 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="col-sm-10 m-auto">
+                                            @include('components.requestPathology')
+                                        </div>
                                         <div class="col-sm-10 m-auto text-justify">
                                             @include('termsAndConditions')
 
