@@ -9,11 +9,12 @@
             <div class="form-group label-floating">
                 <label class="control-label">Día <small>(requerido)</small></label>
                 <select class="form-control pl-1" id="hourSelector" name="event">
-                    <option value="Monday" selected>Lunes</option>
-                    <option value="Tuesday" selected>Martes</option>
-                    <option value="Wednesday" selected>Miercoles</option>
-                    <option value="Thursday" selected>Jueves</option>
-                    <option value="Friday" selected>Viernes</option>
+                    <option value="" disabled selected>Selecciona...</option>
+                    <option value="Monday">Lunes</option>
+                    <option value="Tuesday">Martes</option>
+                    <option value="Wednesday">Miercoles</option>
+                    <option value="Thursday">Jueves</option>
+                    <option value="Friday">Viernes</option>
                 </select>
             </div>
         </div>

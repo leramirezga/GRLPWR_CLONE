@@ -65,15 +65,7 @@
                                     <div class="row">
                                         <h4 class="info-text"></h4>
                                         <div class="col-sm-10 m-auto">
-                                            <div class="input-group">
-                                                <span class="iconos">
-                                                    <i class="material-icons">fitness_center</i>
-                                                </span>
-                                                <div class="form-group label-floating">
-                                                    <label class="control-label">Tipo de clase <small>(requerido)</small></label>
-                                                    @include('components.classTypeSelector')
-                                                </div>
-                                            </div>
+                                            @include('components.classTypeSelector', ['color' => 'color-black', 'bg' => 'bg-light'])
                                         </div>
                                         <div>
                                             <div class="col-sm-10 m-auto kangooForm" style="display: none">
@@ -165,9 +157,11 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        @include('termsAndConditions')
+                                        <div class="col-sm-10 m-auto text-justify">
+                                            @include('termsAndConditions')
 
-                                        <p class="mt-3 col-sm-11 m-auto text-justify" style="display: none">* Cómo tenemos botas limitadas, debemos cobrar $10.000 para la reserva de las botas, este valor será abonado al plan que adquieras o se te devolverá si asistes a la cortesía y no deseas inscribirte</p>
+                                            <p class="mt-3 col-sm-11 m-auto text-justify" style="display: none">* Cómo tenemos botas limitadas, debemos cobrar $10.000 para la reserva de las botas, este valor será abonado al plan que adquieras o se te devolverá si asistes a la cortesía y no deseas inscribirte</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

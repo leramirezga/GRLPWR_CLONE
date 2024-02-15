@@ -16,8 +16,8 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <object data="https://drive.google.com/file/d/1tqjcPDTw0j4S6IgAQnpz1IH0vE_mxaGa/preview?usp=share_link" type="application/pdf" frameborder="0" width="100%" height="100%" style="padding: 20px;">
-                        <embed src="https://drive.google.com/file/d/1tqjcPDTw0j4S6IgAQnpz1IH0vE_mxaGa/preview?usp=share_link" type='application/pdf' width="100%" height="100%" />
+                    <object data="{{asset('pdf/terminos_y_condiciones.pdf')}}" type="application/pdf" frameborder="0" width="100%" height="100%" style="padding: 20px;">
+                        <embed src="{{asset('pdf/terminos_y_condiciones.pdf')}}" type='application/pdf' width="100%" height="100%" />
                     </object>
                 </div>
                 <div class="modal-footer">
@@ -34,8 +34,8 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <object data="https://drive.google.com/file/d/1tjTuDN1YO9v0H7epzbdqryguXMh8S1MF/preview?usp=share_link" type="application/pdf" frameborder="0" width="100%" height="100%" style="padding: 20px;">
-                        <embed src="https://drive.google.com/file/d/1tjTuDN1YO9v0H7epzbdqryguXMh8S1MF/preview?usp=share_link" type='application/pdf' width="100%" height="100%" />
+                    <object data="{{asset('pdf/consentimiento_informado.pdf')}}" type="application/pdf" frameborder="0" width="100%" height="100%" style="padding: 20px;">
+                        <embed src="{{asset('pdf/consentimiento_informado.pdf')}}" type='application/pdf' width="100%" height="100%" />
                     </object>
                 </div>
                 <div class="modal-footer">
