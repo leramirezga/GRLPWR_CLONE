@@ -25,6 +25,20 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('general.Phone') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="cellphone" type="number"  min="1000000000" max="9999999999" class="form-control{{ $errors->has('cellphone') ? ' is-invalid' : '' }}" name="cellphone" value="{{ old('cellphone') }}" required>
+
+                                @if ($errors->has('cellphone'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('cellphone') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
                             <div class="col-md-6">

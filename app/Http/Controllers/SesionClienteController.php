@@ -17,6 +17,7 @@ use App\Model\ReviewSession;
 use App\Model\SesionCliente;
 use App\RemainingClass;
 use App\Repositories\ClientPlanRepository;
+use App\User;
 use App\Utils\PlanTypesEnum;
 use Carbon\Carbon;
 use Exception;
@@ -64,18 +65,34 @@ class SesionClienteController extends Controller
 
     public function scheduleCourtesy(Request $request){
 
-        $registerController = new RegisterController();
-        $request->merge(['password' => config('app.default_password')]);
-        $user = $registerController->create($request->all());
+        $user = User::where('email', $request->email)
+                    ->orWhere('telefono', $request->cellphone)
+                    ->first();
 
-
-        $client = new Cliente();
-        $client->usuario_id = $user->id;
-        if($request->shoeSize){
-            $client->talla_zapato = $request->shoeSize;
+        if($user){
+            if(SesionCliente::where('cliente_id', $user->id)->first()){
+                Session::put('msg_level', 'danger');
+                Session::put('msg', __('general.already_registered_for_courtesy'));
+                Session::save();
+                return redirect()->back();
+            }
+        }else{
+            $registerController = new RegisterController();
+            $request->merge(['password' => config('app.default_password')]);
+            $user = $registerController->create($request->all());
         }
-        $client->pathology = $request->pathology;
-        $client->save();
+
+        $client = Cliente::updateOrCreate(
+            ['usuario_id' => $user->id],
+            [
+                'talla_zapato' => $request->shoeSize ?? null,
+                'objective' => request()->objective,
+                'pathology' => $request->pathology,
+                'channel' => request()->channel
+                //'peso_ideal' => request()->pesoIdeal,
+                //'biotipo' => request()->tipoCuerpo
+            ]
+        );
         $client->usuario_id = $user->id;
 
         if($request->weight){

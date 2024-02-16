@@ -68,8 +68,9 @@ return [
     'message_enable_late_cancellation' => 'Cancelacion exitosa, al ser cancelada con menos de 12 horas de antelacion se descontará del número de clases restantes',
     'successfully_cancelled' => 'Cancelación exitosa.',
     'Plans' => 'Planes',
-    'success_courtesy' => 'Felicidades por ese salto. Tu cortesía ha sido agendada, puedes verla ingresando con tu correo, la clave será '.config('app.default_password'),
+    'success_courtesy' => 'Felicidades por ese salto. Tu cortesía ha sido agendada, puedes verla ingresando con tu correo, si no asignaste clave, será '.config('app.default_password'),
     'error_general' => 'Algo salió mal. Por favor contacta al soporte en el botón de whatsapp',
     'success_save_client_plan' => 'Plan cargado exitosamente',
-    'error_save_client_plan' => 'Error al cargar el plan, contacta al soporte'
+    'error_save_client_plan' => 'Error al cargar el plan, contacta al soporte',
+    'already_registered_for_courtesy' => 'El celular ya fue registrado en nuestro sistema. Si quieres reagendar una cortesía porfa contáctanos por whatsapp',
 ];

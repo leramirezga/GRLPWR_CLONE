@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Exceptions\ExistingUserException;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -63,6 +64,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => 'required|string|max:255',
+            'cellphone' => 'required|int|min:1000000000|max:9999999999|unique:usuarios,telefono',
             'email' => 'required|string|email|max:255|unique:usuarios',
             'password' => 'required|string|min:6',
             //'role' => 'required|string',
@@ -72,7 +74,7 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param array $data
      * @return \App\User
      */
     public function create(array $data)
@@ -93,13 +95,11 @@ class RegisterController extends Controller
             'apellido_1' => $primer_apellido,
             'apellido_2' => $segundo_apellido,
             'email' => $data['email'],
-            'telefono' => $data['cellphone'] ?? null,
+            'telefono' => $data['cellphone'],
             'password' => Hash::make($data['password']),
             'nivel' => 0,
             'slug' => $id,//por defecto se coloca el id como la URL (slug) inicial
             'rol' => 'cliente',//strtolower($data['role']),
         ]);
     }
-
-
 }
