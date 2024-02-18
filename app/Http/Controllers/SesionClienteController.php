@@ -86,9 +86,9 @@ class SesionClienteController extends Controller
             ['usuario_id' => $user->id],
             [
                 'talla_zapato' => $request->shoeSize ?? null,
-                'objective' => request()->objective,
+                'objective' => $request->objective,
                 'pathology' => $request->pathology,
-                'channel' => request()->channel
+                'channel' => $request->channel
                 //'peso_ideal' => request()->pesoIdeal,
                 //'biotipo' => request()->tipoCuerpo
             ]
