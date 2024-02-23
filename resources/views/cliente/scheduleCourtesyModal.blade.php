@@ -163,7 +163,7 @@
                                             @include('components.requestPathology')
                                         </div>
                                         <div class="col-sm-10 m-auto text-justify">
-                                            @include('termsAndConditions')
+                                            @include('termsAndConditionsModal')
 
                                             <p class="mt-3 col-sm-11 m-auto text-justify" style="display: none">* Cómo tenemos botas limitadas, debemos cobrar $10.000 para la reserva de las botas, este valor será abonado al plan que adquieras o se te devolverá si asistes a la cortesía y no deseas inscribirte</p>
                                         </div>

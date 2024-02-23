@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Http\Services\SendMessageInterface;
+use App\Http\Services\SendWhatsAppMessage;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -35,5 +37,6 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         define('HOURS_TO_CANCEL_TRAINING', 4);
+        $this->app->bind(SendMessageInterface::class, SendWhatsAppMessage::class);
     }
 }

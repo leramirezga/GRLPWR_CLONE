@@ -19,6 +19,10 @@ class ClientPlan extends Model
      */
     protected $dates = ['created_at', 'updated_at', 'expiration_date'];
 
+    public function cliente(){
+        return $this->belongsTo(Cliente::class, 'client_id', 'usuario_id');
+    }
+
     public function plan(){
         return $this->belongsTo(Plan::class)->withTrashed();
     }
