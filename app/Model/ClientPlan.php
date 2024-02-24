@@ -14,6 +14,13 @@ class ClientPlan extends Model
     use HasFactory;
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['scheduled_renew_msg'];
+
+    /**
      * Transforms dates to carbon
      * @var string[]
      */

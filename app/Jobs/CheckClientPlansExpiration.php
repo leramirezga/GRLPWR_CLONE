@@ -28,17 +28,11 @@ class CheckClientPlansExpiration
                 ->where('expiration_date', '>=', $initialDate)
                 ->where('expiration_date', '<=', $finalDate)
                 ->where('scheduled_renew_msg', '0')
-                ->select('usuarios.telefono', 'client_plans.expiration_date')
+                ->select('usuarios.telefono', 'client_plans.expiration_date', 'client_plans.id')
                 ->get();
 
-            ClientPlan::
-                where('expiration_date', '>=', $initialDate)
-                ->where('expiration_date', '<=', $finalDate)
-                ->where('scheduled_renew_msg', '0')
-                ->update(['scheduled_renew_msg' => '1']);
-
             $usersInfo->each(function ($info) {
-                $expirationInfo = new ExpirationInfo($info->telefono, $info->expiration_date);
+                $expirationInfo = new ExpirationInfo($info->telefono, $info->expiration_date, $info->id);
                 dispatch(new SendMessageToRenewPlan($expirationInfo));
             });
         });
