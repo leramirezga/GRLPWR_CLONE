@@ -26,10 +26,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->call(new CheckClientPlansExpiration())->dailyAt('09:00');
-
+        $schedule->command("validator:kangosReservados")->everyMinute();
         //$schedule->command("validator:transaccionesPendientes")->cron("*/5 * * * *");
-        //$schedule->command("validator:kangosReservados")->everyMinute();
-        //$schedule->command("validator:kangosReservados")->everyMinute();
     }
 
     /**
