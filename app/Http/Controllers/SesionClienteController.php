@@ -204,7 +204,7 @@ class SesionClienteController extends Controller
             $clientPlanRepository = new ClientPlanRepository();
             $event->fecha_inicio = $startDateTime;
             $event->fecha_fin = $endDateTime;
-            $clientPlan = $clientPlanRepository->findValidClientPlan($event, $clientId);
+            $clientPlan = $clientPlanRepository->findValidClientPlan($event, $client->usuario_id);
 
             if ($clientPlan) {
                 $sesionCliente->save();
