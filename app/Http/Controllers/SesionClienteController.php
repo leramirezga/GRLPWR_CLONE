@@ -9,6 +9,7 @@ use App\Exceptions\ShoeSizeNotSupportedException;
 use App\Exceptions\WeightNotSupportedException;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Services\KangooService;
+use App\Mail\CourtesyScheduled;
 use App\Model\Cliente;
 use App\Model\Evento;
 use App\Model\Peso;
@@ -26,6 +27,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -137,7 +139,7 @@ class SesionClienteController extends Controller
             $kangooId = $this->assignEquipment($event, $client->talla_zapato, $client->peso()->peso, $startDateTime, $endDateTime);
         }
         $isCourtesy = filter_var($isCourtesy, FILTER_VALIDATE_BOOLEAN);
-        return $this->registerSession($client->usuario_id, $event, $startDateTime, $endDateTime, $isCourtesy, $kangooId ?? null);
+        return $this->registerSession($client, $event, $startDateTime, $endDateTime, $isCourtesy, $kangooId ?? null);
 
     }
 
@@ -171,13 +173,13 @@ class SesionClienteController extends Controller
      * @param null $kangooId
      * @return JsonResponse | \Illuminate\Http\RedirectResponse
      */
-    public function registerSession($clientId, $event, $startDateTime, $endDateTime, $isCourtesy, $kangooId=null)
+    public function registerSession($client, $event, $startDateTime, $endDateTime, $isCourtesy, $kangooId=null)
     {
         DB::beginTransaction();
 
         try{
             $sesionCliente = new SesionCliente;
-            $sesionCliente->cliente_id = $clientId;
+            $sesionCliente->cliente_id = $client->usuario_id;
             $sesionCliente->evento_id = $event->id;
             if($kangooId){
                 $sesionCliente->kangoo_id = $kangooId;
@@ -188,6 +190,10 @@ class SesionClienteController extends Controller
 
             if($isCourtesy){
                 $sesionCliente->save();
+
+                Mail::to($client->usuario->email)
+                    ->queue(new CourtesyScheduled($sesionCliente));
+
                 Session::put('msg_level', 'success');
                 Session::put('msg', __('general.success_courtesy'));
                 Session::save();
