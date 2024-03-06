@@ -56,7 +56,7 @@ class SesionClienteController extends Controller
     public function scheduleEvent(Request $request){
         try {
             $client = Cliente::find($request->clientId);
-            return $this->schedule($request->eventId, $request->startDate, $request->startHour, $request->endDate, $request->endHour, $client, $request->rentEquipment, $request->isCourtesy ?? false, $request->validateVacancy ?? false);
+            return $this->schedule($request->eventId, $request->startDate, $request->startHour, $request->endDate, $request->endHour, $client, $request->rentEquipment, $request->isCourtesy ?? false, $request->validateVacancy ?? true);
         }catch (Exception $exception){
             Session::put('msg_level', 'danger');
             Session::put('msg', $exception->getMessage());
