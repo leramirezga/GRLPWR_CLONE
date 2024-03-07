@@ -119,7 +119,7 @@ class ProfileController extends Controller
                 ]
             );
 
-            Peso::updateOrCreate(
+            Peso::create(
                 ['usuario_id' => $user->id],
                 ['peso' => request()->peso, 'unidad_medida' => 0]
             );
