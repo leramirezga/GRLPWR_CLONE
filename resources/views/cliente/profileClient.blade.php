@@ -73,16 +73,18 @@
                     <p>Ocupación: {{$user->occupation}}</p>
                     <p>Contacto de emergencia: {{$user->emergency_contact}}</p>
                     <p>Telefono de emergencia: {{$user->emergency_phone}}</p>
-                    <p>Objetivo: {{$user->cliente->objetive}}</p>
-                    <p>Patologías: {{$user->cliente->pathology}}</p>
+                    @if($user->cliente)
+                        <p>Objetivo: {{$user->cliente->objetive}}</p>
+                        <p>Patologías: {{$user->cliente->pathology}}</p>
+                    @endif
                 </div>
 
                 <div class="{{\Illuminate\Support\Facades\Blade::check('feature', 'dark_theme', false) ? "floating-card bg-semi-transparent" : "box-shadow"}} col-12 col-md-10 mx-auto mt-4 p-2">
                     <h2 class="section-title">Antropometría:</h2>
-                    @if($user->cliente->peso())
+                    @if($user->cliente?->peso())
                         <p><strong>Peso: </strong>{{number_format($user->cliente->peso()->peso, 2)}} Kg</p>
                     @endif
-                    @if($user->cliente->estatura())
+                    @if($user->cliente?->estatura())
                         <p><strong>Estatura: </strong>{{number_format($user->cliente->estatura()->estatura/100, 2)}} m</p>
                         <div class="contador-container mt-3">
                             <div class="numero-contador-container">
@@ -93,7 +95,7 @@
                     @endif
 
                     <div class="d-flex justify-content-around">
-                        @php($anthropometry = $user->cliente->anthropometry())
+                        @php($anthropometry = $user->cliente?->anthropometry())
                         @if($anthropometry?->heart_rate!==null)
                             <div class="contador-container">
                                 <div class="numero-contador-container">
@@ -139,7 +141,7 @@
 
                 <div class="{{\Illuminate\Support\Facades\Blade::check('feature', 'dark_theme', false) ? "floating-card bg-semi-transparent" : "box-shadow"}} col-12 col-md-10 mx-auto mt-4 p-2">
                     <h2 class="section-title">Riesgo Cardiovascular:</h2>
-                    @php($cardiovascularRisk = $user->cliente->cardiovascularRisk())
+                    @php($cardiovascularRisk = $user->cliente?->cardiovascularRisk())
                     <div class="d-flex mb-3">
                         <div class="col-4 bg-success">
                             <p>Bajo</p>
@@ -162,7 +164,7 @@
                     </div>
                 </div>
 
-                @php($maxHeartRate = $user->cliente->maxHeartRate()?->max_heart_rate)
+                @php($maxHeartRate = $user->cliente?->maxHeartRate()?->max_heart_rate)
                 @isset($maxHeartRate)
                     <div class="{{\Illuminate\Support\Facades\Blade::check('feature', 'dark_theme', false) ? "floating-card bg-semi-transparent" : "box-shadow"}} col-12 col-md-10 mx-auto mt-4 p-2">
                         <h2 class="section-title">Frecuencias Cardiacas de actividad:</h2>
@@ -188,7 +190,7 @@
                     </div>
                 @endisset
 
-                @php($fitnessComponent = $user->cliente->fitnessComponent())
+                @php($fitnessComponent = $user->cliente?->fitnessComponent())
                 @isset($fitnessComponent)
                     <div class="{{\Illuminate\Support\Facades\Blade::check('feature', 'dark_theme', false) ? "floating-card bg-semi-transparent" : "box-shadow"}} col-12 col-md-10 mx-auto mt-3 p-4">
                         <h2 class="section-title">COMPONENTES FITNESS:</h2>
@@ -217,7 +219,7 @@
                     </div>
                 @endisset
 
-                @php($exercisePrescription = $user->cliente->exercisePrescription())
+                @php($exercisePrescription = $user->cliente?->exercisePrescription())
                 @isset($exercisePrescription)
                     <div class="{{\Illuminate\Support\Facades\Blade::check('feature', 'dark_theme', false) ? "floating-card bg-semi-transparent" : "box-shadow"}} col-12 col-md-10 mx-auto mt-3 p-4">
                         <h2 class="section-title">RECOMENDACIONES DE PRESCRIPCION DE EJERCICIO:</h2>
@@ -229,7 +231,7 @@
                     </div>
                 @endisset
 
-                @php($nutritionAndHealth = $user->cliente->nutritionAndHealth())
+                @php($nutritionAndHealth = $user->cliente?->nutritionAndHealth())
                 @isset($nutritionAndHealth)
                     <div class="{{\Illuminate\Support\Facades\Blade::check('feature', 'dark_theme', false) ? "floating-card bg-semi-transparent" : "box-shadow"}} col-12 col-md-10 mx-auto mt-3 p-4">
                         <h2 class="section-title">RECOMENDACIONES DE NUTRICION Y SALUD:</h2>

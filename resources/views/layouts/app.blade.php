@@ -131,6 +131,9 @@
                 <a class="d-none d-md-inline-block" href="{{route('blogs')}}">
                     Blogs
                 </a>
+                <a class="d-none d-md-inline-block" href="{{route('users.index')}}">
+                    Users
+                </a>
 
                 @auth
                     <notification class="cursor-pointer" v-bind:unread_notifications="unread_notifications" v-bind:notifications="notifications"></notification>
@@ -142,6 +145,9 @@
                             <a class="dropdown-item" href="{{route('home', ['user'=> Auth::user()->slug])}}">Home</a>
                             <a class="dropdown-item d-block d-md-none" href="{{route('blogs')}}">
                                 Blogs
+                            </a>
+                            <a class="dropdown-item d-block d-md-none" href="{{route('users.index')}}">
+                                Users
                             </a>
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

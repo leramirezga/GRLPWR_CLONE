@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Http\Services\SendMessageInterface;
 use App\Http\Services\SendWhatsAppMessage;
 use Carbon\Carbon;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Route;
@@ -27,6 +28,8 @@ class AppServiceProvider extends ServiceProvider
         setlocale(LC_TIME, 'app.locale_time');
 
         Schema::defaultStringLength(191);//para que los indices de tablas y demás no sobrepasen la longitud de MySQL
+
+        Paginator::useBootstrapFour();
     }
 
     /**
