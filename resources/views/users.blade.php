@@ -2,11 +2,6 @@
 @section('title')
     Users
 @endsection
-@push('head-content')
-    <style>
-        td { cursor: pointer; }
-    </style>
-@endpush
 @section('content')
     <div class="container">
         <h2>Listado de Usuarios</h2>
@@ -22,15 +17,17 @@
                 <th>Nombre</th>
                 <th>Email</th>
                 <th>Telefono</th>
+                <th>Acciones</th>
             </tr>
             </thead>
             <tbody name="table">
             @foreach ($users as $user)
-                <tr onclick="window.location='{{route('visitarPerfil', ['user'=>  $user->slug])}}';">
+                <tr>
                     <td>{{ $user->id }}</td>
-                    <td>{{ $user->nombre }}</td>
+                    <td><a class="client-icon color-white" href="{{route('visitarPerfil', ['user'=>  $user->slug])}}"><div style="max-height:3rem; overflow:hidden">{{ $user->nombre . ' ' .  $user->apellido_1 . ' ' .  $user->apellido_2}}</div></a></td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->telefono }}</td>
+                    <td><a class="client-icon color-white" href="{{route('healthTest', ['user'=>  $user->slug])}}">Valoración</a></td>
                 </tr>
             @endforeach
             </tbody>
@@ -55,11 +52,12 @@
                         $('tbody[name="table"]').empty();
                         data.forEach(function (result) {
                             $('tbody[name="table"]').append(
-                                '<tr onclick="window.location=\'{{env('APP_URL')}}/visitar/' + result.slug + '\';">' +
+                                '<tr>' +
                                     '<td>' + result.id + '</td>' +
-                                    '<td>' + result.nombre + '</td>' +
+                                    '<td><a class="client-icon color-white" href="{{env('APP_URL')}}/visitar/' + result.slug +'"><div style="max-height:3rem; overflow:hidden">' + result.nombre + '</div></a></td>' +
                                     '<td>' + result.email + '</td>' +
                                     '<td>' + result.telefono + '</td>' +
+                                    '<td><a class="client-icon color-white" href="/user/' + result.slug +'/wellBeingTest">Valoración</a></td>' +
                                 '</tr>'
                             );
                         });
