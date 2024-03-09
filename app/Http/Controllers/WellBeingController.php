@@ -12,6 +12,7 @@ use App\WellBeingAssessment;
 use App\WheelOfLife;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class WellBeingController extends controller {
 
@@ -96,6 +97,9 @@ class WellBeingController extends controller {
             $wheelOfLife->save();
         });
 
-        return redirect()->back()->with('success', 'Datos guardados correctamente');
+        Session::put('msg_level', 'success');
+        Session::put('msg', __('general.sucess_wellbeign_assesment'));
+        Session::save();
+        return redirect()->back();
     }
 }

@@ -71,7 +71,7 @@
             <x-raddio name="spiritual_belief" description="¿Tienes alguna creencia espiritual o filosofía de vida que te sea importante?" checked="1" showReason="1" reason="¿Cúal?" required></x-raddio>
             <x-raddio name="spiritual_practice" description="¿Participas en prácticas espirituales o de meditación?" checked="1" showReason="1" reason="¿Cúal?" required></x-raddio>
 
-            <h1 class="text-center">Roue de la Vie ¿Cómo te sientes en tu vida?</h1>
+            <h1 class="text-center">¿Cómo te sientes en tu vida?</h1>
             <x-range name="health" description="Salud: ¿Estás contenta con tu fortaleza física y mental?" min="1" max="10" showReason="1" reason="¿Por qué?" required></x-range>
             <x-range name="personal_growth" description="Desarrollo Personal: ¿Te sientes realizada con lo que quieres hacer?" min="1" max="10" showReason="1" reason="¿Por qué?" required></x-range>
             <x-range name="home" description="Hogar: ¿Estás satisfecha en el sitio donde vives?" min="1" max="10" showReason="1" reason="¿Por qué?" required></x-range>
@@ -81,7 +81,7 @@
             <x-range name="work" description="Trabajo: ¿Qué grado de satisfacción profesional tienes? " min="1" max="10" showReason="1" reason="¿Por qué?" required></x-range>
             <x-range name="money" description="Dinero: ¿Estás contenta con el dinero que manejas?" min="1" max="10" showReason="1" reason="¿Por qué?" required></x-range>
 
-            <button type="submit">Enviar Valoración</button>
+            <button class="btn btn-success d-flex my-3 mx-auto" type="submit">Enviar Valoración</button>
         </div>
     </form>
 @endsection

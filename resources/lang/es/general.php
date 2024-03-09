@@ -73,4 +73,5 @@ return [
     'success_save_client_plan' => 'Plan cargado exitosamente',
     'error_save_client_plan' => 'Error al cargar el plan, contacta al soporte',
     'already_registered_for_courtesy' => 'El celular ya fue registrado en nuestro sistema. Si quieres reagendar una cortesía porfa contáctanos por whatsapp',
+    'sucess_wellbeign_assesment' => 'Valoración completada con exito'
 ];
