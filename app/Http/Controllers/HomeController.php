@@ -58,6 +58,7 @@ class HomeController extends Controller
                     ->join('eventos', 'sesiones_cliente.evento_id', 'eventos.id')
                     ->leftJoin('reviews_session', 'reviews_session.session_id', '=', 'sesiones_cliente.id')
                     ->whereNull('reviews_session.session_id')
+                    ->where('sesiones_cliente.cliente_id', Auth::id())
                     ->where('sesiones_cliente.fecha_inicio', '>', Carbon::now()->subDay()->startOfDay())
                     ->where('sesiones_cliente.fecha_fin', '<', today())
                     ->orderBy('sesiones_cliente.fecha_fin', 'desc')

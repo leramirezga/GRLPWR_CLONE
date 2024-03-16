@@ -13,6 +13,7 @@ use App\Utils\AuthEnum;
 use App\Utils\Constantes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Validator;
 
 class ProfileController extends Controller
@@ -119,17 +120,23 @@ class ProfileController extends Controller
                 ]
             );
 
-            Peso::create(
-                ['usuario_id' => $user->id],
-                ['peso' => request()->peso, 'unidad_medida' => 0]
-            );
+            $lastWeight = Peso::where('usuario_id', $user->id)->orderBy('created_at', 'desc')->first();
+            if(!$lastWeight){
+                $lastWeight = new Peso();
+                $lastWeight->usuario_id = $user->id;
+                $lastWeight->unidad_medida = 0;
+            }
+            $lastWeight->peso = request()->peso;
+            $lastWeight->save();
 
             Estatura::updateOrCreate(
                 ['usuario_id' => $user->id],
                 ['estatura' => request()->estatura, 'unidad_medida' => 1]
             );
 
-            request()->session()->flash('alert-success', Constantes::MENSAJE_ACTUALIZACION_PERFIL_EXITOSA);
+            Session::put('msg_level', 'success');
+            Session::put('msg', Constantes::MENSAJE_ACTUALIZACION_PERFIL_EXITOSA);
+            Session::save();
 
         }elseif (strcasecmp ($user->rol, Constantes::ROL_ENTRENADOR ) == 0){
             $reviewId = 2;
@@ -138,7 +145,7 @@ class ProfileController extends Controller
                 ['tipo_cuenta' => request()->tipoCuenta, 'banco' => request()->banco, 'numero_cuenta' => request()->numeroCuenta, 'tarifa' => request()->tarifa]
             );
 
-            request()->session()->flash('alert-success', 'Tu perfil ahora está actualizado, A BUSCAR ATLETAS!');
+            request()->session()->flash('alert-success', 'Tu perfil ahora está actualizado, A ENTRENAR!');
         }
 
         $reviewUser = ReviewUser::where('review_id', 1)

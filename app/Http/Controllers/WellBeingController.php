@@ -27,17 +27,17 @@ class WellBeingController extends controller {
     public function processWellBeingTest(Request $request, User $user): \Illuminate\Http\RedirectResponse
     {
         DB::transaction(function () use ($request, $user) {
-            $physicalAssesment = new PhysicalAssesment();
-            $physicalAssesment->user_id = $user->id;
-            $physicalAssesment->muscle = $request->muscle;
-            $physicalAssesment->visceral_fat = $request->visceral_fat;
-            $physicalAssesment->body_fat = $request->body_fat;
-            $physicalAssesment->water_level = $request->water_level;
-            $physicalAssesment->proteins = $request->proteins;
-            $physicalAssesment->basal_metabolism = $request->basal_metabolism;
-            $physicalAssesment->bone_mass = $request->bone_mass;
-            $physicalAssesment->body_score = $request->body_score;
-            $physicalAssesment->save();
+            $physicalAssessment = new PhysicalAssesment();
+            $physicalAssessment->user_id = $user->id;
+            $physicalAssessment->muscle = $request->muscle;
+            $physicalAssessment->visceral_fat = $request->visceral_fat;
+            $physicalAssessment->body_fat = $request->body_fat;
+            $physicalAssessment->water_level = $request->water_level;
+            $physicalAssessment->proteins = $request->proteins;
+            $physicalAssessment->basal_metabolism = $request->basal_metabolism;
+            $physicalAssessment->bone_mass = $request->bone_mass;
+            $physicalAssessment->body_score = $request->body_score;
+            $physicalAssessment->save();
 
             $peso = new Peso();
             $peso->usuario_id = $user->id;
