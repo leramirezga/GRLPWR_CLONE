@@ -27,7 +27,7 @@
             <x-input name="body_score" description="Puntuación Corporal:" type="number" required></x-input>
 
             <h1 class="text-center">Alimentación</h1>
-            <x-range name="food_relationship" description="De 1 a 10, ¿Cómo es tu relación con tu alimentación?" min="1" max="10" required></x-range>
+            <x-range name="feeding_relationship" description="De 1 a 10, ¿Cómo es tu relación con tu alimentación?" min="1" max="10" required></x-range>
             <x-input name="breakfast" description="¿Qué desayunas?" type="text" required></x-input>
             <x-input name="mid_morning" description="¿Qué comes en la media mañana?" type="text" required></x-input>
             <x-input name="lunch" description="¿Qué almuerzas?" type="text" required></x-input>
