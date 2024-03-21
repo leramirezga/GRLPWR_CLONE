@@ -16,15 +16,15 @@
         <div class="col-10 col-lg-6 m-auto">
 
             <h1 class="text-center">Valoración Física</h1>
-            <x-input name="weight" description="Peso (Kg)" type="number" required></x-input>
-            <x-input name="muscle" description="Músculo" type="number" required></x-input>
-            <x-input name="visceral_fat" description="Grasa Visceral" type="number" required></x-input>
-            <x-input name="body_fat" description="Grasa Corporal" type="number" required></x-input>
-            <x-input name="water_level" description="Nivel agua:" type="number" required></x-input>
-            <x-input name="proteins" description="Proteínas:" type="number" required></x-input>
-            <x-input name="basal_metabolism" description="Metabolismo Basal:" type="number" required></x-input>
-            <x-input name="bone_mass" description="Masa Ósea:" type="number" required></x-input>
-            <x-input name="body_score" description="Puntuación Corporal:" type="number" required></x-input>
+            <x-input name="weight" description="Peso (Kg)" type="number" required step=".01"></x-input>
+            <x-input name="muscle" description="Músculo" type="number" required step=".01"></x-input>
+            <x-input name="visceral_fat" description="Grasa Visceral" type="number" required step=".01"></x-input>
+            <x-input name="body_fat" description="Grasa Corporal" type="number" required step=".01"></x-input>
+            <x-input name="water_level" description="Nivel agua:" type="number" required step=".01"></x-input>
+            <x-input name="proteins" description="Proteínas:" type="number" required step=".01"></x-input>
+            <x-input name="basal_metabolism" description="Metabolismo Basal:" type="number" required step=".01"></x-input>
+            <x-input name="bone_mass" description="Masa Ósea:" type="number" required step=".01"></x-input>
+            <x-input name="body_score" description="Puntuación Corporal:" type="number" required step=".01"></x-input>
 
             <h1 class="text-center">Alimentación</h1>
             <x-range name="feeding_relationship" description="De 1 a 10, ¿Cómo es tu relación con tu alimentación?" min="1" max="10" required></x-range>
