@@ -65,6 +65,7 @@
                 <div class="{{\Illuminate\Support\Facades\Blade::check('feature', 'dark_theme', false) ? "floating-card bg-semi-transparent" : "box-shadow"}} col-12 col-md-10 mx-auto mt-4 p-2">
                     @if(Auth::user()->rol == \App\Utils\Constantes::ROL_ADMIN)
                         <p>Id: {{$user->id}}</p>
+                        <p>Última valoración: {{$user->physicalAssessment?->created_at}}</p>
                     @endif
                     <p>Telefono: {{$user->telefono}}</p>
                     <p>Eps: {{$user->eps}}</p>

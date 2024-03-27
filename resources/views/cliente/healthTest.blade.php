@@ -65,11 +65,11 @@
             <x-input name="music" description="¿Con qué música te gusta entrenar?" type="text" required></x-input>
 
             <h1 class="text-center">Mentalidad</h1>
+            <x-range name="body_relation" description="De 1 a 10: ¿Cómo consideras es tú relación con tú cuerpo?" min="1" max="10" required></x-range>
             <x-input name="body_discomfort" description="¿Hay alguna parte de tu cuerpo que te haga sentir incómoda o que quieras mejorar?" type="text" required></x-input>
             <x-raddio name="stress" description="¿Experimentas estrés, ansiedad o algún otro desafío de salud mental?" checked="1" showReason="1" reason="¿Cúal?" required></x-raddio>
-            <x-raddio name="stress_practice" description="¿Participas en prácticas de manejo del estrés o bienestar mental?" checked="1" showReason="1" reason="¿Cúal?" required></x-raddio>
             <x-raddio name="spiritual_belief" description="¿Tienes alguna creencia espiritual o filosofía de vida que te sea importante?" checked="1" showReason="1" reason="¿Cúal?" required></x-raddio>
-            <x-raddio name="spiritual_practice" description="¿Participas en prácticas espirituales o de meditación?" checked="1" showReason="1" reason="¿Cúal?" required></x-raddio>
+            <x-raddio name="stress_practice" description="¿Participas en prácticas de manejo del estrés o bienestar mental?" checked="1" showReason="1" reason="¿Cúal?" required></x-raddio>
 
             <h1 class="text-center">¿Cómo te sientes en tu vida?</h1>
             <x-range name="health" description="Salud: ¿Estás contenta con tu fortaleza física y mental?" min="1" max="10" showReason="1" reason="¿Por qué?" required></x-range>

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\FoodAssesment;
 use App\Model\Peso;
-use App\PhysicalAssesment;
+use App\PhysicalAssessment;
 use App\HealthTest;
 use App\TrainingPreference;
 use App\User;
@@ -27,7 +27,7 @@ class WellBeingController extends controller {
     public function processWellBeingTest(Request $request, User $user): \Illuminate\Http\RedirectResponse
     {
         DB::transaction(function () use ($request, $user) {
-            $physicalAssessment = new PhysicalAssesment();
+            $physicalAssessment = new PhysicalAssessment();
             $physicalAssessment->user_id = $user->id;
             $physicalAssessment->muscle = $request->muscle;
             $physicalAssessment->visceral_fat = $request->visceral_fat;
@@ -68,11 +68,11 @@ class WellBeingController extends controller {
 
             $wellBeingAssessment = new WellBeingAssessment();
             $wellBeingAssessment->user_id = $user->id;
+            $wellBeingAssessment->body_relation = $request->body_relation;
             $wellBeingAssessment->body_discomfort = $request->body_discomfort;
             $wellBeingAssessment->stress = $request->reason_stress;
             $wellBeingAssessment->stress_practice = $request->reason_stress_practice;
             $wellBeingAssessment->spiritual_belief = $request->reason_spiritual_belief;
-            $wellBeingAssessment->spiritual_practice = $request->reason_spiritual_practice;
             $wellBeingAssessment->save();
 
             $wheelOfLife = new WheelOfLife();

@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PhysicalAssesment extends model
+class PhysicalAssessment extends model
 {
     use HasFactory;
 
