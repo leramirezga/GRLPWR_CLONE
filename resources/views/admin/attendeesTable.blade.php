@@ -36,7 +36,7 @@
         <tbody>
     </table>
 
-    <button class="btn btn-success" data-toggle="modal" data-target="#registerAttendee">
+    <button class="btn themed-btn" data-toggle="modal" data-target="#registerAttendee">
         Registrar Asistente
     </button>
 </div>

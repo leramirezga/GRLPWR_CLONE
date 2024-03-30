@@ -31,7 +31,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-danger">Eliminar</button>
-                        <button type="button" class="btn btn-success" data-dismiss="modal"
+                        <button type="button" class="btn themed-btn" data-dismiss="modal"
                                 aria-label="Close">Cancelar
                         </button>
                     </div>
@@ -42,7 +42,7 @@
 @endsection
 
 @section('content')
-    <div class="{{\Illuminate\Support\Facades\Blade::check('feature', 'dark_theme', false) ? "floating-card bg-semi-transparent" : ""}} p-3 mb-3">
+    <div class="themed-block p-3 mb-3">
         <div class="mb-5">
             <h3>Próximas sesiones:</h3>
         </div>

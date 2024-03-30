@@ -30,6 +30,7 @@
           integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css"
           href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons"/>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="{{asset('css/general.css')}}">
 
@@ -83,7 +84,6 @@
 
         gtag('config', '{{env('GTAG')}}');
     </script>
-
     @auth
         <!--notificaciones-->
         <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -100,16 +100,15 @@
                     <div class="alert bg-{{session('msg_level')}} color-white redondeado">
                         <p>{{session('msg')}}</p>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
 
     <div id="app">
-        <div id="top-navbar" class="navbar navbar-dark fixed-top">
+        <div id="top-navbar" class="navbar themed-navbar fixed-top">
             <a class="navbar-brand position-absolute" style="width: 60px" href="@auth{{route('home', ['user'=> Auth::user()->slug])}}@else # @endauth">
-                <img width="100%" alt="logo" src="{{asset('images/brand/imago_fondo_oscuro.png')}}">
+                <img width="120%" alt="logo" src="{{asset('images/brand/Imago_fondo_claro.png')}}">
             </a>
             <!--
             <form id="buscarEntrenadores-form" action="{{ route('buscarEntrenadores') }}" method="GET">
@@ -131,24 +130,29 @@
                 <a class="d-none d-md-inline-block" href="{{route('blogs')}}">
                     Blogs
                 </a>
-                <a class="d-none d-md-inline-block" href="{{route('users.index')}}">
-                    Users
-                </a>
+
+                @if(Auth::user()->rol == \App\Utils\Constantes::ROL_ADMIN)
+                    <a class="d-none d-md-inline-block" href="{{route('users.index')}}">
+                        Users
+                    </a>
+                @endif
 
                 @auth
-                    <notification class="cursor-pointer" v-bind:unread_notifications="unread_notifications" v-bind:notifications="notifications"></notification>
+                    {{--<notification class="cursor-pointer" v-bind:unread_notifications="unread_notifications" v-bind:notifications="notifications"></notification>--}}
 
                     <div class="dropdown d-inline-block">
                         <img class="rounded-circle user-icon ml-3 cursor-pointer" alt="user" src="{{asset('images/avatars/'.Auth::user()->foto)}}" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-                        <div class="dropdown-menu dropdown-menu-right floating-card bg-dark" aria-labelledby="navbarDropdown">
+                        <div class="dropdown-menu dropdown-menu-right floating-card themed-block" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{route('home', ['user'=> Auth::user()->slug])}}">Home</a>
                             <a class="dropdown-item d-block d-md-none" href="{{route('blogs')}}">
                                 Blogs
                             </a>
-                            <a class="dropdown-item d-block d-md-none" href="{{route('users.index')}}">
-                                Users
-                            </a>
+                            @if(Auth::user()->rol == \App\Utils\Constantes::ROL_ADMIN)
+                                <a class="dropdown-item d-block d-md-none" href="{{route('users.index')}}">
+                                    Users
+                                </a>
+                            @endif
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}

@@ -1,7 +1,7 @@
 <div class="form-group">
     <span class="material-icons">directions_run</span>
     <label for="classTypeSelector" class="h4">Tipo de clase</label>
-    <select class="form-control pl-1 {{$color ?? 'color-white'}}  {{$bg ?? 'bg-dark'}}" id="classTypeSelector" name="classType">
+    <select class="form-control pl-1 border-bottom themed-border-color" id="classTypeSelector" name="classType">
         @isset($showAll)
             <option value="all" selected>Todas</option>
         @else

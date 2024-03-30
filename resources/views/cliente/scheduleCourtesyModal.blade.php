@@ -45,7 +45,7 @@
                 @endif
                 <!--      Wizard container        -->
                 <div class="wizard-container">
-                    <div class="wizard-card" data-color="green" id="wizardProfile">
+                    <div class="wizard-card" data-color="purple" id="wizardProfile">
                         <form id="scheduleCourtesyForm" method="post" action="{{route('scheduleCourtesy')}}" enctype="multipart/form-data">
                             @method('POST')
                             @csrf
@@ -172,8 +172,8 @@
                             </div>
                             <div class="wizard-footer">
                                 <div class="float-right">
-                                    <input type='button' class='btn btn-next btn-fill btn-success btn-wd' name='next' value='Siguiente' onclick="validar()"/>
-                                    <input type='submit' class='btn btn-finish btn-fill btn-success btn-wd' name='finish' value='Finalizar' onclick="validar()"/>
+                                    <input type='button' class='btn btn-next btn-fill themed-btn btn-wd' name='next' value='Siguiente' onclick="validar()"/>
+                                    <input type='submit' class='btn btn-finish btn-fill themed-btn btn-wd' name='finish' value='Finalizar' onclick="validar()"/>
                                 </div>
 
                                 <div class="float-left">

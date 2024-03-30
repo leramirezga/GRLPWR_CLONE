@@ -3,12 +3,12 @@
         @if($user->cliente == null)
             <div class="margenes-normales floating-card bg-semi-transparent d-block d-md-flex">
                 <p class="mb-3 d-inline-block pr-md-4">Para poder crear solicitudes debes completar tu perfil.</p>
-                <button class="btn btn-success ml-auto btn-block" style="min-width: unset"  data-toggle="modal" data-target="#completarPerfilModal">Completar perfil</button>
+                <button class="btn themed-btn ml-auto btn-block" style="min-width: unset"  data-toggle="modal" data-target="#completarPerfilModal">Completar perfil</button>
             </div>
         @else
             <div class="margenes-normales floating-card bg-semi-transparent">
                 <p class="d-inline-block mb-3">Parece que aún no has agendado un entrenamiento. No busques más excusas y empieza a entrenar. Vamos a alcanzar la meta!</p>
-                <a class="btn btn-success" href="{{route('crearSolicitud')}}">
+                <a class="btn themed-btn" href="{{route('crearSolicitud')}}">
                     Quiero Entrenar
                 </a>
             </div>
@@ -16,7 +16,7 @@
     @elseif($user->rol == \App\Utils\Constantes::ROL_ENTRENADOR)
         <div class="margenes-normales floating-card bg-semi-transparent">
             <p class="d-inline-block mb-3">Parece que aún no has ofrecido ningún entrenamiento. Busquemos usuarios para ayudarlos a alcanzar sus metas!</p>
-            <a class="btn btn-success" href="{{route('buscarProyecto')}}">
+            <a class="btn themed-btn" href="{{route('buscarProyecto')}}">
                 Buscar clientes
             </a>
         </div>

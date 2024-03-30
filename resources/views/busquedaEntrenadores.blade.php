@@ -112,7 +112,7 @@
                     @endisset
                     <div style="height: 40px">
                         <!--la altura máxima del boton, para que no se sobreponga cuando la altura del card es automatica-->
-                        <a class="btn btn-success bottom"
+                        <a class="btn themed-btn bottom"
                            onclick="window.location='{{route('home', ['user'=> $entrenador->nivel])}}'">Contratar</a>
                     </div>
                 </div>

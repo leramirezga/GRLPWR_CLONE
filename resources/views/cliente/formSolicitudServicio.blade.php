@@ -38,7 +38,7 @@
 
         <div class="floating-card bg-semi-transparent mb-5">
             <div class="wizard-container">
-                <div class="wizard-card" data-color="green" id="wizardProfile">
+                <div class="wizard-card" data-color="purple" id="wizardProfile">
                     @section('form')
                         <!--parametros obtenidos del marker en maps-->
                         <input type="hidden" id="ciudad" name="ciudad"
@@ -343,9 +343,9 @@
                         </div>
                         <div class="wizard-footer">
                             <div class="float-right">
-                                <input type='button' class='btn btn-next btn-fill btn-success btn-wd' name='next'
+                                <input type='button' class='btn btn-next btn-fill themed-btn btn-wd' name='next'
                                        value='Siguiente' onclick="validar()"/>
-                                <input type='submit' class='btn btn-finish btn-fill btn-success btn-wd' name='finish'
+                                <input type='submit' class='btn btn-finish btn-fill themed-btn btn-wd' name='finish'
                                        value='Finalizar'/>
                             </div>
 

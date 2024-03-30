@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn bg-fifth ms-3">Agendar</button>
+                    <button type="submit" class="btn themed-btn ms-3">Agendar</button>
                 </div>
             </form>
         </div>

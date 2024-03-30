@@ -44,7 +44,7 @@
                 @endif
                 <!--      Wizard container        -->
                 <div class="wizard-container">
-                    <div class="wizard-card" data-color="green" id="wizardProfile">
+                    <div class="wizard-card" data-color="purple" id="wizardProfile">
                         <!--enctype="multipart/form-data" en el form para que cargue la imagen cuando cambien la foto de perfil-->
                         <form id="actualizarPerfilForm" method="post" action="{{route('actualizarPerfil', ['user'=> Auth::user()->slug])}}" enctype="multipart/form-data">
                             @method('PUT')
@@ -261,8 +261,8 @@
                             </div>
                             <div class="wizard-footer">
                                 <div class="float-right">
-                                    <input type='button' class='btn btn-next btn-fill btn-success btn-wd' name='next' value='Siguiente' />
-                                    <input type='submit' class='btn btn-finish btn-fill btn-success btn-wd' name='finish' value='Finalizar'/>
+                                    <input type='button' class='btn btn-next btn-fill themed-btn btn-wd' name='next' value='Siguiente' />
+                                    <input type='submit' class='btn btn-finish btn-fill themed-btn btn-wd' name='finish' value='Finalizar'/>
                                 </div>
 
                                 <div class="float-left">

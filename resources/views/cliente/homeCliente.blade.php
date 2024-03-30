@@ -32,7 +32,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-danger">Eliminar</button>
-                        <button type="button" class="btn btn-success" data-dismiss="modal"
+                        <button type="button" class="btn themed-btn" data-dismiss="modal"
                                 aria-label="Close">Cancelar
                         </button>
                     </div>
@@ -55,19 +55,15 @@
     @endif
 @endsection
 
-@section('card2')
+@push('cards')
     @if(!$visitante)
         @include('entrenamientosAgendados')
         @if(isset($reviewFor))
             @include('modalDarReviewEntrenamiento')
         @endif
+        @include('highlightSection')
         @include('cliente/clientPlan')
-    @endif
-@endsection
-
-@push('cards')
-    @if(!$visitante)
-        <div class="{{\Illuminate\Support\Facades\Blade::check('feature', 'dark_theme', false) ? "floating-card bg-semi-transparent" : ""}} p-3 mb-3">
+        <div class="p-3 mb-3">
             <div class="mb-3 d-flex justify-content-between">
                 <h3>Próximas sesiones:</h3>
             </div>

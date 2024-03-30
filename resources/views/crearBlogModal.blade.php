@@ -45,7 +45,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success">Escribir Blog</button>
+                    <button type="submit" class="btn themed-btn">Escribir Blog</button>
                 </div>
             </form>
         </div>

@@ -1,39 +1,26 @@
+@include('components.daySelector')
+<br>
 @include('components.classTypeSelector', ['showAll' => true])
 
-<div id="functional" class="d-none">
-    <div class="hourSelector">
-        <div class="input-group">
-            <span class="iconos">
-                <i class="material-icons">calendar_today</i>
-            </span>
-            <div class="form-group label-floating">
-                <label class="control-label">Día <small>(requerido)</small></label>
-                <select class="form-control pl-1" id="hourSelector" name="event">
-                    <option value="" disabled selected>Selecciona...</option>
-                    <option value="Monday">Lunes</option>
-                    <option value="Tuesday">Martes</option>
-                    <option value="Wednesday">Miercoles</option>
-                    <option value="Thursday">Jueves</option>
-                    <option value="Friday">Viernes</option>
-                </select>
-            </div>
-        </div>
-    </div>
-</div>
-<div id="non-functional">
+<div>
     @foreach($events as $event)
-        <div class-type="{{ $event->class_type_id }}" day="{{$event->day}}" class="next-session solicitud-container text-center text-md-left d-md-flex {{\Illuminate\Support\Facades\Blade::check('feature', 'dark_theme', false) ? "floating-card bg-semi-transparent" : "box-shadow"}} mb-3">
-            <div>
-                <h3 class="d-block my-2">{{$event->nombre}} </h3>
-                <p class="d-block my-1"><strong>Día:</strong> {{Carbon\Carbon::parse($event->fecha_inicio)->translatedFormat('l d F', 'es')}}</p>
-                <p class="d-block my-1"><strong>Hora:</strong> {{Carbon\Carbon::parse($event->start_hour)->translatedFormat('H:i')}} - {{Carbon\Carbon::parse($event->end_hour)->translatedFormat('H:i')}}</p>
-                <p class="d-block my-1"><strong>Lugar: </strong>{{$event->lugar}}</p>
-                @if((strcasecmp (\Illuminate\Support\Facades\Auth::user()->rol, \App\Utils\Constantes::ROL_ADMIN ) == 0))
-                    <p class="d-block my-1"><strong>Asistentes: </strong>{{$event->attendees->count()}}</p>
-                @endif
-            </div>
-            <div class="ml-auto my-3">
-                <a type="button" class="btn btn-success" href="{{route('eventos.show',['event' => $event, 'date' => Carbon\Carbon::parse($event->fecha_inicio)->format('d-m-Y'), 'hour' => $event->start_hour, 'isEdited' => $event->getTable()=='edited_events' ? 1 : 0])}}">Ver mas</a>
+        <div class-type="{{ $event->class_type_id }}" day="{{$event->fecha_inicio}}" class="next-session solicitud-container text-center text-md-left themed-block mb-3 border-type-{{$event->class_type_id }}">
+            <div class="d-md-flex">
+                <div>
+                    <h3 class="d-block my-2">{{$event->nombre}} </h3>
+                    <p class="d-block my-1"><strong>Día:</strong> {{Carbon\Carbon::parse($event->fecha_inicio)->translatedFormat('l d F', 'es')}}</p>
+                    <p class="d-block my-1"><strong>Hora:</strong> {{Carbon\Carbon::parse($event->start_hour)->translatedFormat('H:i')}} - {{Carbon\Carbon::parse($event->end_hour)->translatedFormat('H:i')}}</p>
+                    <p class="d-block my-1"><strong>Lugar: </strong>{{$event->lugar}}</p>
+                    <div class="d-block my-1">
+                        <i class="material-icons align-middle">diversity_3</i>
+                        <p class="d-inline-block">
+                            {{$event->attendees->count()}} / {{$event->cupos}}
+                        </p>
+                    </div>
+                </div>
+                <div class="ml-auto my-3">
+                    <a type="button" class="btn themed-btn" href="{{route('eventos.show',['event' => $event, 'date' => Carbon\Carbon::parse($event->fecha_inicio)->format('d-m-Y'), 'hour' => $event->start_hour, 'isEdited' => $event->getTable()=='edited_events' ? 1 : 0])}}">Ver mas</a>
+                </div>
             </div>
         </div>
     @endforeach
@@ -41,27 +28,39 @@
 
 @push('scripts')
     <script>
-        $(document).ready(function () {
-            var filterType = "all"
-            $('#classTypeSelector').on('change', function () {
-                filterType = $(this).val();
-                $(".next-session").removeClass("d-md-flex").addClass("d-none");
-                if(filterType == 2)
-                {
-                    $("#functional").removeClass("d-none").addClass("d-md-flex");
+        var selectedDate = null;
+        var filterType = "all"
+        function onSelectDate(selected) {
+            selected = $(selected);
+            if(!selected.hasClass('selected')) {
+                $('.daySelector').removeClass('selected');
+                $(".next-session").fadeOut();
+                selectedDate = selected.data('date');
+                if (filterType === 'all') {
+                    $('.next-session[day="' + selectedDate + '"]').fadeIn("3000");
                 }else{
-                    $("#functional").removeClass("d-md-flex").addClass("d-none");
-                    if (filterType === 'all') {
-                        $(".next-session").removeClass("d-none").addClass("d-md-flex");
-                    } else {
-                        $('.next-session[class-type="' + filterType + '"]').removeClass("d-none").addClass("d-md-flex");
+                    $('.next-session[class-type="' + filterType + '"][day="' + selectedDate + '"]').fadeIn("3000");
+                }
+                selected.addClass('selected')
+            }
+        }
+        $(document).ready(function () {
+            $('#classTypeSelector').on('change', function () {
+                $(".next-session").fadeOut();
+                filterType = $(this).val();
+                if (filterType === 'all') {
+                    if(selectedDate){
+                        $('.next-session[day="' + selectedDate + '"]').fadeIn("3000");
+                    }else{
+                        $('.next-session').fadeIn("3000");
+                    }
+                }else{
+                    if(selectedDate){
+                        $('.next-session[class-type="' + filterType + '"][day="' + selectedDate + '"]').fadeIn("3000");
+                    }else{
+                        $('.next-session[class-type="' + filterType + '"]').fadeIn("3000");
                     }
                 }
-            });
-            $('#hourSelector').on('change', function () {
-                var filterHour = $(this).val();
-                $(".next-session").removeClass("d-md-flex").addClass("d-none");
-                $('.next-session[class-type="' + filterType + '"][day="' + filterHour + '"]').removeClass("d-none").addClass("d-md-flex");
             });
         });
     </script>

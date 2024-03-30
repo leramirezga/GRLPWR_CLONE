@@ -81,7 +81,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-success">Enviar</button>
+                            <button type="submit" class="btn themed-btn">Enviar</button>
                         </div>
                     </form>
                 </div>
@@ -138,7 +138,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-success">Actualizar</button>
+                            <button type="submit" class="btn themed-btn">Actualizar</button>
                         </div>
                     </form>
                 </div>
@@ -167,7 +167,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-danger">Eliminar</button>
-                            <button type="button" class="btn btn-success" data-dismiss="modal" aria-label="Close">
+                            <button type="button" class="btn themed-btn" data-dismiss="modal" aria-label="Close">
                                 Cancelar
                             </button>
                         </div>

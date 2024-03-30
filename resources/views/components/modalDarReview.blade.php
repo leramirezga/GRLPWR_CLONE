@@ -51,7 +51,7 @@
                               rows="3" type="text" name="review"></textarea>
                 </div>
                 <div class="modal-footer" style="border-top: 0; padding-top: 0">
-                    <button type="submit" class="btn btn-success">Finalizar</button>
+                    <button type="submit" class="btn themed-btn">Finalizar</button>
                 </div>
             </form>
         </div>

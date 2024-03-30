@@ -116,6 +116,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/loadSessions',[EventController::class, 'ajaxNextSessions'])->name('loadSessions');
 
     Route::post('/scheduleCourtesy',[SesionClienteController::class, 'scheduleCourtesy'])->name('scheduleCourtesy');
+    Route::post('/scheduleGuest',[SesionClienteController::class, 'scheduleGuest'])->name('scheduleGuest');
 
     Route::get('/TyC', function () {
         return view('termsAndConditionsPage');

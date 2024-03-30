@@ -1,10 +1,10 @@
-<div class="{{\Illuminate\Support\Facades\Blade::check('feature', 'dark_theme', false) ? "floating-card bg-semi-transparent" : ""}} p-3 mb-3">
+<div class="py-3 mb-3">
     <div>
         <h3>Mis planes:</h3>
     </div>
     @if($clientPlans and $clientPlans->isNotEmpty())
         @foreach($clientPlans as $clientPlan)
-            <div class="solicitud-container  text-center text-md-left d-md-flex {{\Illuminate\Support\Facades\Blade::check('feature', 'dark_theme', false) ? "floating-card bg-semi-transparent" : "box-shadow"}} mb-3 mt-5">
+            <div class="solicitud-container  text-center text-md-left d-md-flex themed-block col-12 col-md-10 mx-auto mb-3 mt-5">
                 <div>
                     <h3 class="d-block my-2">{{$clientPlan->plan->name}}</h3>
                     @if($clientPlan->remaining_shared_classes)
@@ -33,10 +33,10 @@
             </div>
         @endforeach
     @else
-        <div class="text-center p-3 {{\Illuminate\Support\Facades\Blade::check('feature', 'dark_theme', false) ? "" : "box-shadow mt-4"}}">
+        <div class="text-center p-3 col-12 col-md-10 themed-block mx-auto mt-3">
             <p>Aún no tienes planes</p>
             <a href="{{route('plans')}}" class="">
-                <button type="button" class="btn btn-success mt-2">Ver planes</button>
+                <button type="button" class="btn themed-btn mt-2">Ver planes</button>
             </a>
         </div>
     @endisset

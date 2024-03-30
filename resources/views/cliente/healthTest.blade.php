@@ -81,7 +81,7 @@
             <x-range name="work" description="Trabajo: ¿Qué grado de satisfacción profesional tienes? " min="1" max="10" showReason="1" reason="¿Por qué?" required></x-range>
             <x-range name="money" description="Dinero: ¿Estás contenta con el dinero que manejas?" min="1" max="10" showReason="1" reason="¿Por qué?" required></x-range>
 
-            <button class="btn btn-success d-flex my-3 mx-auto" type="submit">Enviar Valoración</button>
+            <button class="btn themed-btn d-flex my-3 mx-auto" type="submit">Enviar Valoración</button>
         </div>
     </form>
 @endsection

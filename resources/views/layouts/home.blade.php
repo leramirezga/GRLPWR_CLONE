@@ -50,7 +50,7 @@
 
     <div class="container-fluid">
         <div class="d-md-flex">
-            <div class="{{\Illuminate\Support\Facades\Blade::check('feature', 'dark_theme', false) ? "floating-card bg-semi-transparent" : "box-shadow"}}  perfil-container m-3">
+            <div class="perfil-container m-3">
                 <img src="{{asset('images/avatars/'.$user->foto)}}" class="user-profile-icon">
                 @if(!$visitante)
 
@@ -60,12 +60,12 @@
                                  aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%
                             </div>
                         </div>
-                        <button class="btn btn-success d-block ml-auto mr-auto" data-toggle="modal"
+                        <button class="btn themed-btn d-block ml-auto mr-auto" data-toggle="modal"
                                 data-target="#completarPerfilModal">Completar perfil
                         </button>
                     @else
                         <a href="{{route('profile', ['user'=> Auth::user()->slug])}}" class="d-block ml-auto mr-auto">
-                            <button type="button" class="btn btn-success mt-2">Ver mi perfil</button>
+                            <button type="button" class="btn themed-btn mt-2">Ver mi perfil</button>
                         </a>
                     @endif
 
@@ -83,10 +83,7 @@
                 <p>{{$user->edad}}</p>
             </div>
             <div id="right-div" class="ml-md-auto m-3">
-                @yield('card1')
-                @yield('card2')
                 @stack('cards')
-
 
                 <div>
                     <h1 class="text-center">
@@ -98,10 +95,10 @@
                     </div>
                 </div>
 
-                <div class="{{\Illuminate\Support\Facades\Blade::check('feature', 'dark_theme', false) ? "floating-card bg-semi-transparent" : "box-shadow"}} p-3 mb-3">
+                <div class="themed-block p-3 mb-3">
                     <h3 class="mb-5">Reviews ({{$user->reviews->count()}}):</h3>
                     @foreach($user->reviews as $review)
-                        <div class="floating-card bg-dark p-3 mb-3">
+                        <div class="floating-card theme-inverted p-3 mb-3">
                             <div class="float-left">
                                 <img class="rounded-circle" height="48px" width="48px" alt="user"
                                      src="{{asset('images/avatars/'.$review->reviewer->foto)}}">

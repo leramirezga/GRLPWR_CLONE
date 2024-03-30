@@ -20,13 +20,13 @@
             <div class="margenes-normales floating-card bg-semi-transparent text-center">
                 <p class="d-inline-block">Aún no hay ningún blog.</p>
                 @if($user == \Illuminate\Support\Facades\Auth::user())
-                    <button type="button" class="btn btn-success m-auto d-inline-block d-md-block" data-toggle="modal"
+                    <button type="button" class="btn themed-btn m-auto d-inline-block d-md-block" data-toggle="modal"
                             data-target="#crearInfoBlogModal">Crear Blog
                     </button>
                 @endif
             </div>
         @elseif($user == \Illuminate\Support\Facades\Auth::user())
-            <button type="button" class="btn btn-success m-auto d-inline-block d-md-block" data-toggle="modal"
+            <button type="button" class="btn themed-btn m-auto d-inline-block d-md-block" data-toggle="modal"
                     data-target="#crearInfoBlogModal">Crear Blog
             </button>
         @endif

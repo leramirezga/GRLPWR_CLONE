@@ -164,11 +164,11 @@
     <div class="floating-card bg-semi-transparent p-3 mb-3">
         <h3 class="d-inline-block mb-5">Blogs:</h3>
         @if(!$user->blogs->isEmpty())
-            <a class="btn btn-success float-right" href="{{route('blogsUsuario', ['user'=> $user])}}">Ver Todos</a>
+            <a class="btn themed-btn float-right" href="{{route('blogsUsuario', ['user'=> $user])}}">Ver Todos</a>
 
         @else
             @if(!$visitante)
-                <button class="btn btn-success float-right" data-toggle="modal" data-target="#crearInfoBlogModal">
+                <button class="btn themed-btn float-right" data-toggle="modal" data-target="#crearInfoBlogModal">
                     Escribir Blog
                 </button>
                 <p class="d-inline-block mt-3 mb-3">Aún no has escrito un blog. Publica uno para que más atletas te
@@ -188,7 +188,7 @@
             <div class="mb-5">
                 <h3 class="d-inline-block">Ofrecimientos:</h3>
                 @if(!$solicitudes->isEmpty())
-                    <a class="btn btn-success float-right" href="{{route('buscarProyecto')}}">
+                    <a class="btn themed-btn float-right" href="{{route('buscarProyecto')}}">
                         Buscar clientes
                     </a>
                 @endif

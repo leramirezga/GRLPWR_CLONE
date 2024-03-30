@@ -80,7 +80,7 @@
                             </div>
                         @endif
                         <div class="clearfix">
-                            <button class="btn btn-success float-right">Comentar</button>
+                            <button class="btn themed-btn float-right">Comentar</button>
                         </div>
                     </form>
                 </div>
@@ -107,7 +107,7 @@
                 </div>
             @endif
             <div class="clearfix mb-5">
-                <button class="btn btn-success float-right">Comentar</button>
+                <button class="btn themed-btn float-right">Comentar</button>
             </div>
         </form>
 

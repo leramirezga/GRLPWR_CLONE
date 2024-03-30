@@ -112,6 +112,81 @@ class SesionClienteController extends Controller
         }
     }
 
+    public function scheduleGuest(Request $request){
+
+        $user = User::where('telefono', $request->cellphone)->first();
+
+        if($user) {
+            $client = Cliente::where('usuario_id', $user->id)->first();
+        }
+        if(!$user || !$client){
+            Session::put('msg_level', 'danger');
+            Session::put('msg', __('general.not_registered_guest'));
+            Session::save();
+            return redirect()->back();
+        }
+        $eventArray = json_decode($request->event, true);
+        $eventId = $eventArray['id'];
+        $hostId = Auth::id();
+        /* Uncomment and finish this code if every plan has a number of guest per week
+        $clientPlanRepository = new ClientPlanRepository();
+        $clientPlan = $clientPlanRepository->findValidClientPlan($eventId, $hostId);
+        if($clientPlan && $clientPlan->un $clientPlan->guest_per_week < SesionCliente::where('host', $hostId)->count()){
+        */
+        $startDate = $eventArray['fecha_inicio'];
+        $startHour =  $eventArray['start_hour'];
+        $endDate = $eventArray['fecha_fin'];
+        $endHour = $eventArray['end_hour'];
+        $startOfWeek = Carbon::parse($startDate)->startOfWeek();
+        $endOfWeek = Carbon::parse($endDate)->endOfWeek();
+        $guestNumber = SesionCliente::where('host', $hostId)
+            ->where('fecha_inicio', '>=', $startOfWeek)
+            ->where('fecha_fin', '<=', $endOfWeek)
+            ->count();
+        if(1 <= $guestNumber){
+            Session::put('msg_level', 'danger');
+            Session::put('msg', __('general.not_more_guest'));
+            Session::save();
+            return redirect()->back();
+        }
+        try {
+            $this->schedule($eventId, $startDate, $startHour, $endDate, $endHour, $client, $request->get('rentEquipment'), false, true, true);
+            return redirect()->back();
+        }catch (Exception $exception){
+            Session::put('msg_level', 'danger');
+            Session::put('msg', $exception->getMessage());
+            Session::save();
+            return redirect()->back();
+        }
+    }
+
+    /**
+     * @param int $eventId
+     * @param $startDate
+     * @param $endDate
+     * @param $startHour
+     * @param $endHour
+     * @return EditedEvent | Evento
+     * @throws NoVacancyException
+     */
+    private function validateVacancy($eventId, $startDate, $endDate, $startHour, $endHour): Evento|EditedEvent
+    {
+        $editedEvent = EditedEvent::where('evento_id', $eventId)
+            ->where('fecha_inicio', '=', $startDate)
+            ->where('start_hour', '=', $startHour)
+            ->first();
+        $event = $editedEvent ?: Evento::find($eventId);
+        $startDateTime = Carbon::parse($startDate)->format('Y-m-d') . ' ' . $startHour;
+        $endDateTime = Carbon::parse($endDate)->format('Y-m-d') . ' ' . $endHour;
+        $scheduled_clients = SesionCliente::where('evento_id', $event->id)
+            ->where('fecha_inicio', '=', $startDateTime)
+            ->where('fecha_fin', '=', $endDateTime)->count();
+        if($event->cupos <= $scheduled_clients){
+            throw new NoVacancyException();
+        }
+        return $event;
+    }
+
     /**
      * @throws ShoeSizeNotSupportedException
      * @throws NoVacancyException
@@ -119,28 +194,16 @@ class SesionClienteController extends Controller
      * @throws WeightNotSupportedException
      *
      */
-    private function schedule($id, $startDate, $startHour, $endDate, $endHour, $client, $isRenting, $isCourtesy, $validateVacancy): JsonResponse|\Illuminate\Http\RedirectResponse
+    private function schedule($id, $startDate, $startHour, $endDate, $endHour, $client, $isRenting, $isCourtesy, $validateVacancy, bool $isGuest = false): JsonResponse|\Illuminate\Http\RedirectResponse
     {
-        $editedEvent = EditedEvent::where('evento_id', $id)
-            ->where('fecha_inicio', '=', $startDate)
-            ->where('start_hour', '=', $startHour)
-            ->first();
-        $event = $editedEvent ?: Evento::find($id);
+        $event = $this->validateVacancy($id, $startDate, $endDate, $startHour, $endHour);
         $startDateTime = Carbon::parse($startDate)->format('Y-m-d') . ' ' . $startHour;
         $endDateTime = Carbon::parse($endDate)->format('Y-m-d') . ' ' . $endHour;
-        $scheduled_clients = SesionCliente::where('evento_id', $event->id)
-            ->where('fecha_inicio', '=', $startDateTime)
-            ->where('fecha_fin', '=', $endDateTime)->count();
-        if(filter_var($validateVacancy, FILTER_VALIDATE_BOOLEAN) && $event->cupos <= $scheduled_clients){
-           throw new NoVacancyException();
-        }
-
         if(filter_var($isRenting, FILTER_VALIDATE_BOOLEAN)){
             $kangooId = $this->assignEquipment($event, $client->talla_zapato, $client->peso()->peso, $startDateTime, $endDateTime);
         }
         $isCourtesy = filter_var($isCourtesy, FILTER_VALIDATE_BOOLEAN);
-        return $this->registerSession($client, $event, $startDateTime, $endDateTime, $isCourtesy, $kangooId ?? null);
-
+        return $this->registerSession($client, $event, $startDateTime, $endDateTime, $isCourtesy, $kangooId ?? null, $isGuest);
     }
 
     /**
@@ -173,7 +236,7 @@ class SesionClienteController extends Controller
      * @param null $kangooId
      * @return JsonResponse | \Illuminate\Http\RedirectResponse
      */
-    public function registerSession($client, $event, $startDateTime, $endDateTime, $isCourtesy, $kangooId=null)
+    public function registerSession($client, $event, $startDateTime, $endDateTime, $isCourtesy, $kangooId=null, bool $isGuest=false)
     {
         DB::beginTransaction();
 
@@ -187,6 +250,9 @@ class SesionClienteController extends Controller
             $sesionCliente->fecha_inicio = $startDateTime;
             $sesionCliente->fecha_fin = $endDateTime;
             $sesionCliente->is_courtesy = $isCourtesy;
+            if($isGuest){
+                $sesionCliente->host = Auth::id();
+            }
 
             if($isCourtesy){
                 $sesionCliente->save();
@@ -332,5 +398,4 @@ class SesionClienteController extends Controller
             'success' => true
         ], 200);
     }
-
 }

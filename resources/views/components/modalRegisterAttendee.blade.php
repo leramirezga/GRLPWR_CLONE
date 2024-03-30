@@ -61,7 +61,7 @@
                     </div>
                 </div>
                 <div class="modal-footer" style="border-top: 0; padding-top: 0">
-                    <button type="submit" class="btn btn-success">Registrar</button>
+                    <button type="submit" class="btn themed-btn">Registrar</button>
                 </div>
             </form>
         </div>

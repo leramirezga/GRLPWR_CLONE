@@ -43,7 +43,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-success">Finalizar</button>
+                            <button type="submit" class="btn themed-btn">Finalizar</button>
                         </div>
                     </form>
                 </div>
