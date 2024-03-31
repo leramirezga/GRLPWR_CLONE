@@ -22,6 +22,7 @@
     }
     .exercise-image{
         max-width: 300px;
+        border-radius: 100%;
         aspect-ratio: 1;
     }
 }
@@ -50,6 +51,7 @@
     }
     .exercise-image{
         max-width: 300px;
+        border-radius: 100%;
         aspect-ratio: 1;
     }
 }
