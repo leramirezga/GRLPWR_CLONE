@@ -131,13 +131,12 @@
                     Blogs
                 </a>
 
-                @if(Auth::user()->rol == \App\Utils\Constantes::ROL_ADMIN)
-                    <a class="d-none d-md-inline-block" href="{{route('users.index')}}">
-                        Users
-                    </a>
-                @endif
-
                 @auth
+                    @if(Auth::user()->rol == \App\Utils\Constantes::ROL_ADMIN)
+                        <a class="d-none d-md-inline-block" href="{{route('users.index')}}">
+                            Users
+                        </a>
+                    @endif
                     {{--<notification class="cursor-pointer" v-bind:unread_notifications="unread_notifications" v-bind:notifications="notifications"></notification>--}}
 
                     <div class="dropdown d-inline-block">
