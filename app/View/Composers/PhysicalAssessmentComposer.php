@@ -58,7 +58,9 @@ class PhysicalAssessmentComposer
                 ],
                 [
                     'label' => 'Basal Metabolism',
-                    'data' => $physicalAssessments->pluck('basal_metabolism'),
+                    'data' => $physicalAssessments->pluck('basal_metabolism')->map(function ($value) {
+                        return $value / 1000;
+                    }),
                     'backgroundColor' => 'rgba(255, 159, 64, 1)',
                     'borderColor' => 'rgba(255, 159, 64, 1)',
                 ],
