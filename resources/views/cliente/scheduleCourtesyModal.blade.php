@@ -266,12 +266,16 @@
                 },
 
                 success: function (data) {
+                    moment.locale('es');
                     var select = $('#daySelector');
                     select.empty(); // Limpia las opciones actuales
 
                     select.append($('<option style="" value="" disabled selected></option>'));
                     // Agrega las nuevas opciones desde el resultado de la llamada AJAX
                     $.each(data.events, function(key, value) {
+                        let startDate = moment(value.fecha_inicio.slice(0, 10), "YYYY-MM-DD");
+                        let formatedStartDate = startDate.format("dddd D MMMM");
+
                         select.append($('<option></option>')
                             //JSON format
                             .attr('value',
@@ -281,7 +285,7 @@
                                 '"endDate": "' + value.fecha_fin.slice(0,10) + '",' +
                                 '"endHour": "' + value.end_hour +
                                 '"}')
-                            .text(value.fecha_inicio.slice(0,10) + ' ' + value.start_hour));
+                            .text(formatedStartDate + ' ' + value.start_hour));
                     });
                 },
                 error: function(data) {
