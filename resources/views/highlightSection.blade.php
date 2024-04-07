@@ -4,7 +4,9 @@
         @foreach($highlightSections as $highlightSection)
             @if($highlightSection->event)<a href="{{route('eventos.show',['event' => $highlightSection->event, 'date' => Carbon\Carbon::parse($highlightSection->event->fecha_inicio)->format('d-m-Y'), 'hour' => $highlightSection->event->start_hour, 'isEdited' => 0])}}">@endif
             <div class="carousel-item w-100 h-100 @if($loop->first)active @endif">
+                @if($highlightSection->event)<a href="{{route('eventos.show',['event' => $highlightSection->event, 'date' => Carbon\Carbon::parse($highlightSection->event->fecha_inicio)->format('d-m-Y'), 'hour' => $highlightSection->event->start_hour, 'isEdited' => 0])}}">@endif
                 <img src="{{asset('images/highlightSections/'.$highlightSection->image)}}" class="d-block w-100 h-100" alt="">
+                @if($highlightSection->event)</a>@endif
             </div>
             @if($highlightSection->event)</a>@endif
         @endforeach
