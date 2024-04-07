@@ -274,17 +274,19 @@ class SesionClienteController extends Controller
 
             if ($clientPlan) {
                 $sesionCliente->save();
-                if($clientPlan->remaining_shared_classes != null){
-                    $clientPlan->remaining_shared_classes--;
-                    $clientPlan->save();
-                }
-                /*FIT-57: Uncomment this if you want specific classes*/
-                else{
-                    $remainingClass = RemainingClass::find($clientPlan->remaining_classes_id);
-                    if($remainingClass) {
-                        if($remainingClass->unlimited == 0){
-                            $remainingClass->remaining_classes--;
-                            $remainingClass->save();
+                if($event->discounts_session){
+                    if($clientPlan->remaining_shared_classes != null){
+                        $clientPlan->remaining_shared_classes--;
+                        $clientPlan->save();
+                    }
+                    /*FIT-57: Uncomment this if you want specific classes*/
+                    else{
+                        $remainingClass = RemainingClass::find($clientPlan->remaining_classes_id);
+                        if($remainingClass) {
+                            if($remainingClass->unlimited == 0){
+                                $remainingClass->remaining_classes--;
+                                $remainingClass->save();
+                            }
                         }
                     }
                 }
@@ -329,7 +331,7 @@ class SesionClienteController extends Controller
                     Session::save();
                     return back();
                 }
-                if($session->fecha_inicio->subHours(HOURS_TO_CANCEL_TRAINING) < now()){
+                if($session->fecha_inicio->subHours(HOURS_TO_CANCEL_TRAINING) < now() && $session->event->discounts_session){
                     $session->delete();
                     Session::put('msg_level', 'warning');
                     Session::put('msg', __('general.message_enable_late_cancellation'));
@@ -342,7 +344,9 @@ class SesionClienteController extends Controller
                 Session::save();
                 $session->event->fecha_inicio = $session->fecha_inicio;
                 $session->event->fecha_fin = $session->fecha_fin;
-                $this->returnClassAfterCancellation($session->event);
+                if($session->event->discounts_session){
+                    $this->returnClassAfterCancellation($session->event);
+                }
                 return back();
             } catch (Exception $exception) {
                 Log::error("ERROR SesionClienteController - cancelTraining: " . $exception->getMessage());
@@ -372,12 +376,12 @@ class SesionClienteController extends Controller
         $clientPlanRepository = new ClientPlanRepository();
         $clientPlan = $clientPlanRepository->findValidClientPlan(event: $event, withRemainingClasses: false);
         if ($clientPlan) {
-            if($clientPlan->remaining_shared_classes != null){
+            if($clientPlan->remaining_shared_classes != null) {
                 $clientPlan->remaining_shared_classes++;
                 $clientPlan->save();
             }
             /*FIT-57: Uncomment this if you want specific classes*/
-            else{
+            else {
                 $remainingClass = RemainingClass::find($clientPlan->remaining_classes_id);
                 if($remainingClass && $remainingClass->unlimited == 0) {
                     $remainingClass->remaining_classes++;
