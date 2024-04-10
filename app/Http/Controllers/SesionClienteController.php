@@ -161,30 +161,19 @@ class SesionClienteController extends Controller
     }
 
     /**
-     * @param int $eventId
-     * @param $startDate
-     * @param $endDate
-     * @param $startHour
-     * @param $endHour
-     * @return EditedEvent | Evento
+     * @param $event
+     * @param $startDateTime
+     * @param $endDateTime
      * @throws NoVacancyException
      */
-    private function validateVacancy($eventId, $startDate, $endDate, $startHour, $endHour): Evento|EditedEvent
+    private function validateVacancy($event, $startDateTime, $endDateTime)
     {
-        $editedEvent = EditedEvent::where('evento_id', $eventId)
-            ->where('fecha_inicio', '=', $startDate)
-            ->where('start_hour', '=', $startHour)
-            ->first();
-        $event = $editedEvent ?: Evento::find($eventId);
-        $startDateTime = Carbon::parse($startDate)->format('Y-m-d') . ' ' . $startHour;
-        $endDateTime = Carbon::parse($endDate)->format('Y-m-d') . ' ' . $endHour;
         $scheduled_clients = SesionCliente::where('evento_id', $event->id)
             ->where('fecha_inicio', '=', $startDateTime)
             ->where('fecha_fin', '=', $endDateTime)->count();
         if($event->cupos <= $scheduled_clients){
             throw new NoVacancyException();
         }
-        return $event;
     }
 
     /**
@@ -196,9 +185,16 @@ class SesionClienteController extends Controller
      */
     private function schedule($id, $startDate, $startHour, $endDate, $endHour, $client, $isRenting, $isCourtesy, $validateVacancy, bool $isGuest = false): JsonResponse|\Illuminate\Http\RedirectResponse
     {
-        $event = $this->validateVacancy($id, $startDate, $endDate, $startHour, $endHour);
+        $editedEvent = EditedEvent::where('evento_id', $id)
+            ->where('fecha_inicio', '=', $startDate)
+            ->where('start_hour', '=', $startHour)
+            ->first();
+        $event = $editedEvent ?: Evento::find($id);
         $startDateTime = Carbon::parse($startDate)->format('Y-m-d') . ' ' . $startHour;
         $endDateTime = Carbon::parse($endDate)->format('Y-m-d') . ' ' . $endHour;
+        if($validateVacancy){
+            $this->validateVacancy($event, $startDateTime, $endDateTime);
+        }
         if(filter_var($isRenting, FILTER_VALIDATE_BOOLEAN)){
             $kangooId = $this->assignEquipment($event, $client->talla_zapato, $client->peso()->peso, $startDateTime, $endDateTime);
         }
