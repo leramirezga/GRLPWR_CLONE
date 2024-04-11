@@ -40,6 +40,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         define('HOURS_TO_CANCEL_TRAINING', 4);
+        define('MONTHS_FOR_NEW_HEALTH_ASSESSMENT', 2);
         $this->app->bind(SendMessageInterface::class, SendWhatsAppMessage::class);
     }
 }
