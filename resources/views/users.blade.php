@@ -99,8 +99,8 @@
                                 '<td><a class="client-icon theme-color" href="{{env('APP_URL')}}/visitar/' + result.slug + '"><div style="max-height:3rem; overflow:hidden">' + result.nombre + ' ' +  result.apellido_1 + ' ' +  result.apellido_2 + '</div></a></td>' +
                                 '<td>' + result.email + '</td>' +
                                 '<td>' + result.telefono + '</td>' +
-                                '<td><a class="client-icon theme-color" href="/user/' + result.slug + '/wellBeingTest">Valoración</a></td>' +
                                 '<td>' + result.expiration_date + '</td>'+
+                                '<td><a class="client-icon theme-color" href="/user/' + result.slug + '/wellBeingTest">Valoración</a></td>' +
                                 '</tr>'
                             );
                         });
