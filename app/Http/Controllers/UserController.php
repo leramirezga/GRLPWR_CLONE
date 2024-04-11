@@ -15,7 +15,12 @@ class UserController extends controller
     public function index()
     {
         return view('users', [
-            'users' => DB::table('usuarios')->orderBy('id', 'desc')->paginate(15)
+            'users' => DB::table('usuarios')
+                ->join('client_plans', 'usuarios.id', '=', 'client_plans.client_id')
+                ->orderBy('client_plans.expiration_date', 'desc')
+                ->orderBy('usuarios.id', 'desc')
+                ->select('usuarios.*', 'client_plans.expiration_date')
+                ->paginate(15)
         ]);
     }
 
@@ -26,7 +31,7 @@ class UserController extends controller
         $email = $request->input('email');
         $phone = $request->input('phone');
         $needAssessment = $request->input('needAssessment');
-        $activeClients = $request->input('activeClients');
+        $expirationType = $request->input('expirationType');
 
         $query = User::query();
 
@@ -49,17 +54,27 @@ class UserController extends controller
                         ->orWhere('physical_assessments.created_at', '<', Carbon::today()->subMonths(MONTHS_FOR_NEW_HEALTH_ASSESSMENT)->format('Y-m-d'));
                 });
         }
-        if ($activeClients === "true") {
-            $currentDate = Carbon::today()->format('Y-m-d');
-            $query->join('client_plans', 'usuarios.id', '=', 'client_plans.client_id')
-                ->where(function ($query) use ($currentDate) {
+
+        $query->join('client_plans', 'usuarios.id', '=', 'client_plans.client_id');
+        switch ($expirationType){
+            case "all":
+                break;
+            case "active":
+                $currentDate = Carbon::today()->format('Y-m-d');
+                $query->where(function ($query) use ($currentDate) {
                     $query->where('client_plans.created_at', '<=', $currentDate)
                         ->where('client_plans.expiration_date', '>=', $currentDate);
                 });
+                break;
+            case "inactive":
+                $currentDate = Carbon::today()->format('Y-m-d');
+                $query->where('client_plans.expiration_date', '<=', $currentDate);
+                break;
         }
-
-        $users = $query->orderBy('usuarios.id', 'desc')
-        ->select('usuarios.*')->distinct()->get();
+        $users = $query->orderBy('client_plans.expiration_date', 'desc')
+            ->select('usuarios.*', 'client_plans.expiration_date')
+            ->distinct()
+            ->get();
         return response()->json($users);
     }
 }

@@ -6,11 +6,19 @@
     <div class="container" style="overflow-x: scroll;">
         <div class="d-flex">
             <h2>Listado de Usuarios</h2>
-            <div class="form-check m-auto">
-                <input class="form-check-input" type="checkbox" name="activeClients" id="activeClients">
-                <label class="form-check-label terms-label" for="activeClients">
-                   Clientes Activos
-                </label>
+            <div class="ml-auto my-auto">
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="expirationType1" name="expirationType" value="all" checked=checked class="custom-control-input">
+                    <label class="custom-control-label" for="expirationType1">Todos</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="expirationType2" name="expirationType" value="active" class="custom-control-input">
+                    <label class="custom-control-label" for="expirationType2">Activos</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="expirationType3" name="expirationType" value="inactive" class="custom-control-input">
+                    <label class="custom-control-label" for="expirationType3">Inactivos</label>
+                </div>
             </div>
         </div>
         <table class="table">
@@ -29,6 +37,7 @@
                     <td><input type="text" id="name" name="name" placeholder="Nombre"></td>
                     <td><input type="text" id="email" name="email" placeholder="Correo"></td>
                     <td><input type="number" id="phone" name="phone" placeholder="Celular"></td>
+                    <td>F. Expiración</td>
                     <td>
                         <div class="form-check m-auto">
                             <input class="form-check-input" type="checkbox" name="needAssessment" id="needAssessment">
@@ -44,6 +53,7 @@
                     <td><a class="client-icon theme-color" href="{{route('visitarPerfil', ['user'=>  $user->slug])}}"><div style="max-height:3rem; overflow:hidden">{{ $user->nombre . ' ' .  $user->apellido_1 . ' ' .  $user->apellido_2}}</div></a></td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->telefono }}</td>
+                    <td>{{ $user->expiration_date }}</td>
                     <td><a class="client-icon theme-color" href="{{route('healthTest', ['user'=>  $user->slug])}}">Valoración</a></td>
                 </tr>
             @endforeach
@@ -62,7 +72,7 @@
                 var emailValue = $('#email').val();
                 var phoneValue = $('#phone').val();
                 var needAssessmentValue = $('#needAssessment').prop('checked');
-                var activeClientsValue = $('#activeClients').prop('checked');
+                var expirationTypeValue = $('input[name="expirationType"]:checked').val();
 
                 $.ajax({
                     headers: {
@@ -76,7 +86,7 @@
                         email: emailValue,
                         phone: phoneValue,
                         needAssessment : needAssessmentValue,
-                        activeClients : activeClientsValue,
+                        expirationType : expirationTypeValue,
                     },
                     dataType: 'json',
                     success: function(data) {
@@ -90,6 +100,7 @@
                                 '<td>' + result.email + '</td>' +
                                 '<td>' + result.telefono + '</td>' +
                                 '<td><a class="client-icon theme-color" href="/user/' + result.slug + '/wellBeingTest">Valoración</a></td>' +
+                                '<td>' + result.expiration_date + '</td>'+
                                 '</tr>'
                             );
                         });
@@ -105,8 +116,11 @@
                 filter();
             });
 
-            $('#needAssessment, #activeClients').on('change', function() {
+            $('#needAssessment').on('change', function() {
                 filter();
+            });
+            $('input[name="expirationType"]').change(function(){
+                filter()
             });
         });
     </script>
