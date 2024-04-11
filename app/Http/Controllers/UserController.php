@@ -39,7 +39,11 @@ class UserController extends controller
             $query->where('usuarios.id', $id);
         }
         if ($name) {
-            $query->where('usuarios.nombre', 'LIKE', "%$name%");
+            $query->where(function ($query) use ($name) {
+                $query->where('usuarios.nombre', 'LIKE', "%$name%")
+                ->orWhere('usuarios.apellido_1', 'LIKE', "%$name%")
+                ->orWhere('usuarios.apellido_2', 'LIKE', "%$name%");
+            });
         }
         if ($email) {
             $query->where('usuarios.email', 'LIKE', "%$email%");
