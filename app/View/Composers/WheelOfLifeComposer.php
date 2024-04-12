@@ -2,13 +2,8 @@
 
 namespace App\View\Composers;
 
-use App\Http\Controllers\EventController;
-use App\PhysicalAssessment;
-use App\Repositories\ClientPlanRepository;
 use App\WheelOfLife;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\View\View;
 
 class WheelOfLifeComposer

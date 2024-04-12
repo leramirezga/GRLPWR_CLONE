@@ -25,6 +25,7 @@ use App\Http\Controllers\WellBeingController;
 use App\Model\ClientPlan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\StatisticsController;
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/mis_solicitudes/crear', 'SolicitudServicioController@irCrear')->name('irCrearSolicitud');
@@ -86,6 +87,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/nextSessions/{branchId}',[EventController::class, 'nextSessions'])->name('nextSessions');
 });
+
 Route::group(['middleware' => 'admin'], function () {
     Route::get('/admin/loadPlan', [ClientPlanController::class, 'showLoadClientPlan']);
     Route::post('/admin/loadPlan', [ClientPlanController::class, 'saveClientPlan'])->name('saveClientPlan');
@@ -94,9 +96,11 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('/user/{user}/wellBeingTest', [WellBeingController::class, 'processWellBeingTest'])->name('wellBeingTest');
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/users/search', [UserController::class, 'search'])->name('users.search');
+    Route::get('/statistics', [StatisticsController::class, 'index'])->name('statistics');
     Route::post('{user}/comment/', [UserCommentController::class, 'comment'])->name('commentUser');
     Route::post('{comment}/reply/', [UserCommentController::class, 'reply'])->name('replyUserComment');
 });
+
 /*Open routes*/
     Auth::routes();
 

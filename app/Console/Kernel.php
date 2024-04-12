@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Jobs\CalculateActiveClients;
 use App\Jobs\CheckClientPlansExpiration;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -26,6 +27,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->call(new CheckClientPlansExpiration())->dailyAt('09:00');
+        $schedule->call(new CalculateActiveClients())->dailyAt('01:00');
         $schedule->command("validator:kangosReservados")->everyMinute();
         //$schedule->command("validator:transaccionesPendientes")->cron("*/5 * * * *");
     }
