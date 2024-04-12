@@ -58,26 +58,34 @@ class UserController extends controller
                         ->orWhere('physical_assessments.created_at', '<', Carbon::today()->subMonths(MONTHS_FOR_NEW_HEALTH_ASSESSMENT)->format('Y-m-d'));
                 });
         }
-
-        $query->join('client_plans', 'usuarios.id', '=', 'client_plans.client_id');
+        $currentDate = Carbon::today();
         switch ($expirationType){
             case "all":
+                $query->join('client_plans', 'usuarios.id', '=', 'client_plans.client_id');
                 break;
             case "active":
-                $currentDate = Carbon::today()->format('Y-m-d');
-                $query->where(function ($query) use ($currentDate) {
-                    $query->where('client_plans.created_at', '<=', $currentDate)
-                        ->where('client_plans.expiration_date', '>=', $currentDate);
+                $query->join('client_plans', 'usuarios.id', '=', 'client_plans.client_id')
+                    ->where(function ($query) use ($currentDate) {
+                    $query->where('client_plans.created_at', '<=', $currentDate->copy()->endOfDay())
+                        ->where('client_plans.expiration_date', '>=', $currentDate->copy()->startOfDay());
                 });
                 break;
             case "inactive":
-                $currentDate = Carbon::today()->format('Y-m-d');
-                $query->where('client_plans.expiration_date', '<=', $currentDate);
+                $query->join('client_plans', 'usuarios.id', '=', 'client_plans.client_id')
+                    ->where(function ($query) use ($currentDate) {
+                        $query->whereNull('client_plans.client_id')
+                            ->orWhere('client_plans.expiration_date', '<', $currentDate->copy()->startOfDay());
+                    })
+                    ->whereNotIn('usuarios.id', function ($query) use ($currentDate) {
+                        $query->select('cpa.client_id')
+                            ->from('client_plans as cpa')
+                            ->where('cpa.expiration_date', '>=', $currentDate->copy()->startOfDay());
+                    });
                 break;
         }
-        $users = $query->orderBy('client_plans.expiration_date', 'desc')
+        $users = $query->distinct('usuarios.id')
             ->select('usuarios.*', 'client_plans.expiration_date')
-            ->distinct()
+            ->orderBy('client_plans.expiration_date', 'desc')
             ->get();
         return response()->json($users);
     }
