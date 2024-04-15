@@ -2,8 +2,8 @@
 
 namespace App\Http\Services;
 
-use App\ClientPlan;
 use App\HistoricalActiveClient;
+use App\Model\ClientPlan;
 
 class ActiveClientsService
 {
