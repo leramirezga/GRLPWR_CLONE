@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Auth\SeguridadController;
 use App\Model\HorarioSolicitudServicio;
 use App\Model\Ofrecimientos;
 use App\Model\ProgramacionSolicitudServicio;
+use App\Model\Review;
 use App\Model\SolicitudServicio;
 use App\Model\Tags;
 use App\Model\TagsSolicitudServicio;
@@ -14,9 +16,7 @@ use App\Notifications\SolicitudEditada;
 use App\User;
 use App\Utils\Constantes;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Auth\SeguridadController;
 use Illuminate\Support\Facades\Notification;
-use App\Model\Review;
 use Validator;
 
 class SolicitudServicioController extends Controller

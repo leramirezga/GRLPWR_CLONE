@@ -5,14 +5,9 @@ namespace App\Http\Services;
 use App\Exceptions\NoAvailableEquipmentException;
 use App\Exceptions\ShoeSizeNotSupportedException;
 use App\Exceptions\WeightNotSupportedException;
-use App\Model\Cliente;
-use App\Model\Evento;
-use App\Model\SesionCliente;
-use App\Utils\KangooResistancesEnum;
 use App\Utils\KangooStatesEnum;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Session;
 
 class KangooService
 {

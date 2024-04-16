@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\FoodAssesment;
+use App\HealthTest;
 use App\Model\Peso;
 use App\PhysicalAssessment;
-use App\HealthTest;
 use App\TrainingPreference;
 use App\User;
 use App\WellBeingAssessment;

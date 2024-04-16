@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Auth;
+use App\Http\Controllers\Controller;
 use App\User;
+use Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Socialite;
-use App\Http\Controllers\Controller;
 
 class SocialAuthController extends Controller
 {

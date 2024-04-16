@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\PagosController;
 use Illuminate\Http\Request;
 
 /*

@@ -4,18 +4,21 @@ namespace App\Http\Services;
 
 use App\HistoricalActiveClient;
 use App\Model\ClientPlan;
+use Illuminate\Support\Facades\Log;
 
 class ActiveClientsService
 {
-    public function saveActiveClients($currentDate):void
+    public function saveActiveClients($date):void
     {
-        $count = ClientPlan::where('created_at', '<=', $currentDate)
-            ->where('expiration_date', '>=', $currentDate)
+        $count = ClientPlan::where('created_at', '<=', $date)
+            ->where('expiration_date', '>=', $date)
             ->count();
 
+        Log::info('Active clients at: ' . $date . ' - ' . $count);
+
         HistoricalActiveClient::updateOrCreate(
-            ['date' => $currentDate],
-            ['active_plans_count' => $count]
+            ['date' => $date],
+            ['active_clients' => $count]
         );
     }
 }

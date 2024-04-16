@@ -3,8 +3,6 @@
 namespace App\View\Composers;
 
 use App\HistoricalActiveClient;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Route;
 use Illuminate\View\View;
 
 class HistoricActiveClientsComposer

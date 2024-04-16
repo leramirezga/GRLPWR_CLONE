@@ -2,16 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Auth\SeguridadController;
-use App\Model\Cliente;
-use App\Model\Entrenador;
-use App\Model\Estatura;
-use App\Model\Peso;
-use App\Model\ReviewUser;
 use App\User;
-use App\Utils\AuthEnum;
-use App\Utils\Constantes;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Validator;
 

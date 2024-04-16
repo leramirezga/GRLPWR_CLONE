@@ -2,9 +2,7 @@
 
 namespace App\View\Composers;
 
-use App\Http\Controllers\EventController;
 use App\PhysicalAssessment;
-use App\Repositories\ClientPlanRepository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 use Illuminate\View\View;

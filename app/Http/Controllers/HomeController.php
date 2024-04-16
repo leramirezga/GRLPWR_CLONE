@@ -3,22 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Auth\SeguridadController;
-use App\Model\Cliente;
-use App\Model\ClientPlan;
-use App\Model\Entrenador;
-use App\Model\Estatura;
 use App\Model\Ofrecimientos;
-use App\Model\Peso;
-use App\Model\Review;
-use App\Model\ReviewUser;
 use App\Model\SesionCliente;
-use App\Repositories\ClientPlanRepository;
+use App\Model\SolicitudServicio;
 use App\User;
 use App\Utils\Constantes;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Model\SolicitudServicio;
 use Illuminate\Support\Facades\DB;
 use Validator;
 

@@ -19,9 +19,9 @@
 </template>
 
 <script>
-    import axios from 'axios'
+import axios from 'axios'
 
-    export default {
+export default {
         props: ['notifications','unread_notifications'],
         methods:{
             MarkAsRead: function (notification) {

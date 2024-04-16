@@ -3,7 +3,6 @@
 namespace App\View\Components;
 
 use Illuminate\View\Component;
-use PhpParser\Node\Scalar\String_;
 
 class typeSection extends Component
 {

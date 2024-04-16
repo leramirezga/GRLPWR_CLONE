@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Seeder;
 use App\Model\Estatura;
+use Illuminate\Database\Seeder;
 
 class EstaturaSeeder extends Seeder
 {

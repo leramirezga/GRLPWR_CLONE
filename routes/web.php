@@ -11,13 +11,15 @@
 |
 */
 
+use App\Http\Controllers\ActiveClientsController;
 use App\Http\Controllers\ClientPlanController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PagosController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SesionClienteController;
-use App\Http\Controllers\EventController;
+use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\UserCommentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WelcomeController;
@@ -25,7 +27,6 @@ use App\Http\Controllers\WellBeingController;
 use App\Model\ClientPlan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\StatisticsController;
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/mis_solicitudes/crear', 'SolicitudServicioController@irCrear')->name('irCrearSolicitud');
@@ -99,6 +100,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/statistics', [StatisticsController::class, 'index'])->name('statistics');
     Route::post('{user}/comment/', [UserCommentController::class, 'comment'])->name('commentUser');
     Route::post('{comment}/reply/', [UserCommentController::class, 'reply'])->name('replyUserComment');
+    Route::get('/admin/saveActiveClients/{date}', [ActiveClientsController::class, 'saveActiveClientByDate']);
 });
 
 /*Open routes*/
