@@ -50,6 +50,7 @@ return [
             'prefix' => '',
             'strict' => true,
             'engine' => null,
+            'cache' => false,
         ],
 
         'pgsql' => [
