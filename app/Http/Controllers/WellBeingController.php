@@ -93,7 +93,6 @@ class WellBeingController extends controller {
             $wheelOfLife->reason_work = $request->reason_work;
             $wheelOfLife->money = $request->money;
             $wheelOfLife->reason_money = $request->reason_money;
-            $wheelOfLife->user_id = auth()->user()->id;
             $wheelOfLife->save();
         });
 
