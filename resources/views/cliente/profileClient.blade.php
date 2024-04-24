@@ -82,6 +82,7 @@
                     @endif
                 </div>
                 @include('cliente.clientPlan')
+                @include('components.lastClasses')
 
                 <div class="themed-block col-12 col-md-10 mx-auto mt-4 p-2">
                     <h3 class="section-title">Antropometría:</h3>

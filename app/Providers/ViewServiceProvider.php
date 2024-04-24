@@ -10,6 +10,7 @@ use App\Repositories\ClientPlanRepository;
 use App\View\Composers\EventComposer;
 use App\View\Composers\HighlightComposer;
 use App\View\Composers\HistoricActiveClientsComposer;
+use App\View\Composers\LatestClassesComposer;
 use App\View\Composers\PhysicalAssessmentComposer;
 use App\View\Composers\TrainingPreferencesComposer;
 use App\View\Composers\WheelOfLifeComposer;
@@ -75,6 +76,7 @@ class ViewServiceProvider extends ServiceProvider
         Facades\View::composer('assessments.wheelOfLife', WheelOfLifeComposer::class);
         Facades\View::composer('cliente.trainingPreferences', TrainingPreferencesComposer::class);
         Facades\View::composer('highlightSection', HighLightComposer::class);
+        Facades\View::composer('components.lastClasses', LatestClassesComposer::class);
         Facades\View::composer('components.historicActiveClients', HistoricActiveClientsComposer::class);
     }
 }
