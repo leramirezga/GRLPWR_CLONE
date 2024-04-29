@@ -55,7 +55,7 @@
                     <td><a class="client-icon theme-color" href="{{route('visitarPerfil', ['user'=>  $user->slug])}}"><div style="max-height:3rem; overflow:hidden">{{ $user->nombre . ' ' .  $user->apellido_1 . ' ' .  $user->apellido_2}}</div></a></td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->telefono }}</td>
-                    <td>{{ $user->assigned }}</td>
+                    <td>{{ $user->assigned_id }}</td>
                     <td>{{ str_limit($user->expiration_date,10, '') }}</td>
                     <td><a class="client-icon theme-color" href="{{route('healthTest', ['user'=>  $user->slug])}}">Valoración</a></td>
                 </tr>
@@ -104,7 +104,7 @@
                                 '<td><a class="client-icon theme-color" href="{{env('APP_URL')}}/visitar/' + result.slug + '"><div style="max-height:3rem; overflow:hidden">' + result.nombre + ' ' +  result.apellido_1 + ' ' +  result.apellido_2 + '</div></a></td>' +
                                 '<td>' + result.email + '</td>' +
                                 '<td>' + result.telefono + '</td>' +
-                                '<td>' + result.assigned + '</td>' +
+                                '<td>' + result.assigned_id + '</td>' +
                                 '<td>' + result.expiration_date?.slice(0, 10)+ '</td>'+
                                 '<td><a class="client-icon theme-color" href="/user/' + result.slug + '/wellBeingTest">Valoración</a></td>' +
                                 '</tr>'
