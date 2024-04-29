@@ -31,6 +31,7 @@ class UserController extends controller
         $email = $request->input('email');
         $phone = $request->input('phone');
         $needAssessment = $request->input('needAssessment');
+        $assigned = $request->input('assigned');
         $expirationType = $request->input('expirationType');
 
         $query = User::query();
@@ -47,6 +48,9 @@ class UserController extends controller
         }
         if ($email) {
             $query->where('usuarios.email', 'LIKE', "%$email%");
+        }
+        if ($assigned) {
+            $query->where('usuarios.assigned_id', 'LIKE', "%$assigned%");
         }
         if ($phone) {
             $query->where('usuarios.telefono', 'LIKE', "%$phone%");
