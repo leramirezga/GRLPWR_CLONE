@@ -77,6 +77,10 @@ class UserController extends controller
                 $query->join('client_plans', function ($join) use ($currentDate) {
                     $join->on('usuarios.id', '=', 'client_plans.client_id')
                         ->where('client_plans.expiration_date', '<', $currentDate->copy()->startOfDay());
+                })->whereNotIn('usuarios.id', function ($query) use ($currentDate) {
+                    $query->select('cpa.client_id')
+                        ->from('client_plans as cpa')
+                        ->where('cpa.expiration_date', '>=', $currentDate->copy()->startOfDay());
                 });
                 break;
         }
