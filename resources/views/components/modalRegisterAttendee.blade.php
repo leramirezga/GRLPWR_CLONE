@@ -110,7 +110,7 @@
                 },
 
                 success: function (data) {
-                    console.log(data); //if you want to debug you need to uncomment this line and comment reload
+                    //console.log(data); //if you want to debug you need to uncomment this line and comment reload
                     $('html, body').animate({ scrollTop: 0 }, 0);
                     location.reload();
                 },
