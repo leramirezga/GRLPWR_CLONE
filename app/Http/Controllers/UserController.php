@@ -59,7 +59,14 @@ class UserController extends controller
             $query->leftJoin('physical_assessments', 'usuarios.id', '=', 'physical_assessments.user_id')
                 ->where(function ($query) {
                     $query->whereNull('physical_assessments.user_id')
-                        ->orWhere('physical_assessments.created_at', '<', Carbon::today()->subMonths(MONTHS_FOR_NEW_HEALTH_ASSESSMENT)->format('Y-m-d'));
+                        ->orWhere(function ($query)  {
+                            $query->where('physical_assessments.created_at', '<', Carbon::today()->subMonths(MONTHS_FOR_NEW_HEALTH_ASSESSMENT)->format('Y-m-d'))
+                                ->whereRaw('physical_assessments.created_at = (
+                                    SELECT MAX(pa.created_at) 
+                                    FROM physical_assessments pa 
+                                    WHERE pa.user_id = usuarios.id
+                                )');
+                        });
                 });
         }
         $currentDate = Carbon::today();
