@@ -56,7 +56,7 @@
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->telefono }}</td>
                     <td>
-                        <select onchange="onChangeAssignment({{ $user->id }},this.value)">
+                        <select onchange="onChangeAssignment({{ $user->id }},this.value)" {{$user->assigned_id ? 'disabled' : ''}}>
                             <option style="color: black" value="" disabled selected>Seleccione...</option>
                             @foreach ($adminUsers as $adminUser)
                                 <option value="{{ $adminUser->id }}" {{$user->assigned_id == $adminUser->id ? 'selected' : ''}}>{{ $adminUser->nombre }}</option>
@@ -89,7 +89,6 @@
         }
 
         $(document).ready(function() {
-
             let options = @foreach ($adminUsers as $adminUser)
                 '<option value="{{$adminUser->id}}" >{{ $adminUser->nombre }}</option>' @if(!$loop->last)+@endif
             @endforeach
@@ -142,6 +141,7 @@
 
                             if(result.assigned_id){
                                 $('#select_'+result.id).val(result.assigned_id);
+                                $('#select_'+result.id).prop('disabled', true);
                             }
                             if(result.expiration_date){
                                 var today = new Date();
