@@ -55,7 +55,14 @@
                     <td><a class="client-icon theme-color" href="{{route('visitarPerfil', ['user'=>  $user->slug])}}"><div style="max-height:3rem; overflow:hidden">{{ $user->nombre . ' ' .  $user->apellido_1 . ' ' .  $user->apellido_2}}</div></a></td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->telefono }}</td>
-                    <td>{{ $user->assigned_id }}</td>
+                    <td>
+                        <select onchange="onChangeAssignment({{ $user->id }},this.value)">
+                            <option style="color: black" value="" disabled selected>Seleccione...</option>
+                            @foreach ($adminUsers as $adminUser)
+                                <option value="{{ $adminUser->id }}" {{$user->assigned_id == $adminUser->id ? 'selected' : ''}}>{{ $adminUser->nombre }}</option>
+                            @endforeach
+                        </select>
+                    </td>
                     <td>{{ str_limit($user->expiration_date,10, '') }}</td>
                     <td><a class="client-icon theme-color" href="{{route('healthTest', ['user'=>  $user->slug])}}">Valoración</a></td>
                 </tr>
@@ -67,7 +74,25 @@
 @endsection
 @push('scripts')
     <script>
+        function onChangeAssignment(userId, padrinoId) {
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{ route('assigned.update') }}",
+                method: "POST",
+                data: {
+                    userId: userId,
+                    assigned: padrinoId
+                },
+            });
+        }
+
         $(document).ready(function() {
+
+            let options = @foreach ($adminUsers as $adminUser)
+                '<option value="{{$adminUser->id}}" >{{ $adminUser->nombre }}</option>' @if(!$loop->last)+@endif
+            @endforeach
 
             function filter(){
                 var idValue = $('#id').val();
@@ -104,11 +129,20 @@
                                 '<td><a class="client-icon theme-color" href="{{env('APP_URL')}}/visitar/' + result.slug + '"><div style="max-height:3rem; overflow:hidden">' + result.nombre + ' ' +  result.apellido_1 + ' ' +  result.apellido_2 + '</div></a></td>' +
                                 '<td>' + result.email + '</td>' +
                                 '<td>' + result.telefono + '</td>' +
-                                '<td>' + result.assigned_id + '</td>' +
+                                '<td>' +
+                                    '<select id="select_'+ result.id +'" onchange="onChangeAssignment(' + result.id + ', this.value)">' +
+                                        '<option style="color: black" value="" disabled selected>Seleccione...</option>' +
+                                            options +
+                                    '</select>' +
+                                '</td>' +
                                 '<td>' + result.expiration_date?.slice(0, 10)+ '</td>'+
                                 '<td><a class="client-icon theme-color" href="/user/' + result.slug + '/wellBeingTest">Valoración</a></td>' +
                                 '</tr>'
                             );
+
+                            if(result.assigned_id){
+                                $('#select_'+result.id).val(result.assigned_id);
+                            }
                             if(result.expiration_date){
                                 var today = new Date();
                                 today.setHours(0,0,0,0);

@@ -102,6 +102,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('/wheelOfLifeTest', [WellBeingController::class, 'saveWheelOfLifeTest'])->name('saveWheelOfLifeTest');
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/users/search', [UserController::class, 'search'])->name('users.search');
+    Route::post('/users/assigned', [UserController::class, 'updateAssigned'])->name('assigned.update');
     Route::get('/statistics', [StatisticsController::class, 'index'])->name('statistics');
     Route::post('{user}/comment/', [UserCommentController::class, 'comment'])->name('commentUser');
     Route::post('{comment}/reply/', [UserCommentController::class, 'reply'])->name('replyUserComment');
