@@ -39,29 +39,31 @@
         </div>
     @endif
 </div>
-<div class="p-3 themed-block col-12 col-md-10 mx-auto">
-    <h3 class="mb-3">Planes Vencidos:</h3>
-    @if(Auth::user()->rol == \App\Utils\Constantes::ROL_ADMIN and $expiredPlans and $expiredPlans->isNotEmpty())
-        <table class="w-100 table">
-            <thead>
-            <tr>
-                <th scope="col">Plan</th>
-                <th scope="col">F. Creación</th>
-                <th scope="col">F. Expiración</th>
-                <th scope="col">Clases Restantes</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach($expiredPlans as $expiredPlan)
+@if((Auth::user()->rol == \App\Utils\Constantes::ROL_ADMIN || Auth::user() == $user ) and $expiredPlans and $expiredPlans->isNotEmpty())
+    <div class="p-3 themed-block col-12 col-md-10 mx-auto">
+        <h3 class="mb-3">Planes Vencidos:</h3>
+        <div class="table-responsive">
+            <table class="w-100 table">
+                <thead>
                 <tr>
-                    <td>{{$expiredPlan->name}}</td>
-                    <td>{{$expiredPlan->created_at}}</td>
-                    <td>{{$expiredPlan->expiration_date}}</td>
-                    {{-- FIT-57: Load the remaining specific clases--}}
-                    <td>{{$expiredPlan->remaining_shared_classes}}</td>
+                    <th scope="col">Plan</th>
+                    <th scope="col">F. Creación</th>
+                    <th scope="col">F. Expiración</th>
+                    <th scope="col">Clases Restantes</th>
                 </tr>
-            @endforeach
-            </tbody>
-        </table>
-    @endif
-</div>
+                </thead>
+                <tbody>
+                @foreach($expiredPlans as $expiredPlan)
+                    <tr>
+                        <td>{{$expiredPlan->name}}</td>
+                        <td>{{$expiredPlan->created_at}}</td>
+                        <td>{{$expiredPlan->expiration_date}}</td>
+                        {{-- FIT-57: Load the remaining specific clases--}}
+                        <td>{{$expiredPlan->remaining_shared_classes}}</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+@endif
