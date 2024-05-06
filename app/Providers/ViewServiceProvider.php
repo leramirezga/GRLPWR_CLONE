@@ -7,6 +7,7 @@ use App\ClassType;
 use App\Model\ClientPlan;
 use App\Model\Evento;
 use App\Repositories\ClientPlanRepository;
+use App\Utils\Constantes;
 use App\View\Composers\EventComposer;
 use App\View\Composers\HighlightComposer;
 use App\View\Composers\HistoricActiveClientsComposer;
@@ -56,7 +57,6 @@ class ViewServiceProvider extends ServiceProvider
             $view->with('classTypes', $classTypes);
         });
 
-        $route = Route::current(); // Illuminate\Routing\Route
         Facades\View::composer('cliente.clientPlan', function (View $view) {
             $route = Route::current(); // Illuminate\Routing\Route
             $clientPlanRepository = new ClientPlanRepository();
@@ -65,6 +65,10 @@ class ViewServiceProvider extends ServiceProvider
                 ->where('client_plans.expiration_date', '<', Carbon::now())
                 ->join('plans', 'client_plans.plan_id', '=', 'plans.id')
                 ->select('client_plans.*', 'plans.name')
+                ->orderBy('client_plans.expiration_date', 'desc')
+                ->when(Facades\Auth::user()->rol != Constantes::ROL_ADMIN, function ($query) {
+                    return $query->limit(1);
+                })
                 ->get();
             $view->with(
                 ['clientPlans' => $clientPlans,
