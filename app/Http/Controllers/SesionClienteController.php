@@ -185,12 +185,13 @@ class SesionClienteController extends Controller
      */
     private function schedule($id, $startDate, $startHour, $endDate, $endHour, $client, $isRenting, $isCourtesy, $validateVacancy, bool $isGuest = false): JsonResponse|\Illuminate\Http\RedirectResponse
     {
+        $formattedStartDate = Carbon::parse($startDate)->format('Y-m-d');
         $editedEvent = EditedEvent::where('evento_id', $id)
-            ->where('fecha_inicio', '=', $startDate)
+            ->where('fecha_inicio', '=', $formattedStartDate)
             ->where('start_hour', '=', $startHour)
             ->first();
         $event = $editedEvent ?: Evento::find($id);
-        $startDateTime = Carbon::parse($startDate)->format('Y-m-d') . ' ' . $startHour;
+        $startDateTime = $formattedStartDate . ' ' . $startHour;
         $endDateTime = Carbon::parse($endDate)->format('Y-m-d') . ' ' . $endHour;
         if($validateVacancy){
             $this->validateVacancy($event, $startDateTime, $endDateTime);
