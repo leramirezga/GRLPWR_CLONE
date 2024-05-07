@@ -78,7 +78,7 @@ return [
     'sucess_food_assesment' => 'Valoración alimenticia guardada',
     'sucess_training_assesment' => 'Preferencias de entramiento guardadas',
     'sucess_wheel_of_life_assesment' => 'Rueda de la vida guardada',
-
+    'upgrade_morning_plan' => 'Este horario no está incluido en tu plan morning, pero puedes mejorar tu plan para no perder ninguna clase',
 
     'not_registered_guest' => 'Tu invitado no está registrado. Pídele que se registre y complete su perfil para poder agendar',
     'not_more_guest' => 'Tu plan no tiene más invitados esta semana'

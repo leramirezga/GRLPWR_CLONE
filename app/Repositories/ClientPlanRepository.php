@@ -3,8 +3,11 @@
 namespace App\Repositories;
 
 use App\Model\ClientPlan;
+use App\Utils\PlansEnum;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 
 class ClientPlanRepository
 {
@@ -72,7 +75,17 @@ class ClientPlanRepository
         if($multiplePlans){
             return $clientPlan;
         }
-        return$clientPlan && $clientPlan->isNotEmpty() ?
-            $clientPlan->first() : null;
+        //FIT-107 Plan Morning
+        if($clientPlan && $clientPlan->isNotEmpty()){
+            $clientPlan = $clientPlan ->first();
+            if($clientPlan->plan_id != PlansEnum::MORNING->value || $event->start_hour < '11:00:00'){
+               return $clientPlan;
+            }
+            Log::info('Trying to schedule an unsupported class with a morning plan');
+            Session::put('msg_level', 'danger');
+            Session::put('msg', __('general.upgrade_morning_plan'));
+            Session::save();
+        }
+        return null;
     }
 }

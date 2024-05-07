@@ -266,7 +266,9 @@ class SesionClienteController extends Controller
 
             $clientPlanRepository = new ClientPlanRepository();
             $event->fecha_inicio = $startDateTime;
+            $event->start_hour = substr($startDateTime, 11);
             $event->fecha_fin = $endDateTime;
+            $event->end_hour = substr($endDateTime, 11);
             $clientPlan = $clientPlanRepository->findValidClientPlan($event,  $isGuest ? Auth::id() : $client->usuario_id);
 
             if ($clientPlan) {
@@ -304,6 +306,7 @@ class SesionClienteController extends Controller
                 return response()->json(['status' =>  'reserved', 'sesionClienteId' => $sesionCliente->id], 200);
             }
             DB::commit();
+            Session::forget('msg');//FIT-107: Clear message from morning plan
             return response()->json(['status' =>  'goToPay'], 200);
         }catch (Exception $exception) {
             DB::rollBack();
