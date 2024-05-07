@@ -190,7 +190,12 @@ class SesionClienteController extends Controller
             ->where('fecha_inicio', '=', $formattedStartDate)
             ->where('start_hour', '=', $startHour)
             ->first();
-        $event = $editedEvent ?: Evento::find($id);
+        if($editedEvent){
+            $event = $editedEvent;
+            $event->id = $editedEvent->evento_id;
+        }else{
+            $event =  Evento::find($id);
+        }
         $startDateTime = $formattedStartDate . ' ' . $startHour;
         $endDateTime = Carbon::parse($endDate)->format('Y-m-d') . ' ' . $endHour;
         if($validateVacancy){
