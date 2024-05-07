@@ -146,9 +146,9 @@
                 </div>
 
                 @if(Auth::id() === $user->id || Auth::user()->rol == \App\Utils\Constantes::ROL_ADMIN)
-                    @include('assessments.physicalAssessment')
-                    @include('assessments.wheelOfLife')
-                    @include('cliente.trainingPreferences')
+                    @include('assessmentResults.physicalAssessment')
+                    @include('assessmentResults.wheelOfLife')
+                    @include('assessmentResults.trainingPreferences')
                 @endif
 
                 @php($cardiovascularRisk = $user->cliente?->cardiovascularRisk())

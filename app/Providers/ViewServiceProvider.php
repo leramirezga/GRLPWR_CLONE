@@ -76,9 +76,9 @@ class ViewServiceProvider extends ServiceProvider
             );
         });
 
-        Facades\View::composer('assessments.physicalAssessment', PhysicalAssessmentComposer::class);
-        Facades\View::composer('assessments.wheelOfLife', WheelOfLifeComposer::class);
-        Facades\View::composer('cliente.trainingPreferences', TrainingPreferencesComposer::class);
+        Facades\View::composer('assessmentResults.physicalAssessment', PhysicalAssessmentComposer::class);
+        Facades\View::composer('assessmentResults.wheelOfLife', WheelOfLifeComposer::class);
+        Facades\View::composer('assessmentResults.trainingPreferences', TrainingPreferencesComposer::class);
         Facades\View::composer('highlightSection', HighLightComposer::class);
         Facades\View::composer('components.lastClasses', LatestClassesComposer::class);
         Facades\View::composer('components.historicActiveClients', HistoricActiveClientsComposer::class);
