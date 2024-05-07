@@ -39,9 +39,9 @@
                     user_id : {{$user->id}},
                     body_relation : document.getElementById('body_relation')?.value,
                     body_discomfort: document.getElementById('body_discomfort')?.value,
-                    stress: document.getElementById('stress')?.value,
-                    stress_practice: document.getElementById('stress_practice')?.value,
-                    spiritual_belief: document.getElementById('spiritual_belief')?.value,
+                    stress: document.getElementById('reason-stress')?.value,
+                    stress_practice: document.getElementById('reason-stress_practice')?.value,
+                    spiritual_belief: document.getElementById('reason-spiritual_belief')?.value,
                 },
 
                 success: handleAjaxResponse,

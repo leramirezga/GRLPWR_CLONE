@@ -57,7 +57,7 @@
                 data: {
                     user_id : {{$user->id}},
                     training_frequency : document.getElementById('training_frequency').value,
-                    intensity: document.getElementById('intensity').value,
+                    intensity: document.getElementById('training_intensity').value,
                     music: document.getElementById('music').value,
                 },
 

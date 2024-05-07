@@ -99,9 +99,9 @@ class WellBeingController extends controller
         $wellBeingAssessment->user_id = $request->user_id;
         $wellBeingAssessment->body_relation = $request->body_relation;
         $wellBeingAssessment->body_discomfort = $request->body_discomfort;
-        $wellBeingAssessment->stress = $request->reason_stress;
-        $wellBeingAssessment->stress_practice = $request->reason_stress_practice;
-        $wellBeingAssessment->spiritual_belief = $request->reason_spiritual_belief;
+        $wellBeingAssessment->stress = $request->stress;
+        $wellBeingAssessment->stress_practice = $request->stress_practice;
+        $wellBeingAssessment->spiritual_belief = $request->spiritual_belief;
         $wellBeingAssessment->save();
 
         return response()->json([
@@ -131,7 +131,7 @@ class WellBeingController extends controller
         $wheelOfLife->reason_work = $request->reason_work;
         $wheelOfLife->money = $request->money;
         $wheelOfLife->reason_money = $request->reason_money;
-        $wheelOfLife->user_id = auth()->user()->id;
+        $wheelOfLife->user_id = $request->user_id;
         $wheelOfLife->save();
 
         return response()->json([
