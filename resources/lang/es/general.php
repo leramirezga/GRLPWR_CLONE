@@ -81,5 +81,6 @@ return [
     'upgrade_morning_plan' => 'Este horario no está incluido en tu plan morning, pero puedes mejorar tu plan para no perder ninguna clase',
 
     'not_registered_guest' => 'Tu invitado no está registrado. Pídele que se registre y complete su perfil para poder agendar',
-    'not_more_guest' => 'Tu plan no tiene más invitados esta semana'
+    'not_more_guest' => 'Tu plan no tiene más invitados esta semana',
+    'success_save_petty_cash' => 'Transacción registrada exitosamente',
 ];

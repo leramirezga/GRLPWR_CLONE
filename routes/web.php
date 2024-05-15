@@ -24,7 +24,9 @@ use App\Http\Controllers\UserCommentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\WellBeingController;
+use App\Model\Cliente;
 use App\Model\ClientPlan;
+use App\PaymentMethod;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -90,6 +92,12 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Route::group(['middleware' => 'admin'], function () {
+    Route::get('/admin/savePettyCash', function () {
+        $clients = Cliente::all();
+        $paymentMethods = PaymentMethod::where('enabled', true)->get();
+        return view('admin.savePettyCash', compact('clients', 'paymentMethods'));
+    });
+    Route::post('/admin/savePettyCash', [PagosController::class, 'savePettyCash'])->name('savePettyCash');
     Route::get('/admin/loadPlan', [ClientPlanController::class, 'showLoadClientPlan']);
     Route::post('/admin/loadPlan', [ClientPlanController::class, 'saveClientPlan'])->name('saveClientPlan');
     Route::post('/admin/checkAttendee', [SesionClienteController::class, 'checkAttendee'])->name('checkAttendee');

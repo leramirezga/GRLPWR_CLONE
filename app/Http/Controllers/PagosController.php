@@ -6,7 +6,9 @@ use App\Model\SesionCliente;
 use App\Model\TransaccionesPagos;
 use App\Model\TransaccionesPendientes;
 use App\Utils\PayTypesEnum;
+use Carbon\Carbon;
 use GuzzleHttp\Client;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
@@ -134,5 +136,25 @@ class PagosController extends Controller
             ]);
         }
         return $id;
+    }
+
+    public function savePettyCash(Request $request){
+
+        $payDay = Carbon::createFromFormat('d/m/Y',$request->payDay);
+        $transaction = new TransaccionesPagos();
+        $transaction->payment_method_id = $request->paymentMethodId;
+        $transaction->ref_payco = "1";
+        $transaction->codigo_respuesta = "1";
+        $transaction->respuesta = "Aprobado";
+        $transaction->amount = $request->amount;
+        $transaction->data = $request->data ?? "";
+        $transaction->user_id = $request->clientId;
+        $transaction->created_at = $payDay;
+        $transaction->save();
+
+        Session::put('msg_level', 'success');
+        Session::put('msg', __('general.success_save_petty_cash'));
+        Session::save();
+        return redirect()->back();
     }
 }
