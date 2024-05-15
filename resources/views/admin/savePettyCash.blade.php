@@ -42,7 +42,7 @@
         <div class="themed-block mb-5 pb-4">
             <div class="wizard-container">
                 <div class="wizard-card" data-color="purple" id="wizardProfile">
-                    <form id="savePettyCashForm" method="post" action="{{route('savePettyCash')}}" enctype="multipart/form-data">
+                    <form id="savePettyCashForm" method="post" action="{{route('pettyCash.save')}}" enctype="multipart/form-data">
                     @method('POST')
                     @csrf
 

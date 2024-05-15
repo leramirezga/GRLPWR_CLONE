@@ -96,8 +96,8 @@ Route::group(['middleware' => 'admin'], function () {
         $clients = Cliente::all();
         $paymentMethods = PaymentMethod::where('enabled', true)->get();
         return view('admin.savePettyCash', compact('clients', 'paymentMethods'));
-    });
-    Route::post('/admin/savePettyCash', [PagosController::class, 'savePettyCash'])->name('savePettyCash');
+    })->name('pettyCash.index');
+    Route::post('/admin/savePettyCash', [PagosController::class, 'savePettyCash'])->name('pettyCash.save');
     Route::get('/admin/loadPlan', [ClientPlanController::class, 'showLoadClientPlan']);
     Route::post('/admin/loadPlan', [ClientPlanController::class, 'saveClientPlan'])->name('saveClientPlan');
     Route::post('/admin/checkAttendee', [SesionClienteController::class, 'checkAttendee'])->name('checkAttendee');

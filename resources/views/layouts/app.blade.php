@@ -138,6 +138,9 @@
                         <a class="d-none d-md-inline-block" href="{{route('users.index')}}">
                             Users
                         </a>
+                        <a class="d-none d-md-inline-block" href="{{route('pettyCash.index')}}">
+                            Caja Menor
+                        </a>
                     @endif
                     {{--<notification class="cursor-pointer" v-bind:unread_notifications="unread_notifications" v-bind:notifications="notifications"></notification>--}}
 
@@ -152,6 +155,9 @@
                             @if(Auth::user()->rol == \App\Utils\Constantes::ROL_ADMIN)
                                 <a class="dropdown-item d-block d-md-none" href="{{route('users.index')}}">
                                     Users
+                                </a>
+                                <a class="dropdown-item d-block d-md-none" href="{{route('pettyCash.index')}}">
+                                    Caja Menor
                                 </a>
                             @endif
                             <a class="dropdown-item" href="{{ route('logout') }}"
