@@ -28,6 +28,11 @@ class CheckClientPlansExpiration
                 ->where('expiration_date', '>=', $initialDate)
                 ->where('expiration_date', '<=', $finalDate)
                 ->where('scheduled_renew_msg', '0')
+                ->whereNotIn('usuarios.id', function ($query) use ($finalDate) {
+                    $query->select('cp.client_id')
+                        ->from('client_plans as cp')
+                        ->where('cp.expiration_date', '>', $finalDate);
+                })
                 ->select('usuarios.telefono', 'client_plans.expiration_date', 'client_plans.id')
                 ->get();
 
