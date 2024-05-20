@@ -57,6 +57,7 @@
 
 @push('cards')
     @if(!$visitante)
+        @include('achievements.achievementsResume')
         @include('entrenamientosAgendados')
         @if(isset($reviewFor))
             @include('modalDarReviewEntrenamiento')

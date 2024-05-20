@@ -49,7 +49,7 @@ return [
     | query from achievements().
     |
     */
-    'locked_sync' => true,
+    'locked_sync' => false,
 
     /*
     |--------------------------------------------------------------------------

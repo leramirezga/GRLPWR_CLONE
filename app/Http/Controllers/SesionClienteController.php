@@ -72,6 +72,7 @@ class SesionClienteController extends Controller
         $user = User::where('email', $request->email)
                     ->orWhere('telefono', $request->cellphone)
                     ->first();
+
         if($user){
             if(SesionCliente::where('cliente_id', $user->id)->first()){
                 Session::put('msg_level', 'danger');
@@ -84,6 +85,7 @@ class SesionClienteController extends Controller
             $request->merge(['password' => config('app.default_password')]);
             $user = $registerController->create($request->all());
         }
+
         $client = Cliente::updateOrCreate(
             ['usuario_id' => $user->id],
             [
@@ -156,6 +158,7 @@ class SesionClienteController extends Controller
             return redirect()->back();
         }
     }
+
     /**
      * @param $event
      * @param $startDateTime
@@ -171,6 +174,7 @@ class SesionClienteController extends Controller
             throw new NoVacancyException();
         }
     }
+
     /**
      * @throws ShoeSizeNotSupportedException
      * @throws NoVacancyException
@@ -202,6 +206,7 @@ class SesionClienteController extends Controller
         $isCourtesy = filter_var($isCourtesy, FILTER_VALIDATE_BOOLEAN);
         return $this->registerSession($client, $event, $startDateTime, $endDateTime, $isCourtesy, $kangooId ?? null, $isGuest);
     }
+
     /**
      * @throws ShoeSizeNotSupportedException
      * @throws NoAvailableEquipmentException
@@ -212,6 +217,7 @@ class SesionClienteController extends Controller
             return $this->kangooService->assignKangoo($shoeSize, $weight, $startDateTime, $endDateTime);
         }
     }
+
     /**
      *Renta
         si:
@@ -246,22 +252,26 @@ class SesionClienteController extends Controller
             if($isGuest){
                 $sesionCliente->host = Auth::id();
             }
+
             if($isCourtesy){
                 $sesionCliente->save();
                 Mail::to($client->usuario->email)
                     ->queue(new CourtesyScheduled($sesionCliente));
+
                 Session::put('msg_level', 'success');
                 Session::put('msg', __('general.success_courtesy'));
                 Session::save();
                 DB::commit();
                 return redirect()->back();
             }
+
             $clientPlanRepository = new ClientPlanRepository();
             $event->fecha_inicio = $startDateTime;
             $event->start_hour = substr($startDateTime, 11);
             $event->fecha_fin = $endDateTime;
             $event->end_hour = substr($endDateTime, 11);
             $clientPlan = $clientPlanRepository->findValidClientPlan($event,  $isGuest ? Auth::id() : $client->usuario_id);
+
             if ($clientPlan) {
                 $sesionCliente->save();
                 if($event->discounts_session){
@@ -281,6 +291,7 @@ class SesionClienteController extends Controller
                     }
                 }
                 /*FIT-57: end block code*/
+
                 Session::put('msg_level', 'success');
                 Session::put('msg', __('general.success_purchase'));
                 Session::save();
@@ -382,7 +393,7 @@ class SesionClienteController extends Controller
         }
     }
 
-    public function checkAttendee(Request $request)
+    public function checkAttendee(Request $request): JsonResponse
     {
         $clientSession = SesionCliente::find($request->clientSessionId);
         $clientSession->attended = $request->checked === "true";

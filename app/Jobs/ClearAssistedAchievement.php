@@ -10,6 +10,7 @@ class ClearAssistedAchievement
 {
     public function __construct()
     {}
+
     /**
      * This job clears the assisted class achievement progress for all users to start a new week progress
      *

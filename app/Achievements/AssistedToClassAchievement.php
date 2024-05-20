@@ -17,6 +17,7 @@ class AssistedToClassAchievement extends Achievement
     public $slug = "assisted-to-class";
     public $description = "You have trained for 3 days this week";
     public $points = 3;
+
     /*
      * Triggers whenever an Achiever unlocks this achievement
     */

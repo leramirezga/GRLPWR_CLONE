@@ -18,6 +18,7 @@ class MonthsTrained extends Achievement
      * The achievement name
      */
     public $name = 'MonthsTrained';
+
     /*
      * A small description for the achievement
      */

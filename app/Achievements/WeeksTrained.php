@@ -6,6 +6,7 @@ namespace App\Achievements;
 use App\User;
 use Assada\Achievements\Achievement;
 use Assada\Achievements\Model\AchievementProgress;
+
 /**
  * Class Registered
  *
@@ -17,6 +18,7 @@ class WeeksTrained extends Achievement
      * The achievement name
      */
     public $name = 'WeeksTrained';
+
     /*
      * A small description for the achievement
      */
@@ -32,6 +34,7 @@ class WeeksTrained extends Achievement
         if($progress->points % 4  == 0){
             $user->addProgress(new MonthsTrained());
         }
+
         $points =  AchievementProgress::where('achievement_id', env('RECORD_WEEKS_TRAINED_ACHIEVEMENT_ID'))
             ->where('achiever_id', $user->id)
             ->value('points');

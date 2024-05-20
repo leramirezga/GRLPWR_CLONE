@@ -181,6 +181,11 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\ViewServiceProvider::class,
 
+        /*
+        * Achievements Providers...
+        */
+        Assada\Achievements\AchievementsServiceProvider::class,
+
         /*CORS
         \Fruitcake\Cors\HandleCors::class,*/
     ),

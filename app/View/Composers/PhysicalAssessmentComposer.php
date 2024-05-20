@@ -14,7 +14,7 @@ class PhysicalAssessmentComposer
      */
     public function compose(View $view): void
     {
-        $route = Route::current(); // Illuminate\Routing\Route
+        $route = Route::current();
         $physicalAssessments =  PhysicalAssessment::where('user_id', $route->parameter('user')->id)
             ->orderBy('created_at')->get();
         if(!$physicalAssessments->isEmpty()) {

@@ -81,6 +81,8 @@
                         <p>Patologías: {{$user->cliente->pathology}}</p>
                     @endif
                 </div>
+
+                @include('achievements.achievementsResume')
                 @include('cliente.clientPlan')
                 @include('components.lastClasses')
 
@@ -145,11 +147,9 @@
                     @endif
                 </div>
 
-                @if(Auth::id() === $user->id || Auth::user()->rol == \App\Utils\Constantes::ROL_ADMIN)
-                    @include('assessmentResults.physicalAssessment')
-                    @include('assessmentResults.wheelOfLife')
-                    @include('assessmentResults.trainingPreferences')
-                @endif
+                @include('assessmentResults.physicalAssessment')
+                @include('assessmentResults.wheelOfLife')
+                @include('assessmentResults.trainingPreferences')
 
                 @php($cardiovascularRisk = $user->cliente?->cardiovascularRisk())
                 @isset($cardiovascularRisk)

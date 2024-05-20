@@ -1,0 +1,27 @@
+.achievement-icon{
+  height: 64px;
+  width: 64px;
+}
+.achievement-badge{
+  position:absolute;
+  top:-5px;
+  right:-5px;
+  font-size:.7em;
+  width:23px;height:23px;
+  text-align:center;
+  line-height:18px;
+  border-radius:50%;
+  box-shadow:0 0 1px #333;
+  padding: 3px;
+  background-color: #E04006;
+  color: white;
+}
+.bg-locked{
+  background-color: grey;
+  color: white;
+}
+.achievement-container{
+  display: flex;
+  width: 120px;
+  height: 120px;
+}
