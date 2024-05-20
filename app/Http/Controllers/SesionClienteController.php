@@ -212,7 +212,7 @@ class SesionClienteController extends Controller
      * @throws NoAvailableEquipmentException
      * @throws WeightNotSupportedException
      */
-    public function assignEquipment(Evento $event, $shoeSize, $weight, $startDateTime, $endDateTime){
+    public function assignEquipment($event, $shoeSize, $weight, $startDateTime, $endDateTime){
         if(strcasecmp($event->classType->type, PlanTypesEnum::KANGOO->value) == 0 || strcasecmp($event->classType->type, PlanTypesEnum::KANGOO_KIDS->value) == 0){
             return $this->kangooService->assignKangoo($shoeSize, $weight, $startDateTime, $endDateTime);
         }
