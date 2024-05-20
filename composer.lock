@@ -4,8 +4,67 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "44a2d433132190150b4fb01d121c5027",
+    "content-hash": "636f8818e7dbbd4e981af63c9e2a52be",
     "packages": [
+        {
+            "name": "assada/laravel-achievements",
+            "version": "v2.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/assada/laravel-achievements.git",
+                "reference": "c37d4b8419afda80cb11ecb5630d4df203041f93"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/assada/laravel-achievements/zipball/c37d4b8419afda80cb11ecb5630d4df203041f93",
+                "reference": "c37d4b8419afda80cb11ecb5630d4df203041f93",
+                "shasum": ""
+            },
+            "require": {
+                "ramsey/uuid": "^3 || ^4"
+            },
+            "require-dev": {
+                "laravel/laravel": "^6.0|^7.0|^8.0|^9.0|^10.0",
+                "phpunit/phpunit": "^8"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Assada\\Achievements\\AchievementsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Assada\\Tests\\": "tests/",
+                    "Assada\\Achievements\\": "src/"
+                },
+                "classmap": [
+                    "src/Migrations"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Gabriel Simonetti",
+                    "email": "simonettigo@gmail.com"
+                },
+                {
+                    "name": "Alex Ilyenko",
+                    "email": "assada.ua@gmail.com"
+                }
+            ],
+            "description": "Achievements for Laravel 6+",
+            "support": {
+                "issues": "https://github.com/assada/laravel-achievements/issues",
+                "source": "https://github.com/assada/laravel-achievements/tree/v2.6.0"
+            },
+            "time": "2023-08-28T14:51:25+00:00"
+        },
         {
             "name": "brick/math",
             "version": "0.10.2",
