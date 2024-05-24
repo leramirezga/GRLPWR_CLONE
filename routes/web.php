@@ -24,6 +24,7 @@ use App\Http\Controllers\UserCommentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\WellBeingController;
+use App\Http\Controllers\AccountingFlowController;
 use App\Model\Cliente;
 use App\Model\ClientPlan;
 use App\PaymentMethod;
@@ -115,6 +116,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('{user}/comment/', [UserCommentController::class, 'comment'])->name('commentUser');
     Route::post('{comment}/reply/', [UserCommentController::class, 'reply'])->name('replyUserComment');
     Route::get('/admin/saveActiveClients/{date}', [ActiveClientsController::class, 'saveActiveClientByDate']);
+    Route::get('/AccountingFlow', [AccountingFlowController::class, 'AccountingFlow'])->name('AccountingFlow');
 });
 
 /*Open routes*/

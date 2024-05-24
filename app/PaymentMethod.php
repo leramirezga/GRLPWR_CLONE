@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PaymentMethod extends Model
 {
+    protected $table = 'payment_methods';
     use HasFactory;
     use SoftDeletes;
 }

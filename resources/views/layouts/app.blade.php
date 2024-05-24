@@ -141,6 +141,9 @@
                         <a class="d-none d-md-inline-block" href="{{route('pettyCash.index')}}">
                             Caja Menor
                         </a>
+                        <a class="d-none d-md-inline-block" href="{{route('AccountingFlow')}}">
+                            Flujo contable
+                        </a>
                     @endif
                     {{--<notification class="cursor-pointer" v-bind:unread_notifications="unread_notifications" v-bind:notifications="notifications"></notification>--}}
 
