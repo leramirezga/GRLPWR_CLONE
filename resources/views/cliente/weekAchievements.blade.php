@@ -17,7 +17,7 @@
             <tbody>
             @foreach ($achievements as $achievement)
                 <tr>
-                    <td>{{ $achievement->achiever->nombre }}</td>
+                    <td>{{ $achievement->achiever->fullname }}</td>
                     <td>{{ $achievement->points }}</td>
                 </tr>
             @endforeach
