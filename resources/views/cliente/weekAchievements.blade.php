@@ -1,5 +1,3 @@
-<!-- resources/views/cliente/weekachievements.blade.php -->
-
 @extends('layouts.app')
 
 @section('title', 'Ranking semanas completadas')
