@@ -1,0 +1,27 @@
+
+    /* Estilos para centrar la tabla y mejorar su apariencia */
+.table-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+.week-achievements-table {
+    width: 80%; /* Ajusta el porcentaje según lo necesites */
+    max-width: 800px; /* Ancho máximo de la tabla */
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+.week-achievements-table th, .week-achievements-table td {
+    border: 1px solid #dddddd;
+    text-align: center; /* Centrar el texto */
+    padding: 12px;
+    font-size: 16px; /* Aumentar el tamaño de la fuente */
+}
+.week-achievements-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+.week-achievements-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
