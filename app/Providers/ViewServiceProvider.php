@@ -7,6 +7,7 @@ use App\ClassType;
 use App\Model\ClientPlan;
 use App\Model\Evento;
 use App\Repositories\ClientPlanRepository;
+use App\Utils\RolsEnum;
 use App\View\Composers\AchievementsComposer;
 use App\Utils\Constantes;
 use App\View\Composers\EventComposer;
@@ -67,7 +68,7 @@ class ViewServiceProvider extends ServiceProvider
                 ->join('plans', 'client_plans.plan_id', '=', 'plans.id')
                 ->select('client_plans.*', 'plans.name')
                 ->orderBy('client_plans.expiration_date', 'desc')
-                ->when(Facades\Auth::user()->rol != Constantes::ROL_ADMIN, function ($query) {
+                ->when(!Facades\Auth::user()->hasRole(RolsEnum::ADMIN), function ($query) {
                     return $query->limit(1);
                 })
                 ->get();

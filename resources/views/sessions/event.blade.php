@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="text-center">
-        @if(strcasecmp (\Illuminate\Support\Facades\Auth::user()->rol, 'cliente' ) == 0 && \Illuminate\Support\Facades\Auth::user()->cliente == null)
+        @if(\Illuminate\Support\Facades\Auth::user()->hasRole(\App\Utils\RolsEnum::CLIENT) && \Illuminate\Support\Facades\Auth::user()->cliente == null)
             <h2 class="w-75 m-auto">Para agendarte a los eventos debes completar tu perfil</h2>
             <button class="btn themed-btn d-block mx-auto mt-3" data-toggle="modal"
                     data-target="#completarPerfilModal">Completar perfil
@@ -29,7 +29,7 @@
                         <img class="exercise-image" src="{{asset('images/'.$event->imagen)}}"
                              alt="Eventos @lang('general.AppName')">
                     </div>
-                    @if((strcasecmp (\Illuminate\Support\Facades\Auth::user()->rol, \App\Utils\Constantes::ROL_ADMIN ) == 0))
+                    @if(\Illuminate\Support\Facades\Auth::user()->hasFeature(\App\Utils\FeaturesEnum::SEE_ATTENDEES))
                         @include('admin.attendeesTable')
                     @endif
                 </div>
@@ -53,7 +53,7 @@
                         </div>
                     </div>
                 </div>
-                @if((strcasecmp (\Illuminate\Support\Facades\Auth::user()->rol, \App\Utils\Constantes::ROL_ADMIN ) != 0))
+                @if(\Illuminate\Support\Facades\Auth::user()->hasRole(\App\Utils\RolsEnum::CLIENT))
                     @include('scheduleModal')
                 @endif
                 <h2 class="text-center mt-5 ">
@@ -68,7 +68,7 @@
     @include('components.modalCancelPolicy')
     @include('cliente.scheduleGuestModal')
 
-    @if((strcasecmp (\Illuminate\Support\Facades\Auth::user()->rol, \App\Utils\Constantes::ROL_ADMIN ) != 0))
+    @if(\Illuminate\Support\Facades\Auth::user()->hasRole(\App\Utils\RolsEnum::CLIENT))
         @include('cliente.completeProfileClient')
         @include('modalCompletarPerfil')
     @endif

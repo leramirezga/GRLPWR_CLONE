@@ -257,7 +257,7 @@
                     </div>
                 @endisset
             @endif
-            @if(Auth::user()->rol == \App\Utils\Constantes::ROL_ADMIN)
+            @if(Auth::user()->hasFeature(\App\Utils\FeaturesEnum::SEE_CLIENT_FOLLOW_UP))
                 <div class="themed-block col-12 col-md-10 mx-auto mt-3 p-4">
                     @include('admin.followUp')
                 </div>

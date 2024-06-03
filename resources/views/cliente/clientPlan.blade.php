@@ -39,7 +39,7 @@
         </div>
     @endif
 </div>
-@if((Auth::user()->rol == \App\Utils\Constantes::ROL_ADMIN || Auth::user() == $user ) and $expiredPlans and $expiredPlans->isNotEmpty())
+@if((Auth::user()->hasFeature(\App\Utils\FeaturesEnum::SEE_EXPIRED_PLANS) || Auth::user() == $user ) and $expiredPlans and $expiredPlans->isNotEmpty())
     <div class="p-3 themed-block col-12 col-md-10 mx-auto">
         <h3 class="mb-3">Planes Vencidos:</h3>
         <div class="table-responsive">

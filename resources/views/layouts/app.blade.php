@@ -164,12 +164,17 @@
                             <a class="dropdown-item d-block d-md-none" href="{{route('blogs')}}">
                                 Blogs
                             </a>
-                            @if(Auth::user()->rol == \App\Utils\Constantes::ROL_ADMIN)
+                            @if(Auth::user()->hasFeature(\App\Utils\FeaturesEnum::SEE_USERS))
                                 <a class="dropdown-item d-block d-md-none" href="{{route('users.index')}}">
                                     Users
                                 </a>
+                            @endif
+                            @if(Auth::user()->hasFeature(\App\Utils\FeaturesEnum::SAVE_PETTY_CASH))
                                 <a class="dropdown-item d-block d-md-none" href="{{route('pettyCash.index')}}">
                                     Caja Menor
+                                </a>
+                            @endif
+                            @if(Auth::user()->hasFeature(\App\Utils\FeaturesEnum::SEE_ACHIEVEMENTS_WEEKS_RANK))
                                 <a class="dropdown-item d-block d-md-none" href="{{route('achievementsWeeksRank')}}">
                                     Ranking
                                 </a>

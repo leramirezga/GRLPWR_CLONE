@@ -13,10 +13,12 @@ use App\Model\Evento;
 use App\Repositories\ClientPlanRepository;
 use App\Utils\Constantes;
 use App\Utils\DaysEnum;
+use App\Utils\FeaturesEnum;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class EventController extends Controller
@@ -29,7 +31,7 @@ class EventController extends Controller
     }
 
     public function create(){
-        SeguridadController::verificarRol(Constantes::ROL_ADMIN);
+        Auth::user()->hasFeature(FeaturesEnum::SAVE_SESSION);
         return view('sessions.createSession');
     }
 
