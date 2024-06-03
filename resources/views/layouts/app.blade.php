@@ -134,15 +134,22 @@
                 </a>
 
                 @auth
-                    @if(Auth::user()->rol == \App\Utils\Constantes::ROL_ADMIN)
+                    @if(Auth::user()->hasFeature(\App\Utils\FeaturesEnum::SEE_USERS))
                         <a class="d-none d-md-inline-block" href="{{route('users.index')}}">
                             Users
                         </a>
+                    @endif
+                    @if(Auth::user()->hasFeature(\App\Utils\FeaturesEnum::SAVE_PETTY_CASH))
                         <a class="d-none d-md-inline-block" href="{{route('pettyCash.index')}}">
                             Caja Menor
                         </a>
+                    @endif
+                    @if(Auth::user()->hasFeature(\App\Utils\FeaturesEnum::SEE_ACHIEVEMENTS_WEEKS_RANK))
                         <a class="d-none d-md-inline-block" href="{{route('achievementsWeeksRank')}}">
                             Ranking
+                        </a>
+                    @endif
+                    @if(Auth::user()->hasFeature(\App\Utils\FeaturesEnum::SEE_ACCOUNTING_FLOW))
                         <a class="d-none d-md-inline-block" href="{{route('AccountingFlow')}}">
                             Flujo contable
                         </a>

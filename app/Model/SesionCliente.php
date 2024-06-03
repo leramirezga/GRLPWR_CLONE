@@ -28,24 +28,18 @@ class SesionCliente extends Model
      */
     protected $dates = ['created_at', 'updated_at', 'fecha_inicio', 'fecha_fin'];
 
-    public function scopeEntrenamientosAgendados($query, $tipoUsuario){
-        switch ($tipoUsuario){
-            case Constantes::ROL_CLIENTE:
-                 return $query->leftJoin('edited_events', function ($join) {
-                            $join->on('sesiones_cliente.evento_id', '=', 'edited_events.evento_id')
-                                ->whereRaw('sesiones_cliente.fecha_inicio = CONCAT(edited_events.fecha_inicio, " ", edited_events.start_hour)');
-                        })
-                     ->leftJoin('eventos', 'sesiones_cliente.evento_id', 'eventos.id')
-                     ->leftJoin('kangoos', 'sesiones_cliente.kangoo_id', 'kangoos.id')
-                     ->where('sesiones_cliente.fecha_inicio', '>=', today())
-                     ->select('sesiones_cliente.id','sesiones_cliente.fecha_inicio','sesiones_cliente.fecha_fin',
-                         DB::raw('COALESCE(edited_events.nombre, eventos.nombre) as nombre'),
-                         DB::raw('COALESCE(edited_events.lugar, eventos.lugar) as lugar'),
-                        'kangoos.SKU');
-            case Constantes::ROL_ENTRENADOR:
-                //TODO
-        }
-        return null;
+    public function scopeEntrenamientosAgendados($query){
+         return $query->leftJoin('edited_events', function ($join) {
+                    $join->on('sesiones_cliente.evento_id', '=', 'edited_events.evento_id')
+                        ->whereRaw('sesiones_cliente.fecha_inicio = CONCAT(edited_events.fecha_inicio, " ", edited_events.start_hour)');
+                })
+             ->leftJoin('eventos', 'sesiones_cliente.evento_id', 'eventos.id')
+             ->leftJoin('kangoos', 'sesiones_cliente.kangoo_id', 'kangoos.id')
+             ->where('sesiones_cliente.fecha_inicio', '>=', today())
+             ->select('sesiones_cliente.id','sesiones_cliente.fecha_inicio','sesiones_cliente.fecha_fin',
+                 DB::raw('COALESCE(edited_events.nombre, eventos.nombre) as nombre'),
+                 DB::raw('COALESCE(edited_events.lugar, eventos.lugar) as lugar'),
+                'kangoos.SKU');
     }
 
     public function client(){

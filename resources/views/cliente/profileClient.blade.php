@@ -56,7 +56,7 @@
             <h4>{{$user->FullName}}</h4>
             <p>@yield('tipoUsuario')</p>
 
-            @if(Auth::user()->rol == \App\Utils\Constantes::ROL_ADMIN || Auth::user()->id == $user->id)
+            @if(Auth::user()->hasFeature(\App\Utils\FeaturesEnum::SEE_USERS_GENERAL_INFO) || Auth::user()->id == $user->id)
                 <p>{{$user->edad}}</p>
 
             {{--
@@ -65,7 +65,7 @@
             --}}
 
                 <div class="themed-block col-12 col-md-10 mx-auto mt-4 p-2">
-                    @if(Auth::user()->rol == \App\Utils\Constantes::ROL_ADMIN)
+                    @if(Auth::user()->hasFeature(\App\Utils\FeaturesEnum::SEE_USERS_GENERAL_INFO))
                         <p>Id: {{$user->id}}</p>
                         <p>Última valoración: {{$user->physicalAssessment?->created_at}}</p>
                     @endif

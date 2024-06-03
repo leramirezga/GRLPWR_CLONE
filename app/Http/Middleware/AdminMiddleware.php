@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Utils\RolsEnum;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,7 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->check() && auth()->user()->isAdmin())
+        if (auth()->check() && auth()->user()->hasRol(RolsEnum::ADMIN))
             return $next($request);
 
         return redirect('/');

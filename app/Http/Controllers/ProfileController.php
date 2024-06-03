@@ -11,6 +11,7 @@ use App\Model\ReviewUser;
 use App\User;
 use App\Utils\AuthEnum;
 use App\Utils\Constantes;
+use App\Utils\RolsEnum;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -36,13 +37,13 @@ class ProfileController extends Controller
     public function index(User $user)
     {
         $userType = SeguridadController::verificarUsuario($user, true);
-        if(strcasecmp ( $user->rol, Constantes::ROL_CLIENTE ) == 0){
+        if($user->hasRol(RolsEnum::CLIENT)){
             return $userType == AuthEnum::SAME_USER ?
                 view('cliente.profileClient', compact('user')) :
                 redirect()->route('visitarPerfil', ['user' => $user]);
         }
-        if(strcasecmp ($user->rol, Constantes::ROL_ENTRENADOR) == 0){
-            return view('perfilEntrenador', compact('user', 'solicitudes', 'entrenamientosAgendados', 'visitante'));
+        if($user->hasRol(RolsEnum::TRAINER)){
+            redirect()->route('visitarPerfil', ['user' => $user]);
         }
         //cuando se registra con redes sociales
         if(strcasecmp ($user->rol, 'indefinido' ) == 0){
@@ -106,7 +107,7 @@ class ProfileController extends Controller
         $user->save();
 
         $reviewId = 0;
-        if(strcasecmp ($user->rol, Constantes::ROL_CLIENTE ) == 0) {
+        if($user->hasRole(RolsEnum::CLIENT)) {
             $reviewId = 1;
             Cliente::updateOrCreate(
                 ['usuario_id' => $user->id],

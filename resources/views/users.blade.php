@@ -58,8 +58,8 @@
                     <td>
                         <select onchange="onChangeAssignment({{ $user->id }},this.value)" {{$user->assigned_id ? 'disabled' : ''}}>
                             <option style="color: black" value="" disabled selected>Seleccione...</option>
-                            @foreach ($adminUsers as $adminUser)
-                                <option value="{{ $adminUser->id }}" {{$user->assigned_id == $adminUser->id ? 'selected' : ''}}>{{ $adminUser->nombre }}</option>
+                            @foreach ($clientFollowers as $clientFollower)
+                                <option value="{{ $clientFollower->id }}" {{$user->assigned_id == $clientFollower->id ? 'selected' : ''}}>{{ $clientFollower->nombre }}</option>
                             @endforeach
                         </select>
                     </td>
@@ -89,9 +89,11 @@
         }
 
         $(document).ready(function() {
-            let options = @foreach ($adminUsers as $adminUser)
-                '<option value="{{$adminUser->id}}" >{{ $adminUser->nombre }}</option>' @if(!$loop->last)+@endif
-            @endforeach
+            @if($clientFollowers)
+                let options = @foreach ($clientFollowers as $clientFollower)
+                    '<option value="{{$clientFollower->id}}" >{{ $clientFollower->nombre }}</option>' @if(!$loop->last)+@endif
+                @endforeach
+            @endif
 
             function filter(){
                 var idValue = $('#id').val();

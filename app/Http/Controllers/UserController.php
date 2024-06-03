@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Utils\Constantes;
+use App\Utils\RolsEnum;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -22,11 +23,13 @@ class UserController extends controller
             ->orderBy('usuarios.id', 'desc')
             ->select('usuarios.*', 'client_plans.expiration_date')
             ->paginate(15);
-        $adminUsers = User::where('rol', Constantes::ROL_ADMIN)->get();
+        $clientFollowers = User::join('user_roles', 'usuarios.id', '=', 'user_roles.user_id')
+            ->where('user_roles.role_id', RolsEnum::CLIENT_FOLLOWER->value)->get();
+
 
         return view('users', [
             'users' => $users,
-            'adminUsers' => $adminUsers
+            'clientFollowers' => $clientFollowers
         ]);
     }
 

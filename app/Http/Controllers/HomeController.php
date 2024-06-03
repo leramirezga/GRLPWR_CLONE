@@ -8,6 +8,7 @@ use App\Model\SesionCliente;
 use App\Model\SolicitudServicio;
 use App\User;
 use App\Utils\Constantes;
+use App\Utils\RolsEnum;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -34,13 +35,13 @@ class HomeController extends Controller
     {
         SeguridadController::verificarUsuario($user);
         $visitante = false;
-        if(strcasecmp ( $user->rol, Constantes::ROL_ADMIN ) == 0){
+        if($user->hasRol(RolsEnum::ADMIN) || $user->hasRol(RolsEnum::TRAINER)){
             return view('admin.homeAdmin', compact('user'));
         }
-        if(strcasecmp ( $user->rol, Constantes::ROL_CLIENTE ) == 0) {
+        if($user->hasRol(RolsEnum::CLIENT)) {
             $entrenamientosAgendados = SesionCliente::
             where('cliente_id', $user->id)
-                ->entrenamientosAgendados($user->rol)
+                ->entrenamientosAgendados()
                 ->get();
 
             $randomNumber = rand(1, 100);
@@ -62,24 +63,6 @@ class HomeController extends Controller
             }
             return view('cliente.homeCliente', compact('user', 'entrenamientosAgendados', 'visitante'));
         }
-        if(strcasecmp ($user->rol, Constantes::ROL_ENTRENADOR) == 0){
-            $ofrecimientos = Ofrecimientos::where('usuario_id', $user->id)->get();
-            $solicitudes_id = array();
-            foreach ($ofrecimientos as $ofrecimiento){
-                array_push($solicitudes_id, $ofrecimiento->solicitud_servicio_id);
-            }
-            $solicitudes= SolicitudServicio::
-                            whereIn('id', $solicitudes_id )
-                            ->whereIn('estado', [0, 5])//solicitud activa o modificada
-                            ->get();
-
-            $entrenamientosAgendados = SolicitudServicio::
-                                        whereIn('solicitudes_servicio.id', $solicitudes_id )
-                                        ->entrenamientosAgendados($user->rol)
-                                        ->get();
-
-            return view('perfilEntrenador', compact('user', 'solicitudes', 'entrenamientosAgendados', 'visitante'));
-        }
 
         //cuando se registra con redes sociales
         if(strcasecmp ($user->rol, 'indefinido' ) == 0){
@@ -96,9 +79,7 @@ class HomeController extends Controller
         if(strcasecmp ($user->rol, Constantes::ROL_ENTRENADOR ) == 0) {
             return view('perfilEntrenador', compact('user', 'solicitudes', 'visitante'));
         }
-        if(strcasecmp ($user->rol, Constantes::ROL_CLIENTE ) == 0) {
-            return view('cliente.profileClient', compact('user', 'solicitudes', 'visitante'));
-        }
+        return view('cliente.profileClient', compact('user', 'solicitudes', 'visitante'));
     }
 
     public function completarRegistroRedesSociales(){

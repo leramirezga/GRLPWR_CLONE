@@ -11,9 +11,7 @@ namespace App\Utils;
 class Constantes {
 
     //USER
-    const ROL_CLIENTE = 'cliente';
     const ROL_ENTRENADOR = 'entrenador';
-    const ROL_ADMIN = 'admin';
 
     //MENSAJES
     const MENSAJE_ENTRENAMIENTO_YA_CANCELADO = 'El entrenamiento ya no estaba agendado. Posiblemente había sido cancelado o se realizó una reclamación';
