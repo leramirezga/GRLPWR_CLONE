@@ -139,7 +139,7 @@ class User extends Authenticatable
             ->orderBy('created_at', $order);
     }
 
-    public function hasRol(RolsEnum $rol): bool
+    public function hasRole(RolsEnum $rol): bool
     {
         $hasRol = DB::table('user_roles')
             ->where('user_roles.user_id', $this->id)

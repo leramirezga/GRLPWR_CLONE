@@ -17,7 +17,7 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->check() && auth()->user()->hasRol(RolsEnum::ADMIN))
+        if (auth()->check() && auth()->user()->hasRole(RolsEnum::ADMIN))
             return $next($request);
 
         return redirect('/');

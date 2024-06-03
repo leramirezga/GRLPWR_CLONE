@@ -37,12 +37,12 @@ class ProfileController extends Controller
     public function index(User $user)
     {
         $userType = SeguridadController::verificarUsuario($user, true);
-        if($user->hasRol(RolsEnum::CLIENT)){
+        if($user->hasRole(RolsEnum::CLIENT)){
             return $userType == AuthEnum::SAME_USER ?
                 view('cliente.profileClient', compact('user')) :
                 redirect()->route('visitarPerfil', ['user' => $user]);
         }
-        if($user->hasRol(RolsEnum::TRAINER)){
+        if($user->hasRole(RolsEnum::TRAINER)){
             redirect()->route('visitarPerfil', ['user' => $user]);
         }
         //cuando se registra con redes sociales

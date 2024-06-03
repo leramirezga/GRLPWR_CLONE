@@ -35,10 +35,10 @@ class HomeController extends Controller
     {
         SeguridadController::verificarUsuario($user);
         $visitante = false;
-        if($user->hasRol(RolsEnum::ADMIN) || $user->hasRol(RolsEnum::TRAINER)){
+        if($user->hasRole(RolsEnum::ADMIN) || $user->hasRole(RolsEnum::TRAINER)){
             return view('admin.homeAdmin', compact('user'));
         }
-        if($user->hasRol(RolsEnum::CLIENT)) {
+        if($user->hasRole(RolsEnum::CLIENT)) {
             $entrenamientosAgendados = SesionCliente::
             where('cliente_id', $user->id)
                 ->entrenamientosAgendados()
