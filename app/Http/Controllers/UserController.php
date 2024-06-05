@@ -24,7 +24,7 @@ class UserController extends controller
             ->select('usuarios.*', 'client_plans.expiration_date')
             ->paginate(15);
         $clientFollowers = User::join('user_roles', 'usuarios.id', '=', 'user_roles.user_id')
-            ->where('user_roles.role_id', RolsEnum::CLIENT_FOLLOWER->value)->get();
+            ->where('user_roles.role_id', RolsEnum::CLIENT_FOLLOWER->value)->select('usuarios.*')->get();
 
 
         return view('users', [
