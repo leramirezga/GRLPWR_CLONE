@@ -149,7 +149,7 @@
                             Ranking
                         </a>
                     @endif
-                    @if(Auth::user()->hasFeature(\App\Utils\FeaturesEnum::SEE_ACCOUNTING_FLOW))
+                    @if(Auth::user()->hasFeature(\App\Utils\FeaturesEnum::SEE_PETTY_CASH) || Auth::user()->hasFeature(\App\Utils\FeaturesEnum::SEE_MAYOR_CASH))
                         <a class="d-none d-md-inline-block" href="{{route('AccountingFlow')}}">
                             Flujo contable
                         </a>
