@@ -10,6 +10,7 @@ use App\Utils\RolsEnum;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class UserController extends controller
@@ -109,6 +110,9 @@ class UserController extends controller
 
     public function updateAssigned(Request $request): JsonResponse
     {
+        if(!Auth::user()->hasFeature(\App\Utils\FeaturesEnum::CHANGE_CLIENT_FOLLOWER)){
+            return response()->json(['success' => true]);
+        }
         $userId = $request->input('userId');
         $assigned = $request->input('assigned');
         User::where('id', $userId)->update(['assigned_id' => $assigned]);
