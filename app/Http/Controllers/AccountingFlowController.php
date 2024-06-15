@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\TransaccionesPagos;
 use App\Utils\FeaturesEnum;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -17,8 +18,8 @@ class AccountingFlowController extends Controller
             'end_date' => 'nullable|date|after_or_equal:start_date',
         ]);
 
-        $startDate = $request->input('start_date');
-        $endDate = $request->input('end_date');
+        $startDate = Carbon::parse($request->input('start_date'));
+        $endDate = Carbon::parse($request->input('end_date'));
 
         $positiveValuesMayorCash = collect();
         $positiveMayorCashSum = 0;
@@ -36,15 +37,19 @@ class AccountingFlowController extends Controller
             $positiveValuesPettyCash = TransaccionesPagos::with(['user', 'payment'])
                 ->where('amount', '>', 0)
                 ->where('is_petty_cash', '=', 1)
-                ->whereBetween('created_at', [$startDate, $endDate])
+                ->where('created_at', '>=', $startDate->startOfDay())
+                ->where('created_at', '<=', $endDate->endOfDay())
+                ->where('codigo_respuesta', '=', 1)
                 ->get();
 
             $positivePettyCashSum = $positiveValuesPettyCash->sum('amount');
 
             $negativeValuesPettyCash = TransaccionesPagos::with(['user', 'payment'])
                 ->where('amount', '<', 0)
-                ->where('is_petty_cash', '=', 0)
-                ->whereBetween('created_at', [$startDate, $endDate])
+                ->where('is_petty_cash', '=', 1)
+                ->where('created_at', '>=', $startDate->startOfDay())
+                ->where('created_at', '<=', $endDate->endOfDay())
+                ->where('codigo_respuesta', '=', 1)
                 ->get();
 
             $negativePettyCashSum = $negativeValuesPettyCash->sum('amount');
@@ -55,7 +60,9 @@ class AccountingFlowController extends Controller
             $positiveValuesMayorCash = TransaccionesPagos::with(['user', 'payment'])
                 ->where('amount', '>', 0)
                 ->where('is_petty_cash', '=', 0)
-                ->whereBetween('created_at', [$startDate, $endDate])
+                ->where('created_at', '>=', $startDate->startOfDay())
+                ->where('created_at', '<=', $endDate->endOfDay())
+                ->where('codigo_respuesta', '=', 1)
                 ->get();
 
             $positiveMayorCashSum = $positiveValuesMayorCash->sum('amount');
@@ -63,7 +70,9 @@ class AccountingFlowController extends Controller
             $negativeValuesMayorCash = TransaccionesPagos::with(['user', 'payment'])
                 ->where('amount', '<', 0)
                 ->where('is_petty_cash', '=', 0)
-                ->whereBetween('created_at', [$startDate, $endDate])
+                ->where('created_at', '>=', $startDate->startOfDay())
+                ->where('created_at', '<=', $endDate->endOfDay())
+                ->where('codigo_respuesta', '=', 1)
                 ->get();
 
             $negativeMayorCashSum = $negativeValuesMayorCash->sum('amount');
