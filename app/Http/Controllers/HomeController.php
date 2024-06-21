@@ -8,6 +8,7 @@ use App\Model\SesionCliente;
 use App\Model\SolicitudServicio;
 use App\User;
 use App\Utils\Constantes;
+use App\Utils\FeaturesEnum;
 use App\Utils\RolsEnum;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -35,9 +36,6 @@ class HomeController extends Controller
     {
         SeguridadController::verificarUsuario($user);
         $visitante = false;
-        if($user->hasRole(RolsEnum::ADMIN) || $user->hasRole(RolsEnum::TRAINER)){
-            return view('admin.homeAdmin', compact('user'));
-        }
         if($user->hasRole(RolsEnum::CLIENT)) {
             $entrenamientosAgendados = SesionCliente::
             where('cliente_id', $user->id)
@@ -62,6 +60,9 @@ class HomeController extends Controller
                 return view('cliente.homeCliente', compact('user', 'entrenamientosAgendados', 'visitante', 'reviewFor', 'eventName'));
             }
             return view('cliente.homeCliente', compact('user', 'entrenamientosAgendados', 'visitante'));
+        }
+        if($user->hasFeature(FeaturesEnum::SEE_ATTENDEES)){//TODO create a different feature for admin view an another view for persons without this feature
+            return view('admin.homeAdmin', compact('user'));
         }
 
         //cuando se registra con redes sociales
