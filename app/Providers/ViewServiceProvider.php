@@ -65,7 +65,7 @@ class ViewServiceProvider extends ServiceProvider
             $clientPlans = $clientPlanRepository->findValidClientPlans(clientId: $route->parameter('user')->id);
             $expiredPlans = ClientPlan::where('client_id', '=', $route->parameter('user')->id)
                 ->where('client_plans.expiration_date', '<', Carbon::now())
-                ->orWhere('client_plans.remaining_shared_clases', '=', 0)
+                ->orWhere('client_plans.remaining_shared_classes', '=', 0) //TODO FIT-57: fix for specific classes
                 ->join('plans', 'client_plans.plan_id', '=', 'plans.id')
                 ->select('client_plans.*', 'plans.name')
                 ->orderBy('client_plans.expiration_date', 'desc')
