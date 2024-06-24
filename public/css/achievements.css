@@ -25,3 +25,35 @@
   width: 120px;
   height: 120px;
 }
+.wheel-of-life-achievement{
+  position: absolute;
+  background-size: cover;/* Make the background image cover the area of the <div>, and clip the excess */
+  z-index: 100;
+  margin-top: -64px;
+  margin-left: -31px;
+}
+
+#health-achievement{
+  background-image: url('../images/achievements/health.png');
+}
+#love-achievement{
+  background-image: url('../images/achievements/love.png');
+}
+#familyAndFriends-achievement{
+  background-image: url('../images/achievements/family_and_friends.png');
+}
+#home-achievement{
+  background-image: url('../images/achievements/home.png');
+}
+#leisure-achievement{
+  background-image: url('../images/achievements/leisure.png');
+}
+#money-achievement{
+  background-image: url('../images/achievements/money.png');
+}
+#work-achievement{
+  background-image: url('../images/achievements/work.png');
+}
+#personal-growth-achievement{
+  background-image: url('../images/achievements/personal_growth.png');
+}
