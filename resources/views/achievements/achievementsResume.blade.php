@@ -7,7 +7,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-12 col-md-5 d-flex justify-content-center">
-            <div class="achievement-container themed-block mt-4 p-2 text-center">
+            <div class="achievement-container themed-block mt-4 p-2 text-center" data-toggle="tooltip" data-placement="auto" title="Entrena 3 veces a la semana">
                 <div class="d-flex flex-column">
                     <div class="position-relative m-auto" style="width: fit-content">
                         @if($weeksStreak && $weeksStreak->points > 0)
