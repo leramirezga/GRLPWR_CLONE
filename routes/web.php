@@ -80,10 +80,10 @@ Route::group(['middleware' => 'auth'], function () {
     //Route::get('/eventos', [SesionEventoController::class, 'fullcalendar'])->name('eventos');
     Route::post('/agendar', [SesionClienteController::class, 'save'])->name('agendar');
 
-    Route::post('/response_payment',[PagosController::class, 'responsePayment']);
+    Route::post('/response_payment', [PagosController::class, 'responsePayment']);
     Route::get('/response_payment', [PagosController::class, 'responsePayment']);
 
-    Route::post('/scheduleEvent',[SesionClienteController::class, 'scheduleEvent'])->name('scheduleEvent');
+    Route::post('/scheduleEvent', [SesionClienteController::class, 'scheduleEvent'])->name('scheduleEvent');
     Route::post('/dar_review_entrenamiento/', [SesionClienteController::class, 'darReview'])->name('darReviewEntrenamiento');
     Route::delete('/cancelar_entrenamiento', [SesionClienteController::class, 'cancelTraining'])->name('cancelarEntrenamiento');
     Route::get('/planes/{plan}', [PlanController::class, 'show'])->name('plan');
@@ -91,19 +91,21 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/clientLastPlanWithRemainingClasses', [ClientPlan::class, 'clientLastPlanWithRemainingClasses'])->name('clientLastPlanWithRemainingClasses');
 
 
-    Route::get('/nextSessions/{branchId}',[EventController::class, 'nextSessions'])->name('nextSessions');
+    Route::get('/nextSessions/{branchId}', [EventController::class, 'nextSessions'])->name('nextSessions');
+
+    Route::post('/admin/checkAttendee', [SesionClienteController::class, 'checkAttendee'])->name('checkAttendee');
+
+    Route::post('{user}/comment/', [UserCommentController::class, 'comment'])->name('commentUser');
+    Route::post('{comment}/reply/', [UserCommentController::class, 'reply'])->name('replyUserComment');
 });
 
 Route::group(['middleware' => 'admin'], function () {
-    Route::get('/admin/savePettyCash', function () {
-        $clients = Cliente::all();
-        $paymentMethods = PaymentMethod::where('enabled', true)->get();
-        return view('admin.savePettyCash', compact('clients', 'paymentMethods'));
-    })->name('pettyCash.index');
-    Route::post('/admin/savePettyCash', [PagosController::class, 'savePettyCash'])->name('pettyCash.save');
-    Route::get('/admin/loadPlan', [ClientPlanController::class, 'showLoadClientPlan']);
-    Route::post('/admin/loadPlan', [ClientPlanController::class, 'saveClientPlan'])->name('saveClientPlan');
-    Route::post('/admin/checkAttendee', [SesionClienteController::class, 'checkAttendee'])->name('checkAttendee');
+    Route::get('/statistics', [StatisticsController::class, 'index'])->name('statistics');
+
+    Route::get('/admin/saveActiveClients/{date}', [ActiveClientsController::class, 'saveActiveClientByDate']);
+});
+
+Route::middleware(['auth', 'check.feature:' . \App\Utils\FeaturesEnum::class . '-' .\App\Utils\FeaturesEnum::MAKE_WELLBEING_TEST->value])->group(function () {
     Route::get('/user/{user}/wellBeingTest', [WellBeingController::class, 'index'])->name('healthTest');
     Route::post('/user/{user}/wellBeingTest', [WellBeingController::class, 'processWellBeingTest'])->name('wellBeingTest');
     Route::post('/physicalTest', [WellBeingController::class, 'savePhysicalTest'])->name('savePhysicalTest');
@@ -111,15 +113,37 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('/trainingTest', [WellBeingController::class, 'saveTrainingTest'])->name('saveTrainingTest');
     Route::post('/wellbeingTest', [WellBeingController::class, 'saveWellBeingTest'])->name('saveWellBeingTest');
     Route::post('/wheelOfLifeTest', [WellBeingController::class, 'saveWheelOfLifeTest'])->name('saveWheelOfLifeTest');
+});
+
+Route::middleware(['auth', 'check.feature:' . \App\Utils\FeaturesEnum::class . '-' .\App\Utils\FeaturesEnum::CHANGE_CLIENT_FOLLOWER->value])->group(function () {
+    Route::post('/users/assigned', [UserController::class, 'updateAssigned'])->name('assigned.update');
+});
+
+Route::middleware(['auth', 'check.feature:' . \App\Utils\FeaturesEnum::class . '-' .\App\Utils\FeaturesEnum::LOAD_CLIENT_PLAN->value])->group(function () {
+    Route::get('/admin/loadPlan', [ClientPlanController::class, 'showLoadClientPlan']);
+    Route::post('/admin/loadPlan', [ClientPlanController::class, 'saveClientPlan'])->name('saveClientPlan');
+});
+
+Route::middleware(['auth', 'check.feature:' . \App\Utils\FeaturesEnum::class . '-' . \App\Utils\FeaturesEnum::SEE_MAYOR_CASH->value . ',' . \App\Utils\FeaturesEnum::class . '-' . \App\Utils\FeaturesEnum::SEE_PETTY_CASH->value])->group(function () {
+    Route::get('/AccountingFlow', [AccountingFlowController::class, 'AccountingFlow'])->name('AccountingFlow');
+});
+
+Route::middleware(['auth', 'check.feature:' . \App\Utils\FeaturesEnum::class . '-' .\App\Utils\FeaturesEnum::SAVE_PETTY_CASH->value])->group(function () {
+    Route::get('/savePettyCash', function () {
+        $clients = Cliente::all();
+        $paymentMethods = PaymentMethod::where('enabled', true)->get();
+        return view('admin.savePettyCash', compact('clients', 'paymentMethods'));
+    })->name('pettyCash.index');
+    Route::post('/savePettyCash', [PagosController::class, 'savePettyCash'])->name('pettyCash.save');
+});
+
+Route::middleware(['auth', 'check.feature:' . \App\Utils\FeaturesEnum::class . '-' . \App\Utils\FeaturesEnum::SEE_USERS->value])->group(function () {
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/users/search', [UserController::class, 'search'])->name('users.search');
-    Route::post('/users/assigned', [UserController::class, 'updateAssigned'])->name('assigned.update');
-    Route::get('/statistics', [StatisticsController::class, 'index'])->name('statistics');
-    Route::post('{user}/comment/', [UserCommentController::class, 'comment'])->name('commentUser');
-    Route::post('{comment}/reply/', [UserCommentController::class, 'reply'])->name('replyUserComment');
-    Route::get('/admin/saveActiveClients/{date}', [ActiveClientsController::class, 'saveActiveClientByDate']);
+});
+
+Route::middleware(['auth', 'check.feature:' . \App\Utils\FeaturesEnum::class . '-' . \App\Utils\FeaturesEnum::SEE_ACHIEVEMENTS_WEEKS_RANK->value])->group(function () {
     Route::get('/achievementsWeeksRank', [AchievementController::class, 'showAchievements'])->name('achievementsWeeksRank');
-    Route::get('/AccountingFlow', [AccountingFlowController::class, 'AccountingFlow'])->name('AccountingFlow');
 });
 
 /*Open routes*/

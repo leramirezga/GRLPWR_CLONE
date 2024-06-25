@@ -31,7 +31,6 @@ class EventController extends Controller
     }
 
     public function create(){
-        Auth::user()->hasFeature(FeaturesEnum::SAVE_SESSION);
         return view('sessions.createSession');
     }
 
