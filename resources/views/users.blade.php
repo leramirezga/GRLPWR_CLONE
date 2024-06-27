@@ -131,7 +131,7 @@
                                 '<td>' + result.email + '</td>' +
                                 '<td>' + result.telefono + '</td>' +
                                 '<td>' +
-                                    '<select id="select_'+ result.id +'" onchange="onChangeAssignment(' + result.id + ', this.value)"'+ {{!Auth::user()->hasFeature(\App\Utils\FeaturesEnum::CHANGE_CLIENT_FOLLOWER) ? 'disabled' : ''}}+'>' +
+                                    '<select id="select_'+ result.id +'" onchange="onChangeAssignment(' + result.id + ', this.value)"'+ '{{!Auth::user()->hasFeature(\App\Utils\FeaturesEnum::CHANGE_CLIENT_FOLLOWER) ? "disabled" : ''}}' + '>' +
                                         '<option style="color: black" value="" disabled selected>Seleccione...</option>' +
                                             options +
                                     '</select>' +
