@@ -2,7 +2,6 @@
     <link href="{{ asset('css/achievements.css') }}" rel="stylesheet"/>
 @endpush
 
-@if(false)
 <h3 class="section-title mt-4">Logros:</h3>
 
 <div class="container">
@@ -65,4 +64,3 @@
         </div>
     </div>
 </div>
-@endif
