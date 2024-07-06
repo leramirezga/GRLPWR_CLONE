@@ -205,8 +205,8 @@
                                 '</td>' +
                                 '<td>' + (result.expiration_date ? result.expiration_date.slice(0, 10) : '') + '</td>' +
                                 '<td><a class="client-icon theme-color" href="/user/' + result.slug + '/wellBeingTest">' + assessmentText + '</a></td>' +
-                                '<td><input type="checkbox" onclick="onChangePhotoStatus(' + result.id + ', this)" data-user-id="' + result.id + '" ' + (result.physical_photo ? 'checked' : '') + '></td>' +
-                                '<td><input type="checkbox" onclick="onChangeWhatsappStatus(' + result.id + ', this)" data-user-id="' + result.id + '" ' + (result.wa_group ? 'checked' : '') + '></td>' +
+                                '<td><input type="checkbox" onclick="onChangePhotoStatus(' + result.id + ', this)" data-user-id="' + result.id + '" ' + (result.physical_photo === 1 ? 'checked' : '') + '></td>' +
+                                '<td><input type="checkbox" onclick="onChangeWhatsappStatus(' + result.id + ', this)" data-user-id="' + result.id + '" ' + (result.wa_group === 1 ? 'checked' : '') + '></td>' +
                                 '</tr>'
                             );
 
