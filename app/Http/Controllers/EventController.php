@@ -154,13 +154,19 @@ class EventController extends Controller
     }
 
     public function loadNextSessions(int $branchId = null, int $classTypeId = null){
+        $startDate = Carbon::now();
+        $startDate->minute(0);
+        $startDate->second(0);
+        if(Auth::user()?->hasFeature(FeaturesEnum::SEE_ATTENDEES)){
+            $startDate->subHour();
+        }
         $editedEvents = EditedEvent::when($branchId, function ($query, $branchId) {
                 return $query->where('branch_id', $branchId);
             })
             ->when($classTypeId, function ($query, $classTypeId) {
                 return $query->where('class_type_id', $classTypeId);
             })
-            ->where('fecha_inicio', '>=', today()) //It is only comparing by date because if it compares also with hour the repeated events that were edited will not be filtered
+            ->where('fecha_inicio', '>=', $startDate) //It is only comparing by date because if it compares also with hour the repeated events that were edited will not be filtered
             ->where('fecha_fin', '<=', today()->addDays(8))
             ->orderBy('fecha_inicio', 'asc')
             ->get()->map(function($element) {
@@ -169,8 +175,8 @@ class EventController extends Controller
             });
 
         $uniqueEvents = Evento::
-            whereDoesntHave('edited_events', function (Builder $query) {
-                $query->whereRaw('CONCAT(fecha_inicio, " ", start_hour) >= ?', [today()])
+            whereDoesntHave('edited_events', function (Builder $query) use ($startDate) {
+                $query->whereRaw('CONCAT(fecha_inicio, " ", start_hour) >= ?', [$startDate])
                     ->whereRaw('CONCAT(fecha_fin, " ", end_hour) <= ?', [today()->addDays(8)]);
             })
             ->when($branchId, function ($query, $branchId) {
@@ -180,7 +186,7 @@ class EventController extends Controller
                 return $query->where('class_type_id', $classTypeId);
             })
             ->where('repeatable', '=', false)
-            ->whereRaw('CONCAT(fecha_inicio, " ", start_hour) >= ?', [today()])
+            ->whereRaw('CONCAT(fecha_inicio, " ", start_hour) >= ?', [$startDate])
             ->whereRaw('CONCAT(fecha_fin, " ", end_hour) <= ?', [today()->addDays(8)])
             ->orderBy('fecha_inicio', 'asc')
             ->get();
@@ -225,11 +231,10 @@ class EventController extends Controller
             $dateTime = $dateTime->addDay();
         }
 
-        $dateTime =  Carbon::now();
-        return $events->filter(function ($event) use ($dateTime) {
+        return $events->filter(function ($event) use ($startDate) {
             $eventStartTime = Carbon::parse($event->fecha_inicio->format('Y-m-d') . ' ' . $event->start_hour);
             $eventEndTime = Carbon::parse($event->fecha_fin->format('Y-m-d') . ' ' . $event->end_hour);
-            return $eventStartTime->gte($dateTime) || $eventEndTime->gte($dateTime);
+            return $eventStartTime->gte($startDate) || $eventEndTime->gte($startDate);
         })->sortBy([
                 ['fecha_inicio', 'asc'],
                 ['start_hour', 'asc'],
