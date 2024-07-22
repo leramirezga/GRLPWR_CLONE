@@ -7,6 +7,7 @@ use App\EventHour;
 use App\Exceptions\NoAvailableEquipmentException;
 use App\Exceptions\ShoeSizeNotSupportedException;
 use App\Exceptions\WeightNotSupportedException;
+use App\Feature;
 use App\Http\Controllers\Auth\SeguridadController;
 use App\Http\Services\KangooService;
 use App\Model\Evento;
@@ -154,6 +155,13 @@ class EventController extends Controller
     }
 
     public function loadNextSessions(int $branchId = null, int $classTypeId = null){
+        $scheduleUntil = Feature::where('feature', '=', 'schedule_until')->first();
+        if($scheduleUntil){
+            $endDate = $scheduleUntil->active_at;
+        }else{
+            $endDate = today()->addDays(8);
+        }
+
         $startDate = Carbon::now();
         $startDate->minute(0);
         $startDate->second(0);
@@ -167,7 +175,7 @@ class EventController extends Controller
                 return $query->where('class_type_id', $classTypeId);
             })
             ->where('fecha_inicio', '>=', $startDate) //It is only comparing by date because if it compares also with hour the repeated events that were edited will not be filtered
-            ->where('fecha_fin', '<=', today()->addDays(8))
+            ->where('fecha_fin', '<=', )
             ->orderBy('fecha_inicio', 'asc')
             ->get()->map(function($element) {
                 $element['id'] = $element->evento_id;
@@ -175,9 +183,9 @@ class EventController extends Controller
             });
 
         $uniqueEvents = Evento::
-            whereDoesntHave('edited_events', function (Builder $query) use ($startDate) {
+            whereDoesntHave('edited_events', function (Builder $query) use ($endDate, $startDate) {
                 $query->whereRaw('CONCAT(fecha_inicio, " ", start_hour) >= ?', [$startDate])
-                    ->whereRaw('CONCAT(fecha_fin, " ", end_hour) <= ?', [today()->addDays(8)]);
+                    ->whereRaw('CONCAT(fecha_fin, " ", end_hour) <= ?', [$endDate]);
             })
             ->when($branchId, function ($query, $branchId) {
                 return $query->where('branch_id', $branchId);
@@ -187,7 +195,7 @@ class EventController extends Controller
             })
             ->where('repeatable', '=', false)
             ->whereRaw('CONCAT(fecha_inicio, " ", start_hour) >= ?', [$startDate])
-            ->whereRaw('CONCAT(fecha_fin, " ", end_hour) <= ?', [today()->addDays(8)])
+            ->whereRaw('CONCAT(fecha_fin, " ", end_hour) <= ?', [$endDate])
             ->orderBy('fecha_inicio', 'asc')
             ->get();
 
@@ -206,9 +214,8 @@ class EventController extends Controller
 
         $events = $editedEvents->where('deleted', '==', 0)->concat($uniqueEvents);
 
-
         $dateTime =  Carbon::now();
-        for ($i = 0; $i < 7; $i++) {
+        for ($i = 0; $i <  Carbon::today()->diffInDays($endDate)+1; $i++) {
             $dayName = $dateTime->format('l');
 
             $updatedCollection = $repeatableEvents->where('day', '=', $dayName)

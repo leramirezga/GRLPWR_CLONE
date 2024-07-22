@@ -18,4 +18,6 @@ enum FeaturesEnum: string
     case SEE_USERS_MEDICAL_INFO = 'SEE_USERS_MEDICAL_INFO';
     case LOAD_CLIENT_PLAN = 'LOAD_CLIENT_PLAN';
     case MAKE_WELLBEING_TEST = 'MAKE_WELLBEING_TEST';
+
+    case schedule_until = 'schedule_until';
 }
