@@ -14,6 +14,10 @@ class HistoricalActiveClient extends Model
      */
     protected $fillable = [
         'date',
-        'active_clients'
+        'active_clients',
+        'active_new_clients',
+        'active_old_clients',
+        'retained_clients',
+        'percent_retained_clients'
     ];
 }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Services\ActiveClientsService;
+use App\Http\Services\ActiveAndRetainedClientsService;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -20,7 +20,7 @@ class ActiveClientsController extends Controller
 
     public function saveActiveClientByDate(Request $request):void
     {
-        $activeClientsService = new ActiveClientsService();
+        $activeClientsService = new ActiveAndRetainedClientsService();
         $activeClientsService->saveActiveClients($request->route()->parameter('date'));
     }
 }

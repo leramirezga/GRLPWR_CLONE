@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Http\Services\ActiveClientsService;
+use App\Http\Services\ActiveAndRetainedClientsService;
 use Carbon\Carbon;
 
 class CalculateActiveClients
@@ -17,7 +17,7 @@ class CalculateActiveClients
      */
     public function __invoke(): void
     {
-        $activeClientsService = new ActiveClientsService();
+        $activeClientsService = new ActiveAndRetainedClientsService();
         $activeClientsService->saveActiveClients(Carbon::now()->subDays(5));
     }
 }
