@@ -175,7 +175,7 @@ class EventController extends Controller
                 return $query->where('class_type_id', $classTypeId);
             })
             ->where('fecha_inicio', '>=', $startDate) //It is only comparing by date because if it compares also with hour the repeated events that were edited will not be filtered
-            ->where('fecha_fin', '<=', )
+            ->where('fecha_fin', '<=', $endDate)
             ->orderBy('fecha_inicio', 'asc')
             ->get()->map(function($element) {
                 $element['id'] = $element->evento_id;
@@ -215,7 +215,7 @@ class EventController extends Controller
         $events = $editedEvents->where('deleted', '==', 0)->concat($uniqueEvents);
 
         $dateTime =  Carbon::now();
-        for ($i = 0; $i <  Carbon::today()->diffInDays($endDate)+1; $i++) {
+        for ($i = 0; $i <  Carbon::today()->diffInDays($endDate, false)+1; $i++) {
             $dayName = $dateTime->format('l');
 
             $updatedCollection = $repeatableEvents->where('day', '=', $dayName)
@@ -238,13 +238,14 @@ class EventController extends Controller
             $dateTime = $dateTime->addDay();
         }
 
-        return $events->filter(function ($event) use ($startDate) {
+        $events = $events->filter(function ($event) use ($startDate) {
             $eventStartTime = Carbon::parse($event->fecha_inicio->format('Y-m-d') . ' ' . $event->start_hour);
             $eventEndTime = Carbon::parse($event->fecha_fin->format('Y-m-d') . ' ' . $event->end_hour);
             return $eventStartTime->gte($startDate) || $eventEndTime->gte($startDate);
         })->sortBy([
                 ['fecha_inicio', 'asc'],
                 ['start_hour', 'asc'],
-        ]);
+        ])->values()->all();
+        return $events;
     }
 }
