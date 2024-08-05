@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Exceptions\ExistingUserException;
 use App\Http\Controllers\Controller;
+use App\Model\Cliente;
 use App\User;
 use App\UserRole;
 use App\Utils\RolsEnum;
@@ -108,6 +109,9 @@ class RegisterController extends Controller
             UserRole::create([
                 'user_id' => $id,
                 'role_id' => RolsEnum::CLIENT
+            ]);
+            Cliente::create([
+                'usuario_id' => $id
             ]);
             DB::commit();
             return $user;
