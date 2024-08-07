@@ -57,7 +57,7 @@ class ClientPlan extends Model
 
     public function clientLastPlanWithRemainingClasses(Request $request){
         $clientPlanRepository = new ClientPlanRepository();
-        $lastPlanWithRemainingClasses = $clientPlanRepository->findValidClientPlan(clientId: $request->query('clientId'), extendedTimeToRenew: true);
+        $lastPlanWithRemainingClasses = $clientPlanRepository->findValidClientPlan(clientId: $request->query('clientId'), extendedTimeToRenew: true, frozenPlans: true);
 
         return response()->json([
             'success' => true,

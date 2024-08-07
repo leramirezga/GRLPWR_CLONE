@@ -12,11 +12,11 @@ use Illuminate\Support\Facades\Session;
 class ClientPlanRepository
 {
 
-    public function findValidClientPlans($clientId = null){
-        return $this->findValidClientPlan(clientId: $clientId, multiplePlans: true);
+    public function findValidClientPlans($clientId = null, $frozenPlans = false){
+        return $this->findValidClientPlan(clientId: $clientId, multiplePlans: true, frozenPlans: $frozenPlans);
     }
 
-    public function findValidClientPlan($event = null, int $clientId = null, bool $withRemainingClasses = true, bool $extendedTimeToRenew = false, bool $multiplePlans = false)
+    public function findValidClientPlan($event = null, int $clientId = null, bool $withRemainingClasses = true, bool $extendedTimeToRenew = false, bool $multiplePlans = false, bool $frozenPlans = false)
     {
         /*
         *FIT-57: Uncomment this if you want specific classes*/
@@ -26,6 +26,9 @@ class ClientPlanRepository
             )
             ->distinct()
             ->where('client_id', $clientId ?? Auth::id())
+            ->when(!$frozenPlans, function ($query) {
+                return $query->where('frozen_from', '<',  today())->orWhere('frozen_to', '<',  today());
+            })
             ->where(function($q) use ($extendedTimeToRenew, $event) {
                 $q->where('client_plans.expiration_date', '>', now())
                     ->where('client_plans.expiration_date', '>', $event->fecha_fin)
@@ -54,6 +57,9 @@ class ClientPlanRepository
 
 
         $clientPlan = ClientPlan::where('client_id', $clientId ?? Auth::id())
+            ->when(!$frozenPlans, function ($query) {
+                return $query->where('frozen_from', '<', today())->orWhere('frozen_to', '<',  today());
+            })
             ->where(function($q) use ($extendedTimeToRenew, $event) {
                 $q->where('client_plans.expiration_date', '>', Carbon::now())//is not expired
                 ->when($event, function ($query) use ($event) {

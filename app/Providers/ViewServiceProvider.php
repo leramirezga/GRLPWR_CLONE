@@ -64,7 +64,7 @@ class ViewServiceProvider extends ServiceProvider
         Facades\View::composer('cliente.clientPlan', function (View $view) {
             $route = Route::current(); // Illuminate\Routing\Route
             $clientPlanRepository = new ClientPlanRepository();
-            $clientPlans = $clientPlanRepository->findValidClientPlans(clientId: $route->parameter('user')->id);
+            $clientPlans = $clientPlanRepository->findValidClientPlans(clientId: $route->parameter('user')->id, frozenPlans: true);
             $expiredPlans = ClientPlan::where('client_id', '=', $route->parameter('user')->id)
                 ->where(function ($query) {
                     return $query->where('client_plans.expiration_date', '<', Carbon::now())

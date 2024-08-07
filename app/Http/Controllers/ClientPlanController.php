@@ -87,4 +87,29 @@ class ClientPlanController extends Controller
             return redirect()->back();
         }
     }
+
+    public function showFreezeClientPlan(){
+        $clients = Cliente::all();
+        return view('admin.clientPlan.freezeClientPlan', compact('clients'));
+    }
+
+    public function freezePlan(Request $request){
+        if(!$request->lastPlanId || !$request->frozenFrom || !$request->frozenTo){
+            Session::put('msg_level', 'danger');
+            Session::put('msg', __('general.error_no_plan'));
+            Session::save();
+            return redirect()->back();
+        }
+        $lastPlan = ClientPlan::find($request->lastPlanId);
+        $frozenFrom = Carbon::createFromFormat('d/m/Y',$request->frozenFrom);
+        $frozenTo =  Carbon::createFromFormat('d/m/Y',$request->frozenTo);
+        $lastPlan->frozen_from = $frozenFrom;
+        $lastPlan->frozen_to = $frozenTo;
+        $lastPlan->expiration_date = $lastPlan->expiration_date->addDays($frozenFrom->diffInDays($frozenTo, false));
+        $lastPlan->save();
+        Session::put('msg_level', 'success');
+        Session::put('msg', __('general.success_freeze'));
+        Session::save();
+        return redirect()->back();
+   }
 }

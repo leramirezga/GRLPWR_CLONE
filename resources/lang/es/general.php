@@ -83,4 +83,6 @@ return [
     'not_registered_guest' => 'Tu invitado no está registrado. Pídele que se registre y complete su perfil para poder agendar',
     'not_more_guest' => 'Tu plan no tiene más invitados esta semana',
     'success_save_petty_cash' => 'Transacción registrada exitosamente',
+    'error_no_plan' => 'No tienes un plan valido',
+    'success_freeze' => 'Plan congelado exitosamente',
 ];
