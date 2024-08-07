@@ -27,7 +27,7 @@ class ClientPlanRepository
             ->distinct()
             ->where('client_id', $clientId ?? Auth::id())
             ->when(!$frozenPlans, function ($query) {
-                return $query->where('frozen_from', '<',  today())->orWhere('frozen_to', '<',  today());
+                return $query->where('frozen_from', '<',  today())->orWhere('frozen_to', '<',  today())->orWhereNull('frozen_from');
             })
             ->where(function($q) use ($extendedTimeToRenew, $event) {
                 $q->where('client_plans.expiration_date', '>', now())
@@ -58,7 +58,7 @@ class ClientPlanRepository
 
         $clientPlan = ClientPlan::where('client_id', $clientId ?? Auth::id())
             ->when(!$frozenPlans, function ($query) {
-                return $query->where('frozen_from', '<', today())->orWhere('frozen_to', '<',  today());
+                return $query->where('frozen_from', '<', today())->orWhere('frozen_to', '<',  today())->orWhereNull('frozen_from');
             })
             ->where(function($q) use ($extendedTimeToRenew, $event) {
                 $q->where('client_plans.expiration_date', '>', Carbon::now())//is not expired
