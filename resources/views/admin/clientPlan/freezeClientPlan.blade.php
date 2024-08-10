@@ -203,7 +203,7 @@
                     $("#remainingClases").val(0);
                     $("#lastPlanId").val(null);
 
-                    if(data.lastPlanWithRemainingClasses){
+                    if(data.lastPlanWithRemainingClasses) {
                         hasRemainingClasses = true;
                         const jsDate = new Date(data.lastPlanWithRemainingClasses.expiration_date);
                         const formattedDate = jsDate.toLocaleDateString('es-ES', {
@@ -212,18 +212,24 @@
                             year: 'numeric'
                         });
 
-                        const frozenFrom = new Date(data.lastPlanWithRemainingClasses.frozen_from);
-                        const formattedFrozenFrom = frozenFrom.toLocaleDateString('es-ES', {
-                            day: '2-digit',
-                            month: '2-digit',
-                            year: 'numeric'
-                        });
-                        const frozenTo= new Date(data.lastPlanWithRemainingClasses.frozen_to);
-                        const formattedFrozenTo = frozenTo.toLocaleDateString('es-ES', {
-                            day: '2-digit',
-                            month: '2-digit',
-                            year: 'numeric'
-                        });
+                        let formattedFrozenFrom = "";
+                        if (data.lastPlanWithRemainingClasses.frozen_from){
+                            const frozenFrom = new Date(data.lastPlanWithRemainingClasses.frozen_from);
+                            formattedFrozenFrom = frozenFrom.toLocaleDateString('es-ES', {
+                                day: '2-digit',
+                                month: '2-digit',
+                                year: 'numeric'
+                            });
+                        }
+                        let formattedFrozenTo = "";
+                        if(data.lastPlanWithRemainingClasses.frozen_to){
+                            const frozenTo= new Date(data.lastPlanWithRemainingClasses.frozen_to);
+                            formattedFrozenTo = frozenTo.toLocaleDateString('es-ES', {
+                                day: '2-digit',
+                                month: '2-digit',
+                                year: 'numeric'
+                            });
+                        }
 
                         const newRow = $("<tr>");
                         newRow.append('<td><div style="max-height:3rem; overflow:hidden">' + data.lastPlanWithRemainingClasses.name + "</td>");
@@ -232,8 +238,8 @@
                         newRow.append('<td><div style="max-height:3rem; overflow:hidden">'+ formattedFrozenFrom  + " - " + formattedFrozenTo + "</td>");
                         if(data.lastPlanWithRemainingClasses.remaining_shared_classes){
                             $("#remainingClases").val(data.lastPlanWithRemainingClasses.remaining_shared_classes);
-                            $("#lastPlanId").val(data.lastPlanWithRemainingClasses.id);
                         }
+                        $("#lastPlanId").val(data.lastPlanWithRemainingClasses.id);
                         $("#lastPlanBody").append(newRow);
 
                         lastPlanContainer.removeClass("d-none");
