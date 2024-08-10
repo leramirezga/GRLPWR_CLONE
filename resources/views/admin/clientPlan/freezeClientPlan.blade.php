@@ -143,11 +143,11 @@
     <script>
         $(function () {
             var actualDate = new Date();
-            actualDate.setHours(0,0);
+            actualDate.setHours(0,0,0);
             $('.datepicker').datetimepicker({
                 ignoreReadonly: true,
                 format: 'DD/MM/YYYY',
-                minDate: actualDate,
+                minDate: moment().subtract(1, 'days'),
                 locale: 'es',
                 useCurrent: false //Para que con el max date no quede seleccionada por defecto esa fecha
             });
@@ -214,7 +214,7 @@
 
                         let formattedFrozenFrom = "";
                         if (data.lastPlanWithRemainingClasses.frozen_from){
-                            const frozenFrom = new Date(data.lastPlanWithRemainingClasses.frozen_from);
+                            const frozenFrom = new Date(data.lastPlanWithRemainingClasses.frozen_from + 'T00:00:00');
                             formattedFrozenFrom = frozenFrom.toLocaleDateString('es-ES', {
                                 day: '2-digit',
                                 month: '2-digit',
@@ -223,7 +223,7 @@
                         }
                         let formattedFrozenTo = "";
                         if(data.lastPlanWithRemainingClasses.frozen_to){
-                            const frozenTo= new Date(data.lastPlanWithRemainingClasses.frozen_to);
+                            const frozenTo= new Date(data.lastPlanWithRemainingClasses.frozen_to + 'T00:00:00');
                             formattedFrozenTo = frozenTo.toLocaleDateString('es-ES', {
                                 day: '2-digit',
                                 month: '2-digit',

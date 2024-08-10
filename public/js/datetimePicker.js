@@ -541,10 +541,10 @@ Copyright (c) 2015 Jonathan Peterson
                 if (options.enabledDates && granularity === 'd' && !isInEnabledDates(targetMoment)) {
                     return false;
                 }
-                if (options.minDate && targetMoment.isBefore(options.minDate, granularity)) {
+                if (options.minDate && (targetMoment.isBefore(options.minDate, granularity) || targetMoment.isSame(options.minDate, granularity))) {
                     return false;
                 }
-                if (options.maxDate && targetMoment.isAfter(options.maxDate, granularity)) {
+                if (options.maxDate && (targetMoment.isAfter(options.maxDate, granularity) || targetMoment.isSame(options.minDate, granularity))) {
                     return false;
                 }
                 if (options.daysOfWeekDisabled && granularity === 'd' && options.daysOfWeekDisabled.indexOf(targetMoment.day()) !== -1) {
