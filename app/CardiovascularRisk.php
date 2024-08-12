@@ -8,6 +8,4 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CardiovascularRisk extends Model
 {
-    use HasFactory;
-    use SoftDeletes;
 }
