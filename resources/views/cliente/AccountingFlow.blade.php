@@ -56,7 +56,6 @@
                         <th>Amount</th>
                         <th>Fecha</th>
                         <th>Metodo de pago</th>
-                        <th>CXP</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -66,13 +65,6 @@
                             <td class="currency">$ {{ number_format($negative->amount, 0, ',', '.') }}</td>
                             <td>{{ $negative->created_at->format('Y-m-d') }}</td>
                             <td>{{ $negative->payment->name }}</td>
-                            <td>
-                                @if($negative->cxp)
-                                    Si
-                                @else
-                                    No
-                                @endif
-                            </td>
                         </tr>
                     @endforeach
                     <tr>
@@ -94,7 +86,7 @@
                         <th>Amount</th>
                         <th>Fecha</th>
                         <th>Metodo de pago</th>
-                        <th>CXP</th>
+                        <th>Item</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -104,13 +96,7 @@
                             <td class="currency">$ {{ number_format($positive->amount, 0, ',', '.') }}</td>
                             <td>{{ $positive->created_at->format('Y-m-d') }}</td>
                             <td>{{ $positive->payment->name }}</td>
-                            <td>
-                                @if($positive->cxp)
-                                    Si
-                                @else
-                                    No
-                                @endif
-                            </td>
+                            <td>{{ $positive->data }}</td>
                         </tr>
                     @endforeach
                     <tr>
@@ -130,7 +116,7 @@
                         <th>Amount</th>
                         <th>Fecha</th>
                         <th>Metodo de pago</th>
-                        <th>CXP</th>
+                        <th>Item</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -140,13 +126,7 @@
                             <td class="currency">$ {{ number_format($negative->amount, 0, ',', '.') }}</td>
                             <td>{{ $negative->created_at->format('Y-m-d') }}</td>
                             <td>{{ $negative->payment->name }}</td>
-                            <td>
-                                @if($negative->cxp)
-                                    Si
-                                @else
-                                    No
-                                @endif
-                            </td>
+                            <td>{{ $negative->data }}</td>
                         </tr>
                     @endforeach
                     <tr>

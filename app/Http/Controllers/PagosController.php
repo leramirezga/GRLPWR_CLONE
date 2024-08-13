@@ -149,8 +149,7 @@ class PagosController extends Controller
         $transaction->data = $request->data ?? "";
         $transaction->user_id = $request->clientId;
         $transaction->created_at = $payDay;
-        $transaction->cxp = $request->has('cxp') ? 1 : 0;
-        $transaction->amount = $request->cxp ? -1*abs($request->amount) : $request->amount;
+        $transaction->amount = $request->amount;
         $transaction->is_petty_cash = 1;
         $transaction->save();
 

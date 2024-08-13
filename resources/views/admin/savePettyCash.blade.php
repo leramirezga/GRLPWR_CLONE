@@ -96,7 +96,7 @@
                                                 <i class="material-icons">attach_money</i>
                                             </span>
                                             <div class="form-group label-floating">
-                                                <label class="control-label">Valor pagado <small>(requerido)</small></label>
+                                                <label class="control-label">Valor <small>(requerido)</small></label>
                                                 <input name="amount" type="number" step="1" class="form-control">
                                             </div>
                                         </div>
@@ -113,14 +113,6 @@
                                             <span class="iconos">
                                                 <i class="fa fa-comments" aria-hidden="true"></i>
                                             </span>
-                                            <div class="form-group label-floating">
-                                                <label class="control-label">Item <small>(requerido)</small></label>
-                                                <textarea name="data" class="form-control" rows="3"></textarea>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="cxp" name="cxp">
-                                                    <label class="form-check-label" for="cxp">Es Cuenta por Pagar</label>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
