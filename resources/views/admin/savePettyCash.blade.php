@@ -113,6 +113,10 @@
                                             <span class="iconos">
                                                 <i class="fa fa-comments" aria-hidden="true"></i>
                                             </span>
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">Item <small>(requerido)</small></label>
+                                                <textarea name="data" class="form-control" rows="3"></textarea>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
