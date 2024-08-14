@@ -27,7 +27,9 @@ class ClientPlanRepository
             ->distinct()
             ->where('client_id', $clientId ?? Auth::id())
             ->when(!$frozenPlans, function ($query) {
-                return $query->where('frozen_from', '<',  today())->orWhere('frozen_to', '<',  today())->orWhereNull('frozen_from');
+                return $query->where(function($q) {
+                    return $q->where('frozen_from', '<', today())->orWhere('frozen_to', '<', today())->orWhereNull('frozen_from');
+                });
             })
             ->where(function($q) use ($extendedTimeToRenew, $event) {
                 $q->where('client_plans.expiration_date', '>', now())
@@ -58,16 +60,18 @@ class ClientPlanRepository
 
         $clientPlan = ClientPlan::where('client_id', $clientId ?? Auth::id())
             ->when(!$frozenPlans, function ($query) {
-                return $query->where('frozen_from', '<', today())->orWhere('frozen_to', '<',  today())->orWhereNull('frozen_from');
+                return $query->where(function($q) {
+                    return $q->where('frozen_from', '<', today())->orWhere('frozen_to', '<', today())->orWhereNull('frozen_from');
+                });
             })
             ->where(function($q) use ($extendedTimeToRenew, $event) {
                 $q->where('client_plans.expiration_date', '>', Carbon::now())//is not expired
                 ->when($event, function ($query) use ($event) {
                     return $query->where('client_plans.expiration_date', '>', $event->fecha_fin);
                 })
-                    ->when($extendedTimeToRenew, function ($query, $extendedTimeToRenew) {
-                        return $query->orWhere('client_plans.expiration_date', '>', Carbon::now()->subDays(env('DAYS_TO_RENEW', 7)));//expired 7 days ago
-                    });
+                ->when($extendedTimeToRenew, function ($query, $extendedTimeToRenew) {
+                    return $query->orWhere('client_plans.expiration_date', '>', Carbon::now()->subDays(env('DAYS_TO_RENEW', 7)));//expired 7 days ago
+                });
             })
             ->when($withRemainingClasses, function ($query) {
                 return $query->where(function ($query) {
