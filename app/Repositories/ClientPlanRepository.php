@@ -88,7 +88,7 @@ class ClientPlanRepository
         //FIT-107 Plan Morning
         if($clientPlan && $clientPlan->isNotEmpty()){
             $clientPlan = $clientPlan ->first();
-            if($clientPlan->plan_id != PlansEnum::MORNING->value || !$event ?? $event->start_hour < '11:00:00'){
+            if($clientPlan->plan_id != PlansEnum::MORNING->value || ($event && $event->start_hour < '11:00:00')){
                return $clientPlan;
             }
             Log::info('Trying to schedule an unsupported class with a morning plan');
