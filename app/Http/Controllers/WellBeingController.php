@@ -2,14 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Achievements\FamilyAndFriendsAchievement;
-use App\Achievements\HealthAchievement;
-use App\Achievements\HomeAchievement;
-use App\Achievements\LeisureAchievement;
-use App\Achievements\LoveAchievement;
-use App\Achievements\MoneyAchievement;
-use App\Achievements\PersonalGrowthAchievement;
-use App\Achievements\WorkAchievement;
 use App\FoodAssesment;
 use App\HealthTest;
 use App\Model\Peso;
@@ -140,34 +132,8 @@ class WellBeingController extends controller
         $wheelOfLife->reason_work = $request->reason_work;
         $wheelOfLife->money = $request->money;
         $wheelOfLife->reason_money = $request->reason_money;
+        $wheelOfLife->user_id = $request->user_id;
         $wheelOfLife->save();
-
-        $user = User::find($request->user_id);
-
-        if ($request->health >= 9) {
-            $user->addProgress(new HealthAchievement(), 1);
-        }
-        if ($request->personal_growth >= 9) {
-            $user->addProgress(new PersonalGrowthAchievement(), 1);
-        }
-        if ($request->home >= 9) {
-            $user->addProgress(new HomeAchievement(), 1);
-        }
-        if ($request->family_and_friends >= 9) {
-            $user->addProgress(new FamilyAndFriendsAchievement(), 1);
-        }
-        if ($request->love >= 9) {
-            $user->addProgress(new LoveAchievement(), 1);
-        }
-        if ($request->leisure >= 9) {
-            $user->addProgress(new LeisureAchievement(), 1);
-        }
-        if ($request->work >= 9) {
-            $user->addProgress(new WorkAchievement(), 1);
-        }
-        if ($request->money >= 9) {
-            $user->addProgress(new MoneyAchievement(), 1);
-        }
 
         return response()->json([
             'success' => true,

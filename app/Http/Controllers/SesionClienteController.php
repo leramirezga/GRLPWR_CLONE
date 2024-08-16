@@ -398,12 +398,6 @@ class SesionClienteController extends Controller
         $clientSession = SesionCliente::find($request->clientSessionId);
         $clientSession->attended = $request->checked === "true";
         $clientSession->save();
-        $user = User::find($clientSession->cliente_id);
-        if($request->checked === "true"){
-            $user->addProgress(new AssistedToClassAchievement(), 1);
-        }else{
-            $user->removeProgress(new AssistedToClassAchievement(), 1);
-        }
         return response()->json([
             'success' => true
         ], 200);

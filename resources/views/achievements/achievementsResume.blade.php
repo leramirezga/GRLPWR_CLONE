@@ -32,35 +32,3 @@
                     <div class="position-relative m-auto" style="width: fit-content">
                         <img class="achievement-icon" alt="wheelOfLife" src="{{ asset('images/achievements/pie_chart.png') }}">
                         <div style="margin: 0 auto 1vh auto; width: 1px; height: 1px">
-                            @if($healthAchievement && $healthAchievement->unlocked_at)
-                                <div id="health-achievement" class="achievement-icon wheel-of-life-achievement"></div>
-                            @endif
-                            @if($loveAchievement && $loveAchievement->unlocked_at)
-                                <div id="love-achievement" class="achievement-icon wheel-of-life-achievement"></div>
-                            @endif
-                            @if($familyAndFriendsAchievement && $familyAndFriendsAchievement->unlocked_at)
-                                <div id="familyAndFriends-achievement" class="achievement-icon wheel-of-life-achievement"></div>
-                            @endif
-                            @if($homeAchievement && $homeAchievement->unlocked_at)
-                                <div id="home-achievement" class="achievement-icon wheel-of-life-achievement"></div>
-                            @endif
-                            @if($leisureAchievement && $leisureAchievement->unlocked_at)
-                                <div id="leisure-achievement" class="achievement-icon wheel-of-life-achievement"></div>
-                            @endif
-                            @if($moneyAchievement && $moneyAchievement->unlocked_at)
-                                <div id="money-achievement" class="achievement-icon wheel-of-life-achievement"></div>
-                            @endif
-                            @if($workAchievement && $workAchievement->unlocked_at)
-                                <div id="work-achievement" class="achievement-icon wheel-of-life-achievement"></div>
-                            @endif
-                            @if($personalGrowthAchievement && $personalGrowthAchievement->unlocked_at)
-                                <div id="personal-growth-achievement" class="achievement-icon wheel-of-life-achievement"></div>
-                            @endif
-                        </div>
-                    </div>
-                    <p class="small">Rueda de la vida</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
