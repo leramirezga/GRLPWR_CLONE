@@ -68,7 +68,8 @@ class EventController extends Controller
             return view('sessions.event', [
                 'event' => $event,
                 'plan' => $clientPlan,
-                'equipmentIncluded' => $clientPlan->equipment_included
+                'equipmentIncluded' => $clientPlan->equipment_included,
+                'user' => Auth::user()
             ]);
         }
         return view('sessions.event', [
