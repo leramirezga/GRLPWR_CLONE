@@ -6,14 +6,14 @@
 
 @section('content')
     <div class="text-center">
-        @if(\Illuminate\Support\Facades\Auth::user()->hasRole(\App\Utils\RolsEnum::CLIENT) && \Illuminate\Support\Facades\Auth::user()->cliente == null)
+        @if($user->hasRole(\App\Utils\RolsEnum::CLIENT) && $user->cliente == null)
             <h2 class="w-75 m-auto">Para agendarte a los eventos debes completar tu perfil</h2>
             <button class="btn themed-btn d-block mx-auto mt-3" data-toggle="modal"
                     data-target="#completarPerfilModal">Completar perfil
             </button>
         @else
             @if(strcasecmp($event->classType->type, \App\Utils\PlanTypesEnum::KANGOO->value) === 0 &&
-                    (!\Illuminate\Support\Facades\Auth::user()->cliente->peso() || !\Illuminate\Support\Facades\Auth::user()->cliente->talla_zapato))
+                    (!$user->cliente->peso() || !$user->cliente->talla_zapato))
                 <h2 class="w-75 m-auto">Para los eventos de kangoo debes completar tu perfil con la información de tu peso y talla de zapato</h2>
                 <button class="btn themed-btn d-block mx-auto mt-3" data-toggle="modal"
                         data-target="#completarPerfilModal">Completar perfil
@@ -29,7 +29,7 @@
                         <img class="exercise-image" src="{{asset('images/'.$event->imagen)}}"
                              alt="Eventos @lang('general.AppName')">
                     </div>
-                    @if(\Illuminate\Support\Facades\Auth::user()->hasFeature(\App\Utils\FeaturesEnum::SEE_ATTENDEES))
+                    @if($user->hasFeature(\App\Utils\FeaturesEnum::SEE_ATTENDEES))
                         @include('admin.attendeesTable')
                     @endif
                 </div>
@@ -53,7 +53,7 @@
                         </div>
                     </div>
                 </div>
-                @if(\Illuminate\Support\Facades\Auth::user()->hasRole(\App\Utils\RolsEnum::CLIENT))
+                @if($user->hasRole(\App\Utils\RolsEnum::CLIENT))
                     @include('scheduleModal')
                 @endif
                 <h2 class="text-center mt-5 ">
@@ -68,7 +68,7 @@
     @include('components.modalCancelPolicy')
     @include('cliente.scheduleGuestModal')
 
-    @if(\Illuminate\Support\Facades\Auth::user()->hasRole(\App\Utils\RolsEnum::CLIENT))
+    @if($user->hasRole(\App\Utils\RolsEnum::CLIENT))
         @include('cliente.completeProfileClient')
         @include('modalCompletarPerfil')
     @endif

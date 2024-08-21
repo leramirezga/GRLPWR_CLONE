@@ -46,9 +46,11 @@
                 <div class="wizard-container">
                     <div class="wizard-card" data-color="purple" id="wizardProfile">
                         <!--enctype="multipart/form-data" en el form para que cargue la imagen cuando cambien la foto de perfil-->
-                        <form id="actualizarPerfilForm" method="post" action="{{route('actualizarPerfil', ['user'=> Auth::user()->slug])}}" enctype="multipart/form-data">
+                        <form id="actualizarPerfilForm" method="post" action="{{route('actualizarPerfil', ['user'=> $user->slug])}}" enctype="multipart/form-data">
                             @method('PUT')
                             @csrf
+                            <input type="hidden" name="userId" value="{{$user->id}}">
+
                             <!--        You can switch " data-color="purple" "  with one of the next bright colors: "green", "orange", "red", "blue"       -->
                             <div class="wizard-header">
                                 <h3 class="wizard-title">
@@ -72,7 +74,7 @@
                                         <div class="col-sm-4 offset-sm-1 mb-3">
                                             <div class="picture-container">
                                                 <div class="picture">
-                                                    <img src="{{asset('images/avatars/'. Auth::user()->foto)}}" class="picture-src" id="wizardPicturePreview" title=""/>
+                                                    <img src="{{asset('images/avatars/'. $user->foto)}}" class="picture-src" id="wizardPicturePreview" title=""/>
                                                     <input type="file" id="wizard-picture" name="avatar" accept="image/*">
                                                 </div>
                                                 <h6>Carga una foto de perfil</h6>
@@ -85,7 +87,7 @@
                                                                 </span>
                                                 <div class="form-group label-floating">
                                                     <label class="control-label">Nombres <small>(requerido)</small></label>
-                                                    <input name="firstname" type="text" class="form-control" value="{{Auth::user()->nombre}}">
+                                                    <input name="firstname" type="text" class="form-control" value="{{$user->nombre}}">
                                                 </div>
                                             </div>
 
@@ -95,7 +97,7 @@
                                                                 </span>
                                                 <div class="form-group label-floating">
                                                     <label class="control-label">Primer apellido <small>(requerido)</small></label>
-                                                    <input name="lastname" type="text" class="form-control" value="{{Auth::user()->apellido_1}}">
+                                                    <input name="lastname" type="text" class="form-control" value="{{$user->apellido_1}}">
                                                 </div>
                                             </div>
 
@@ -105,7 +107,7 @@
                                                                 </span>
                                                 <div class="form-group label-floating">
                                                     <label class="control-label">Segundo apellido <small>(opcional)</small></label>
-                                                    <input name="lastname2" type="text" class="form-control" value="{{Auth::user()->apellido_2}}">
+                                                    <input name="lastname2" type="text" class="form-control" value="{{$user->apellido_2}}">
                                                 </div>
                                             </div>
 
@@ -115,7 +117,7 @@
                                                             </span>
                                                 <div id="dateContainer" class="form-group label-floating">
                                                     <label class="control-label">Fecha de nacimiento <small>(requerido)</small></label>
-                                                    <input name="dateborn" class="form-control input-group-addon" type="text" value="{{Auth::user()->fecha_nacimiento ? Auth::user()->fecha_nacimiento->format('d/m/Y') : ''}}">
+                                                    <input name="dateborn" class="form-control input-group-addon" type="text" value="{{$user->fecha_nacimiento ? $user->fecha_nacimiento->format('d/m/Y') : ''}}">
                                                 </div>
                                             </div>
 
@@ -125,7 +127,7 @@
                                                                 </span>
                                                 <div class="form-group label-floating">
                                                     <label class="control-label">Número de Identidad <small>(requerido)</small></label>
-                                                    <input name="documentId" type="number" class="form-control" value="{{Auth::user()->document_id}}">
+                                                    <input name="documentId" type="number" class="form-control" value="{{$user->document_id}}">
                                                 </div>
                                             </div>
                                             @yield('generoEntrenador')
@@ -142,7 +144,7 @@
                                             </span>
                                             <div class="form-group label-floating">
                                                 <label class="control-label">EPS <small>(requerido)</small></label>
-                                                <input name="eps" type="text" class="form-control" value="{{Auth::user()->eps}}">
+                                                <input name="eps" type="text" class="form-control" value="{{$user->eps}}">
                                             </div>
                                         </div>
                                     </div>
@@ -155,9 +157,9 @@
                                                 <label class="control-label">Estado Civil <small>(requerido)</small></label>
                                                 <select class="form-control" name="maritalStatus">
                                                     <option disabled selected value style="display:none"></option>
-                                                    <option value="Soltera" {{Auth::user()->marital_status === 'Soltera' ? "selected" : ""}}>Soltera</option>
-                                                    <option value="Casada" {{Auth::user()->marital_status === 'Casada' ? "selected" : ""}}>Casada</option>
-                                                    <option value="Otro" {{Auth::user()->marital_status === 'Otro' ? "selected" : ""}}>Otro</option>
+                                                    <option value="Soltera" {{$user->marital_status === 'Soltera' ? "selected" : ""}}>Soltera</option>
+                                                    <option value="Casada" {{$user->marital_status === 'Casada' ? "selected" : ""}}>Casada</option>
+                                                    <option value="Otro" {{$user->marital_status === 'Otro' ? "selected" : ""}}>Otro</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -169,7 +171,7 @@
                                             </span>
                                             <div class="form-group label-floating">
                                                 <label class="control-label">Ocupación <small>(requerido)</small></label>
-                                                <input name="occupation" type="text" class="form-control" value="{{Auth::user()->occupation}}">
+                                                <input name="occupation" type="text" class="form-control" value="{{$user->occupation}}">
                                             </div>
                                         </div>
                                     </div>
@@ -182,13 +184,13 @@
                                                 <label class="control-label">¿Cómo nos conociste? <small>(requerido)</small></label>
                                                 <select class="form-control" name="channel">
                                                     <option disabled selected value style="display:none"></option>
-                                                    <option value="Facebook" {{Auth::user()->cliente != null && Auth::user()->cliente->channel === 'Facebook' ? "selected" : ""}}>Facebook</option>
-                                                    <option value="Instagram" {{Auth::user()->cliente != null && Auth::user()->cliente->channel === 'Instagram' ? "selected" : ""}}>Instagram</option>
-                                                    <option value="TikTok" {{Auth::user()->cliente != null && Auth::user()->cliente->channel === 'TikTok' ? "selected" : ""}}>TikTok</option>
-                                                    <option value="Google" {{Auth::user()->cliente != null && Auth::user()->cliente->channel === 'Google' ? "selected" : ""}}>Google</option>
-                                                    <option value="Fisico" {{Auth::user()->cliente != null && Auth::user()->cliente->channel === 'Fisico' ? "selected" : ""}}>Punto Físico</option>
-                                                    <option value="Referido" {{Auth::user()->cliente != null && Auth::user()->cliente->channel === 'Referido' ? "selected" : ""}}>Referido</option>
-                                                    <option value="Otro" {{Auth::user()->cliente != null && Auth::user()->cliente->channel === 'Otro' ? "selected" : ""}}>Otro</option>
+                                                    <option value="Facebook" {{$user->cliente != null && $user->cliente->channel === 'Facebook' ? "selected" : ""}}>Facebook</option>
+                                                    <option value="Instagram" {{$user->cliente != null && $user->cliente->channel === 'Instagram' ? "selected" : ""}}>Instagram</option>
+                                                    <option value="TikTok" {{$user->cliente != null && $user->cliente->channel === 'TikTok' ? "selected" : ""}}>TikTok</option>
+                                                    <option value="Google" {{$user->cliente != null && $user->cliente->channel === 'Google' ? "selected" : ""}}>Google</option>
+                                                    <option value="Fisico" {{$user->cliente != null && $user->cliente->channel === 'Fisico' ? "selected" : ""}}>Punto Físico</option>
+                                                    <option value="Referido" {{$user->cliente != null && $user->cliente->channel === 'Referido' ? "selected" : ""}}>Referido</option>
+                                                    <option value="Otro" {{$user->cliente != null && $user->cliente->channel === 'Otro' ? "selected" : ""}}>Otro</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -204,7 +206,7 @@
                                             </span>
                                             <div class="form-group label-floating">
                                                 <label class="control-label">Télefono celular <small>(requerido)</small></label>
-                                                <input name="cellphone" type="number" min="1000000000" max="9999999999" class="form-control" value="{{Auth::user()->telefono}}">
+                                                <input name="cellphone" type="number" min="1000000000" max="9999999999" class="form-control" value="{{$user->telefono}}">
                                             </div>
                                         </div>
                                     </div>
@@ -215,7 +217,7 @@
                                             </span>
                                             <div class="form-group label-floating">
                                                 <label class="control-label">Correo eléctronico <small>(requerido)</small></label>
-                                                <input name="email" type="email" class="form-control deshabilitado" value="{{Auth::user()->email}}" readonly>
+                                                <input name="email" type="email" class="form-control deshabilitado" value="{{$user->email}}" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -226,7 +228,7 @@
                                             </span>
                                             <div class="form-group label-floating">
                                                 <label class="control-label">Instagram <small>(opcional)</small></label>
-                                                <input name="instagram" type="text" class="form-control" value="{{Auth::user()->instagram}}">
+                                                <input name="instagram" type="text" class="form-control" value="{{$user->instagram}}">
                                             </div>
                                         </div>
                                     </div>
@@ -237,7 +239,7 @@
                                             </span>
                                             <div class="form-group label-floating">
                                                 <label class="control-label">Nombre Contacto de emergencia <small>(requerido)</small></label>
-                                                <input name="emergencyContact" type="text" class="form-control" value="{{Auth::user()->emergency_contact}}">
+                                                <input name="emergencyContact" type="text" class="form-control" value="{{$user->emergency_contact}}">
                                             </div>
                                         </div>
                                     </div>
@@ -248,7 +250,7 @@
                                             </span>
                                             <div class="form-group label-floating">
                                                 <label class="control-label">Número contacto de emergencia <small>(requerido)</small></label>
-                                                <input name="emergencyPhone" type="number" min="1000000000" max="9999999999" class="form-control" value="{{Auth::user()->emergency_phone}}">
+                                                <input name="emergencyPhone" type="number" min="1000000000" max="9999999999" class="form-control" value="{{$user->emergency_phone}}">
                                             </div>
                                         </div>
                                     </div>

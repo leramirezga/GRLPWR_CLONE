@@ -73,6 +73,7 @@ class EventController extends Controller
         }
         return view('sessions.event', [
             'event' => $event,
+            'user' => Auth::user()
         ]);
     }
 

@@ -31,21 +31,11 @@
     <div class="container-fluid">
         <div class="perfil-container col-12 col-md-10 m-auto">
             <img src="{{asset('images/avatars/'.$user->foto)}}" class="user-profile-icon">
-            @if((strcasecmp ($user->rol, 'entrenador' ) == 0 && $user->entrenador == null) || (strcasecmp ($user->rol, 'cliente' ) == 0 && $user->cliente == null))
-                <div class="progress bg-dark ml-auto mr-auto" style="width: 80%;">
-                    <div class="progress-bar bg-white" role="progressbar" style="width: 25%; color: black"
-                         aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%
-                    </div>
-                </div>
-                <button class="btn themed-btn d-block ml-auto mr-auto" data-toggle="modal"
-                        data-target="#completarPerfilModal">Completar perfil
-                </button>
-            @else
+            @if($user==Auth::user()){
                 <button class="btn themed-btn d-block ml-auto mr-auto" data-toggle="modal"
                         data-target="#completarPerfilModal">Editar perfil
                 </button>
             @endif
-
             <img style="width: 100px; height: 25px; margin-bottom: 0" alt="rating"
                  src="{{asset('images/empty_rating.png')}}">
             <div style="margin: 0 auto 3vh auto; width: 100px; height: 1px">

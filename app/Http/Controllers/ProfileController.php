@@ -80,7 +80,7 @@ class ProfileController extends Controller
             }
         /*****************************************************************/
 
-        $user = Auth::user();
+        $user = User::find($request->userId);
         $user -> fecha_nacimiento =date('Y-m-d', strtotime(str_replace('/', '-', request()->dateborn)));
         $user -> nombre = request()->firstname;
         $user -> apellido_1 = request()->lastname;

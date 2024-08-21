@@ -11,6 +11,10 @@
 @section('content')
 
         <div class="col-10 col-lg-6 m-auto">
+            <button class="btn themed-btn d-block ml-auto mr-auto" data-toggle="modal"
+                    data-target="#completarPerfilModal">Completar perfil
+            </button>
+            <div class="mt-5"></div>
             @include('cliente.physicalTest')
             <div class="mt-5"></div>
             @include('cliente.foodTest')
@@ -23,6 +27,8 @@
             <div class="mt-5"></div>
         </div>
 
+        @include('cliente.completeProfileClient')
+        @include('modalCompletarPerfil')
 @endsection
 
 @push('scripts')
