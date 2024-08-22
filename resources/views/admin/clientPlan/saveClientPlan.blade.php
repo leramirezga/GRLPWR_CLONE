@@ -219,19 +219,8 @@
 
     <script>
         const lastPlanContainer = $('#lastPlan');
-        const planSelect = document.getElementById('planId');
         const $eventSelect = $("#clientId");
         var hasRemainingClasses = false;
-
-        document.addEventListener('DOMContentLoaded', function() {
-            planSelect.addEventListener('change', function () {
-                if(planSelect.value === "3"){
-                    lastPlanContainer.addClass("d-none");
-                }else if(hasRemainingClasses){
-                    lastPlanContainer.removeClass("d-none");
-                }
-            });
-        });
 
         $eventSelect.on("change", function (e) {
             loadClientLastPlanWithRemainingClasses($eventSelect.select2('data')[0].id);
@@ -268,10 +257,10 @@
                         newRow.append('<td><div style="max-height:3rem; overflow:hidden">' + data.lastPlanWithRemainingClasses.name + "</td>");
                         newRow.append('<td><div style="max-height:3rem; overflow:hidden">' + (data.lastPlanWithRemainingClasses.remaining_shared_classes ?? '') + "</td>");
                         newRow.append('<td><div style="max-height:3rem; overflow:hidden">'+ formattedDate  + "</td>");
+                        $("#lastPlanId").val(data.lastPlanWithRemainingClasses.id);
                         if(data.lastPlanWithRemainingClasses.remaining_shared_classes){
                             newRow.append('<td><div class="d-flex justify-content-center" style="max-height: 3rem; overflow: hidden"><input type="checkbox" class="form-check-input" id="accumulateClasses" name="accumulateClasses"></div></td>');
                             $("#remainingClases").val(data.lastPlanWithRemainingClasses.remaining_shared_classes);
-                            $("#lastPlanId").val(data.lastPlanWithRemainingClasses.id);
                         }
                         $("#lastPlanBody").append(newRow);
 

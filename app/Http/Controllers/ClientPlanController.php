@@ -67,8 +67,11 @@ class ClientPlanController extends Controller
             $transaction->created_at = $payDay;
             $transaction->save();
 
-            if($request->accumulateClasses === "on" ){
-                $lastPlan = ClientPlan::find($request->lastPlanId);
+            $lastPlan = ClientPlan::find($request->lastPlanId);
+            if($lastPlan && ($request->accumulateClasses === "on" || !$lastPlan->remaining_shared_classes)){
+                if($lastPlan->expiration_date->greaterThan($payDay)){
+                    $payDay =  $lastPlan->expiration_date;
+                }
                 $lastPlan->expiration_date = now();
                 $lastPlan->save();
             }
