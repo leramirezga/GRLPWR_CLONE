@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Auth\SeguridadController;
-use App\Model\Ofrecimientos;
 use App\Model\SesionCliente;
-use App\Model\SolicitudServicio;
 use App\User;
 use App\Utils\Constantes;
 use App\Utils\FeaturesEnum;
@@ -69,6 +67,7 @@ class HomeController extends Controller
         if(strcasecmp ($user->rol, 'indefinido' ) == 0){
             return view('register.completearRegistroRedesSociales');
         }
+        abort(403, 'Usuario sin permisos, contacte al soporte');
     }
 
     public function visitar(User $user){
