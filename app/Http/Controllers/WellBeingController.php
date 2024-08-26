@@ -2,14 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Achievements\FamilyAndFriendsAchievement;
-use App\Achievements\HealthAchievement;
-use App\Achievements\HomeAchievement;
-use App\Achievements\LeisureAchievement;
-use App\Achievements\LoveAchievement;
-use App\Achievements\MoneyAchievement;
-use App\Achievements\PersonalGrowthAchievement;
-use App\Achievements\WorkAchievement;
 use App\FoodAssesment;
 use App\HealthTest;
 use App\Model\Peso;
