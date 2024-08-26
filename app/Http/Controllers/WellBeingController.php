@@ -16,6 +16,7 @@ use App\Model\Peso;
 use App\PhysicalAssessment;
 use App\TrainingPreference;
 use App\User;
+use App\Utils\FeaturesEnum;
 use App\WellBeingAssessment;
 use App\WheelOfLife;
 use Illuminate\Http\JsonResponse;
@@ -144,28 +145,28 @@ class WellBeingController extends controller
 
         $user = User::find($request->user_id);
 
-        if ($request->health >= 9) {
+        if ($request->health >= 9 && $user->hasFeature(FeaturesEnum::SEE_ACHIEVEMENTS_PROGRESS)) {
             $user->addProgress(new HealthAchievement(), 1);
         }
-        if ($request->personal_growth >= 9) {
+        if ($request->personal_growth >= 9 && $user->hasFeature(FeaturesEnum::SEE_ACHIEVEMENTS_PROGRESS)) {
             $user->addProgress(new PersonalGrowthAchievement(), 1);
         }
-        if ($request->home >= 9) {
+        if ($request->home >= 9  && $user->hasFeature(FeaturesEnum::SEE_ACHIEVEMENTS_PROGRESS)) {
             $user->addProgress(new HomeAchievement(), 1);
         }
-        if ($request->family_and_friends >= 9) {
+        if ($request->family_and_friends >= 9  && $user->hasFeature(FeaturesEnum::SEE_ACHIEVEMENTS_PROGRESS)) {
             $user->addProgress(new FamilyAndFriendsAchievement(), 1);
         }
-        if ($request->love >= 9) {
+        if ($request->love >= 9  && $user->hasFeature(FeaturesEnum::SEE_ACHIEVEMENTS_PROGRESS)) {
             $user->addProgress(new LoveAchievement(), 1);
         }
-        if ($request->leisure >= 9) {
+        if ($request->leisure >= 9  && $user->hasFeature(FeaturesEnum::SEE_ACHIEVEMENTS_PROGRESS)) {
             $user->addProgress(new LeisureAchievement(), 1);
         }
-        if ($request->work >= 9) {
+        if ($request->work >= 9  && $user->hasFeature(FeaturesEnum::SEE_ACHIEVEMENTS_PROGRESS)) {
             $user->addProgress(new WorkAchievement(), 1);
         }
-        if ($request->money >= 9) {
+        if ($request->money >= 9  && $user->hasFeature(FeaturesEnum::SEE_ACHIEVEMENTS_PROGRESS)) {
             $user->addProgress(new MoneyAchievement(), 1);
         }
 

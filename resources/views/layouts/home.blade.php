@@ -95,31 +95,33 @@
                     </div>
                 </div>
 
-                <div class="themed-block p-3 mb-3">
-                    <h3 class="mb-5">Reviews ({{$user->reviews->count()}}):</h3>
-                    @foreach($user->reviews as $review)
-                        <div class="floating-card theme-inverted p-3 mb-3">
-                            <div class="float-left">
-                                <img class="rounded-circle" height="48px" width="48px" alt="user"
-                                     src="{{asset('images/avatars/'.$review->reviewer->foto)}}">
-                            </div>
+                @if ((\Illuminate\Support\Facades\Auth::user()->hasFeature(\App\Utils\FeaturesEnum:: SEE_REVIEWS)))
+                    <div class="themed-block p-3 mb-3">
+                        <h3 class="mb-5">Reviews ({{$user->reviews->count()}}):</h3>
+                        @foreach($user->reviews as $review)
+                            <div class="floating-card theme-inverted p-3 mb-3">
+                                <div class="float-left">
+                                    <img class="rounded-circle" height="48px" width="48px" alt="user"
+                                         src="{{asset('images/avatars/'.$review->reviewer->foto)}}">
+                                </div>
 
-                            <div class="user-info d-inline-block">
-                                <h4>{{$review->reviewer->nombre}} {{$review->reviewer->apellido_1}}</h4>
-                                <div class="fullRating-container"
-                                     style="min-width: calc(64px*{{$review->rating/5}}); max-width: calc(100px*{{$review->rating/5}}); width: calc(10vw*{{$review->rating/5}});"></div>
-                                <img id="emptyRating" alt="rating" src="{{asset('images/empty_rating.png')}}">
+                                <div class="user-info d-inline-block">
+                                    <h4>{{$review->reviewer->nombre}} {{$review->reviewer->apellido_1}}</h4>
+                                    <div class="fullRating-container"
+                                         style="min-width: calc(64px*{{$review->rating/5}}); max-width: calc(100px*{{$review->rating/5}}); width: calc(10vw*{{$review->rating/5}});"></div>
+                                    <img id="emptyRating" alt="rating" src="{{asset('images/empty_rating.png')}}">
+                                </div>
+                                <div style="height: 2.5vw; min-height: 16px; max-height: 25px;"></div>
+                                <blockquote class="blockquote">
+                                    @if($review->review != null)
+                                        <p class="mb-0">"{{$review->review}}"</p>
+                                    @endif
+                                    <footer class="blockquote-footer">{{$review->tiempo()}}</footer>
+                                </blockquote>
                             </div>
-                            <div style="height: 2.5vw; min-height: 16px; max-height: 25px;"></div>
-                            <blockquote class="blockquote">
-                                @if($review->review != null)
-                                    <p class="mb-0">"{{$review->review}}"</p>
-                                @endif
-                                <footer class="blockquote-footer">{{$review->tiempo()}}</footer>
-                            </blockquote>
-                        </div>
-                    @endforeach
-                </div>
+                        @endforeach
+                    </div>
+                @endif
             </div>
         </div>
     </div>

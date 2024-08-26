@@ -1,4 +1,5 @@
-<div class="m-auto text-center w-75">
+@if ((\Illuminate\Support\Facades\Auth::user()->hasFeature(\App\Utils\FeaturesEnum::SEE_CHECK_ATTENDEES)))
+    <div class="m-auto text-center w-75">
     <h2>Asistentes:</h2>
     <table class="w-100 table">
         <thead>
@@ -40,6 +41,7 @@
         Registrar Asistente
     </button>
 </div>
+@endif
 
 @include('components/modalRegisterAttendee')
 

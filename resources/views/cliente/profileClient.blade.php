@@ -59,10 +59,10 @@
             @if(Auth::user()->hasFeature(\App\Utils\FeaturesEnum::SEE_USERS_GENERAL_INFO) || Auth::user()->id == $user->id)
                 <p>{{$user->edad}}</p>
 
-            {{--
-                <p>Nivel: </p>
-                <p class="counter-count-decimal">{{$user->nivel}}</p>
-            --}}
+                {{--
+                    <p>Nivel: </p>
+                    <p class="counter-count-decimal">{{$user->nivel}}</p>
+                --}}
 
                 <div class="themed-block col-12 col-md-10 mx-auto mt-4 p-2">
                     <p>Id: {{$user->id}}</p>
@@ -242,9 +242,9 @@
                     <div class="themed-block col-12 col-md-10 mx-auto mt-3 p-4">
                         <h2 class="section-title">RECOMENDACIONES DE PRESCRIPCION DE EJERCICIO:</h2>
                         <ul class="mr-3">
-                        @foreach($exercisePrescription as $prescription)
-                            <li class="text-justify">{{$prescription}}</li>
-                        @endforeach
+                            @foreach($exercisePrescription as $prescription)
+                                <li class="text-justify">{{$prescription}}</li>
+                            @endforeach
                         </ul>
                     </div>
                 @endisset

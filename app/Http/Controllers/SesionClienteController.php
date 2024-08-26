@@ -399,7 +399,7 @@ class SesionClienteController extends Controller
         $clientSession->attended = $request->checked === "true";
         $clientSession->save();
         $user = User::find($clientSession->cliente_id);
-        if($request->checked === "true"){
+        if($request->checked === "true"  && $user->hasFeature(FeaturesEnum::SEE_ACHIEVEMENTS_PROGRESS)){
             $user->addProgress(new AssistedToClassAchievement(), 1);
         }else{
             $user->removeProgress(new AssistedToClassAchievement(), 1);
