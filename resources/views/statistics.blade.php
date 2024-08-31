@@ -9,5 +9,5 @@
             @include('components.historicActiveClients')
         </div>
     @endsection
-    @endif
+@endif
 
