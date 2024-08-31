@@ -46,9 +46,9 @@ class EventController extends Controller
         $date = Carbon::parse($date)->format('Y-m-d');
         if($isEdited){
             $event = EditedEvent::where('evento_id', '=', $event)
-                ->where('fecha_inicio', '=', $date)
-                ->where('start_hour', '=', $hour)
-                ->first();
+                        ->where('fecha_inicio', '=', $date)
+                        ->where('start_hour', '=', $hour)
+                        ->first();
             $event->id = $event->evento_id;
         } else{
             $event = Evento::find($event);
@@ -169,13 +169,13 @@ class EventController extends Controller
             $startDate->subHour();
         }
         $editedEvents = EditedEvent::when($branchId, function ($query, $branchId) {
-            return $query->where('branch_id', $branchId);
-        })
+                return $query->where('branch_id', $branchId);
+            })
             ->when($classTypeId, function ($query, $classTypeId) {
                 return $query->where('class_type_id', $classTypeId);
             })
-            ->where('fecha_inicio', '>=', today()) //It is only comparing by date because if it compares also with hour the repeated events that were edited will not be filtered
-            ->where('fecha_fin', '<=', today()->addDays(8))
+            ->where('fecha_inicio', '>=', $startDate) //It is only comparing by date because if it compares also with hour the repeated events that were edited will not be filtered
+            ->where('fecha_fin', '<=', $endDate)
             ->orderBy('fecha_inicio', 'asc')
             ->get()->map(function($element) {
                 $element['id'] = $element->evento_id;
@@ -186,7 +186,7 @@ class EventController extends Controller
             whereDoesntHave('edited_events', function (Builder $query) use ($endDate, $startDate) {
                 $query->whereRaw('CONCAT(fecha_inicio, " ", start_hour) >= ?', [$startDate])
                     ->whereRaw('CONCAT(fecha_fin, " ", end_hour) <= ?', [$endDate]);
-        })
+            })
             ->when($branchId, function ($query, $branchId) {
                 return $query->where('branch_id', $branchId);
             })
@@ -201,7 +201,7 @@ class EventController extends Controller
 
         $repeatableEvents = Evento::selectRaw(
             'eventos.*, event_hours.*, eventos.id as id'
-        )
+            )
             ->when($branchId, function ($query, $branchId) {
                 return $query->where('branch_id', $branchId);
             })
@@ -215,24 +215,24 @@ class EventController extends Controller
         $events = $editedEvents->where('deleted', '==', 0)->concat($uniqueEvents);
 
         $dateTime =  Carbon::now();
-        for ($i = 0; $i < 7; $i++) {
+        for ($i = 0; $i <  Carbon::today()->diffInDays($endDate, false)+1; $i++) {
             $dayName = $dateTime->format('l');
 
             $updatedCollection = $repeatableEvents->where('day', '=', $dayName)
                 ->map(function($element) use ($dateTime, $editedEvents) {
-                    if ($editedEvents->filter(function ($model) use ($dateTime, $element) {
-                            return $model->evento_id == $element->id && $model->fecha_inicio->equalTo($dateTime->format('Y-m-d'));
-                        })->count() > 0) {
-                        return null;
-                    }else{
-                        $element['id'] = $element->event_id;
-                        $element['fecha_inicio'] = $dateTime->format('d-m-Y');
-                        $element['fecha_fin'] = $dateTime->format('d-m-Y');
-                        return $element;
-                    }
-                })->filter(function($item) {
-                    return $item !== null;
-                });
+                if ($editedEvents->filter(function ($model) use ($dateTime, $element) {
+                        return $model->evento_id == $element->id && $model->fecha_inicio->equalTo($dateTime->format('Y-m-d'));
+                    })->count() > 0) {
+                    return null;
+                }else{
+                    $element['id'] = $element->event_id;
+                    $element['fecha_inicio'] = $dateTime->format('d-m-Y');
+                    $element['fecha_fin'] = $dateTime->format('d-m-Y');
+                    return $element;
+                }
+            })->filter(function($item) {
+                return $item !== null;
+            });
 
             $events = $events->concat($updatedCollection);
             $dateTime = $dateTime->addDay();
@@ -243,8 +243,8 @@ class EventController extends Controller
             $eventEndTime = Carbon::parse($event->fecha_fin->format('Y-m-d') . ' ' . $event->end_hour);
             return $eventStartTime->gte($startDate) || $eventEndTime->gte($startDate);
         })->sortBy([
-            ['fecha_inicio', 'asc'],
-            ['start_hour', 'asc'],
+                ['fecha_inicio', 'asc'],
+                ['start_hour', 'asc'],
         ])->values()->all();
         return $events;
     }
