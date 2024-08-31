@@ -147,7 +147,7 @@
             $('.datepicker').datetimepicker({
                 ignoreReadonly: true,
                 format: 'DD/MM/YYYY',
-                minDate: moment().subtract(1, 'days'),
+                minDate: actualDate,
                 locale: 'es',
                 useCurrent: false //Para que con el max date no quede seleccionada por defecto esa fecha
             });
