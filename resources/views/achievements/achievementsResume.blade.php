@@ -2,8 +2,10 @@
     <link href="{{ asset('css/achievements.css') }}" rel="stylesheet"/>
 @endpush
 
-@if ((\Illuminate\Support\Facades\Auth::user()->hasFeature(\App\Utils\FeaturesEnum::SEE_ACHIEVEMENTS_PROGRESS)))
-
+@php
+    $AchievementsPicturesFeature = \DB::table('features')->where('title', 'SEE_ACHIEVEMENTS_PROGRESS')->whereNotNull('active_at')->first();
+@endphp
+@if($AchievementsPicturesFeature)
     <h3 class="section-title mt-4">Logros:</h3>
 
     <div class="container">

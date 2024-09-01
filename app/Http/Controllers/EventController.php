@@ -215,7 +215,7 @@ class EventController extends Controller
         $events = $editedEvents->where('deleted', '==', 0)->concat($uniqueEvents);
 
         $dateTime =  Carbon::now();
-        for ($i = 0; $i < 7; $i++) {
+        for ($i = 0; $i <  Carbon::today()->diffInDays($endDate, false)+1; $i++) {
             $dayName = $dateTime->format('l');
 
             $updatedCollection = $repeatableEvents->where('day', '=', $dayName)
