@@ -139,7 +139,10 @@
                             Users
                         </a>
                     @endif
-                    @if(Auth::user()->hasFeature(\App\Utils\FeaturesEnum::SAVE_PETTY_CASH))
+                    @php
+                        $pettyCashFeature = \DB::table('features')->where('title', 'SEE_PETTY_CASH')->whereNotNull('active_at')->first();
+                    @endphp
+                    @if($pettyCashFeature)
                         <a class="d-none d-md-inline-block" href="{{route('pettyCash.index')}}">
                             Caja Menor
                         </a>
@@ -149,7 +152,10 @@
                             Ranking
                         </a>
                     @endif
-                    @if(Auth::user()->hasFeature(\App\Utils\FeaturesEnum::SEE_PETTY_CASH) || Auth::user()->hasFeature(\App\Utils\FeaturesEnum::SEE_MAYOR_CASH))
+                    @php
+                        $accountingFlowFeature = \DB::table('features')->where('title', 'SEE_ACCOUNTING_FLOW_BUTTON')->whereNotNull('active_at')->first();
+                    @endphp
+                    @if($accountingFlowFeature)
                         <a class="d-none d-md-inline-block" href="{{route('AccountingFlow')}}">
                             Flujo contable
                         </a>
@@ -169,7 +175,10 @@
                                     Users
                                 </a>
                             @endif
-                            @if(Auth::user()->hasFeature(\App\Utils\FeaturesEnum::SAVE_PETTY_CASH))
+                            @php
+                                $pettyCashFeature = \App\Feature::where('title', \App\Utils\FeaturesEnum::SAVE_PETTY_CASH)->first();
+                            @endphp
+                            @if($pettyCashFeature && $pettyCashFeature->state)
                                 <a class="dropdown-item d-block d-md-none" href="{{route('pettyCash.index')}}">
                                     Caja Menor
                                 </a>

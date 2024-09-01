@@ -16,6 +16,7 @@ use App\Model\Peso;
 use App\PhysicalAssessment;
 use App\TrainingPreference;
 use App\User;
+use App\Utils\FeaturesEnum;
 use App\WellBeingAssessment;
 use App\WheelOfLife;
 use Illuminate\Http\JsonResponse;
@@ -144,29 +145,28 @@ class WellBeingController extends controller
 
         $user = User::find($request->user_id);
 
-        if ($request->health >= 9) {
-            $user->addProgress(new HealthAchievement(), 1);
-        }
-        if ($request->personal_growth >= 9) {
-            $user->addProgress(new PersonalGrowthAchievement(), 1);
-        }
-        if ($request->home >= 9) {
-            $user->addProgress(new HomeAchievement(), 1);
-        }
-        if ($request->family_and_friends >= 9) {
-            $user->addProgress(new FamilyAndFriendsAchievement(), 1);
-        }
-        if ($request->love >= 9) {
-            $user->addProgress(new LoveAchievement(), 1);
-        }
-        if ($request->leisure >= 9) {
-            $user->addProgress(new LeisureAchievement(), 1);
-        }
-        if ($request->work >= 9) {
-            $user->addProgress(new WorkAchievement(), 1);
-        }
-        if ($request->money >= 9) {
-            $user->addProgress(new MoneyAchievement(), 1);
+        $achievementsProgress = \DB::table('features')
+            ->where('title', 'SEE_ACHIEVEMENTS_PROGRESS')
+            ->whereNotNull('active_at')
+            ->first();
+
+        if ($achievementsProgress) {
+            $achievements = [
+                'health' => HealthAchievement::class,
+                'personal_growth' => PersonalGrowthAchievement::class,
+                'home' => HomeAchievement::class,
+                'family_and_friends' => FamilyAndFriendsAchievement::class,
+                'love' => LoveAchievement::class,
+                'leisure' => LeisureAchievement::class,
+                'work' => WorkAchievement::class,
+                'money' => MoneyAchievement::class,
+            ];
+
+            foreach ($achievements as $attribute => $achievementClass) {
+                if ($request->$attribute >= 9) {
+                    $user->addProgress(new $achievementClass(), 1);
+                }
+            }
         }
 
         return response()->json([
