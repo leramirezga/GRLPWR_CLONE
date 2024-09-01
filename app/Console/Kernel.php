@@ -29,15 +29,14 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $user = Auth::user();
-
-        if ($user->hasFeature(FeaturesEnum::SEE_PLAN_EXPIRATION)) {
+        $featureState = DB::table('features')->where('title', FeaturesEnum::SEE_PLAN_EXPIRATION)->whereNotNull('active_at');
+        if ($featureState) {
             $schedule->call(new CheckClientPlansExpiration())->dailyAt('09:00');
         }
         $schedule->call(new CalculateActiveClients())->dailyAt('01:00');
         $schedule->call(new ClearAssistedAchievement())->sundays()->at('23:59:59');
         $schedule->command("validator:kangosReservados")->everyMinute();
-        // $schedule->command("validator:transaccionesPendientes")->cron("*/5 * * * *");
+        //$schedule->command("validator:transaccionesPendientes")->cron("*/5 * * * *");
     }
     /**
      * Register the commands for the application.

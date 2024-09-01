@@ -1,5 +1,8 @@
 @extends('layouts.app')
-@if(\Illuminate\Support\Facades\Auth::user()->hasFeature(\App\Utils\FeaturesEnum::SEE_STATISTICS))
+@php
+    $statisticsFeature = \DB::table('features')->where('title', 'SEE_STATISTICS')->whereNotNull('active_at')->first();
+@endphp
+@if($statisticsFeature)
     @section('title')
         Users
     @endsection

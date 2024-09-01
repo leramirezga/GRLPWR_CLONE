@@ -1,4 +1,8 @@
-@if ((\Illuminate\Support\Facades\Auth::user()->hasFeature(\App\Utils\FeaturesEnum::SEE_CHECK_ATTENDEES)))
+@php
+    $checkAttendeesFeature = \DB::table('features')->where('title', 'SEE_CHECK_ATTENDEES')->whereNotNull('active_at')->first();
+@endphp
+
+@if ($checkAttendeesFeature)
     <div class="m-auto text-center w-75">
     <h2>Asistentes:</h2>
     <table class="w-100 table">

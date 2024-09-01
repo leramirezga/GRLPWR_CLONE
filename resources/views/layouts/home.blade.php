@@ -95,7 +95,11 @@
                     </div>
                 </div>
 
-                @if ((\Illuminate\Support\Facades\Auth::user()->hasFeature(\App\Utils\FeaturesEnum:: SEE_REVIEWS)))
+                @php
+                    $reviewFeature = \DB::table('features')->where('title', 'SEE_REVIEWS')->whereNotNull('active_at')->first();
+                @endphp
+
+                @if ($reviewFeature)
                     <div class="themed-block p-3 mb-3">
                         <h3 class="mb-5">Reviews ({{$user->reviews->count()}}):</h3>
                         @foreach($user->reviews as $review)

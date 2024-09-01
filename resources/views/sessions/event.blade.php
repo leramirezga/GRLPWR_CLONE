@@ -49,7 +49,12 @@
                         </div>
                         <div class="d-flex justify-content-around">
                             <button type="button" class="btn themed-btn ms-3" data-toggle="modal" data-target="#alertaCancelaciontemprana" >Agendar</button>
-                            <button type="button" class="btn themed-btn ms-3" data-toggle="modal" data-target="#guestModal" >Invitar</button>
+                            @php
+                                $guestFeature = \DB::table('features')->where('title', 'GUEST_VIEW')->whereNotNull('active_at')->first();
+                            @endphp
+                            @if($guestFeature)
+                                <button type="button" class="btn themed-btn ms-3" data-toggle="modal" data-target="#guestModal" >Invitar</button>
+                            @endif
                         </div>
                     </div>
                 </div>

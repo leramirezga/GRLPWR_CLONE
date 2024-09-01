@@ -7,7 +7,6 @@
 @section('content')
     <div class="d-md-flex justify-content-between justify-content-md-around w-75 m-auto flex-wrap">
         @foreach($plans as $plan)
-            @if(\Illuminate\Support\Facades\Auth::user()->hasFeature(\App\Utils\FeaturesEnum::SEE_PAYMENT_METHODS))
             @if($plan->available_plans === null || $plan->available_plans > 0)
                 @include('planCard')
             @endif
